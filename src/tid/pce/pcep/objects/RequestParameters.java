@@ -2,6 +2,7 @@ package tid.pce.pcep.objects;
 
 import tid.pce.pcep.objects.tlvs.MaxRequestTimeTLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
+import tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import tid.protocol.commons.ByteHandler;
 
 /**
@@ -128,6 +129,8 @@ public class RequestParameters extends PCEPObject{
 	//FOR TESTING PURPOSES ONLY, NO STANDARD!!!
 	MaxRequestTimeTLV maxRequestTimeTLV;
 	
+	private PathSetupTLV pathSetupTLV;
+	
 	
 	/**
 	 *    As described in Section 3.3.1, three new RP Object Flags have been
@@ -204,8 +207,10 @@ public class RequestParameters extends PCEPObject{
 		bidirect = false;
 		loose = false;				
 		retry=false;
+		
+		
 	}
-	
+
 	/**
 	 * Constructs a Request Parameters (RP) object from a sequence of bytes 
 	 * @param bytes Sequence of bytes where the object is present
@@ -234,6 +239,18 @@ public class RequestParameters extends PCEPObject{
 			}
 			
 		}
+		if (pathSetupTLV!=null){
+			log.info("HAY pathSetupTLV");
+			try {
+				pathSetupTLV.encode();
+				log.info("codificado pathSetupTLV");
+				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
+
+			}catch (Exception e){
+				log.warning(e.getMessage());
+			}
+						
+		}
 		object_bytes=new byte[ObjectLength];
 		encode_header();
 		object_bytes[4]=(byte)((retry?1:0) <<7);
@@ -244,14 +261,21 @@ public class RequestParameters extends PCEPObject{
 		object_bytes[9]=(byte)((requestID>>16) & 0xFF);
 		object_bytes[10]=(byte)((requestID>>8) & 0xFF);
 		object_bytes[11]=(byte)(requestID & 0xFF);
-		if (maxRequestTimeTLV!=null){
-			System.arraycopy(maxRequestTimeTLV.getTlv_bytes(), 0, object_bytes, 12, maxRequestTimeTLV.getTotalTLVLength());
-		}
 		ByteHandler.BoolToBuffer(17, Fbit,object_bytes);
 		ByteHandler.BoolToBuffer(18, Nbit,object_bytes);
 		ByteHandler.BoolToBuffer(19, Ebit,object_bytes);
-	}
+		int offset = 12;
 
+		if (maxRequestTimeTLV!=null){
+			System.arraycopy(maxRequestTimeTLV.getTlv_bytes(), 0, object_bytes, offset, maxRequestTimeTLV.getTotalTLVLength());
+			offset+=maxRequestTimeTLV.getTotalTLVLength();
+		}
+		if (pathSetupTLV!=null){
+			System.arraycopy(pathSetupTLV.getTlv_bytes(), 0, object_bytes, offset, pathSetupTLV.getTotalTLVLength());
+		}
+
+		
+	}
 	/**
 	 * Decode Request Parameters Object
 	 */
@@ -285,6 +309,10 @@ public class RequestParameters extends PCEPObject{
 				log.info("PCEP_TLV_TYPE_MAX_REQ_TIME TLV found");
 				maxRequestTimeTLV=new MaxRequestTimeTLV(this.getObject_bytes(), offset);				
 				break;
+			case ObjectParameters.PCEP_TLV_PATH_SETUP:
+				log.info("PCEP_TLV_PATH_SETUP found");
+				pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
+				break;					
 			default:
 				log.info("Unknown or unexpected TLV found");
 				//UnknownTLV unknownTLV = new UnknownTLV();
@@ -388,13 +416,28 @@ public class RequestParameters extends PCEPObject{
 	public MaxRequestTimeTLV getMaxRequestTimeTLV() {
 		return maxRequestTimeTLV;
 	}
+	
+	public PathSetupTLV getPathSetupTLV() {
+		return pathSetupTLV;
+	}
+	
+	public void setPathSetupTLV(PathSetupTLV pathSetupTLV) {
+		this.pathSetupTLV = pathSetupTLV;
+	}
+
 
 	public void setMaxRequestTimeTLV(MaxRequestTimeTLV maxRequestTimeTLV) {
 		this.maxRequestTimeTLV = maxRequestTimeTLV;
 	}
 
 	public String toString(){
-		return "<RP"+" ReqID: "+requestID+" Prio: "+prio+" Reopt: "+(reopt?1:0)+" Bid: "+(bidirect?1:0)+" Loose: "+(loose?1:0)+" SupOF: "+supplyOF+" retry "+retry+">";
+		String str =  "<RP"+" ReqID: "+requestID+" Prio: "+prio+" Reopt: "+(reopt?1:0)+" Bid: "+(bidirect?1:0)+" Loose: "+(loose?1:0)+" SupOF: "+supplyOF+" retry "+retry;
+		if (this.pathSetupTLV != null)
+		{
+			str += "<PathSetupTLV "+this.pathSetupTLV.toString()+">";
+		}
+		str+=">";
+		return str;
 	}
 
 	

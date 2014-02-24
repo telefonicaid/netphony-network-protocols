@@ -94,6 +94,10 @@ public class ExplicitRouteObject extends PCEPObject{
 			int subojectclass=EROSubobject.getType(this.getObject_bytes(), offset);
 			int subojectlength=EROSubobject.getLength(this.getObject_bytes(), offset);
 			switch(subojectclass) {
+			/*				case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+					SREROSubobject sreroso = new SREROSubobject(this.getObject_bytes(), offset);
+					this.addEROSubobject(sreroso);
+					break;*/
 				case SubObjectValues.ERO_SUBOBJECT_IPV4PREFIX:
 					IPv4prefixEROSubobject sobjt4=new IPv4prefixEROSubobject(this.getObject_bytes(), offset);
 					this.addEROSubobject(sobjt4);

@@ -69,6 +69,13 @@ public class ObjectParameters {
 	
 	public static final int PCEP_OBJECT_CLASS_ADVANCE_RESERVATION=100;
 	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;
+
+	
+	//TODO: Aun por determinar los valores finales 
+	public static final int PCEP_OBJECT_CLASS_SR_ERO = 31;
+	public static final int PCEP_OBJECT_TYPE_SR_ERO = 2;
+	public static final int PCEP_SUBOBJECT_TYPE_SR_ERO = 5; 
+	
 	
 	/*
 	 * Object types from RFC 5440
@@ -293,6 +300,8 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_P2MP_CAPABLE=6;
 	public static final int PCEP_TLV_REQUEST_INFO=7;
 	public static final int PCEP_TLV_TYPE_XIFI=500;
+	
+	public static final int PCEP_TLV_PATH_SETUP=666;	
 
 	
 	// TLV types from GEYSERS!!!
@@ -414,6 +423,9 @@ public class ObjectParameters {
         
 	//Symbolic Path Name
     public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=1013;  
+    
+    //Segment Routing PCE Capability TLV type. Value 26 according to draft-sivabalan-pce-segment-routing-02
+    public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       
     
     //ESTO NO VA A AQUI. CAMBIARLO!!!
     //FIXME

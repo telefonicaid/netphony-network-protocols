@@ -155,9 +155,21 @@ public class LSPplusPath  extends PCEPConstruct
 				return;
 			}
 		}
+		else if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
+		{
+			log.finest("SRERO Object found, New Path Construct found");
+			path=new Path(bytes,offset);
+			offset=offset+path.getLength();
+			len=len+path.getLength();
+			if (offset>=bytes.length){
+				log.finest("No more bytes");
+				this.setLength(len);
+				return;
+			}			
+		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one ERO message!");
+			log.warning("Malformed Report Message. There must be at least one ERO or SRERO message!");
 			throw new PCEPProtocolViolationException();
 		}
 	}
