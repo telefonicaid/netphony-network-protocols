@@ -14,6 +14,7 @@ import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.Metric;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcep.objects.PCEPObject;
+import tid.pce.pcep.objects.SRERO;
 
 /**
  * Path PCEP Construct. RFC 5440
@@ -35,6 +36,8 @@ import tid.pce.pcep.objects.PCEPObject;
 public class Path extends PCEPConstruct {
 
 	private ExplicitRouteObject eRO;
+	private SRERO SRERO;
+	
 	private LSPA lSPA;
 	private Bandwidth bandwidth;
 	private GeneralizedBandwidth generalizedbandwidth;
@@ -53,62 +56,94 @@ public class Path extends PCEPConstruct {
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
 		// TODO Auto-generated method stub
+		int z = 1;
+		log.info("Path encoding "+z);z++;
 		log.finest("Encoding Request Rule");
 		int len=0;
+		log.info("Path encoding "+z);z++;
 		if (eRO!=null){
 			eRO.encode();
 			len=len+eRO.getLength();
 		}
+		else if (SRERO!=null){
+			SRERO.encode();
+			len+=SRERO.getLength();
+		}
 		else {
-			log.warning("Path must start with ERO object");
+			log.warning("Path must start with ERO or SRERO object");
 			throw new PCEPProtocolViolationException();
 		}
+		log.info("Path encoding "+z);z++;
 		if (lSPA!=null){
 			lSPA.encode();
 			len=len+lSPA.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (generalizedbandwidth!=null){
 			generalizedbandwidth.encode();
 			len=len+generalizedbandwidth.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			(metricList.get(i)).encode();
 			len=len+(metricList.get(i)).getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (iRO!=null){
 			iRO.encode();
 			len=len+iRO.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		log.finest("Path Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
-		System.arraycopy(eRO.getBytes(), 0, bytes, offset, eRO.getLength());
-		offset=offset+eRO.getLength();
+		log.info("Path encoding "+z);z++;
+		
+		if(eRO!=null)
+		{
+			System.arraycopy(eRO.getBytes(), 0, bytes, offset, eRO.getLength());
+			offset=offset+eRO.getLength();
+		}
+		else if(SRERO!=null)
+		{
+			System.arraycopy(SRERO.getBytes(), 0, bytes, offset, SRERO.getLength());
+			offset=offset+SRERO.getLength();			
+		}
+			
+			
+		log.info("Path encoding "+z);z++;
 		if (lSPA!=null){
 			System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 			offset=offset+lSPA.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (generalizedbandwidth!=null){
 			System.arraycopy(generalizedbandwidth.getBytes(), 0, bytes, offset, generalizedbandwidth.getLength());
 			offset=offset+generalizedbandwidth.getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
 			offset=offset+metricList.get(i).getLength();
 		}
+		log.info("Path encoding "+z);z++;
 		if (iRO!=null){
 			System.arraycopy(iRO.getBytes(), 0, bytes, offset, iRO.getLength());
 			offset=offset+iRO.getLength();
 		}
+		
+		log.info("Path encoding end");
 	}
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
@@ -125,6 +160,18 @@ public class Path extends PCEPConstruct {
 			offset=offset+eRO.getLength();
 			len=len+eRO.getLength();
 		}
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
+			log.finest("SRERO Object found");
+			try {
+				SRERO=new SRERO(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+SRERO.getLength();
+			len=len+SRERO.getLength();
+		}		
+		
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			log.finest("LSPA Object found");
@@ -195,7 +242,11 @@ public class Path extends PCEPConstruct {
 	}
 	
 	
-
+	public void setSRERO(SRERO srero)
+	{
+		this.SRERO = srero;
+	}
+	
 	public void seteRO(ExplicitRouteObject eRO) {
 		this.eRO = eRO;
 	}
@@ -252,8 +303,15 @@ public class Path extends PCEPConstruct {
 		return eRO;
 	}
 	
+	public SRERO getSRERO() {
+		return this.SRERO;
+	}
+	
 	public String toString(){
 		String ret="PATH={ ";
+		if (SRERO!=null){
+			ret+=SRERO.toString();
+		}
 		if (eRO!=null){
 			ret=ret+eRO.toString();
 		}

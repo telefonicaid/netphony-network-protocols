@@ -1,6 +1,7 @@
 package tid.pce.pcep.objects;
 
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
+import tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import tid.protocol.commons.ByteHandler;
 
@@ -84,6 +85,9 @@ public class SRP extends PCEPObject
 	
 	private boolean rFlag;
 	
+	private PathSetupTLV pathSetupTLV;
+	
+	
 	public SRP()
 	{
 		super();
@@ -109,10 +113,25 @@ public class SRP extends PCEPObject
 			symPathName.encode();
 			ObjectLength=ObjectLength+symPathName.getTotalTLVLength();
 		}
+		
+		if (pathSetupTLV!=null){
+			log.info("HAY pathSetupTLV");
+			try {
+				pathSetupTLV.encode();
+				log.info("codificado pathSetupTLV");
+				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
+
+			}catch (Exception e){
+				log.warning(e.getMessage());
+			}
+						
+		}
 		log.info("Length  "+ObjectLength);
 		object_bytes = new byte[ObjectLength];
 		encode_header();
 		log.info("After encode Header");
+
+		
 		
 		
 		int offset = 4;
@@ -131,6 +150,11 @@ public class SRP extends PCEPObject
 		{
 			System.arraycopy(symPathName.getTlv_bytes(),0,this.object_bytes,offset,symPathName.getTotalTLVLength());
 			offset=offset+symPathName.getTotalTLVLength();
+		}
+		
+		if (pathSetupTLV!=null){
+			System.arraycopy(pathSetupTLV.getTlv_bytes(), 0,this.object_bytes, offset, pathSetupTLV.getTotalTLVLength());
+			offset += pathSetupTLV.getTotalTLVLength();
 		}
 		
 	}
@@ -169,7 +193,11 @@ public class SRP extends PCEPObject
 					log.finest("Symbolic path name tlv found");
 					symPathName=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
 					log.info(symPathName.toString());	
-					break;			 
+					break;		
+				case ObjectParameters.PCEP_TLV_PATH_SETUP:
+					log.info("PCEP_TLV_PATH_SETUP found");
+					pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
+					break;								
 				default:
 					log.warning("Unknown or unexpected TLV found");
 					//FIXME: Que hacemos con los desconocidos
@@ -215,6 +243,14 @@ public class SRP extends PCEPObject
 	public void setrFlag(boolean rFlag) 
 	{
 		this.rFlag = rFlag;
+	}
+
+	public PathSetupTLV getPathSetupTLV() {
+		return pathSetupTLV;
+	}
+
+	public void setPathSetupTLV(PathSetupTLV pathSetupTLV) {
+		this.pathSetupTLV = pathSetupTLV;
 	}
 	
 	
