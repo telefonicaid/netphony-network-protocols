@@ -1,5 +1,6 @@
 package tid.pce.pcep.objects;
 
+import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.protocol.commons.ByteHandler;
 
 
@@ -41,7 +42,10 @@ public class EndPointDataPathID extends EndPoints
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS);
 		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID);	
 	}
-
+	public EndPointDataPathID(byte[] bytes, int offset) throws MalformedPCEPObjectException, PCEPProtocolViolationException{
+		super(bytes, offset);
+		decode();
+	}
 	@Override
 	public void encode() 
 	{

@@ -297,6 +297,14 @@ public class Request extends PCEPConstruct{
 					throw new PCEPProtocolViolationException();
 				}
 			}
+			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
+				try {
+					endPoints=new EndPointDataPathID(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed GENERALIZED END POINTS Object found");
+					throw new PCEPProtocolViolationException();
+				}
+			}
 			else {
 				log.warning("BANDWIDTH TYPE NOT SUPPORTED");
 				throw new PCEPProtocolViolationException();

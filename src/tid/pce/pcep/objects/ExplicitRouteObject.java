@@ -128,6 +128,16 @@ public class ExplicitRouteObject extends PCEPObject{
 					SwitchIDEROSubobjectEdge macSE =new SwitchIDEROSubobjectEdge(this.getObject_bytes(), offset);
 					addEROSubobject(macSE);
 					break;
+				
+				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID_OPEN_FLOW:
+					OpenFlowUnnumberIfIDEROSubobject unifOF =new OpenFlowUnnumberIfIDEROSubobject(this.getObject_bytes(), offset);
+					addEROSubobject(unifOF);
+					break;
+					
+				case SubObjectValues.ERO_SUBOBJECT_ID_OPEN_FLOW:
+					OpenFlowIDEROSubobject idOF =new OpenFlowIDEROSubobject(this.getObject_bytes(), offset);
+					addEROSubobject(idOF);
+					break;
 					
 				case SubObjectValues.ERO_SUBOBJECT_LABEL:
 					int ctype=LabelEROSubobject.getCType(this.getObject_bytes(), offset);
