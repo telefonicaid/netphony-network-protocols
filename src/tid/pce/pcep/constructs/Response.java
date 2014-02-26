@@ -234,12 +234,14 @@ public class Response extends PCEPConstruct{
 	 * 
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding PCEP Response Message");
+		int zeta=0;
+		
 		int len=0;
 		if (requestParameters!=null){
 			requestParameters.encode();
 			len=len+requestParameters.getLength();
 			log.finest("despues de RP llevamos "+len);
+
 		}
 		else {
 			log.warning("requestParameters is compulsory in response");
@@ -298,7 +300,6 @@ public class Response extends PCEPConstruct{
 
 			}
 		}
-		log.finest("Response length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -348,7 +349,6 @@ public class Response extends PCEPConstruct{
 			System.arraycopy(metricPCEList.get(i).getBytes(), 0, bytes, offset, metricPCEList.get(i).getLength());
 			offset=offset+metricPCEList.get(i).getLength();
 		}	
-		
 	}
 
 	public void decode(byte[] bytes, int offset)
@@ -542,6 +542,22 @@ public class Response extends PCEPConstruct{
 			}
 			oc=PCEPObject.getObjectClass(bytes, offset);
 		}
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
+			log.info("SRERO Object found, New Path Construct found");
+			Path path=new Path(bytes,offset);
+			pathList.add(path);
+			offset=offset+path.getLength();
+			len=len+path.getLength();
+			if (offset>=bytes.length){
+				log.info("No more bytes");
+				this.setLength(len);
+				return;
+			}
+			oc=PCEPObject.getObjectClass(bytes, offset);
+		}		
+		
+		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCE_ID){
 			log.finest("PCE ID Object found, New Metri PCE Construct found");

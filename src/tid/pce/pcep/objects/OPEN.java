@@ -6,6 +6,7 @@ import tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
 import tid.pce.pcep.objects.tlvs.PCE_ID_TLV;
 import tid.pce.pcep.objects.tlvs.PCE_Redundancy_Group_Identifier_TLV;
+import tid.pce.pcep.objects.tlvs.SRCapabilityTLV;
 import tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV;
 
 /** 
@@ -162,6 +163,12 @@ public class OPEN extends PCEPObject{
 	 * stateful operations
 	 */
 	private StatefulCapabilityTLV stateful_capability_tlv = null;
+
+	/**
+	 * Optional SR PCE Capability TLV. It indicates wether PCE or PCC supports
+	 * segment routing paths
+	 */
+	private SRCapabilityTLV SR_capability_tlv = null;	
 	
 	/**
 	 * Optional LSP database version TLV. It indicates the database version of the LSP. It's useful
@@ -227,6 +234,10 @@ public class OPEN extends PCEPObject{
 			stateful_capability_tlv.encode();
 			ObjectLength=ObjectLength+stateful_capability_tlv.getTotalTLVLength();
 		}
+		if (SR_capability_tlv!=null){
+			SR_capability_tlv.encode();
+			ObjectLength=ObjectLength+SR_capability_tlv.getTotalTLVLength();
+		}		
 		if (lsp_database_version_tlv!=null){
 			lsp_database_version_tlv.encode();
 			ObjectLength=ObjectLength+lsp_database_version_tlv.getTotalTLVLength();
@@ -263,6 +274,10 @@ public class OPEN extends PCEPObject{
 			System.arraycopy(stateful_capability_tlv.getTlv_bytes(),0,this.object_bytes,offset,stateful_capability_tlv.getTotalTLVLength());
 			offset=offset+stateful_capability_tlv.getTotalTLVLength();
 		}
+		if (SR_capability_tlv!=null){
+			System.arraycopy(SR_capability_tlv.getTlv_bytes(),0,this.object_bytes,offset,SR_capability_tlv.getTotalTLVLength());
+			offset=offset+SR_capability_tlv.getTotalTLVLength();
+		}		
 		if (lsp_database_version_tlv!=null){
 			System.arraycopy(lsp_database_version_tlv.getTlv_bytes(),0,this.object_bytes,offset,lsp_database_version_tlv.getTotalTLVLength());
 			offset=offset+lsp_database_version_tlv.getTotalTLVLength();
@@ -281,6 +296,7 @@ public class OPEN extends PCEPObject{
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
 		stateful_capability_tlv = null;
+		SR_capability_tlv = null;		
 		
 		Ver=(object_bytes[4]>>>5) & 0x07;
 		parentPCEIndicationBit=(object_bytes[4]&0x08)==0x08;
@@ -320,6 +336,11 @@ public class OPEN extends PCEPObject{
 				stateful_capability_tlv=new StatefulCapabilityTLV(this.getObject_bytes(), offset);
 				log.fine(stateful_capability_tlv.toString());
 				break;
+			case ObjectParameters.PCEP_TLV_TYPE_SR_CAPABILITY:
+				log.fine("PCEP_TLV_TYPE_SR_CAPABILITY found");
+				SR_capability_tlv=new SRCapabilityTLV(this.getObject_bytes(), offset);
+				log.fine(SR_capability_tlv.toString());
+				break;					
 			case ObjectParameters.PCEP_TLV_TYPE_LSP_DATABASE_VERSION:
 				log.fine("PCEP_TLV_TYPE_LSP_DATABASE_VERSION found");
 				lsp_database_version_tlv=new LSPDatabaseVersionTLV(this.getObject_bytes(), offset);
@@ -466,6 +487,14 @@ public class OPEN extends PCEPObject{
 			StatefulCapabilityTLV stateful_capability_tlv) {
 		this.stateful_capability_tlv = stateful_capability_tlv;
 	}
+	public SRCapabilityTLV getSR_capability_tlv() {
+		return SR_capability_tlv;
+	}
+
+	public void setSR_capability_tlv(
+			SRCapabilityTLV SR_capability_tlv) {
+		this.SR_capability_tlv = SR_capability_tlv;
+	}		
 
 	public LSPDatabaseVersionTLV getLsp_database_version_tlv() {
 		return lsp_database_version_tlv;
