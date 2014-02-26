@@ -1,7 +1,9 @@
 package tid.rsvp.objects.subobjects;
 
-
 import tid.protocol.commons.ByteHandler;
+import tid.util.UtilsFunctions;
+
+
 
 /**
  * EROSubobject copy of UnnumberIfIDEROSubobject but instead of an Inet4Address there will
@@ -36,7 +38,7 @@ public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
 	public OpenFlowUnnumberIfIDEROSubobject()
 	{
 		super();
-		this.setType(SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID);
+		this.setType(SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID_OPEN_FLOW);
 	}
 	
 	public OpenFlowUnnumberIfIDEROSubobject(byte[] bytes, int offset)
@@ -105,7 +107,9 @@ public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
 	{
 		this.interfaceID = interfaceID;
 	}
+	public String toString(){
+		return this.switchID+"/"+this.interfaceID;
+	}
 
 
 }
-
