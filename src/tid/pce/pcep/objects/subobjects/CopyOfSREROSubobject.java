@@ -1,10 +1,9 @@
 package tid.pce.pcep.objects.subobjects;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.util.log.Log;
-
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.protocol.commons.ByteHandler;
+import tid.rsvp.objects.subobjects.EROSubobject;
 
 /** 
  * 
@@ -97,7 +96,7 @@ Internet-Draft     PCEP Extensions for Segment Routing      October 2013
  * 
  */
 
-public class SREROSubobject {
+public class CopyOfSREROSubobject extends EROSubobject{
 
 	public static final int ST_IPv4NodeID = 1;
 	public static final int ST_IPv6NodeID = 2;
@@ -128,8 +127,9 @@ public class SREROSubobject {
 	protected byte [] subobject_bytes;
 	protected Logger log;
 	
-	public SREROSubobject(){
+	public CopyOfSREROSubobject(){
 		//TODO: this will be variable in future updates
+		super();
 		erosolength = 8;
 		fFlag = true;
 		sFlag = false;
@@ -138,11 +138,10 @@ public class SREROSubobject {
 		loosehop = false;
 		ST = 0;
 		type = ObjectParameters.PCEP_SUBOBJECT_TYPE_SR_ERO;
-		log=Logger.getLogger("PCEServer");
 		
 	}
 	
-	public SREROSubobject(byte[] bytes, int offset) {
+	public CopyOfSREROSubobject(byte[] bytes, int offset) {
 		//TODO: this will have variable size if the flag is variable
 		log=Logger.getLogger("PCEServer");
 		erosolength=(int)bytes[offset+1];
@@ -155,15 +154,9 @@ public class SREROSubobject {
 	
 	public void encode(){
 		this.subobject_bytes=new byte[this.erosolength];
-		//TODO: Cambiar esto..?
-		if (loosehop){
-			subobject_bytes[0]=(byte)(0x80 | (type & 0x7F));
-		}
-		else {
-			subobject_bytes[0]=(byte)(type & 0x7F);
-		}
+		
+		encodeSoHeader();
 		//TODO: ver si el length varia con los NAI
-		subobject_bytes[1]=(byte)erosolength;
 		subobject_bytes[2]=(byte)((ST & 0x0F) << 4);
 		ByteHandler.BoolToBuffer(4 + 3 * 8,fFlag,this.subobject_bytes);
 		ByteHandler.BoolToBuffer(5 + 3 * 8,sFlag,this.subobject_bytes);
@@ -181,9 +174,7 @@ public class SREROSubobject {
 	}
 	
 	public void decode(){
-		loosehop = (ByteHandler.easyCopy(0,0,this.subobject_bytes[0]) == 1);
-		type=subobject_bytes[0]&0x7F;
-		erosolength=(int)subobject_bytes[1];
+		decodeSoHeader();
 		ST = (byte)((subobject_bytes[2] >> 4) & 0x0f);
 		
 		fFlag = (ByteHandler.easyCopy(4,4,this.subobject_bytes[3]) == 1);	
@@ -244,19 +235,19 @@ public class SREROSubobject {
 	 */
 	public void decodeNAI(){
 		switch((int)this.ST) {
-		case SREROSubobject.ST_IPv4NodeID:
+		case CopyOfSREROSubobject.ST_IPv4NodeID:
 			decodeIPv4NodeID();
 			break;
-		case SREROSubobject.ST_IPv6NodeID:
+		case CopyOfSREROSubobject.ST_IPv6NodeID:
 			decodeIPv6NodeID();
 			break;		
-		case SREROSubobject.ST_IPv4Adjacency:
+		case CopyOfSREROSubobject.ST_IPv4Adjacency:
 			decodeIPv4Adjacency();;
 			break;
-		case SREROSubobject.ST_IPv6Adjacency:
+		case CopyOfSREROSubobject.ST_IPv6Adjacency:
 			decodeIpv6Adjacency();
 			break;
-		case SREROSubobject.ST_UnnumberedAdjacencyIPv4NodeID:
+		case CopyOfSREROSubobject.ST_UnnumberedAdjacencyIPv4NodeID:
 			decodeUnnumberedAdjacencyIPv4NodeID();
 			break;
 		default:
