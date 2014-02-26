@@ -1,6 +1,7 @@
 package tid.pce.pcep.objects;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
+import tid.pce.pcep.constructs.EndPoint;
 import tid.pce.pcep.constructs.PCEPConstruct;
 import tid.util.UtilsFunctions;
 
@@ -46,13 +47,18 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		len += rsp.getLength();
 		len += lsp.getLength();
 
+
+		if (endPoint!=null) {
+			endPoint.encode();
+			len += endPoint.getLength();
+		}
+		
+
 		if (ero!=null)
 		{	
 			ero.encode();
 			len += ero.getLength();
 
-			endPoint.encode();
-			len += endPoint.getLength();
 		}
 		else if (srero!=null)
 		{
@@ -87,16 +93,19 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		{
 			System.arraycopy(ero.getBytes(), 0, this.getBytes(), offset, ero.getLength());
 			offset=offset + ero.getLength();
-
-
-			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
-			offset=offset + endPoint.getLength();
 		}
 		else if (srero!=null)
 		{
 			System.arraycopy(srero.getBytes(), 0, this.getBytes(), offset, srero.getLength());
 			log.info("SRERO leength:: "+srero.getLength());
 			offset=offset + srero.getLength();			
+		}
+		
+		if (endPoint!=null){
+		
+			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
+			offset=offset + endPoint.getLength();
+			
 		}
 
 
@@ -201,6 +210,15 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				}
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC){
 					try {
+					endPoint=new XifiUniCastEndPoints(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed EndPointsMAC Object found");
+					log.warning(UtilsFunctions.exceptionToString(e));
+					throw new PCEPProtocolViolationException();
+					}
+				}
+				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST){
+				try {
 						endPoint=new XifiEndPoints(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warning("Malformed EndPointsMAC Object found");
@@ -224,6 +242,15 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 						throw new PCEPProtocolViolationException();
 					}
 				}
+				
+			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
+				try {
+					endPoint=new EndPointDataPathID(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed GENERALIZED END POINTS Object found");
+					throw new PCEPProtocolViolationException();
+				}
+			}
 				else {
 					log.warning("BANDWIDTH TYPE NOT SUPPORTED");
 					throw new PCEPProtocolViolationException();

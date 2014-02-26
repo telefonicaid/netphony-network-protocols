@@ -1,7 +1,7 @@
 package tid.rsvp.objects.subobjects;
 
 import tid.protocol.commons.ByteHandler;
-import tid.util.UtilsFunctions;
+
 
 
 
@@ -28,20 +28,18 @@ import tid.util.UtilsFunctions;
  */
 
 
-public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
+public class OpenFlowIDEROSubobject extends EROSubobject
 {
 
-	private String switchID;
-	public long interfaceID;//32 bit Interface ID
+	private String switchID;	
 	
-	
-	public OpenFlowUnnumberIfIDEROSubobject()
+	public OpenFlowIDEROSubobject()
 	{
 		super();
-		this.setType(SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID_OPEN_FLOW);
+		this.setType(SubObjectValues.ERO_SUBOBJECT_ID_OPEN_FLOW);
 	}
 	
-	public OpenFlowUnnumberIfIDEROSubobject(byte[] bytes, int offset)
+	public OpenFlowIDEROSubobject(byte[] bytes, int offset)
 	{
 		super(bytes, offset);
 		decode();		
@@ -52,20 +50,14 @@ public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
 	 */
 	public void encode()
 	{
-		this.erosolength=16;
+		this.erosolength=12;
 		this.subobject_bytes=new byte[this.erosolength];
 		encodeSoHeader();
 		this.subobject_bytes[2]=0x00;
 		this.subobject_bytes[3]=0x00;
 		
 		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(switchID), 0, this.subobject_bytes, 4, 8);
-		
-		int offset = 4 + 8;
-		
-		this.subobject_bytes[offset]=(byte)(interfaceID >>> 24);
-		this.subobject_bytes[offset + 1]=(byte)(interfaceID >>> 16 & 0xff);
-		this.subobject_bytes[offset + 2]=(byte)(interfaceID >>> 8 & 0xff);
-		this.subobject_bytes[offset + 3]=(byte)(interfaceID & 0xff);	
+			
 	}
 	
 	/**
@@ -77,14 +69,7 @@ public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
 		
 		byte[] mac = new byte[8]; 
 		System.arraycopy(this.subobject_bytes,4, mac, 0, 8);
-		switchID = ByteHandler.ByteMACToString(mac);
-		
-		int offset = 12;
-		
-		interfaceID=0;
-		for (int k = 0; k < 4; k++) {
-			interfaceID = (interfaceID << 8) | (this.subobject_bytes[k+offset] & 0xff);
-		}			
+		switchID = ByteHandler.ByteMACToString(mac);			
 	}
 	// GETERS SETTERS
 	
@@ -98,17 +83,8 @@ public class OpenFlowUnnumberIfIDEROSubobject extends EROSubobject
 		this.switchID = switchID;
 	}
 	
-	public long getInterfaceID() 
-	{
-		return interfaceID;
-	}
-
-	public void setInterfaceID(long interfaceID) 
-	{
-		this.interfaceID = interfaceID;
-	}
-	public String toString(){
-		return this.switchID+"/"+this.interfaceID;
+	public String toString() {
+		return this.switchID;
 	}
 
 
