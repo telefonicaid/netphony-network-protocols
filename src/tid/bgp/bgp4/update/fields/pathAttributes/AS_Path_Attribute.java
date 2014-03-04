@@ -87,9 +87,7 @@ public class AS_Path_Attribute extends PathAttribute{
 	}
 	@Override
 	public String toString() {
-		String sb = super.toString();
-		return "AS_PATH ["+sb+"\nValue=" + value
-				+ "]";
+		return "AS_PATH [Value=" + value + " NumberAS: " + numberASes + "type: " + type + "]";
 	}
 
 }

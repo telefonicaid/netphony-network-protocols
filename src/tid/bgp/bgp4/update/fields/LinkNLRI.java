@@ -126,14 +126,17 @@ public class LinkNLRI extends LinkStateNLRI {
 	}
 	@Override
 	public void encode() {
-		int len=4+8;//The four bytes of the header plus the 4 first bytes (Primeros cuatro bytes (protocol-id,reserved, instance identifier))
+		log.info("Encoding Link NLRI..........");
+		int len=4+1+8;//The four bytes of the header plus the 4 first bytes (Primeros cuatro bytes (protocol-id,reserved, instance identifier))
 		if (localNodeDescriptors!=null){
 			localNodeDescriptors.encode();
-			len=len+localNodeDescriptors.getTotalTLVLength();
+			len=len+localNodeDescriptors.getTotalTLVLength();		
 		}
+
 		if (remoteNodeDescriptorsTLV!=null){
 			remoteNodeDescriptorsTLV.encode();
 			len=len+remoteNodeDescriptorsTLV.getTotalTLVLength();
+			
 		}
 		if (linkIdentifiersTLV!=null){
 			linkIdentifiersTLV.encode();
@@ -159,7 +162,6 @@ public class LinkNLRI extends LinkStateNLRI {
 			multiTopologyIDTLV.encode();
 			len=len+multiTopologyIDTLV.getTotalTLVLength();
 		}
-		
 		this.setTotalNLRILength(len); 
 		this.setLength(len);
 		this.bytes=new byte[len];
@@ -177,6 +179,8 @@ public class LinkNLRI extends LinkStateNLRI {
 		
 		int offset=13;
 		
+		log.info("nlri header done...");
+		
 		if (localNodeDescriptors!=null){
 			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset, localNodeDescriptors.getTotalTLVLength());
 			offset=offset+localNodeDescriptors.getTotalTLVLength();
@@ -187,19 +191,25 @@ public class LinkNLRI extends LinkStateNLRI {
 			offset=offset+remoteNodeDescriptorsTLV.getTotalTLVLength();
 		}
 		
+		
 //		if (linkDescriptors!=null){
 //			System.arraycopy(linkDescriptors.getBytes(), 0, this.bytes, offset, linkDescriptors.getLength());
 //			offset=offset+linkDescriptors.getLength();
 //		}
 		if (linkIdentifiersTLV!=null){
+			try{
 			System.arraycopy(linkIdentifiersTLV.getTlv_bytes(), 0, this.bytes, offset, linkIdentifiersTLV.getTotalTLVLength());
 			offset=offset+linkIdentifiersTLV.getTotalTLVLength();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		
 		if (ipv4InterfaceAddressTLV!=null){
 			System.arraycopy(ipv4InterfaceAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv4InterfaceAddressTLV.getTotalTLVLength());
 			offset=offset+ipv4InterfaceAddressTLV.getTotalTLVLength();
 		}
+		
 		if (ipv4NeighborAddressTLV!=null){
 			System.arraycopy(ipv4NeighborAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv4NeighborAddressTLV.getTotalTLVLength());
 			offset=offset+ipv4NeighborAddressTLV.getTotalTLVLength();
@@ -209,11 +219,12 @@ public class LinkNLRI extends LinkStateNLRI {
 			System.arraycopy(ipv6InterfaceAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6InterfaceAddressTLV.getTotalTLVLength());
 			offset=offset+ipv6InterfaceAddressTLV.getTotalTLVLength();
 		}
+		
 		if (ipv6NeighborAddressTLV!=null){
 			System.arraycopy(ipv6NeighborAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6NeighborAddressTLV.getTotalTLVLength());
 			offset=offset+ipv6NeighborAddressTLV.getTotalTLVLength();
 		}
-		
+	
 		if (multiTopologyIDTLV!=null){
 			System.arraycopy(multiTopologyIDTLV.getTlv_bytes(), 0, this.bytes, offset, multiTopologyIDTLV.getTotalTLVLength());
 			offset=offset+multiTopologyIDTLV.getTotalTLVLength();

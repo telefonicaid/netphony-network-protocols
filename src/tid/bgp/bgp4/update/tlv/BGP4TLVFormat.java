@@ -49,7 +49,7 @@ public abstract class BGP4TLVFormat {
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 		log.info("TLVType:"+TLVType);
 		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
-		log.info("TLVLength:"+TLVValueLength);
+		log.info("TLVValueLength:"+TLVValueLength);
 		this.TotalTLVLength=TLVValueLength+4;
 		this.tlv_bytes=new byte[TotalTLVLength];
 		System.arraycopy(bytes, offset, tlv_bytes, 0, TotalTLVLength);
@@ -72,10 +72,6 @@ public abstract class BGP4TLVFormat {
 	
 	public static int getTotalTLVLength(byte []bytes, int offset) {
 		int len=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF)+4;
-		if ((len%4)!=0){
-			//Padding must be done!!
-			len=len+4-(len%4);
-		}		
 		return len;
 	}
 	
@@ -119,12 +115,7 @@ public abstract class BGP4TLVFormat {
 	 */
 	protected void setTLVValueLength(int TLVValueLength) {
 		this.TLVValueLength = TLVValueLength;
-		this.TotalTLVLength=TLVValueLength+4;
-		if ((this.TotalTLVLength%4)!=0){
-			//Padding must be done!!
-			this.TotalTLVLength=this.TotalTLVLength+4-(this.TotalTLVLength%4);
-		}	
-		
+		this.TotalTLVLength=TLVValueLength+4;		
 	}
 	
 

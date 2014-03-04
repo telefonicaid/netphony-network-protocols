@@ -34,6 +34,7 @@ public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
 	private long linkMetric;
 	
 	public DefaultTEMetricLinkAttribTLV(){
+		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TE_DEFAULT_METRIC);
 	}
 	

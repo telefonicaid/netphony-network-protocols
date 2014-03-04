@@ -7,6 +7,7 @@ public class UnreservedBandwidthLinkAttribTLV extends BGP4TLVFormat{
 public float[] unreservedBandwidth;
 	
 	public UnreservedBandwidthLinkAttribTLV(){
+		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_UNRESERVED_BANDWITH);
 		unreservedBandwidth=new float[8];
 	}

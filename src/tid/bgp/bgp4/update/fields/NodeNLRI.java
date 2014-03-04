@@ -60,7 +60,7 @@ public class NodeNLRI extends LinkStateNLRI {
 	}
 	@Override
 	public void encode() {
-		int len=4+8;// The four bytes of the header plus the 4 first bytes)
+		int len=4+1+8;// The four bytes of the header plus the 4 first bytes)
 		if (localNodeDescriptors!=null){
 			localNodeDescriptors.encode();
 			len=len+localNodeDescriptors.getTotalTLVLength();		

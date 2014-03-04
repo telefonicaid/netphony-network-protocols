@@ -53,10 +53,14 @@ import tid.util.UtilsFunctions;
       |   Network Layer Reachability Information (variable) |
       +-----------------------------------------------------+
 </pre>
- * @author mcs
+ * @author mcs,pac
  *
  */
 public class BGP4Update extends BGP4Message {
+	
+	/** Used to check the origin of update message */
+	private String learntFrom;
+	
 	/**
 	 * Total length of the Withdrawn Routes field in octets.  
 	 */
@@ -144,6 +148,7 @@ public class BGP4Update extends BGP4Message {
 		
 		//Add Path Attributes
 		for (int i=0;i<pathAttributes.size();++i){
+			log.info("Path attribute to be encoded::::" + pathAttributes.get(i).getTypeCode());
 			System.arraycopy(pathAttributes.get(i).getBytes(),0,messageBytes,offset,pathAttributes.get(i).getLength());	
 			offset=offset+pathAttributes.get(i).getLength();
 		}
@@ -152,7 +157,7 @@ public class BGP4Update extends BGP4Message {
 			System.arraycopy(nlri.getBytes(),0,messageBytes,offset,nlri.getBytes().length);
 			offset=offset+nlri.getLength();
 		}
-		log.info("Update Encode Offset: "+offset);
+		
 	}
 	
 	
@@ -169,19 +174,22 @@ public class BGP4Update extends BGP4Message {
 		//Path Attributes Length
 		totalPathAttibuteLength = ((  ((int)messageBytes[offset]) <<8)& 0xFF00) |  ((int)messageBytes[offset+1] & 0xFF);
 		log.info("total path attribute length "+ totalPathAttibuteLength);
-		UtilsFunctions.printByte(messageBytes, "messageBytes");
 		offset = offset +2;
 		if (totalPathAttibuteLength != 0){
 			pathAttributes = new ArrayList<PathAttribute>();
 			int len = 0;
-			int attribute_typeCode, attribute_length;
+			int attribute_typeCode = PathAttribute.getAttibuteTypeCode(messageBytes, offset);
+			int attribute_length = PathAttribute.getAttributeLength(messageBytes, offset);
 			while (len < totalPathAttibuteLength){
 				//Path Attributes
 				attribute_typeCode = PathAttribute.getAttibuteTypeCode(messageBytes, offset);
 				attribute_length = PathAttribute.getAttributeLength(messageBytes, offset);
-				log.info("Attribute Length: "+attribute_length+" offset: "+offset);
-				log.info("New Attribute, type code: "+attribute_typeCode+" length: "+len);
+
+				log.info("Attribute Length: "+attribute_length);
+				log.info("New Attribute, type code: "+attribute_typeCode);
+				
 				if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_ORIGIN){
+					log.info("Tiene atributo ORIGIN");
 					OriginAttribute origin = new OriginAttribute(messageBytes,offset);
 					pathAttributes.add(origin);
 					
@@ -194,6 +202,10 @@ public class BGP4Update extends BGP4Message {
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_LINKSTATE){
 					log.info("Tiene atributo LINK_STATE");
 					LinkStateAttribute linkState_Attribute = new LinkStateAttribute(messageBytes,offset);
+					if(linkState_Attribute.getMandatoryLength() == 4){
+						offset++;//extended length
+						len++;//length tiene 2 bytes con extended length
+					}
 					pathAttributes.add(linkState_Attribute);
 				}	
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE){
@@ -209,15 +221,27 @@ public class BGP4Update extends BGP4Message {
 					int afi = MP_Reach_Attribute.getAFI(messageBytes, offset);
 					if (afi == AFICodes.AFI_BGP_LS ){
 						BGP_LS_MP_Reach_Attribute blsra= new BGP_LS_MP_Reach_Attribute(messageBytes,offset);
+						if(blsra.getMandatoryLength()==4){
+							offset++;//extended length
+							len++;//length tiene 2 bytes
+						}
 						pathAttributes.add(blsra);
 					}else {
 						Generic_MP_Reach_Attribute gblsra= new Generic_MP_Reach_Attribute(messageBytes,offset);
+						if(gblsra.getMandatoryLength()==4){
+							offset++;
+							len++;
+						}
 						pathAttributes.add(gblsra);
 					}
+					//nlri con extended length tiene mandatory length 4 no tres
 				}
 				
-				offset = offset + attribute_length + 4;
-				len = len + attribute_length+4;				
+				offset = offset + attribute_length + 3;
+				len = len + attribute_length +3;
+				log.info("offset2: "+offset);
+				/**attribute_typeCode = messageBytes[offset];
+				attribute_length = messageBytes[offset+1];*/
 			}
 			//NLRI
 			//if (nlri != null){
@@ -279,6 +303,14 @@ public class BGP4Update extends BGP4Message {
 
 	public void setNlri(NLRI nlri) {
 		this.nlri = nlri;
+	}
+	
+	public String getLearntFrom() {
+		return learntFrom;
+	}
+
+	public void setLearntFrom(String learntFrom) {
+		this.learntFrom = learntFrom;
 	}
 	
 	@Override

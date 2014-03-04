@@ -1,11 +1,7 @@
 package tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.net.Inet4Address;
-
 import tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 import tid.ospf.ospfv2.lsa.tlv.subtlv.LinkLocalRemoteIdentifiers;
-import tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
-import tid.ospf.ospfv2.lsa.tlv.subtlv.OSPFSubTLVTypes;
 
 
 /**
