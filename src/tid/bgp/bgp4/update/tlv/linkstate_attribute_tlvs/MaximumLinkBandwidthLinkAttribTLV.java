@@ -7,6 +7,7 @@ public class MaximumLinkBandwidthLinkAttribTLV extends BGP4TLVFormat{
 public float maximumBandwidth;
 	
 	public MaximumLinkBandwidthLinkAttribTLV(){
+		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MAXIMUM_BANDWITH);
 	}
 	

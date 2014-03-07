@@ -48,11 +48,11 @@ public abstract class LinkStateNLRI extends NLRI {
 	}
 	
 	protected void encodeHeader(){
-		
+		int nlriValueLength = TotalNLRILength-4;//ñapa para que quede bien el mensaje
 		this.bytes[0]=(byte)(NLRIType>>>8 & 0xFF);
 		this.bytes[1]=(byte)(NLRIType & 0xFF);
-		this.bytes[2]=(byte)(TotalNLRILength>>>8 & 0xFF);
-		this.bytes[3]=(byte)(TotalNLRILength & 0xFF);
+		this.bytes[2]=(byte)(nlriValueLength>>>8 & 0xFF);
+		this.bytes[3]=(byte)(nlriValueLength & 0xFF);
 	}
 	
 

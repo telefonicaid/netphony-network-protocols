@@ -72,7 +72,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 		if ((nodeDescriptorsSubTLVList.size() == 0))
 			log.warning("LocalNodeDescriptorsTLV sub TLV with 0 elements");
 		
-		int len = 4;//Header TLV
+		int len = 0;//Header TLV
 
 		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
 			nodeDescriptorsSubTLVList.get(i).encode();
@@ -82,8 +82,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		encodeHeader();
 		int offset=4;//Header TLV
-
-		
+	
 		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
 			System.arraycopy(nodeDescriptorsSubTLVList.get(i).getSubTLV_bytes(),0,this.tlv_bytes,offset,nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength());			
 			offset=offset+nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength();

@@ -64,8 +64,6 @@ public class MultiprotocolExtensionCapabilityAdvertisement extends BGP4Capabilit
 		this.bytes[offset]=(byte)(AFI>>>8 & 0xFF);
 		this.bytes[offset+1]=(byte)(AFI & 0xFF);
 		this.bytes[offset+3]=(byte)(SAFI & 0xFF);
-		log.info("AFI:::: "+ AFI);
-		log.info("SAFI:::: "+ SAFI);
 	}
 	
 	public void decode(){
@@ -75,8 +73,6 @@ public class MultiprotocolExtensionCapabilityAdvertisement extends BGP4Capabilit
 		AFI = ((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 
 		SAFI = (int)bytes[offset+3] & 0xFF;
-		log.info("AFI: "+ AFI);
-		log.info("SAFI: "+ SAFI);
 	}
 	public int getAFI() {
 		return AFI;

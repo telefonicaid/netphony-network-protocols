@@ -55,9 +55,9 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 	public void encode(){		
 		log.info("Encode RemoteNodeDescriptorsTLV");
 		if ((nodeDescriptorsSubTLVList.size() == 0))
-			log.warning("...");
+			log.warning("RemoteNodeDescriptorsTLV sub TLV with 0 elements");
 		
-		int len = 4;//Header TLV
+		int len = 0;//Header TLV
 
 		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
 			nodeDescriptorsSubTLVList.get(i).encode();
@@ -67,14 +67,12 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		encodeHeader();
 		int offset=4;//Header TLV
-
-		
+	
 		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
 			System.arraycopy(nodeDescriptorsSubTLVList.get(i).getSubTLV_bytes(),0,this.tlv_bytes,offset,nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength());			
 			offset=offset+nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength();
 			
-		}
-	
+		}	
 	}
 	public void decode(){
 		log.info("Decoding RemoteNodeDescriptorsTLV");
@@ -97,12 +95,14 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID:
 					AreaIDNodeDescriptorSubTLV AreaID = new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
 					addNodeDescriptorsSubTLV(AreaID);
+					break;
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_IGP_ROUTER_ID:
 					IGPRouterIDNodeDescriptorSubTLV IGPRouterID = new IGPRouterIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
-					addNodeDescriptorsSubTLV(IGPRouterID);				
+					addNodeDescriptorsSubTLV(IGPRouterID);		
+					break;
 				default:
-					log.info("Local Node Descriptor Unknown");
+					log.info("Remote Node Descriptor Unknown");
 					//FIXME What do we do??
 					break;
 			}

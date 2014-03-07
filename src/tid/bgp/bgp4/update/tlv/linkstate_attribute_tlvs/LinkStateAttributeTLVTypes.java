@@ -49,7 +49,7 @@ public class LinkStateAttributeTLVTypes {
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_ADMINISTRATIVE_GROUP = 1088;
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_LINK_PROTECTION_TYPE = 1093;
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_METRIC = 1095;
-
+	public static final int  LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS = 1200;
 	
 	
 	/**          
@@ -82,12 +82,13 @@ public class LinkStateAttributeTLVTypes {
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME = 1026;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID = 1027;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE = 1028;
+	public static final int NODE_ATTRIBUTE_TLV_TYPE_SID_LABEL = 1069;
 	
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_OSPF_FORWARDING_ADDRESS = 1156;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS = 1152;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_METRIC = 1155;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG = 1153;
 	
-	public static final int BGP4_TLV_TYPE_AVAILABLELABELS = 101;
+	
 	
 }

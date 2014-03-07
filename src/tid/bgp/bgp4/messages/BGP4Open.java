@@ -144,7 +144,7 @@ public class BGP4Open extends BGP4Message {
 	 */
 	private LinkedList<BGP4OptionalParameter> parametersList;
 	
-	private int BGPOpenMessageMandatoryFileds=17;
+	private int BGPOpenMessageMandatoryFileds=10;
 	/**
 	 * Construct new PCEP Open message from scratch
 	 */
