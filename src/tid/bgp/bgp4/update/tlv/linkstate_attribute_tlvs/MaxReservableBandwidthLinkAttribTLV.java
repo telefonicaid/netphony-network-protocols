@@ -9,6 +9,7 @@ public float maximumReservableBandwidth;
 
 
 	public MaxReservableBandwidthLinkAttribTLV(){
+		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MAX_RESERVABLE_BANDWITH);
 	}
 	

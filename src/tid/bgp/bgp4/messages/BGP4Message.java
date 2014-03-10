@@ -162,7 +162,7 @@ public abstract class BGP4Message  implements BGP4Element {
 	
 	protected void encodeHeader() { 
 		for (int i = 0;i<16;i++)
-			messageBytes[i]=(byte)0xFF;
+		messageBytes[i]=(byte)0xFF;
 		messageBytes[16]=(byte)((messageLength>>8) & 0xFF);
 		messageBytes[17]=(byte)(messageLength & 0xFF);
 		messageBytes[18]=(byte)messageType;

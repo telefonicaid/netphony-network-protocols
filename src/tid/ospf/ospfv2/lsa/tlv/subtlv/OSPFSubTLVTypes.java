@@ -28,7 +28,7 @@ public class OSPFSubTLVTypes {
 	// Draft http://tools.ietf.org/html/draft-ietf-ccamp-general-constraint-encode-05#section-2.6
 	
 	public static final int PortLabelRestriction = 100;
-	public static final int AvailableLabels = 101;
+	public static final int AvailableLabels = 1200;
 	
 
 
