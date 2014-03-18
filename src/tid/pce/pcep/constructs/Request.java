@@ -256,7 +256,15 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			int ot=PCEPObject.getObjectType(bytes, offset);
-			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
+				try {
+					endPoints=new P2MPEndPointsIPv4(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed P2MP ENDPOINTS IPV4 Object found");
+					throw new PCEPProtocolViolationException();
+				}
+			}				
+			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
 				try {
 					endPoints=new EndPointsIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
