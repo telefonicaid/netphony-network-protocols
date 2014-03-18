@@ -88,8 +88,18 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REOPT = 2;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV4 = 1;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV6 = 2;
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 3;
+
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST = 10;
+	
+	/*
+	 * Object type from nowhere
+	 */
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 5;
+	
+	/*
+	 * Object types from RFC 6006
+	 */
+	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4 = 3;
 	
 	/*
 	 * From Strauss project
