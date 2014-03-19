@@ -62,7 +62,10 @@ public class PCEPReport extends PCEPMessage
 	public PCEPReport(byte [] bytes)  throws PCEPProtocolViolationException
 	{
 		super(bytes);
+		System.out.println("PCEPReport finishing");
+		System.out.println("Decoding PCEP Report 2");
 		stateReportList = new LinkedList<StateReport>();
+		System.out.println("PCEPReport finishing 2");
 		decode();
 		
 	}
@@ -70,7 +73,7 @@ public class PCEPReport extends PCEPMessage
 	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-		log.info("Empezando enconde");
+		System.out.println("Empezando enconde");
 		int len = 4;
 		int index = 0;
 		
@@ -81,21 +84,21 @@ public class PCEPReport extends PCEPMessage
 			index++;			
         }
         
-        log.info("CCCC");
+        System.out.println("CCCC");
 		if (stateReportList.size()==0)
 		{
 			log.warning("There should be at least one update request in a PCEP update Request message");
 			//throw new PCEPProtocolViolationException();
 		}
 		
-		log.info("DDDD "+len);
+		System.out.println("DDDD "+len);
 		this.setMessageLength(len);
 		messageBytes=new byte[len];
-		log.info("Vamos a por el encodeHeaer");
+		System.out.println("Vamos a por el encodeHeaer");
 		this.encodeHeader();
 		int offset = 4;		//Header
 		index=0;
-		log.info("a por array copy");
+		System.out.println("a por array copy");
 		
 		while(index < stateReportList.size())
 		{
@@ -112,13 +115,14 @@ public class PCEPReport extends PCEPMessage
 		int offset=4;//We start after the object header
 		boolean atLeastOne = false;
 		StateReport sr;
-		log.info("Decoding PCEP Report!!");
+		System.out.println("PCEPReport finishing 2");
+		System.out.println("Decoding PCEP Report!!");
 		
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
-		log.info("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
+		System.out.println("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
 		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP)
 		{
-			log.info("There should be at least one RSP Object");
+			System.out.println("There should be at least one RSP Object");
 			//throw new PCEPProtocolViolationException();
 		}
 		//It has to be at least one!
@@ -144,7 +148,7 @@ public class PCEPReport extends PCEPMessage
 			//log.warning("Malformed Report Message. There must be at least one state-report object. Exception will be throwed");
 			//throw new PCEPProtocolViolationException();
 		}
-		log.info("PCEP Report decoded!!");
+		System.out.println("PCEP Report decoded!!");
 	}
 	
 	public LinkedList<StateReport> getStateReportList() 

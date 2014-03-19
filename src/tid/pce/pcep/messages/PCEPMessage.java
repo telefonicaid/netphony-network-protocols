@@ -61,15 +61,19 @@ public abstract class PCEPMessage implements PCEPElement {
 	 */
 	public PCEPMessage(byte []bytes) throws PCEPProtocolViolationException{
 		log=Logger.getLogger("PCEPParser");
+		System.out.println("Repooooooting");
 		messageLength=(bytes[2] & 0xFF)* 256 + (bytes[3]& 0xFF);
+		System.out.println("Repooooooting 2");
 		if (bytes.length!=this.getLength()){
 			log.warning("Bytes and length in header do not match");
 			throw new PCEPProtocolViolationException();
 		}
+		System.out.println("Repooooooting 3");
 		this.messageBytes=new byte[messageLength];
 		System.arraycopy(bytes, 0, messageBytes, 0, messageLength);
 		messageType=messageBytes[1]&0xFF;
-		Ver= (messageBytes[0] & 0xE0)>>>5;	
+		Ver= (messageBytes[0] & 0xE0)>>>5;
+		System.out.println("Repooooooting finishing");
 	}
 	
 
