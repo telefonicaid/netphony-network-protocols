@@ -12,9 +12,9 @@ import tid.protocol.commons.ByteHandler;
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |               Type=[TBD]      |            Length=4           |
+     |               Type            |            Length=4           |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                             Flags                         |S|U|
+     |                             Flags                   |D|T|I|S|U|
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                Figure 14: STATEFUL-PCE-CAPABILITY TLV format
@@ -23,15 +23,22 @@ import tid.protocol.commons.ByteHandler;
 
    The value comprises a single field - Flags (32 bits):
 
-   U (LSP-UPDATE-CAPABILITY - 1 bit):  if set to 1 by a PCC, the U Flag
-      indicates that the PCC allows modification of LSP parameters; if
-      set to 1 by a PCE, the U Flag indicates that the PCE is capable of
-      updating LSP parameters.  The LSP-UPDATE-CAPABILITY Flag must be
-      advertised by both a PCC and a PCE for PCUpd messages to be
-      allowed on a PCEP session.
+   U (LSP-UPDATE-CAPABILITY - 1 bit):  defined in
+      [I-D.ietf-pce-stateful-pce].
 
    S (INCLUDE-DB-VERSION - 1 bit):  if set to 1 by both PCEP Speakers,
       the PCC will include the LSP-DB-VERSION TLV in each LSP Object.
+
+   I (LSP-INSTANTIATION-CAPABILITY - 1 bit):  defined in
+      [I-D.crabbe-pce-pce-initiated-lsp].
+
+   T (TRIGGERED-SYNC - 1 bit):  if set to 1 by both PCEP Speakers, the
+      PCE can trigger synchronization of LSPs at any point in the life
+      of the session.
+
+   D (DELTA-LSP-SYNC-CAPABILITY - 1 bit):  if set to 1 by a PCEP
+      speaker, it indicates that the PCEP speaker allows incremental
+      state synchronization.
 
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
@@ -44,9 +51,11 @@ import tid.protocol.commons.ByteHandler;
 public class StatefulCapabilityTLV extends PCEPTLV 
 {
 	
-	protected boolean sFlag;
-
 	protected boolean uFlag;
+	protected boolean sFlag;
+	protected boolean iFlag;
+	protected boolean tFlag;
+	protected boolean dFlag;
 	
 	public StatefulCapabilityTLV(){
 		this.TLVType=ObjectParameters.PCEP_TLV_TYPE_STATEFUL_CAPABILITY;
@@ -71,6 +80,9 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		ByteHandler.IntToBuffer(0,offset * 8, 64,Zero,this.tlv_bytes);
 		
 		offset += 3;
+		ByteHandler.BoolToBuffer(3 + offset * 8,dFlag,this.tlv_bytes);
+		ByteHandler.BoolToBuffer(4 + offset * 8,tFlag,this.tlv_bytes);
+		ByteHandler.BoolToBuffer(5 + offset * 8,iFlag,this.tlv_bytes);
 		ByteHandler.BoolToBuffer(6 + offset * 8,sFlag,this.tlv_bytes);
 		ByteHandler.BoolToBuffer(7 + offset * 8,uFlag,this.tlv_bytes);
 	}
@@ -79,8 +91,12 @@ public class StatefulCapabilityTLV extends PCEPTLV
 	{
 		log.fine("Decoding StatefulCapabilityTLV");
 		int offset = 4;
-		sFlag = (ByteHandler.easyCopy(6,6,this.tlv_bytes[offset+3]) == 1) ? true : false ;
-		uFlag = (ByteHandler.easyCopy(7,7,this.tlv_bytes[offset+3]) == 1) ? true : false ;
+		
+		dFlag = (ByteHandler.easyCopy(3,3,this.tlv_bytes[offset+3]) == 1);
+		tFlag = (ByteHandler.easyCopy(4,4,this.tlv_bytes[offset+3]) == 1);
+		iFlag = (ByteHandler.easyCopy(5,5,this.tlv_bytes[offset+3]) == 1);
+		sFlag = (ByteHandler.easyCopy(6,6,this.tlv_bytes[offset+3]) == 1);
+		uFlag = (ByteHandler.easyCopy(7,7,this.tlv_bytes[offset+3]) == 1);
 	}
 	
 	//GETTERS & SETTERS
@@ -103,6 +119,30 @@ public class StatefulCapabilityTLV extends PCEPTLV
 	public void setuFlag(boolean uFlag) 
 	{
 		this.uFlag = uFlag;
+	}
+
+	public boolean isiFlag() {
+		return iFlag;
+	}
+
+	public void setiFlag(boolean iFlag) {
+		this.iFlag = iFlag;
+	}
+
+	public boolean istFlag() {
+		return tFlag;
+	}
+
+	public void settFlag(boolean tFlag) {
+		this.tFlag = tFlag;
+	}
+
+	public boolean isdFlag() {
+		return dFlag;
+	}
+
+	public void setdFlag(boolean dFlag) {
+		this.dFlag = dFlag;
 	}
 
 }
