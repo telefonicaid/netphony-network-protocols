@@ -26,7 +26,7 @@ import tid.protocol.commons.ByteHandler;
    U (LSP-UPDATE-CAPABILITY - 1 bit):  defined in
       [I-D.ietf-pce-stateful-pce].
 
-   S (INCLUDE-DB-VERSION - 1 bit):  if set to 1 by both PCEP Speakers,
+   S (INCLUDE-DB-VERSION = IDB - 1 bit):  if set to 1 by both PCEP Speakers,
       the PCC will include the LSP-DB-VERSION TLV in each LSP Object.
 
    I (LSP-INSTANTIATION-CAPABILITY - 1 bit):  defined in
@@ -43,7 +43,7 @@ import tid.protocol.commons.ByteHandler;
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
    
-   @author jaume
+   @author jimbo, ayk
    
  */
 
