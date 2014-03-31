@@ -71,6 +71,7 @@ public class EndPointsIPv4 extends EndPoints{
 	 * Encode the IPv4 address
 	 */
 	public void encode() {
+		log.info("Encoding EndPointsIPv4");
 		this.ObjectLength=12;
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();

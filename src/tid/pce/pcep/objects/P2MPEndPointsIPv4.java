@@ -176,6 +176,18 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 			} 	 
 		}
 	}
+	
+	
+
+	public LinkedList<Inet4Address> getDestIPList() 
+	{
+		return destIPList;
+	}
+
+	public void setDestIPList(LinkedList<Inet4Address> destIPList) 
+	{
+		this.destIPList = destIPList;
+	}
 
 	public Inet4Address getSourceIP() {
 		return sourceIP;
