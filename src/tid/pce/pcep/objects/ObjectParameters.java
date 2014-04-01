@@ -100,7 +100,7 @@ public class ObjectParameters {
 	 * Object types from RFC 6006
 	 */
 	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4 = 3;
-	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID = 5003;
+	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID = 15;
 	
 	/*
 	 * From Strauss project

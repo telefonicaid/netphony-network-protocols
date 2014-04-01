@@ -82,6 +82,7 @@ public class P2MPEndPointsDataPathID extends EndPoints
 	 */
 	public void encode() 
 	{
+		log.info("Encoding P2MPEndPointsDataPathID");
 		this.ObjectLength= 4 + 4 + 8 + 8 * destDatapathIDList.size();
 
 
