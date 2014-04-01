@@ -255,15 +255,15 @@ public class RequestParameters extends PCEPObject{
 		encode_header();
 		object_bytes[4]=(byte)((retry?1:0) <<7);
 		object_bytes[5]=0x00;
-		object_bytes[6]=0x00;
+		object_bytes[6]=(byte)( ( ((Fbit?1:0) <<5) & 0x20) | ( ((Nbit?1:0) <<4) & 0x10) | (((Ebit?1:0)<<3) & 0x08));
 		object_bytes[7]=(byte)( ( ((loose?1:0) <<5) & 0x20) | ( ((bidirect?1:0) <<4) & 0x10) | (((reopt?1:0)<<3) & 0x08) | (prio & 0x07) | (  ( (supplyOF?1:0)<<6   ) ) ) ;
 		object_bytes[8]=(byte)((requestID>>24) & 0xFF);
 		object_bytes[9]=(byte)((requestID>>16) & 0xFF);
 		object_bytes[10]=(byte)((requestID>>8) & 0xFF);
 		object_bytes[11]=(byte)(requestID & 0xFF);
-		ByteHandler.BoolToBuffer(17, Fbit,object_bytes);
-		ByteHandler.BoolToBuffer(18, Nbit,object_bytes);
-		ByteHandler.BoolToBuffer(19, Ebit,object_bytes);
+//		ByteHandler.BoolToBuffer(16 + 17, Fbit,object_bytes);
+//		ByteHandler.BoolToBuffer(16 + 18, Nbit,object_bytes);
+//		ByteHandler.BoolToBuffer(16 + 19, Ebit,object_bytes);
 		int offset = 12;
 
 		if (maxRequestTimeTLV!=null){

@@ -256,11 +256,12 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			int ot=PCEPObject.getObjectType(bytes, offset);
-			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
+			log.info("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 				try {
-					endPoints=new P2MPEndPointsIPv4(bytes,offset);
+					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed P2MP ENDPOINTS IPV4 Object found");
+					log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}				
@@ -300,14 +301,6 @@ public class Request extends PCEPConstruct{
 			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
 					endPoints=new GeneralizedEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZED END POINTS Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
-				try {
-					endPoints=new EndPointDataPathID(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warning("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
