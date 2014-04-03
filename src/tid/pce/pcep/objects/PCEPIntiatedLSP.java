@@ -38,10 +38,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-//		log.finest("Encoding PCEP Response Message");
-//		int len = 4;
+		//		log.finest("Encoding PCEP Response Message");
+		//		int len = 4;
 		int len = 0;
-		
+
 		rsp.encode();
 		lsp.encode();
 		len += rsp.getLength();
@@ -52,7 +52,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			endPoint.encode();
 			len += endPoint.getLength();
 		}
-		
+
 
 		if (ero!=null)
 		{	
@@ -67,8 +67,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
-			log.info("NO ERO or SRERO, finishing...");
-			throw new PCEPProtocolViolationException();
+			log.warning("NO ERO or SRERO...");
+			// This is not a mistake. A PCE can receive an empty PCEPInitiate and that means it has to find
+			// a path between the endpoints
+			//throw new PCEPProtocolViolationException();
 		}
 
 		if (bandwidth!=null){
@@ -100,12 +102,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			log.info("SRERO leength:: "+srero.getLength());
 			offset=offset + srero.getLength();			
 		}
-		
+
 		if (endPoint!=null){
-		
+
 			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
 			offset=offset + endPoint.getLength();
-			
+
 		}
 
 
@@ -119,7 +121,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	{
 		int len=0;
 		//Current implementation is strict, does not accept unknown objects 
-		log.info("Decoding PCEP Intiate!!offset: "+offset+",");
+		log.info("Decoding PCEP Intiate!!offset: "+offset+", bytes.length:" + bytes.length);
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty Request construct!!!");
@@ -192,7 +194,17 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			try 
 			{
 				int ot=PCEPObject.getObjectType(bytes, offset);
-				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
+
+				log.info("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
+				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
+					try {
+						endPoint=new P2MPEndPointsDataPathID(bytes,offset);
+					} catch (MalformedPCEPObjectException e) {
+						log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
+						throw new PCEPProtocolViolationException();
+					}
+				}		
+				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
 					try {
 						endPoint=new EndPointsIPv4(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
@@ -210,15 +222,15 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				}
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC){
 					try {
-					endPoint=new XifiUniCastEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed EndPointsMAC Object found");
-					log.warning(UtilsFunctions.exceptionToString(e));
-					throw new PCEPProtocolViolationException();
+						endPoint=new XifiUniCastEndPoints(bytes,offset);
+					} catch (MalformedPCEPObjectException e) {
+						log.warning("Malformed EndPointsMAC Object found");
+						log.warning(UtilsFunctions.exceptionToString(e));
+						throw new PCEPProtocolViolationException();
 					}
 				}
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST){
-				try {
+					try {
 						endPoint=new XifiEndPoints(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warning("Malformed EndPointsMAC Object found");
@@ -242,20 +254,19 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 						throw new PCEPProtocolViolationException();
 					}
 				}
-				
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
-				try {
-					endPoint=new EndPointDataPathID(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZED END POINTS Object found");
-					throw new PCEPProtocolViolationException();
+
+				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
+					try {
+						endPoint=new EndPointDataPathID(bytes,offset);
+					} catch (MalformedPCEPObjectException e) {
+						log.warning("Malformed GENERALIZED END POINTS Object found");
+						throw new PCEPProtocolViolationException();
+					}
 				}
-			}
 				else {
 					log.warning("BANDWIDTH TYPE NOT SUPPORTED");
 					throw new PCEPProtocolViolationException();
 				}
-
 			} 
 			catch (Exception e) 
 			{
@@ -283,10 +294,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
-			log.info("There should be at least one ERO or SRERO Object");
-			throw new PCEPProtocolViolationException();						
+			log.info("There should be at least one ERO or SRERO Object but we dont do it that way");
+			//log.info("There should be at least one ERO or SRERO Object");
+			//throw new PCEPProtocolViolationException();						
 		}
-	
+
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			log.finest("BANDWIDTH Object found");
