@@ -8,6 +8,7 @@ import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcep.objects.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.PCEPObject;
+import tid.util.UtilsFunctions;
 
 /**
  * <PCInitiate Message> ::= <Common Header>
@@ -108,6 +109,7 @@ public class PCEPInitiate extends PCEPMessage
 			}
 			catch(PCEPProtocolViolationException e)
 			{
+				log.info(UtilsFunctions.exceptionToString(e));
 				log.warning("Malformed UpdateRequest Construct");
 				throw new PCEPProtocolViolationException();
 			}
