@@ -273,9 +273,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				log.warning("Malformed EndPoint Object found");
 				//throw new PCEPProtocolViolationException();
 			}
-
-			offset = offset + endPoint.getLength();
-			len += endPoint.getLength();
+			if (endPoint!=null)
+			{
+				offset = offset + endPoint.getLength();
+				len += endPoint.getLength();
+			}
 		}//ERO
 		else if(PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
 		{

@@ -94,7 +94,7 @@ public class ObjectParameters {
 	/*
 	 * Object type from nowhere
 	 */
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 5;
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 6;
 	
 	/*
 	 * Object types from RFC 6006
