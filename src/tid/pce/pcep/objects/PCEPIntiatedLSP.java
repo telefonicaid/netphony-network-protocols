@@ -187,8 +187,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 			if(PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS)
 			{
-				log.info("There should be at least one EndPoint Object");
-				throw new PCEPProtocolViolationException();
+				log.info("There should be at least one EndPoint Object. Should throw Ex");
+				//throw new PCEPProtocolViolationException();
 			}
 
 			try 
@@ -271,11 +271,13 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			catch (Exception e) 
 			{
 				log.warning("Malformed EndPoint Object found");
-				throw new PCEPProtocolViolationException();
+				//throw new PCEPProtocolViolationException();
 			}
-
-			offset = offset + endPoint.getLength();
-			len += endPoint.getLength();
+			if (endPoint!=null)
+			{
+				offset = offset + endPoint.getLength();
+				len += endPoint.getLength();
+			}
 		}//ERO
 		else if(PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
 		{
