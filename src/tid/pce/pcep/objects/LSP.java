@@ -361,7 +361,7 @@ public class LSP extends PCEPObject{
 
 	
 	
-	public long getLspId() 
+	public int getLspId() 
 	{
 		return lspId;
 	}
