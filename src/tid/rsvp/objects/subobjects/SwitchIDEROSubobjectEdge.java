@@ -144,7 +144,7 @@ public class SwitchIDEROSubobjectEdge  extends EROSubobject
 		
 		if (erosolength != 48)
 		{
-			PCEServer.Log.warning("Malformed SwitchIDEROSubobject");
+			PCEServer.log.warning("Malformed SwitchIDEROSubobject");
 		}
 		
 		source_SwitchID=new byte[8]; 

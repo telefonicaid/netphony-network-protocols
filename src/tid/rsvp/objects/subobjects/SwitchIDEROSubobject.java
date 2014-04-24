@@ -96,7 +96,7 @@ public class SwitchIDEROSubobject extends EROSubobject
 	{
 		this.subobject_bytes=new byte[erosolength];
 		encodeSoHeader();
-		PCEServer.Log.info("MAC LENGTH::"+SwitchID.length);
+		PCEServer.log.info("MAC LENGTH::"+SwitchID.length);
 		System.arraycopy(SwitchID, 0, this.subobject_bytes, 2, SwitchID.length>8? 8:SwitchID.length);
 		
 		int offset = 2 + 10;
@@ -138,7 +138,7 @@ public class SwitchIDEROSubobject extends EROSubobject
 		
 		if (erosolength != 38)
 		{
-			PCEServer.Log.warning("Malformed SwitchIDEROSubobject");
+			PCEServer.log.warning("Malformed SwitchIDEROSubobject");
 		}
 		
 		SwitchID=new byte[8]; 
