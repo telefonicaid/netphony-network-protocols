@@ -11,8 +11,6 @@ import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6NeighborA
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkDescriptorSubTLVTypes;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkLocalRemoteIdentifiersLinkDescriptorSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MultiTopologyIDLinkDescriptorSubTLV;
-import tid.util.UtilsFunctions;
-
 
 /**
 The Link NLRI (NLRI Type = 2) is shown in the following figure.
@@ -239,9 +237,7 @@ public class LinkNLRI extends LinkStateNLRI {
 		
 		byte[] ip=new byte[8]; 
 		System.arraycopy(this.bytes,offset, ip, 0, 8);
-		UtilsFunctions.printByte(ip, "identifier",log);
-		
-		
+				
 		long routingUniverseIdentifieraux1 = ((  ((long)bytes[offset]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+1]<<16) & 0xFF0000) | (((long)bytes[offset+2]<<8) & 0xFF00) |(((long)bytes[offset+3]) & 0xFF);
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);

@@ -1,7 +1,5 @@
 package tid.bgp.bgp4.open;
 
-import java.util.logging.Logger;
-
 /**
  * RFC 4760           Multiprotocol Extensions for BGP-4       January 2007
  * <a href="http://tools.ietf.org/html/rfc4760">RFC 4760</a>.

@@ -3,8 +3,6 @@ package tid.bgp.bgp4.update.fields;
 import java.util.logging.Logger;
 
 import tid.bgp.bgp4.objects.BGP4Object;
-import tid.pce.pcep.objects.MalformedPCEPObjectException;
-import tid.protocol.commons.ByteHandler;
 
 /**
  * Path Attributes

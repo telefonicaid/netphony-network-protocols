@@ -17,7 +17,6 @@ import tid.bgp.bgp4.update.fields.pathAttributes.LinkStateAttribute;
 import tid.bgp.bgp4.update.fields.pathAttributes.MP_Reach_Attribute;
 import tid.bgp.bgp4.update.fields.pathAttributes.OriginAttribute;
 import tid.bgp.bgp4.update.fields.pathAttributes.PathAttributesTypeCode;
-import tid.util.UtilsFunctions;
 
 
 /**
