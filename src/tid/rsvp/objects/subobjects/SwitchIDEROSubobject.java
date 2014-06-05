@@ -1,13 +1,9 @@
 package tid.rsvp.objects.subobjects;
 
-
-import tid.pce.server.PCEServer;
 import tid.protocol.commons.ByteHandler;
 
-
-
 /*
- * ERO inventado como un campeón
+ * Totally non standard ERO
  * 
  * ID will be 8 bytes
  * 
@@ -33,9 +29,6 @@ import tid.protocol.commons.ByteHandler;
    |                             vlan                              |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    
- */
-/**
- * 
  * @author jaume
  *
  */
@@ -96,7 +89,6 @@ public class SwitchIDEROSubobject extends EROSubobject
 	{
 		this.subobject_bytes=new byte[erosolength];
 		encodeSoHeader();
-		PCEServer.log.info("MAC LENGTH::"+SwitchID.length);
 		System.arraycopy(SwitchID, 0, this.subobject_bytes, 2, SwitchID.length>8? 8:SwitchID.length);
 		
 		int offset = 2 + 10;
@@ -136,11 +128,11 @@ public class SwitchIDEROSubobject extends EROSubobject
 	{
 		decodeSoHeader();
 		
-		if (erosolength != 38)
-		{
-			PCEServer.log.warning("Malformed SwitchIDEROSubobject");
-		}
-		
+//		if (erosolength != 38)
+//		{
+//			log.warning("Malformed SwitchIDEROSubobject");
+//		}
+//		
 		SwitchID=new byte[8]; 
 		System.arraycopy(this.subobject_bytes,2, SwitchID, 0, 8);
 		

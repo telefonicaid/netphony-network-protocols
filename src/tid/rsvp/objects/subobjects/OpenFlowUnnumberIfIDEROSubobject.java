@@ -1,9 +1,6 @@
 package tid.rsvp.objects.subobjects;
 
 import tid.protocol.commons.ByteHandler;
-import tid.util.UtilsFunctions;
-
-
 
 /**
  * EROSubobject copy of UnnumberIfIDEROSubobject but instead of an Inet4Address there will

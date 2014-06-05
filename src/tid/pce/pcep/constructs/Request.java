@@ -1,12 +1,8 @@
 package tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
-
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.*;
-import tid.util.UtilsFunctions;
-
 
 /**
  * Request Object. 
@@ -286,7 +282,6 @@ public class Request extends PCEPConstruct{
 					endPoints=new XifiUniCastEndPoints(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warning("Malformed EndPointsMAC Object found");
-					log.warning(UtilsFunctions.exceptionToString(e));
 					throw new PCEPProtocolViolationException();
 				}
 			}

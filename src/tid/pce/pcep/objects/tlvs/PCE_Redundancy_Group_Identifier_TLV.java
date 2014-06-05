@@ -3,7 +3,6 @@ package tid.pce.pcep.objects.tlvs;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.protocol.commons.ByteHandler;
-import tid.util.UtilsFunctions;
 
 /*
  * PREDUNDANCY-GROUP-ID is an optional TLV that MAY be included in the
@@ -72,7 +71,6 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		
 		int offset = 4;
 		log.fine("Redundancy ID length is: "+ redundancyId.length);
-		UtilsFunctions.printByte(redundancyId, "redundancyId");
 		
 		System.arraycopy(redundancyId, 0, this.tlv_bytes, offset, redundancyId.length);	
 	}
@@ -89,7 +87,6 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 			System.arraycopy(this.tlv_bytes, offset, redundancyId, 0, redundancyId.length);
 			
 			log.info("Redundancy ID is : ");
-			UtilsFunctions.printByte(redundancyId, "redundancyId");
 		}
 		catch (Exception e)
 		{
