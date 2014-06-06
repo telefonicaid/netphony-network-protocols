@@ -3,7 +3,6 @@ package tid.bgp.bgp4.open;
 import java.util.logging.Logger;
 
 import tid.bgp.bgp4.objects.BGP4Object;
-import tid.protocol.commons.ByteHandler;
 
 /**
  * BGP Open Message Format (RFC 4271). 

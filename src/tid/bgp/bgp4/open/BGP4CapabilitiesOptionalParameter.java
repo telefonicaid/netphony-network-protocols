@@ -3,7 +3,6 @@ package tid.bgp.bgp4.open;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
-import tid.protocol.commons.ByteHandler;
 
 /**
  * 

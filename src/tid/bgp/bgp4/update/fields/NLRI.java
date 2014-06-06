@@ -1,7 +1,5 @@
 package tid.bgp.bgp4.update.fields;
 
-import java.net.Inet4Address;
-
 import tid.bgp.bgp4.objects.BGP4Object;
 /**
  * Network Layer Reachability Information:

@@ -7,7 +7,6 @@ import tid.ospf.ospfv2.lsa.tlv.OSPFTLV;
 import tid.ospf.ospfv2.lsa.tlv.OSPFTLVTypes;
 import tid.ospf.ospfv2.lsa.tlv.RouterAddressTLV;
 
-import tid.pce.tedb.DatabaseControlSimplifiedLSA;
 /**
  * The LSA ID of an Opaque LSA is defined as having eight bits of type
    data and 24 bits of type-specific data.  The Traffic Engineering LSA
@@ -136,13 +135,7 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 				case OSPFTLVTypes.LinkTLV:
 					log.finest("linkTLV found");					
 					this.linkTLV=new LinkTLV(this.LSAbytes, offset);
-					
-					/* Methods to fill simplified LSA information*/
-					this.simplifiedLsa = new DatabaseControlSimplifiedLSA();
-					this.fillSimplifiedLsa();
-					//this.logJsonSimplifiedLSA();
-					/* ************* */
-					
+
 					break;
 
 				}
@@ -207,37 +200,5 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 		return ret;
 	}
 	
-	/* Simplified database information */
-	
-	private DatabaseControlSimplifiedLSA simplifiedLsa;
-	
-	private void fillSimplifiedLsa(){
-		if (this.getAdvertisingRouter()!=null)
-			simplifiedLsa.setAdvertisingRouter(this.getAdvertisingRouter());
-		if (this.getLinkTLV().getLinkID().getLinkID()!=null)
-			simplifiedLsa.setLinkId(this.getLinkTLV().getLinkID().getLinkID());
-		if (this.getLinkTLV().getLinkLocalRemoteIdentifiers()!=null){
-			simplifiedLsa.setLinkLocalIdentifier(this.getLinkTLV().getLinkLocalRemoteIdentifiers().getLinkLocalIdentifier());
-			simplifiedLsa.setLinkRemoteIdentifier(this.getLinkTLV().getLinkLocalRemoteIdentifiers().getLinkRemoteIdentifier());
-		}
-		if (this.getLinkTLV().getMaximumBandwidth()!=null)
-			simplifiedLsa.setMaximumBandwidth(this.getLinkTLV().getMaximumBandwidth().getMaximumBandwidth());
-		if (this.getLinkTLV().getUnreservedBandwidth()!=null){
-			simplifiedLsa.setMaximumBandwidth(this.getLinkTLV().getUnreservedBandwidth().unreservedBandwidth[0]);
-		} if (this.getLinkTLV().getMaximumReservableBandwidth()!=null){
-			simplifiedLsa.setMaximumReservableBandwidth(this.getLinkTLV().getMaximumReservableBandwidth().maximumReservableBandwidth);
-		}
-		
-		if (this.getLinkTLV().getAvailableLabels()!=null){
-			simplifiedLsa.fillBitmap(this.getLinkTLV().getAvailableLabels());
-		}
-	}
-	
-	public DatabaseControlSimplifiedLSA getSimplifiedLsa() {
-		return simplifiedLsa;
-	}
 
-	public void setSimplifiedLsa(DatabaseControlSimplifiedLSA simplifiedLsa) {
-		this.simplifiedLsa = simplifiedLsa;
-	}
 }

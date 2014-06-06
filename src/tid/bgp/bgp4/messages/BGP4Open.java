@@ -7,12 +7,6 @@ import java.util.LinkedList;
 import tid.bgp.bgp4.open.BGP4OptionalParameter;
 import tid.bgp.bgp4.open.BGP4OptionalParametersTypes;
 import tid.bgp.bgp4.open.BGP4CapabilitiesOptionalParameter;
-import tid.bgp.bgp4.open.MultiprotocolExtensionCapabilityAdvertisement;
-import tid.ospf.ospfv2.lsa.LSA;
-import tid.ospf.ospfv2.lsa.LSATypes;
-import tid.ospf.ospfv2.lsa.MalformedOSPFLSAException;
-import tid.ospf.ospfv2.lsa.OSPFTEv2LSA;
-import tid.protocol.commons.ByteHandler;
 
 
 /**

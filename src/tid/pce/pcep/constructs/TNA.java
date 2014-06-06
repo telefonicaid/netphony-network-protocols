@@ -1,16 +1,6 @@
 package tid.pce.pcep.constructs;
 
-import java.net.Inet4Address;
-
-import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
-import tid.pce.pcep.objects.ObjectParameters;
-import tid.pce.pcep.objects.tlvs.EndPointApplicationTLV;
-import tid.pce.pcep.objects.tlvs.EndPointServerTLV;
-import tid.pce.pcep.objects.tlvs.EndPointStorageTLV;
-import tid.pce.pcep.objects.tlvs.EndPointsIPv4TLV;
-import tid.pce.pcep.objects.tlvs.EndPointIPv4TLV;
-import tid.pce.pcep.objects.tlvs.PCEPTLV;
 import tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLV;
 import tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 import tid.pce.pcep.objects.tlvs.subtlvs.TNAIPv4SubTLV;

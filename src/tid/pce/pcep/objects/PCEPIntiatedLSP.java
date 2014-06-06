@@ -3,7 +3,6 @@ package tid.pce.pcep.objects;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.EndPoint;
 import tid.pce.pcep.constructs.PCEPConstruct;
-import tid.util.UtilsFunctions;
 
 public class PCEPIntiatedLSP extends PCEPConstruct
 {
@@ -225,7 +224,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 						endPoint=new XifiUniCastEndPoints(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warning("Malformed EndPointsMAC Object found");
-						log.warning(UtilsFunctions.exceptionToString(e));
 						throw new PCEPProtocolViolationException();
 					}
 				}
@@ -234,7 +232,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 						endPoint=new XifiEndPoints(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warning("Malformed EndPointsMAC Object found");
-						log.warning(UtilsFunctions.exceptionToString(e));
 						throw new PCEPProtocolViolationException();
 					}
 				}

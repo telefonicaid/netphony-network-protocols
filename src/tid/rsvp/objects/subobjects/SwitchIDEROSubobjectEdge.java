@@ -1,6 +1,5 @@
 package tid.rsvp.objects.subobjects;
 
-import tid.pce.server.PCEServer;
 import tid.protocol.commons.ByteHandler;
 
 /*
@@ -142,10 +141,10 @@ public class SwitchIDEROSubobjectEdge  extends EROSubobject
 	{
 		decodeSoHeader();
 		
-		if (erosolength != 48)
-		{
-			PCEServer.log.warning("Malformed SwitchIDEROSubobject");
-		}
+//		if (erosolength != 48)
+//		{
+//			PCEServer.log.warning("Malformed SwitchIDEROSubobject");
+//		}
 		
 		source_SwitchID=new byte[8]; 
 		System.arraycopy(this.subobject_bytes,2, source_SwitchID, 0, 8);

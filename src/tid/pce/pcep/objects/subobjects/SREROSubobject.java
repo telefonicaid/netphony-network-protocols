@@ -1,8 +1,5 @@
 package tid.pce.pcep.objects.subobjects;
 import java.util.logging.Logger;
-
-import org.eclipse.jetty.util.log.Log;
-
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.protocol.commons.ByteHandler;
 

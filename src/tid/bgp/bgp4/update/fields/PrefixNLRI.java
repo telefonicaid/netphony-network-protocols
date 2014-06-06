@@ -4,7 +4,6 @@ import tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 import tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.*;
-import tid.util.UtilsFunctions;
 
 public class PrefixNLRI extends LinkStateNLRI {
 	
@@ -95,8 +94,6 @@ public class PrefixNLRI extends LinkStateNLRI {
 		
 		byte[] ip=new byte[8]; 
 		System.arraycopy(this.bytes,offset, ip, 0, 8);
-		UtilsFunctions.printByte(ip, "identifier",log);
-		
 		
 		long routingUniverseIdentifieraux1 = ((  ((long)bytes[offset]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+1]<<16) & 0xFF0000) | (((long)bytes[offset+2]<<8) & 0xFF00) |(((long)bytes[offset+3]) & 0xFF);
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);

@@ -1,8 +1,6 @@
 package tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
-
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.Bandwidth;
 import tid.pce.pcep.objects.GeneralizedBandwidth;
@@ -233,9 +231,7 @@ public class Response extends PCEPConstruct{
 	/**
 	 * 
 	 */
-	public void encode() throws PCEPProtocolViolationException {
-		int zeta=0;
-		
+	public void encode() throws PCEPProtocolViolationException {		
 		int len=0;
 		if (requestParameters!=null){
 			requestParameters.encode();
