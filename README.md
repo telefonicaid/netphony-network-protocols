@@ -42,7 +42,17 @@ ENCODING
    out.flush();
 ```
 # PCEP Support
-RFC 5440 
+* RFC 5440: Full compliance
+* RFC 5521: Path-key not supported
+RFC 5886: Full compliance
+RFC 6006: Only P2MP END-POINTS Object for IPv4
+draft-ietf-pce-gmpls-pcep-extensions-01 
+draft-ietf-pce-inter-layer-ext-05
+draft-ietf-pce-hierarchy-extensions-01
+draft-ietf-pce-stateful-pce-05
+draft-ietf-pce-pcep-stateful-pce-gmpls-00
+draft-ietf-pce-pce-initiated-lsp-00:
+ 
 # RSVP-TE Support
 
 # OSPF-TE Support
