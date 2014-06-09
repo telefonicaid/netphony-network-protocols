@@ -6,7 +6,7 @@ import tid.protocol.commons.ByteHandler;
 /**
  * 
  * This class is a copy of P2MPEndPointsIPv4. The only difference is that instead
- * of Ipv4 we have database ID (of 8 bytes). Asi que merits al farruk
+ * of Ipv4 we have database ID (of 8 bytes).
  * 
  *      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1

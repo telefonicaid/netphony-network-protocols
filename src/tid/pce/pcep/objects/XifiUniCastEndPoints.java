@@ -4,7 +4,6 @@ package tid.pce.pcep.objects;
 import tid.protocol.commons.ByteHandler;
 
 /**
- * Clase inventada para las WLANes.
  * 
  *   0                   1                   2                   3
  *       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
