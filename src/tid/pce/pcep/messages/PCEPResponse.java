@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.Response;
 import tid.pce.pcep.objects.ObjectParameters;
-import tid.pce.pcep.objects.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.PCEPObject;
 
 /**
@@ -105,7 +104,7 @@ RFC 5440                          PCEP                        March 2009
 **/
 
 public class PCEPResponse extends PCEPMessage {
-	
+
 	public LinkedList<Response> ResponseList;
 	private Logger log=Logger.getLogger("PCEPParser");
 
@@ -117,15 +116,15 @@ public class PCEPResponse extends PCEPMessage {
 		ResponseList=new LinkedList<Response>();
 		this.setMessageType(PCEPMessageTypes.MESSAGE_PCREP);
 	}
-	
+
 	public PCEPResponse(byte [] bytes)  throws PCEPProtocolViolationException
 	{
 		super(bytes);
 		ResponseList = new LinkedList<Response>();
 		decode(bytes);
-		
+
 	}
-	
+
 	public void addResponse(Response response){		
 		this.ResponseList.add(response);
 	}
@@ -185,13 +184,13 @@ public class PCEPResponse extends PCEPMessage {
 				return;
 			}
 		}
-		
+
 		if (ResponseList.size()==0){
 			log.warning("No Responses in the PCEP Response message");
 			throw new PCEPProtocolViolationException();
 		}
 	}
-		
+
 	public String toString(){
 		StringBuffer sb=new StringBuffer(ResponseList.size()*100);
 		sb.append("RESP: ");

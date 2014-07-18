@@ -75,7 +75,7 @@ import tid.pce.pcep.objects.*;
  * 
 **/
 public class PCEPRequest extends PCEPMessage {
-	
+
 	/**
 	 * List of optional SVEC Objects
 	 */
@@ -84,23 +84,23 @@ public class PCEPRequest extends PCEPMessage {
 	 * List of requests. At least one request is compulsory!!
 	 */
 	private LinkedList<Request> RequestList;
-	
+
 	/**
 	 * Monitoring object
 	 */
 	private Monitoring monitoring;
-	
+
 	/**
 	 * PCC_REQ_ID
 	 */
-	
+
 	private PccReqId pccReqId;
-	
+
 	/**
 	 * Logger
 	 */
 	private Logger log=Logger.getLogger("PCEPParser");
-	
+
 	/**
 	 * Construct new PCEP Request from scratch
 	 */
@@ -109,16 +109,16 @@ public class PCEPRequest extends PCEPMessage {
 		RequestList=new LinkedList<Request>();
 		this.setMessageType(PCEPMessageTypes.MESSAGE_PCREQ);
 	}
-	
+
 	public PCEPRequest(byte [] bytes)  throws PCEPProtocolViolationException
 	{
 		super(bytes);
 		SvecList=new LinkedList<SVECConstruct>();
 		RequestList=new LinkedList<Request>();
 		decode(bytes);
-		
+
 	}
-	
+
 	/**
 	 * Encodes the PCEP Request message
 	 */
@@ -165,9 +165,9 @@ public class PCEPRequest extends PCEPMessage {
 			System.arraycopy(RequestList.get(i).getBytes(), 0, messageBytes, offset, RequestList.get(i).getLength());
 			offset=offset+RequestList.get(i).getLength();		
 		}
-		
+
 	}
-	
+
 	/**
 	 * Decodes a PCEP Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521 
 	 */
@@ -224,12 +224,12 @@ public class PCEPRequest extends PCEPMessage {
 			throw new PCEPProtocolViolationException();
 		}
 	}
-	
-	
+
+
 	public void addRequest(Request request){		
 		this.RequestList.add(request);		
 	}
-	
+
 	public Request getRequest(int index){
 		return this.RequestList.get(index);	
 	}
@@ -249,12 +249,12 @@ public class PCEPRequest extends PCEPMessage {
 	public void setSvecList(LinkedList<SVECConstruct> svecList) {
 		SvecList = svecList;
 	}
-	
+
 	public void addSvec(SVECConstruct svec){		
 		this.SvecList.add(svec);
 	}
 
-	
+
 	public Monitoring getMonitoring() {
 		return monitoring;
 	}

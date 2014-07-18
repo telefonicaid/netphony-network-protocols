@@ -63,76 +63,76 @@ The PCRep message MUST contain at least one RP object.  For each
  *
  */
 public class Response extends PCEPConstruct{
-	
+
 	/**
 	 * 
 	 */
 	private RequestParameters requestParameters;
-	
+
 	/**
 	 * Monitoring object
 	 */
 	private Monitoring monitoring;
-	
+
 	/**
 	 * 
 	 */
 	private PccReqId pccIdreq;
-	
+
 	/**
 	 * 
 	 */
 	private NoPath noPath;
-	
+
 	/**
 	 * 
 	 */
 	private LSPA lSPA;
-	
+
 	/**
 	 * 
 	 */
 	private Bandwidth bandwidth;
-	
+
 	/**
 	 * 
 	 */
 	private GeneralizedBandwidth generalizedbandwidth;
-	
+
 	/**
 	 * 
 	 */
 	private LinkedList<Metric> metricList;
-	
+
 	/**
 	 * 
 	 */
 	private IncludeRouteObject iRO;
-	
+
 	private ReservationConf resConf;
-	
+
 	/**
 	 * 
 	 */
 	private LinkedList<Path> pathList;
-	
+
 	/**
 	 * 
 	 */
 	private LinkedList<MetricPCE> metricPCEList;
-	
+
 	public Response() {
 		metricList=new LinkedList<Metric>();
 		pathList=new LinkedList<Path>();
 		metricPCEList=new LinkedList<MetricPCE>();
 	}
-	
+
 	public Response(byte[] bytes, int offset) throws PCEPProtocolViolationException {
 		metricList=new LinkedList<Metric>();
 		pathList=new LinkedList<Path>();
 		metricPCEList=new LinkedList<MetricPCE>();
 	}
-	
+
 	public RequestParameters getRequestParameters() {
 		return requestParameters;
 	}
@@ -173,16 +173,16 @@ public class Response extends PCEPConstruct{
 	public LinkedList<Path> getPathList() {
 		return pathList;
 	}
-	
+
 	public void addPath(Path path){
 		this.pathList.add(path);
 	}
-	
+
 	public Path getPath(int index){
 		return this.pathList.get(index);
 	}
-	
-	
+
+
 	public void setPathList(LinkedList<Path> pathList) {
 		this.pathList = pathList;
 	}
@@ -218,7 +218,7 @@ public class Response extends PCEPConstruct{
 	public void setResConf(ReservationConf resConf) {
 		this.resConf = resConf;
 	}
-	
+
 
 	public GeneralizedBandwidth getGeneralizedbandwidth() {
 		return generalizedbandwidth;
@@ -552,8 +552,8 @@ public class Response extends PCEPConstruct{
 			}
 			oc=PCEPObject.getObjectClass(bytes, offset);
 		}		
-		
-		
+
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCE_ID){
 			log.finest("PCE ID Object found, New Metri PCE Construct found");
@@ -568,9 +568,9 @@ public class Response extends PCEPConstruct{
 			oc=PCEPObject.getObjectClass(bytes, offset);
 		}
 		this.setLength(len);
-		
+
 	}
-	
+
 	public String toString(){
 		String ret="";
 		if (requestParameters!=null){
@@ -609,6 +609,6 @@ public class Response extends PCEPConstruct{
 
 		return ret;
 	}
-	
+
 
 }
