@@ -73,7 +73,7 @@ public class PCEPReport extends PCEPMessage
 	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-		System.out.println("Empezando enconde");
+		System.out.println("Inicio encode");
 		int len = 4;
 		int index = 0;
 		
@@ -84,21 +84,19 @@ public class PCEPReport extends PCEPMessage
 			index++;			
         }
         
-        System.out.println("CCCC");
 		if (stateReportList.size()==0)
 		{
 			log.warning("There should be at least one update request in a PCEP update Request message");
 			//throw new PCEPProtocolViolationException();
 		}
 		
-		System.out.println("DDDD "+len);
 		this.setMessageLength(len);
 		messageBytes=new byte[len];
-		System.out.println("Vamos a por el encodeHeaer");
+		System.out.println("Inicio encodeHeader");
 		this.encodeHeader();
 		int offset = 4;		//Header
 		index=0;
-		System.out.println("a por array copy");
+		System.out.println("Inicio arraycopy");
 		
 		while(index < stateReportList.size())
 		{
