@@ -60,7 +60,6 @@ import java.util.LinkedList;
  * </pre>
  * @author Ayk
  * 
- * Venga si Messi.
  * 
  */
 public class P2MPEndPointsIPv4 extends EndPoints{

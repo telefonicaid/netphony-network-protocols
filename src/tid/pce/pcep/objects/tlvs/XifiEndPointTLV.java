@@ -7,7 +7,6 @@ import tid.protocol.commons.ByteHandler;
 /**
  * 
  * @author jaume
- * Si lees esto, hazlo con valors, pero sobre todo , con humiltat.
  */
 
 public class XifiEndPointTLV extends PCEPTLV
