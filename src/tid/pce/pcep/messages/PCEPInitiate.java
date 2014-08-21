@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcep.objects.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.PCEPObject;
@@ -28,10 +27,10 @@ Where:
 
 public class PCEPInitiate extends PCEPMessage 
 {
-	
+
 	protected LinkedList<PCEPIntiatedLSP> pcepIntiatedLSPList; 
 	private Logger log = Logger.getLogger("PCEPParser");
-	
+
 	public PCEPInitiate()
 	{
 		this.setMessageType(PCEPMessageTypes.MESSAGE_INTIATE);
@@ -42,16 +41,16 @@ public class PCEPInitiate extends PCEPMessage
 		super(bytes);
 		pcepIntiatedLSPList = new LinkedList<PCEPIntiatedLSP>();
 		decode();
-		
+
 	}
-	
+
 	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-		log.info("Empezando enconde");
+		log.info("Inicio encode");
 		int len = 4;
 		int index = 0;
-		
+
         while(index < pcepIntiatedLSPList.size())
         {
         	pcepIntiatedLSPList.get(index).encode();		
@@ -59,22 +58,20 @@ public class PCEPInitiate extends PCEPMessage
 			index++;			
         }
         
-        log.info("CCCC");
 		if (pcepIntiatedLSPList.size() == 0)
 		{
 			log.warning("There should be at least one update request in a PCEP update Request message");
 			throw new PCEPProtocolViolationException();
 		}
-		
-		log.info("DDDD "+len);
+
 		this.setMessageLength(len);
 		messageBytes = new byte[len];
-		log.info("Vamos a por el encodeHeaer");
+		log.info("Inicio encodeHeader");
 		this.encodeHeader();
 		int offset = 4;		//Header
 		index=0;
-		log.info("a por array copy");
-		
+		log.info("Inicio array copy");
+
 		while(index < pcepIntiatedLSPList.size())
 		{
 			System.arraycopy(pcepIntiatedLSPList.get(index).getBytes(), 0, this.messageBytes, offset, pcepIntiatedLSPList.get(index).getLength());
@@ -82,8 +79,8 @@ public class PCEPInitiate extends PCEPMessage
 			index++;						
 		}	
 	}
-	
-	
+
+
 	public void decode() throws PCEPProtocolViolationException
 	{
 		//Current implementation is strict, does not accept unknown objects 
@@ -91,7 +88,7 @@ public class PCEPInitiate extends PCEPMessage
 		boolean atLeastOne = false;
 		PCEPIntiatedLSP sr;
 		log.info("Decoding PCEP Intiate!!:: len :: "+this.getBytes().length);
-		
+
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		log.info("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
 		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP)
@@ -115,7 +112,7 @@ public class PCEPInitiate extends PCEPMessage
 			pcepIntiatedLSPList.add(sr);
 			atLeastOne = true;
 		}
-		
+
 		if (!atLeastOne)
 		{
 			log.warning("Malformed Report Message. There must be at least one state-report object. Exception will be throwed");
@@ -132,6 +129,6 @@ public class PCEPInitiate extends PCEPMessage
 	{
 		this.pcepIntiatedLSPList = pcepIntiatedLSPList;
 	}
-	
-	
+
+
 }
