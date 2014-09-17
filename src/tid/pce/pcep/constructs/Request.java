@@ -1,6 +1,7 @@
 package tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
+
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.*;
 
@@ -40,7 +41,6 @@ public class Request extends PCEPConstruct{
 	private EndPoints endPoints;//COMPULSORY!!!
 	private LSPA lSPA;
 	private Bandwidth bandwidth;
-	private GeneralizedBandwidth generalizedbandwidth;
 	private LinkedList<Metric> metricList;
 	private RROBandwidth rROBandwidth;
 	private IncludeRouteObject iRO;
@@ -105,10 +105,6 @@ public class Request extends PCEPConstruct{
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
-		if (generalizedbandwidth!=null){
-			generalizedbandwidth.encode();
-			len=len+generalizedbandwidth.getLength();
-		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
 				(metricList.get(i)).encode();
@@ -166,10 +162,6 @@ public class Request extends PCEPConstruct{
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
-		}
-		if (generalizedbandwidth!=null){
-			System.arraycopy(generalizedbandwidth.getBytes(), 0, bytes, offset, generalizedbandwidth.getLength());
-			offset=offset+generalizedbandwidth.getLength();
 		}
 
 		if (metricList!=null){
@@ -230,6 +222,7 @@ public class Request extends PCEPConstruct{
 		}
 
 		int oc=PCEPObject.getObjectClass(bytes, offset);
+		int ot=PCEPObject.getObjectType(bytes, offset);
 		//EMPEZAMOS HACIENDO IMPLEMENTACION ESTRICTA
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
 			try {
@@ -251,7 +244,7 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
-			int ot=PCEPObject.getObjectType(bytes, offset);
+			ot=PCEPObject.getObjectType(bytes, offset);
 			log.info("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 				try {
@@ -333,46 +326,56 @@ public class Request extends PCEPConstruct{
 			}
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
+		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
-			log.finest("BANDWIDTH Object found");
-			try {
-				bandwidth=new Bandwidth(bytes,offset);
-			} catch (MalformedPCEPObjectException e) {
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
+				log.finest("BANDWIDTH Request Object found");
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}			
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
+				log.finest("BANDWIDTH Existing TE LSP Object found");
+				try {
+					bandwidth=new BandwidthExistingLSP(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
+				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Request Object found");
+				try {
+					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
+				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Existing TE LSP Object found");
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else {
 				log.warning("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
+			
 			offset=offset+bandwidth.getLength();
 			len=len+bandwidth.getLength();
-			if (offset>=max_offset){
+			if (offset>=bytes.length){
 				this.setLength(len);
 				return;
 			}
 		}
-		oc=PCEPObject.getObjectClass(bytes, offset);
-		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_GENERALIZED_BANDWIDTH){
-			log.finest("GENERALIZED BANDWIDTH Object found");
-			int ot=PCEPObject.getObjectType(bytes, offset);
-			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GB_SSON){
-				try {
-					generalizedbandwidth=new GeneralizedBandwidthSSON(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZEDBANDWIDTH_SSON Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
-			else {
-				log.warning("GENERALIZED BANDWIDTH TYPE NOT SUPPORTED");
-				throw new PCEPProtocolViolationException();
-			}
-			
-			offset=offset+generalizedbandwidth.getLength();
-			len=len+generalizedbandwidth.getLength();
-			if (offset>=max_offset){
-				this.setLength(len);
-				return;
-			}
-		
-		}
+	
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
 			log.finest("METRIC Object found");
@@ -553,14 +556,6 @@ public class Request extends PCEPConstruct{
 		this.bandwidth = bandwidth;
 	}
 
-	public GeneralizedBandwidth getGeneralizedbandwidth() {
-		return generalizedbandwidth;
-	}
-
-	public void setGeneralizedbandwidth(GeneralizedBandwidth generalizedbandwidth) {
-		this.generalizedbandwidth = generalizedbandwidth;
-	}
-
 	public LinkedList<Metric> getMetricList() {
 		return metricList;
 	}
@@ -658,9 +653,6 @@ public class Request extends PCEPConstruct{
 		if (bandwidth!=null){
 			sb.append(bandwidth.toString());
 		}
-		if (generalizedbandwidth!=null){
-			sb.append(generalizedbandwidth);
-		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
 				sb.append(metricList.get(i).toString());
@@ -699,7 +691,6 @@ public class Request extends PCEPConstruct{
 		req.setEndPoints(this.endPoints);
 		req.setlSPA(this.lSPA);
 		req.setBandwidth(this.bandwidth);
-		req.setGeneralizedbandwidth(this.generalizedbandwidth);
 		req.setMetricList(this.metricList);
 		req.setrROBandwidth(this.rROBandwidth);
 		req.setiRO(this.iRO);

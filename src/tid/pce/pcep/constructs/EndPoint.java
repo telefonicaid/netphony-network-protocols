@@ -15,8 +15,6 @@ public class EndPoint extends PCEPConstruct {
 	
 	//private 
 	
-	private EndPointsIPv4TLV endPointsIPv4;
-	
 	private EndPointIPv4TLV endPointIPv4;
 	
 	private EndPointStorageTLV endPointStorage;
@@ -106,11 +104,7 @@ public class EndPoint extends PCEPConstruct {
 		int tlvtype=PCEPTLV.getType(bytes, offset);
 		int tlvlength=PCEPTLV.getTotalTLVLength(bytes, offset);
 		this.setLength(tlvlength);
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_IPV4){
-			endPointsIPv4=new EndPointsIPv4TLV(bytes, offset);
-		}else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_IPV6){
-			
-		}
+
 		
 		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINT_IPV4){
 			endPointIPv4=new EndPointIPv4TLV(bytes, offset);

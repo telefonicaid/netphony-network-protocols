@@ -326,7 +326,13 @@ public abstract class PCEPObject implements PCEPElement {
 	 * @return ObjectType
 	 */
 	public static int getObjectType(byte[] bytes, int offset){
-		return (((bytes[offset+1]&0xFF)>>>4)& 0x0F);
+		try {
+			int obc=(((bytes[offset+1]&0xFF)>>>4)& 0x0F);
+			return obc;
+		}
+		catch (ArrayIndexOutOfBoundsException e){
+			return 0;
+		}
 	}
 	
 	/**

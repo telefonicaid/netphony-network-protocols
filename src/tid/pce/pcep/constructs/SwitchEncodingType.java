@@ -74,10 +74,10 @@ public class SwitchEncodingType extends PCEPConstruct {
 	public void encode() throws PCEPProtocolViolationException {
 		this.setLength(4);
 		bytes=new byte[this.length];
-		this.bytes[0]=(byte)(LSPEncodingType >>> 24);
-		this.bytes[1]=(byte)((LSPEncodingType >> 16) & 0xff);
-		this.bytes[2]=(byte)(SwitchingType >>> 24);
-		this.bytes[3]=(byte)((SwitchingType >> 16) & 0xff);
+		this.bytes[0]=(byte)(LSPEncodingType  & 0xff);;
+		this.bytes[1]=(byte)(SwitchingType  & 0xff);
+		this.bytes[2]=(byte)0x00;
+		this.bytes[3]=(byte)(Iflag?1:0);
 
 	}
 
@@ -85,10 +85,9 @@ public class SwitchEncodingType extends PCEPConstruct {
 	private void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
 		this.setLength(4);
-		LSPEncodingType = ( (bytes[0+offset]&0xFF)<<8) | (bytes[1+offset]&0xFF) ; 
-		
-		//SwitchingType
-
+		LSPEncodingType = (this.bytes[0+offset]&0xFF);
+		SwitchingType = (this.bytes[1+offset]&0xFF);	
+		Iflag =(this.bytes[3+offset]&0x01)==0x01;
 	}
 	
 	

@@ -53,6 +53,8 @@ public class ObjectParameters {
 	// NUMBERS FOR INTERNAL USE ONLY THEY DONT FOLLOW THE DRAFT as they use already existing numbers!!!!
 	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=118;
 	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=119;
+	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=120;
+	public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=121;
 	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
 	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=150;
@@ -85,7 +87,12 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_NOPATH = 1;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS = 1;
 	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST = 1;
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REOPT = 2;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP= 2;
+	
+	// from draft-ietf-gmpls
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST = 3;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP = 4;
+	
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV4 = 1;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV6 = 2;
 
@@ -141,9 +148,11 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
 	
 	// PCEP Extensions for Inter-Layer MPLS and GMPLS Traffic Engineering
-    //draft-ietf-pce-inter-layer-ext-05
+    //draft-ietf-pce-inter-layer-ext-08
 	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
 	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
+	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
+	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
 	
 	// PCEP Object types from RFC 5541
 	public static final int PCEP_OBJECT_TYPE_OBJECTIVE_FUNCTION = 1;
@@ -310,6 +319,9 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_ORDER_TLV=5;
 	public static final int PCEP_TLV_P2MP_CAPABLE=6;
 	public static final int PCEP_TLV_REQUEST_INFO=7;
+	
+	public static final int PCEP_TLV_BANDWIDTH=502;
+	
 	public static final int PCEP_TLV_TYPE_XIFI=500;
 	
 	public static final int PCEP_TLV_PATH_SETUP=666;	
@@ -458,5 +470,14 @@ public class ObjectParameters {
     public static final int LSP_OPERATIONAL_ACTIVE = 2;
     public static final int LSP_OPERATIONAL_GOING_DOWN = 3;
     public static final int LSP_OPERATIONAL_GOING_UP = 4;
+    
+    //From draft-ietf-pce-gmpls-pcep-extensions-09
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_INTSERV = 2;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SONET_SDH = 4;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_G709 = 5;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_ETHERNET = 6;
+    // From draft-ietf-ccamp-flexible-grid-rsvp-te-ext-00
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SSON = 12;
+
     
 }

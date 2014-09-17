@@ -24,16 +24,18 @@ import tid.pce.pcep.objects.Svec;
 public class SVECConstruct extends PCEPConstruct{
 	
 	private Svec svec;
-	private ObjectiveFunction objectiveFunction;
+	private LinkedList<ObjectiveFunction> objectiveFunctionList;
 	private LinkedList<Metric> metricList;
 	private Logger log=Logger.getLogger("PCEPParser");
 	
 	public SVECConstruct(){
 		metricList=new LinkedList<Metric>(); 
+		objectiveFunctionList=new LinkedList<ObjectiveFunction>();
 	}
 
 	public  SVECConstruct(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		decode(bytes, offset);
+		objectiveFunctionList=new LinkedList<ObjectiveFunction>();
 		metricList=new LinkedList<Metric>();
 	}
 	
@@ -49,9 +51,12 @@ public class SVECConstruct extends PCEPConstruct{
 			log.warning("svec  not found!  compulsory");
 			throw new PCEPProtocolViolationException();
 		}
-		if (objectiveFunction!=null){
-			objectiveFunction.encode();
-			len=len+objectiveFunction.getLength();
+		if (objectiveFunctionList!=null){
+			for (int i=0;i<objectiveFunctionList.size();++i){
+				(objectiveFunctionList.get(i)).encode();
+				len=len+(objectiveFunctionList.get(i)).getLength();
+			}
+			
 		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
@@ -66,9 +71,11 @@ public class SVECConstruct extends PCEPConstruct{
 		int offset=0;
 		System.arraycopy(svec.getBytes(), 0, bytes, offset, svec.getLength());
 		offset=offset+svec.getLength();
-		if (objectiveFunction!=null){
-			System.arraycopy(objectiveFunction.getBytes(), 0, bytes, offset, objectiveFunction.getLength());
-			offset=offset+objectiveFunction.getLength();
+		if (objectiveFunctionList!=null){
+			for (int i=0;i<objectiveFunctionList.size();++i){
+				System.arraycopy(objectiveFunctionList.get(i).getBytes(), 0, bytes, offset, objectiveFunctionList.get(i).getLength());
+				offset=offset+objectiveFunctionList.get(i).getLength();
+			}
 		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
@@ -101,16 +108,19 @@ public class SVECConstruct extends PCEPConstruct{
 			throw new PCEPProtocolViolationException();
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
-		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
+		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
 			log.finest("OBJECTIVE FUNCTION Object found");
+			ObjectiveFunction objectiveFunction = new ObjectiveFunction();
 			try {
 				objectiveFunction=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warning("Malformed OBJECTIVE FUNCTION Object found");
 				throw new PCEPProtocolViolationException();
 			}
+			objectiveFunctionList.add(objectiveFunction);
 			offset=offset+objectiveFunction.getLength();
 			len=len+objectiveFunction.getLength();
+			oc=PCEPObject.getObjectClass(bytes, offset);
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
@@ -141,11 +151,24 @@ public class SVECConstruct extends PCEPConstruct{
 	}
 
 	public ObjectiveFunction getObjectiveFunction() {
-		return objectiveFunction;
+		return objectiveFunctionList.getFirst();
 	}
 
+	//OSCAR: BEWARE... lo mantenemos por compatibilidad
 	public void setObjectiveFunction(ObjectiveFunction objectiveFunction) {
-		this.objectiveFunction = objectiveFunction;
+		this.objectiveFunctionList.add(objectiveFunction);
+	}
+	
+	
+
+	public LinkedList<ObjectiveFunction> getObjectiveFunctionList() {
+		return objectiveFunctionList;
+	}
+
+	
+	public void setObjectiveFunctionList(
+			LinkedList<ObjectiveFunction> objectiveFunctionList) {
+		this.objectiveFunctionList = objectiveFunctionList;
 	}
 
 	public LinkedList<Metric> getMetricList() {

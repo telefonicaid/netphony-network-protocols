@@ -13,14 +13,14 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	private SRERO srero;
 
 	private EndPoints endPoint;
-	private Bandwidth bandwidth;
+	private BandwidthRequested bandwidth;
 
 
-	public Bandwidth getBandwidth() {
+	public BandwidthRequested getBandwidth() {
 		return bandwidth;
 	}
 
-	public void setBandwidth(Bandwidth bandwidth) {
+	public void setBandwidth(BandwidthRequested bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 
@@ -302,7 +302,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			log.finest("BANDWIDTH Object found");
 			try {
-				bandwidth=new Bandwidth(bytes,offset);
+				bandwidth=new BandwidthRequested(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warning("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();

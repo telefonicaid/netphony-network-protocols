@@ -23,7 +23,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	private EndPoints endPoints;//COMPULSORY!!!
 	private LSPA lSPA;//COMPULSORY!!
 	private ExplicitRouteObject eRO;
-	private Bandwidth bandwidth;
+	private BandwidthRequested bandwidth;
 	private LinkedList<Metric> metricList;
 	
 	private Logger log=Logger.getLogger("PCEPParser");
@@ -197,7 +197,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			log.finest("BANDWIDTH Object found");
 			try {
-				bandwidth=new Bandwidth(bytes,offset);
+				bandwidth=new BandwidthRequested(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warning("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
@@ -256,11 +256,11 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		this.eRO = eRO;
 	}
 
-	public Bandwidth getBandwidth() {
+	public BandwidthRequested getBandwidth() {
 		return bandwidth;
 	}
 
-	public void setBandwidth(Bandwidth bandwidth) {
+	public void setBandwidth(BandwidthRequested bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 
