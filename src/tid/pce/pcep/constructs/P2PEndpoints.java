@@ -102,11 +102,8 @@ public class P2PEndpoints extends PCEPConstruct {
 		}
 		
 		sourceEndpoint = new EndPoint(bytes, offset);
-		log.info("Offset:"+offset);
 		offset = offset + sourceEndpoint.getLength();
-		log.info("Source End-point:"+sourceEndpoint.getEndPointIPv4TLV().IPv4address.toString());
-		log.info("Offset:"+offset);
-		
+	
 		
 		while (PCEPTLV.getType(bytes, offset) == ObjectParameters.PCEP_TLV_TYPE_LABEL_REQUEST){
 			EndpointRestriction sourceEndpointRestriction = new EndpointRestriction(bytes, offset);
@@ -116,9 +113,7 @@ public class P2PEndpoints extends PCEPConstruct {
 		
 		destinationEndpoint = new EndPoint(bytes, offset);
 		offset = offset + destinationEndpoint.getLength();
-		log.info("Destination End-point:"+destinationEndpoint.getEndPointIPv4TLV().IPv4address.toString());
-		log.info("Offset:"+offset);
-		
+				
 		if(offset<max_offset){
 			while (PCEPTLV.getType(bytes, offset)==ObjectParameters.PCEP_TLV_TYPE_LABEL_REQUEST){
 				EndpointRestriction destinationEndpointRestriction = new EndpointRestriction(bytes, offset);
@@ -159,5 +154,14 @@ public class P2PEndpoints extends PCEPConstruct {
 
 	public void setDestinationEndPointRestrictionList(LinkedList <EndpointRestriction> sourceEndPointRestrictionList) {
 		this.destinationEndpointRestrictionList = sourceEndPointRestrictionList;
+	}
+	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(100);
+		sb.append("<GEP_P2P src = ");
+		sb.append(sourceEndpoint.toString());
+		sb.append(destinationEndpoint.toString());
+		sb.append(">");
+		return sb.toString();
 	}
 }

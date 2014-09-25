@@ -248,16 +248,17 @@ public class GeneralizedEndPoints extends EndPoints{
 
 	public void setP2PEndpoints(P2PEndpoints P2PEndpoints) {
 		this.p2pEndpoints = P2PEndpoints;
-		this.generalizedendpointType = 1;
+		this.generalizedendpointType = ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P ;
 	}
 	
 	public P2MPEndpoints getP2MPEndpoints() {
 		return p2mpEndpoints;
 	}
 
+	//FIXME
 	public void setP2MPEndpoints(P2MPEndpoints P2PMEndpoints) {
 		this.p2mpEndpoints = P2PMEndpoints;
-		this.generalizedendpointType = 2;
+		this.generalizedendpointType = ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES;
 	}
 	
 	public AssistedUnicastEndpoints getAssistedUnicastEndpoints() {
@@ -267,6 +268,15 @@ public class GeneralizedEndPoints extends EndPoints{
 	public void setAssistedUnicastEndpoints(AssistedUnicastEndpoints AssistedUnicastEndpoints) {
 		this.assistedUnicastEndpoints = AssistedUnicastEndpoints;
 		this.generalizedendpointType = 3;
+	}
+	
+	public String toString(){
+		if (p2pEndpoints!=null){
+			return p2pEndpoints.toString();
+		}
+		else {
+			return "<GEP unknown>";
+		}
 	}
 	
 }

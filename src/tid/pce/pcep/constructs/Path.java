@@ -66,11 +66,9 @@ public class Path extends PCEPConstruct {
 	}
 	
 	public void encode() throws PCEPProtocolViolationException {
-		int z = 1;
-		//log.info("Path encoding "+z);z++;
+
 		log.finest("Encoding Request Rule");
 		int len=0;
-		//log.info("Path encoding "+z);z++;
 		if (eRO!=null){
 			eRO.encode();
 			len=len+eRO.getLength();
@@ -115,12 +113,13 @@ public class Path extends PCEPConstruct {
 			reqAdapCap.encode();
 			len=len+reqAdapCap.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
-		//log.finest("Path Length = "+len);
+		if (serverIndication!=null){
+			serverIndication.encode();
+			len=len+serverIndication.getLength();
+		}
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
-		//log.info("Path encoding "+z);z++;
 		
 		if(eRO!=null)
 		{
@@ -131,20 +130,16 @@ public class Path extends PCEPConstruct {
 		{
 			System.arraycopy(SRERO.getBytes(), 0, bytes, offset, SRERO.getLength());
 			offset=offset+SRERO.getLength();			
-		}
+		}	
 			
-			
-		//log.info("Path encoding "+z);z++;
 		if (lSPA!=null){
 			System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 			offset=offset+lSPA.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
-
 		//log.info("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
@@ -156,7 +151,23 @@ public class Path extends PCEPConstruct {
 			offset=offset+iRO.getLength();
 		}
 		
-		//log.info("Path encoding end");
+		if (interLayer!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, interLayer.getLength());
+			offset=offset+interLayer.getLength();
+		}
+		if (switchLayer!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, switchLayer.getLength());
+			offset=offset+switchLayer.getLength();
+		}
+		if (reqAdapCap!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, reqAdapCap.getLength());
+			offset=offset+reqAdapCap.getLength();
+		}
+		if (serverIndication!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, serverIndication.getLength());
+			offset=offset+serverIndication.getLength();
+		}
+		
 	}
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
@@ -276,6 +287,59 @@ public class Path extends PCEPConstruct {
 			offset=offset+iRO.getLength();
 			len=len+iRO.getLength();
 		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_INTER_LAYER){
+			log.finest("interLayer Object found");
+			try {
+				interLayer=new InterLayer(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed interLayer Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+interLayer.getLength();
+			len=len+interLayer.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
+			log.finest("switchLayer Object found");
+			try {
+				switchLayer=new SwitchLayer(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed switchLayer Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+switchLayer.getLength();
+			len=len+switchLayer.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_REQ_ADAP_CAP){
+			log.finest("reqAdapCap Object found");
+			try {
+				reqAdapCap=new ReqAdapCap(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed reqAdapCap Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+reqAdapCap.getLength();
+			len=len+reqAdapCap.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SERVER_INDICATION){
+			log.finest("serverIndication Object found");
+			try {
+				serverIndication=new ServerIndication(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed serverIndication Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+serverIndication.getLength();
+			len=len+serverIndication.getLength();
+		}
+		
 		this.setLength(len);
 	}
 	
@@ -338,6 +402,38 @@ public class Path extends PCEPConstruct {
 		return this.SRERO;
 	}
 	
+	public InterLayer getInterLayer() {
+		return interLayer;
+	}
+
+	public void setInterLayer(InterLayer interLayer) {
+		this.interLayer = interLayer;
+	}
+
+	public SwitchLayer getSwitchLayer() {
+		return switchLayer;
+	}
+
+	public void setSwitchLayer(SwitchLayer switchLayer) {
+		this.switchLayer = switchLayer;
+	}
+
+	public ReqAdapCap getReqAdapCap() {
+		return reqAdapCap;
+	}
+
+	public void setReqAdapCap(ReqAdapCap reqAdapCap) {
+		this.reqAdapCap = reqAdapCap;
+	}
+
+	public ServerIndication getServerIndication() {
+		return serverIndication;
+	}
+
+	public void setServerIndication(ServerIndication serverIndication) {
+		this.serverIndication = serverIndication;
+	}
+
 	public String toString(){
 		String ret="PATH={ ";
 		if (SRERO!=null){
@@ -351,6 +447,9 @@ public class Path extends PCEPConstruct {
 		}
 		if (bandwidth!=null){
 			ret=ret+bandwidth.toString();
+		}
+		if (serverIndication!=null){
+			ret=ret+serverIndication.toString();
 		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){

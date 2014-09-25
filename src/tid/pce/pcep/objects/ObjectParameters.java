@@ -181,11 +181,13 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
 	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
 	
-	
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=1;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=2;
+	//Values from draft-ietf-pce-gmpls-pcep-extensions-09
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=0;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=1;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_REMOVE=2;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_MODIFIED=3;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_UNCHANGED=4;
+	
 	
 	public static final int PCEP_TLV_TYPE_LABEL_REQUEST=2000;
 	
@@ -318,9 +320,14 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_OF_LIST_TLV=4;
 	public static final int PCEP_TLV_ORDER_TLV=5;
 	public static final int PCEP_TLV_P2MP_CAPABLE=6;
-	public static final int PCEP_TLV_REQUEST_INFO=7;
+	public static final int PCEP_TLV_REQUEST_INFO=70;//FIXME
 	
+	//From draft-ietf-pce-gmpls-pcep-extensions-09
+	public static final int PCEP_TLV_TYPE_IPV4_ADDRESS=7;
+	public static final int PCEP_TLV_TYPE_IPV6_ADDRESS=8;
+	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT=9;
 	public static final int PCEP_TLV_BANDWIDTH=502;
+	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=14;
 	
 	public static final int PCEP_TLV_TYPE_XIFI=500;
 	
@@ -477,7 +484,7 @@ public class ObjectParameters {
     public static final int PCEP_GMPLS_GEN_BANDWIDTH_G709 = 5;
     public static final int PCEP_GMPLS_GEN_BANDWIDTH_ETHERNET = 6;
     // From draft-ietf-ccamp-flexible-grid-rsvp-te-ext-00
-    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SSON = 12;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SSON = 10;
 
     
 }

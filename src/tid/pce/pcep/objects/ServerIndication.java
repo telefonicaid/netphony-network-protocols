@@ -74,7 +74,7 @@ public class ServerIndication extends PCEPObject {
 			throw new MalformedPCEPObjectException();
 		}
 		switchingCap = ( (this.getBytes()[0+offset]&0xFF)<<8) | (this.getBytes()[1+offset]&0xFF) ; 
-		encoding = ( (this.getBytes()[2+offset]&0xFF)<<8) | (this.getBytes()[4+offset]&0xFF) ; 
+		encoding = ( (this.getBytes()[2+offset]&0xFF)<<8) | (this.getBytes()[3+offset]&0xFF) ; 
 	
 
 	}
