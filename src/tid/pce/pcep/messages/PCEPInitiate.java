@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
+import tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.ObjectParameters;
-import tid.pce.pcep.objects.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.PCEPObject;
 
 /**
@@ -128,6 +128,17 @@ public class PCEPInitiate extends PCEPMessage
 			LinkedList<PCEPIntiatedLSP> pcepIntiatedLSPList) 
 	{
 		this.pcepIntiatedLSPList = pcepIntiatedLSPList;
+	}
+	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(pcepIntiatedLSPList.size()*100);
+		sb.append("INITIATE MESSAGE: ");
+
+		for (int i=0;i<pcepIntiatedLSPList.size();++i){
+			sb.append(pcepIntiatedLSPList.get(i).toString());
+		}
+	
+		return sb.toString();
 	}
 
 

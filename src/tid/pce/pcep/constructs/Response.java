@@ -9,6 +9,7 @@ import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import tid.pce.pcep.objects.IncludeRouteObject;
 import tid.pce.pcep.objects.LSPA;
+import tid.pce.pcep.objects.LabelSet;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.Metric;
 import tid.pce.pcep.objects.Monitoring;
@@ -18,6 +19,7 @@ import tid.pce.pcep.objects.PCEPObject;
 import tid.pce.pcep.objects.PccReqId;
 import tid.pce.pcep.objects.RequestParameters;
 import tid.pce.pcep.objects.ReservationConf;
+import tid.pce.pcep.objects.SuggestedLabel;
 
 /**
  * <p> Represents a PCEP Response. </p>  
@@ -229,7 +231,7 @@ public class Response extends PCEPConstruct{
 	public void setGeneralizedbandwidth(BandwidthRequestedGeneralizedBandwidth generalizedbandwidth) {
 		this.generalizedbandwidth = generalizedbandwidth;
 	}
-
+	
 	/**
 	 * 
 	 */
@@ -298,6 +300,7 @@ public class Response extends PCEPConstruct{
 
 			}
 		}
+		
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -347,6 +350,7 @@ public class Response extends PCEPConstruct{
 			System.arraycopy(metricPCEList.get(i).getBytes(), 0, bytes, offset, metricPCEList.get(i).getLength());
 			offset=offset+metricPCEList.get(i).getLength();
 		}	
+		
 	}
 
 	public void decode(byte[] bytes, int offset)

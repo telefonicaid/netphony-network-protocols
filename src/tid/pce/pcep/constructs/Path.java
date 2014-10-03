@@ -6,11 +6,16 @@ import java.util.logging.Logger;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.BandwidthExistingLSP;
 import tid.pce.pcep.objects.BandwidthRequested;
+import tid.pce.pcep.objects.BitmapLabelSet;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import tid.pce.pcep.objects.Bandwidth;
 import tid.pce.pcep.objects.IncludeRouteObject;
 import tid.pce.pcep.objects.InterLayer;
+import tid.pce.pcep.objects.LabelSet;
+import tid.pce.pcep.objects.LabelSetInclusiveList;
+import tid.pce.pcep.objects.ObjectiveFunction;
+import tid.pce.pcep.objects.SuggestedLabel;
 import tid.pce.pcep.objects.SwitchLayer;
 import tid.pce.pcep.objects.ReqAdapCap;
 import tid.pce.pcep.objects.LSPA;
@@ -28,7 +33,8 @@ import tid.pce.pcep.objects.SRERO;
 
    where:
 
-    <attribute-list>::=[<LSPA>]
+    <attribute-list>::= [OF]
+    					[<LSPA>]
                        [<BANDWIDTH>]
                        [<GENERALIZED-BANDWIDTH>] --ESTADO DRAFT
                        [<metric-list>]
@@ -37,6 +43,7 @@ import tid.pce.pcep.objects.SRERO;
                             [<SWITCH-LAYER>]
                             [<REQ-ADAP-CAP>]
                             [<SERVER-INDICATION>]
+                            
     <metric-list>::=<METRIC>[<metric-list>]
  * @author ogondio
  *
@@ -45,7 +52,7 @@ public class Path extends PCEPConstruct {
 
 	private ExplicitRouteObject eRO;
 	private SRERO SRERO;
-	
+	private ObjectiveFunction of;
 	private LSPA lSPA;
 	private Bandwidth bandwidth;
 	private LinkedList<Metric> metricList;
@@ -54,6 +61,10 @@ public class Path extends PCEPConstruct {
 	private SwitchLayer switchLayer;
 	private ReqAdapCap reqAdapCap;
 	private ServerIndication serverIndication;
+	
+	private LabelSet labelSet;
+	
+	private SuggestedLabel suggestedLabel;
 	
 	
 	public Path(){
@@ -80,6 +91,10 @@ public class Path extends PCEPConstruct {
 		else {
 			log.warning("Path must start with ERO or SRERO object");
 			throw new PCEPProtocolViolationException();
+		}
+		if (of!=null){
+			of.encode();
+			len=len+of.getLength();
 		}
 		//log.info("Path encoding "+z);z++;
 		if (lSPA!=null){
@@ -117,6 +132,15 @@ public class Path extends PCEPConstruct {
 			serverIndication.encode();
 			len=len+serverIndication.getLength();
 		}
+		if (labelSet!=null) {
+			labelSet.encode();
+			len=len+labelSet.getLength();
+		}
+		if (suggestedLabel!=null) {
+			suggestedLabel.encode();
+			len=len+suggestedLabel.getLength();
+		}
+		
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -131,7 +155,10 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(SRERO.getBytes(), 0, bytes, offset, SRERO.getLength());
 			offset=offset+SRERO.getLength();			
 		}	
-			
+		if (of!=null){
+			System.arraycopy(of.getBytes(), 0, bytes, offset, of.getLength());
+			offset=offset+of.getLength();
+		}	
 		if (lSPA!=null){
 			System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 			offset=offset+lSPA.getLength();
@@ -167,7 +194,15 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(iRO.getBytes(), 0, bytes, offset, serverIndication.getLength());
 			offset=offset+serverIndication.getLength();
 		}
-		
+		if (labelSet!=null) {
+			System.arraycopy(labelSet.getBytes(), 0, bytes, offset, labelSet.getLength());
+			offset=offset+labelSet.getLength();
+		}
+		if (suggestedLabel!=null) {
+			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, offset, suggestedLabel.getLength());
+			offset=offset+suggestedLabel.getLength();
+		}
+			
 	}
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
@@ -196,7 +231,18 @@ public class Path extends PCEPConstruct {
 			offset=offset+SRERO.getLength();
 			len=len+SRERO.getLength();
 		}		
-		
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
+			log.finest("OF Object found");
+			try {
+				of=new ObjectiveFunction(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed OF Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+of.getLength();
+			len=len+of.getLength();
+		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			log.finest("LSPA Object found");
@@ -339,6 +385,36 @@ public class Path extends PCEPConstruct {
 			offset=offset+serverIndication.getLength();
 			len=len+serverIndication.getLength();
 		}
+		log.info("A VER SI HAY Label Set!!!");
+		oc=PCEPObject.getObjectClass(bytes, offset);	
+		ot=PCEPObject.getObjectType(bytes, offset);
+	
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LABEL_SET){
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_LABEL_SET_BITMAP){
+				log.finest("Label Set Bitmap Object found");
+				try {
+					labelSet=new BitmapLabelSet(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed Suggested Label Object found");
+					throw new PCEPProtocolViolationException();
+				}
+				offset=offset+labelSet.getLength();
+				len=len+labelSet.getLength();
+			}
+			
+		}
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SUGGESTED_LABEL){
+			log.finest("Suggested Label Object found");
+			try {
+				suggestedLabel=new SuggestedLabel(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed Suggested Label Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+suggestedLabel.getLength();
+			len=len+suggestedLabel.getLength();
+		}
 		
 		this.setLength(len);
 	}
@@ -434,6 +510,33 @@ public class Path extends PCEPConstruct {
 		this.serverIndication = serverIndication;
 	}
 
+	public LabelSet getLabelSet() {
+		return labelSet;
+	}
+
+	public void setLabelSet(LabelSet labelSet) {
+		this.labelSet = labelSet;
+	}
+
+	public SuggestedLabel getSuggestedLabel() {
+		return suggestedLabel;
+	}
+
+	public void setSuggestedLabel(SuggestedLabel suggestedLabel) {
+		this.suggestedLabel = suggestedLabel;
+	}
+	
+	
+
+	
+	public ObjectiveFunction getOf() {
+		return of;
+	}
+
+	public void setOf(ObjectiveFunction of) {
+		this.of = of;
+	}
+
 	public String toString(){
 		String ret="PATH={ ";
 		if (SRERO!=null){
@@ -441,6 +544,9 @@ public class Path extends PCEPConstruct {
 		}
 		if (eRO!=null){
 			ret=ret+eRO.toString();
+		}
+		if (of!=null){
+			ret=ret+of.toString();
 		}
 		if (lSPA!=null){
 			ret=ret+lSPA.toString();
@@ -457,6 +563,12 @@ public class Path extends PCEPConstruct {
 		}
 		if (iRO!=null){
 			ret=ret+iRO.toString();
+		}
+		if (labelSet!=null) {
+			ret=ret+labelSet.toString();
+		}
+		if (suggestedLabel!=null) {
+			ret=ret+suggestedLabel.toString();
 		}
 		ret=ret+" }";
 

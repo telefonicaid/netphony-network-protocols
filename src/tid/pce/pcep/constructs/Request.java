@@ -253,7 +253,14 @@ public class Request extends PCEPConstruct{
 					log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
 					throw new PCEPProtocolViolationException();
 				}
-			}				
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
+				try {
+					endPoints=new P2MPEndPointsIPv4(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
+					throw new PCEPProtocolViolationException();
+				}
+			}						
 			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
 				try {
 					endPoints=new EndPointsIPv4(bytes,offset);
@@ -295,7 +302,7 @@ public class Request extends PCEPConstruct{
 				}
 			}
 			else {
-				log.warning("BANDWIDTH TYPE NOT SUPPORTED");
+				log.warning("END POINT TYPE NOT SUPPORTED");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+endPoints.getLength();

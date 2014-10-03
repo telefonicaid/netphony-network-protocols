@@ -72,14 +72,14 @@ Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
    equal or higher for the same LSP.  A PCRpt with state "Pending" is
    not considered as an acknowledgement.
    
- * @author jaume
+ * @author jaume fixed by ogondio
  *
  */
 
 public class SRP extends PCEPObject
 {
 	
-	private int SRP_ID_number;
+	private long SRP_ID_number;
 	
 	private SymbolicPathNameTLV symPathName;
 	
@@ -91,7 +91,7 @@ public class SRP extends PCEPObject
 	public SRP()
 	{
 		super();
-		this.ObjectClass = ObjectParameters.PCEP_OBJECT_CLASS_RSP;
+		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_RSP);
 		this.setOT(1);
 	}
 	
@@ -104,13 +104,12 @@ public class SRP extends PCEPObject
 	@Override
 	public void encode() 
 	{
-		this.ObjectClass = ObjectParameters.PCEP_OBJECT_CLASS_RSP;
-		this.setOT(1);
 		log.info("Encoding RSP!!");
 		ObjectLength = 4 + 4 + 4;
 		if (symPathName!=null)
 		{
 			symPathName.encode();
+			log.info("ElE");
 			ObjectLength=ObjectLength+symPathName.getTotalTLVLength();
 		}
 		
@@ -140,14 +139,16 @@ public class SRP extends PCEPObject
 		ByteHandler.BoolToBuffer(7 + offset*8, rFlag,object_bytes);
 		
 		offset += 1;
-		ByteHandler.IntToBuffer(0,offset*8, 32,SRP_ID_number,this.object_bytes);
+		//FIXME
+		ByteHandler.IntToBuffer(0,offset*8, 32,(int)SRP_ID_number,this.object_bytes);
 		
 		offset += 4;
 		
 		log.info("SRP_ID_number: "+SRP_ID_number);
-		
+		log.info("EL OFFSET ES "+offset);
 		if (symPathName != null)
 		{
+			log.info("copiamos "+symPathName.getTotalTLVLength()+" que es "+(symPathName.getTlv_bytes()[0]&0xFF));
 			System.arraycopy(symPathName.getTlv_bytes(),0,this.object_bytes,offset,symPathName.getTotalTLVLength());
 			offset=offset+symPathName.getTotalTLVLength();
 		}
@@ -215,12 +216,12 @@ public class SRP extends PCEPObject
 		
 	}
 
-	public int getSRP_ID_number() 
+	public long getSRP_ID_number() 
 	{
 		return SRP_ID_number;
 	}
 
-	public void setSRP_ID_number(int sRP_ID_number) 
+	public void setSRP_ID_number(long sRP_ID_number) 
 	{
 		SRP_ID_number = sRP_ID_number;
 	}
@@ -253,6 +254,13 @@ public class SRP extends PCEPObject
 		this.pathSetupTLV = pathSetupTLV;
 	}
 	
-	
+	public String toString() {
+		if (symPathName!=null){
+			return "[SRP: "+symPathName.toString()+"]";
+		}else {
+			return "[SRP: ]";
+		}
+		
+	}
 
 }

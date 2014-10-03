@@ -54,6 +54,12 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=118;
 	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=119;
 	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=120;
+	
+	//IDEALIST
+	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
+	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
+
+	
 	public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=121;
 	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
@@ -180,6 +186,11 @@ public class ObjectParameters {
 	
 	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
 	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
+	
+	//IDEALIST
+	public static final int PCEP_OBJECT_TYPE_SUGGESTED_LABEL=1;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_INCLUSIVE=2;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_BITMAP=1;
 	
 	//Values from draft-ietf-pce-gmpls-pcep-extensions-09
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=0;
@@ -452,7 +463,7 @@ public class ObjectParameters {
     public static final int PCEP_TLV_TYPE_TUNNEL_ID=5561;
         
 	//Symbolic Path Name
-    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=1013;  
+    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=17;  
     
     //Segment Routing PCE Capability TLV type. Value 26 according to draft-sivabalan-pce-segment-routing-02
     public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       

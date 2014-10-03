@@ -1,7 +1,27 @@
-package tid.pce.pcep.objects;
+package tid.pce.pcep.constructs;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.PCEPConstruct;
+import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthExistingLSP;
+import tid.pce.pcep.objects.BandwidthRequested;
+import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
+import tid.pce.pcep.objects.EndPointDataPathID;
+import tid.pce.pcep.objects.EndPoints;
+import tid.pce.pcep.objects.EndPointsIPv4;
+import tid.pce.pcep.objects.EndPointsIPv6;
+import tid.pce.pcep.objects.EndPointsUnnumberedIntf;
+import tid.pce.pcep.objects.ExplicitRouteObject;
+import tid.pce.pcep.objects.GeneralizedEndPoints;
+import tid.pce.pcep.objects.LSP;
+import tid.pce.pcep.objects.MalformedPCEPObjectException;
+import tid.pce.pcep.objects.ObjectParameters;
+import tid.pce.pcep.objects.P2MPEndPointsDataPathID;
+import tid.pce.pcep.objects.P2MPEndPointsIPv4;
+import tid.pce.pcep.objects.PCEPObject;
+import tid.pce.pcep.objects.SRERO;
+import tid.pce.pcep.objects.SRP;
+import tid.pce.pcep.objects.XifiEndPoints;
+import tid.pce.pcep.objects.XifiUniCastEndPoints;
 
 public class PCEPIntiatedLSP extends PCEPConstruct
 {
@@ -89,6 +109,13 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		System.arraycopy(lsp.getBytes(), 0, this.getBytes(), offset, lsp.getLength());
 		offset=offset + lsp.getLength();
 
+		if (endPoint!=null){
+
+			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
+			offset=offset + endPoint.getLength();
+
+		}
+		
 		if (ero!=null)
 		{
 			System.arraycopy(ero.getBytes(), 0, this.getBytes(), offset, ero.getLength());
@@ -101,12 +128,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			offset=offset + srero.getLength();			
 		}
 
-		if (endPoint!=null){
 
-			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
-			offset=offset + endPoint.getLength();
-
-		}
 
 
 		if (bandwidth!=null){
@@ -411,6 +433,28 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 	public void setSrero(SRERO srero) {
 		this.srero = srero;
+	}
+	
+	public String toString(){
+		StringBuffer sb=new StringBuffer();
+		
+		if (endPoint!=null){
+			sb.append(endPoint.toString());
+		}
+		
+		if (srero!=null){
+			sb.append(srero.toString());
+		}
+		
+		if (bandwidth!=null){
+			sb.append(bandwidth.toString());
+		}		
+		
+		if (rsp!=null){
+			sb.append(rsp.toString());
+		}
+		
+		return sb.toString();
 	}
 
 

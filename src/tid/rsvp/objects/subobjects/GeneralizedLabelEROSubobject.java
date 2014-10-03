@@ -1,5 +1,7 @@
 package tid.rsvp.objects.subobjects;
 
+import org.eclipse.jetty.util.log.Log;
+
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 
@@ -30,6 +32,16 @@ public class GeneralizedLabelEROSubobject extends LabelEROSubobject{
 	 * Encode Generalized LABEL
 	 */
 	public void encode() {		
+		if (dwdmWavelengthLabel!=null) {
+			try {
+				dwdmWavelengthLabel.encode();
+			} catch (RSVPProtocolViolationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			label=new byte[dwdmWavelengthLabel.getLength()];
+			System.arraycopy(dwdmWavelengthLabel.getBytes(), 0, this.label, 0, this.label.length);
+		}
 		this.setErosolength(4+label.length);
 		this.subobject_bytes=new byte[this.erosolength];
 		this.setCtype(SubObjectValues.ERO_SUBOBJECT_LABEL_CTYPE_GENERALIZED_LABEL);
