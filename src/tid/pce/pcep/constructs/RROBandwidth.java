@@ -3,7 +3,7 @@ package tid.pce.pcep.constructs;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcep.objects.PCEPObject;
@@ -17,7 +17,7 @@ import tid.pce.pcep.objects.ReportedRouteObject;
 public class RROBandwidth extends PCEPConstruct{
 
 	private ReportedRouteObject rRO; //Compulsory
-	private Bandwidth bandwidth;//Optional
+	private BandwidthRequested bandwidth;//Optional
 	
 	private Logger log=Logger.getLogger("PCEPParser");
 	
@@ -108,13 +108,13 @@ public class RROBandwidth extends PCEPConstruct{
 
 
 
-	public Bandwidth getBandwidth() {
+	public BandwidthRequested getBandwidth() {
 		return bandwidth;
 	}
 
 
 
-	public void setBandwidth(Bandwidth bandwidth) {
+	public void setBandwidth(BandwidthRequested bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 

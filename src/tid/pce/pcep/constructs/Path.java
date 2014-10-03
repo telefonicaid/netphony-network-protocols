@@ -4,12 +4,22 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthExistingLSP;
+import tid.pce.pcep.objects.BandwidthRequested;
+import tid.pce.pcep.objects.BitmapLabelSet;
 import tid.pce.pcep.objects.ExplicitRouteObject;
-import tid.pce.pcep.objects.GeneralizedBandwidth;
-import tid.pce.pcep.objects.GeneralizedBandwidthSSON;
+import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
+import tid.pce.pcep.objects.Bandwidth;
 import tid.pce.pcep.objects.IncludeRouteObject;
+import tid.pce.pcep.objects.InterLayer;
+import tid.pce.pcep.objects.LabelSet;
+import tid.pce.pcep.objects.LabelSetInclusiveList;
+import tid.pce.pcep.objects.ObjectiveFunction;
+import tid.pce.pcep.objects.SuggestedLabel;
+import tid.pce.pcep.objects.SwitchLayer;
+import tid.pce.pcep.objects.ReqAdapCap;
 import tid.pce.pcep.objects.LSPA;
+import tid.pce.pcep.objects.ServerIndication;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.Metric;
 import tid.pce.pcep.objects.ObjectParameters;
@@ -23,12 +33,17 @@ import tid.pce.pcep.objects.SRERO;
 
    where:
 
-    <attribute-list>::=[<LSPA>]
+    <attribute-list>::= [OF]
+    					[<LSPA>]
                        [<BANDWIDTH>]
                        [<GENERALIZED-BANDWIDTH>] --ESTADO DRAFT
                        [<metric-list>]
                        [<IRO>]
-
+  						[<INTER-LAYER>]
+                            [<SWITCH-LAYER>]
+                            [<REQ-ADAP-CAP>]
+                            [<SERVER-INDICATION>]
+                            
     <metric-list>::=<METRIC>[<metric-list>]
  * @author ogondio
  *
@@ -37,12 +52,20 @@ public class Path extends PCEPConstruct {
 
 	private ExplicitRouteObject eRO;
 	private SRERO SRERO;
-	
+	private ObjectiveFunction of;
 	private LSPA lSPA;
 	private Bandwidth bandwidth;
-	private GeneralizedBandwidth generalizedbandwidth;
 	private LinkedList<Metric> metricList;
 	private IncludeRouteObject iRO;
+	private InterLayer interLayer;
+	private SwitchLayer switchLayer;
+	private ReqAdapCap reqAdapCap;
+	private ServerIndication serverIndication;
+	
+	private LabelSet labelSet;
+	
+	private SuggestedLabel suggestedLabel;
+	
 	
 	public Path(){
 		metricList=new LinkedList<Metric>();
@@ -53,14 +76,10 @@ public class Path extends PCEPConstruct {
 		decode(bytes,offset);
 	}
 	
-	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		// TODO Auto-generated method stub
-		int z = 1;
-		log.info("Path encoding "+z);z++;
+
 		log.finest("Encoding Request Rule");
 		int len=0;
-		log.info("Path encoding "+z);z++;
 		if (eRO!=null){
 			eRO.encode();
 			len=len+eRO.getLength();
@@ -73,37 +92,58 @@ public class Path extends PCEPConstruct {
 			log.warning("Path must start with ERO or SRERO object");
 			throw new PCEPProtocolViolationException();
 		}
-		log.info("Path encoding "+z);z++;
+		if (of!=null){
+			of.encode();
+			len=len+of.getLength();
+		}
+		//log.info("Path encoding "+z);z++;
 		if (lSPA!=null){
 			lSPA.encode();
 			len=len+lSPA.getLength();
 		}
-		log.info("Path encoding "+z);z++;
+		//log.info("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
-		log.info("Path encoding "+z);z++;
-		if (generalizedbandwidth!=null){
-			generalizedbandwidth.encode();
-			len=len+generalizedbandwidth.getLength();
-		}
-		log.info("Path encoding "+z);z++;
+		//log.info("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			(metricList.get(i)).encode();
 			len=len+(metricList.get(i)).getLength();
 		}
-		log.info("Path encoding "+z);z++;
+		//log.info("Path encoding "+z);z++;
 		if (iRO!=null){
 			iRO.encode();
 			len=len+iRO.getLength();
 		}
-		log.info("Path encoding "+z);z++;
-		log.finest("Path Length = "+len);
+		if (interLayer!=null){
+			interLayer.encode();
+			len=len+interLayer.getLength();
+		}
+		if (switchLayer!=null){
+			switchLayer.encode();
+			len=len+switchLayer.getLength();
+		}
+		if (reqAdapCap!=null){
+			reqAdapCap.encode();
+			len=len+reqAdapCap.getLength();
+		}
+		if (serverIndication!=null){
+			serverIndication.encode();
+			len=len+serverIndication.getLength();
+		}
+		if (labelSet!=null) {
+			labelSet.encode();
+			len=len+labelSet.getLength();
+		}
+		if (suggestedLabel!=null) {
+			suggestedLabel.encode();
+			len=len+suggestedLabel.getLength();
+		}
+		
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
-		log.info("Path encoding "+z);z++;
 		
 		if(eRO!=null)
 		{
@@ -114,42 +154,62 @@ public class Path extends PCEPConstruct {
 		{
 			System.arraycopy(SRERO.getBytes(), 0, bytes, offset, SRERO.getLength());
 			offset=offset+SRERO.getLength();			
-		}
-			
-			
-		log.info("Path encoding "+z);z++;
+		}	
+		if (of!=null){
+			System.arraycopy(of.getBytes(), 0, bytes, offset, of.getLength());
+			offset=offset+of.getLength();
+		}	
 		if (lSPA!=null){
 			System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 			offset=offset+lSPA.getLength();
 		}
-		log.info("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
-		log.info("Path encoding "+z);z++;
-		if (generalizedbandwidth!=null){
-			System.arraycopy(generalizedbandwidth.getBytes(), 0, bytes, offset, generalizedbandwidth.getLength());
-			offset=offset+generalizedbandwidth.getLength();
-		}
-		log.info("Path encoding "+z);z++;
+		//log.info("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
 			offset=offset+metricList.get(i).getLength();
 		}
-		log.info("Path encoding "+z);z++;
+		//log.info("Path encoding "+z);z++;
 		if (iRO!=null){
 			System.arraycopy(iRO.getBytes(), 0, bytes, offset, iRO.getLength());
 			offset=offset+iRO.getLength();
 		}
 		
-		log.info("Path encoding end");
+		if (interLayer!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, interLayer.getLength());
+			offset=offset+interLayer.getLength();
+		}
+		if (switchLayer!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, switchLayer.getLength());
+			offset=offset+switchLayer.getLength();
+		}
+		if (reqAdapCap!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, reqAdapCap.getLength());
+			offset=offset+reqAdapCap.getLength();
+		}
+		if (serverIndication!=null){
+			System.arraycopy(iRO.getBytes(), 0, bytes, offset, serverIndication.getLength());
+			offset=offset+serverIndication.getLength();
+		}
+		if (labelSet!=null) {
+			System.arraycopy(labelSet.getBytes(), 0, bytes, offset, labelSet.getLength());
+			offset=offset+labelSet.getLength();
+		}
+		if (suggestedLabel!=null) {
+			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, offset, suggestedLabel.getLength());
+			offset=offset+suggestedLabel.getLength();
+		}
+			
 	}
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		log.finest("Decoding Path Rule");
 		int len=0;		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
+		int ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
 			log.finest("ERO Object found");
 			try {
@@ -171,7 +231,18 @@ public class Path extends PCEPConstruct {
 			offset=offset+SRERO.getLength();
 			len=len+SRERO.getLength();
 		}		
-		
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
+			log.finest("OF Object found");
+			try {
+				of=new ObjectiveFunction(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed OF Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+of.getLength();
+			len=len+of.getLength();
+		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			log.finest("LSPA Object found");
@@ -184,33 +255,57 @@ public class Path extends PCEPConstruct {
 			offset=offset+lSPA.getLength();
 			len=len+lSPA.getLength();
 		}
-		oc=PCEPObject.getObjectClass(bytes, offset);		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
-			log.finest("BANDWIDTH Object found");
-			try {
-				bandwidth=new Bandwidth(bytes,offset);
-			} catch (MalformedPCEPObjectException e) {
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
+				log.finest("BANDWIDTH Request Object found");
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}			
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
+				log.finest("BANDWIDTH Existing TE LSP Object found");
+				try {
+					bandwidth=new BandwidthExistingLSP(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
+				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Request Object found");
+				try {
+					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
+				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Existing TE LSP Object found");
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+				
+			} else {
 				log.warning("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
+			
 			offset=offset+bandwidth.getLength();
 			len=len+bandwidth.getLength();
-		}
-		oc=PCEPObject.getObjectClass(bytes, offset);		
-		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_GENERALIZED_BANDWIDTH){
-			log.finest("GENERALIZED BANDWIDTH Object found");
-			int ot=PCEPObject.getObjectType(bytes, offset);
-			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GB_SSON){
-				try {
-					generalizedbandwidth=new GeneralizedBandwidthSSON(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZED BANDWIDTH Object found");
-					throw new PCEPProtocolViolationException();
-				}
+			if (offset>=bytes.length){
+				this.setLength(len);
+				return;
 			}
-			offset=offset+generalizedbandwidth.getLength();
-			len=len+generalizedbandwidth.getLength();
 		}
+		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
 			log.finest("METRIC Object found");
@@ -238,6 +333,89 @@ public class Path extends PCEPConstruct {
 			offset=offset+iRO.getLength();
 			len=len+iRO.getLength();
 		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_INTER_LAYER){
+			log.finest("interLayer Object found");
+			try {
+				interLayer=new InterLayer(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed interLayer Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+interLayer.getLength();
+			len=len+interLayer.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
+			log.finest("switchLayer Object found");
+			try {
+				switchLayer=new SwitchLayer(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed switchLayer Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+switchLayer.getLength();
+			len=len+switchLayer.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_REQ_ADAP_CAP){
+			log.finest("reqAdapCap Object found");
+			try {
+				reqAdapCap=new ReqAdapCap(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed reqAdapCap Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+reqAdapCap.getLength();
+			len=len+reqAdapCap.getLength();
+		}
+		
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SERVER_INDICATION){
+			log.finest("serverIndication Object found");
+			try {
+				serverIndication=new ServerIndication(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed serverIndication Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+serverIndication.getLength();
+			len=len+serverIndication.getLength();
+		}
+		log.info("A VER SI HAY Label Set!!!");
+		oc=PCEPObject.getObjectClass(bytes, offset);	
+		ot=PCEPObject.getObjectType(bytes, offset);
+	
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LABEL_SET){
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_LABEL_SET_BITMAP){
+				log.finest("Label Set Bitmap Object found");
+				try {
+					labelSet=new BitmapLabelSet(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warning("Malformed Suggested Label Object found");
+					throw new PCEPProtocolViolationException();
+				}
+				offset=offset+labelSet.getLength();
+				len=len+labelSet.getLength();
+			}
+			
+		}
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SUGGESTED_LABEL){
+			log.finest("Suggested Label Object found");
+			try {
+				suggestedLabel=new SuggestedLabel(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warning("Malformed Suggested Label Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+suggestedLabel.getLength();
+			len=len+suggestedLabel.getLength();
+		}
+		
 		this.setLength(len);
 	}
 	
@@ -267,9 +445,6 @@ public class Path extends PCEPConstruct {
 		this.metricList = metricList;
 	}
 	
-	public void setGeneralizedbandwidth(GeneralizedBandwidth generalizedbandwidth) {
-		this.generalizedbandwidth = generalizedbandwidth;
-	}
 	
 	public void setBandwidth(Bandwidth bandwidth) {
 		this.bandwidth = bandwidth;
@@ -281,10 +456,6 @@ public class Path extends PCEPConstruct {
 
 	public Bandwidth getBandwidth() {
 		return bandwidth;
-	}
-
-	public GeneralizedBandwidth getGeneralizedbandwidth() {
-		return generalizedbandwidth;
 	}
 
 	public LinkedList<Metric> getMetricList() {
@@ -307,6 +478,65 @@ public class Path extends PCEPConstruct {
 		return this.SRERO;
 	}
 	
+	public InterLayer getInterLayer() {
+		return interLayer;
+	}
+
+	public void setInterLayer(InterLayer interLayer) {
+		this.interLayer = interLayer;
+	}
+
+	public SwitchLayer getSwitchLayer() {
+		return switchLayer;
+	}
+
+	public void setSwitchLayer(SwitchLayer switchLayer) {
+		this.switchLayer = switchLayer;
+	}
+
+	public ReqAdapCap getReqAdapCap() {
+		return reqAdapCap;
+	}
+
+	public void setReqAdapCap(ReqAdapCap reqAdapCap) {
+		this.reqAdapCap = reqAdapCap;
+	}
+
+	public ServerIndication getServerIndication() {
+		return serverIndication;
+	}
+
+	public void setServerIndication(ServerIndication serverIndication) {
+		this.serverIndication = serverIndication;
+	}
+
+	public LabelSet getLabelSet() {
+		return labelSet;
+	}
+
+	public void setLabelSet(LabelSet labelSet) {
+		this.labelSet = labelSet;
+	}
+
+	public SuggestedLabel getSuggestedLabel() {
+		return suggestedLabel;
+	}
+
+	public void setSuggestedLabel(SuggestedLabel suggestedLabel) {
+		this.suggestedLabel = suggestedLabel;
+	}
+	
+	
+
+	
+	public ObjectiveFunction getOf() {
+		return of;
+	}
+
+	public void setOf(ObjectiveFunction of) {
+		this.of = of;
+	}
+
 	public String toString(){
 		String ret="PATH={ ";
 		if (SRERO!=null){
@@ -315,14 +545,17 @@ public class Path extends PCEPConstruct {
 		if (eRO!=null){
 			ret=ret+eRO.toString();
 		}
+		if (of!=null){
+			ret=ret+of.toString();
+		}
 		if (lSPA!=null){
 			ret=ret+lSPA.toString();
 		}
 		if (bandwidth!=null){
 			ret=ret+bandwidth.toString();
 		}
-		if (generalizedbandwidth!=null){
-			ret=ret+generalizedbandwidth.toString();
+		if (serverIndication!=null){
+			ret=ret+serverIndication.toString();
 		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
@@ -330,6 +563,12 @@ public class Path extends PCEPConstruct {
 		}
 		if (iRO!=null){
 			ret=ret+iRO.toString();
+		}
+		if (labelSet!=null) {
+			ret=ret+labelSet.toString();
+		}
+		if (suggestedLabel!=null) {
+			ret=ret+suggestedLabel.toString();
 		}
 		ret=ret+" }";
 

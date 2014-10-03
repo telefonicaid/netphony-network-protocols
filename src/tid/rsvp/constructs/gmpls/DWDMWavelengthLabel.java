@@ -15,7 +15,7 @@ import tid.rsvp.constructs.RSVPConstruct;
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |Grid | C.S.  |    Identifier   |              n                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |       m       |                  Reserved                     |
+   |       m                       |  Reserved                     |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
    (1) Grid: 3 bits
@@ -126,7 +126,9 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 			this.bytes[1]=(byte)(identifier&0xFF);
 			this.bytes[2]=(byte)((n>>8)&0xFF);
 			this.bytes[3]=(byte)(n&0xFF);
-			this.bytes[4]=(byte)(m&0xFF);
+			this.bytes[4]=(byte)((m>>8)&0xFF);
+			this.bytes[5]=(byte)(m&0xFF);
+			
 		}else{
 			this.setLength(4);
 			this.bytes=new byte[this.getLength()];
@@ -147,7 +149,7 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 		identifier=((bytes[offset]&0x01)<<8)|(bytes[offset+1]&0xFF);
 		n=((bytes[offset+2]&0xFF)<<8)|(bytes[offset+3]&0xFF);
 		if (grid==DWDMWavelengthLabelValues.ITU_T_FLEX){
-			m=((bytes[offset+4]&0xFF));	
+			m=(((bytes[offset+4]&0xFF)<<8)|(bytes[offset+5]&0xFF));	
 		}
 	}
 
@@ -194,7 +196,7 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 	@Override
 	public String toString() {
 		String ret= "";
-		ret = ret + "N:"+Integer.toString(n) +"\tM:"+Integer.toString(m);
+		ret = ret + "Grid "+this.grid +" n:"+Integer.toString(n) +" m:"+Integer.toString(m);
 		return ret;
 	}
 

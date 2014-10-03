@@ -53,6 +53,14 @@ public class ObjectParameters {
 	// NUMBERS FOR INTERNAL USE ONLY THEY DONT FOLLOW THE DRAFT as they use already existing numbers!!!!
 	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=118;
 	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=119;
+	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=120;
+	
+	//IDEALIST
+	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
+	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
+
+	
+	public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=121;
 	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
 	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=150;
@@ -85,7 +93,12 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_NOPATH = 1;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS = 1;
 	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST = 1;
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REOPT = 2;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP= 2;
+	
+	// from draft-ietf-gmpls
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST = 3;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP = 4;
+	
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV4 = 1;
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV6 = 2;
 
@@ -141,9 +154,11 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
 	
 	// PCEP Extensions for Inter-Layer MPLS and GMPLS Traffic Engineering
-    //draft-ietf-pce-inter-layer-ext-05
+    //draft-ietf-pce-inter-layer-ext-08
 	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
 	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
+	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
+	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
 	
 	// PCEP Object types from RFC 5541
 	public static final int PCEP_OBJECT_TYPE_OBJECTIVE_FUNCTION = 1;
@@ -172,11 +187,18 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
 	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
 	
+	//IDEALIST
+	public static final int PCEP_OBJECT_TYPE_SUGGESTED_LABEL=1;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_INCLUSIVE=2;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_BITMAP=1;
 	
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=1;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=2;
+	//Values from draft-ietf-pce-gmpls-pcep-extensions-09
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=0;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=1;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_REMOVE=2;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_MODIFIED=3;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_UNCHANGED=4;
+	
 	
 	public static final int PCEP_TLV_TYPE_LABEL_REQUEST=2000;
 	
@@ -309,7 +331,15 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_OF_LIST_TLV=4;
 	public static final int PCEP_TLV_ORDER_TLV=5;
 	public static final int PCEP_TLV_P2MP_CAPABLE=6;
-	public static final int PCEP_TLV_REQUEST_INFO=7;
+	public static final int PCEP_TLV_REQUEST_INFO=70;//FIXME
+	
+	//From draft-ietf-pce-gmpls-pcep-extensions-09
+	public static final int PCEP_TLV_TYPE_IPV4_ADDRESS=7;
+	public static final int PCEP_TLV_TYPE_IPV6_ADDRESS=8;
+	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT=9;
+	public static final int PCEP_TLV_BANDWIDTH=502;
+	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=14;
+	
 	public static final int PCEP_TLV_TYPE_XIFI=500;
 	
 	public static final int PCEP_TLV_PATH_SETUP=666;	
@@ -433,7 +463,7 @@ public class ObjectParameters {
     public static final int PCEP_TLV_TYPE_TUNNEL_ID=5561;
         
 	//Symbolic Path Name
-    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=1013;  
+    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=17;  
     
     //Segment Routing PCE Capability TLV type. Value 26 according to draft-sivabalan-pce-segment-routing-02
     public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       
@@ -449,7 +479,7 @@ public class ObjectParameters {
     public static final int PCEP_OBJECT_CLASS_LSP = 32;
     
     //RSP class
-    public static final int PCEP_OBJECT_CLASS_RSP = 33;
+    public static final int PCEP_OBJECT_CLASS_SRP = 33;
     
     /*******************************************************************/
     
@@ -458,5 +488,14 @@ public class ObjectParameters {
     public static final int LSP_OPERATIONAL_ACTIVE = 2;
     public static final int LSP_OPERATIONAL_GOING_DOWN = 3;
     public static final int LSP_OPERATIONAL_GOING_UP = 4;
+    
+    //From draft-ietf-pce-gmpls-pcep-extensions-09
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_INTSERV = 2;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SONET_SDH = 4;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_G709 = 5;
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_ETHERNET = 6;
+    // From draft-ietf-ccamp-flexible-grid-rsvp-te-ext-00
+    public static final int PCEP_GMPLS_GEN_BANDWIDTH_SSON = 10;
+
     
 }

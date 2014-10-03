@@ -160,12 +160,12 @@ public class PCEPUpdate extends PCEPMessage{
 		UpdateRequest ur;
 		
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
-		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			throw new PCEPProtocolViolationException();
 		}
 		
-		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_RSP){
+		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_SRP){
 			try
 			{
 				ur = new UpdateRequest(this.getBytes(),offset);

@@ -1,6 +1,7 @@
 package tid.pce.pcep.objects;
 
 import tid.pce.pcep.objects.tlvs.DomainIDTLV;
+import tid.pce.pcep.objects.tlvs.GMPLSCapabilityTLV;
 import tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
@@ -157,6 +158,11 @@ public class OPEN extends PCEPObject{
 	 */
 	private PCE_ID_TLV pce_id_tlv;
 	
+	/**
+	 * Optional GMPLS CAPABILITY TLV
+	 */
+	
+	private GMPLSCapabilityTLV gmplsCapabilityTLV;
 	
 	/**
 	 * Optional Stateful PCE Capability TLV. It indicates wether PCE or PCC supports
@@ -230,6 +236,10 @@ public class OPEN extends PCEPObject{
 			pce_id_tlv.encode();
 			ObjectLength=ObjectLength+pce_id_tlv.getTotalTLVLength();
 		}
+		if (gmplsCapabilityTLV!=null){
+			gmplsCapabilityTLV.encode();
+			ObjectLength=ObjectLength+gmplsCapabilityTLV.getTotalTLVLength();
+		}	
 		if (stateful_capability_tlv!=null){
 			stateful_capability_tlv.encode();
 			ObjectLength=ObjectLength+stateful_capability_tlv.getTotalTLVLength();
@@ -270,6 +280,10 @@ public class OPEN extends PCEPObject{
 			System.arraycopy(pce_id_tlv.getTlv_bytes(),0,this.object_bytes,offset,pce_id_tlv.getTotalTLVLength());
 			offset=offset+pce_id_tlv.getTotalTLVLength();
 		}
+		if (gmplsCapabilityTLV!=null){
+			System.arraycopy(gmplsCapabilityTLV.getTlv_bytes(),0,this.object_bytes,offset,gmplsCapabilityTLV.getTotalTLVLength());
+			offset=offset+gmplsCapabilityTLV.getTotalTLVLength();
+		}
 		if (stateful_capability_tlv!=null){
 			System.arraycopy(stateful_capability_tlv.getTlv_bytes(),0,this.object_bytes,offset,stateful_capability_tlv.getTotalTLVLength());
 			offset=offset+stateful_capability_tlv.getTotalTLVLength();
@@ -292,7 +306,7 @@ public class OPEN extends PCEPObject{
 	 * Decodes the OPEN object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
-		log.fine("Beginning decoding of OPEN object");
+		log.info("Beginning decoding of OPEN object");
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
 		stateful_capability_tlv = null;
@@ -307,17 +321,17 @@ public class OPEN extends PCEPObject{
 		boolean fin=false;
 		int offset=8;
 		if (ObjectLength==8){
-			log.fine("Prematurely ending. OPEN message too short");
+			log.info("Prematurely ending. OPEN message too short");
 			fin=true;
 		}
 		while (!fin) {
-			log.fine("Beginning TLV decoding");
+			log.info("Beginning TLV decoding");
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.fine("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
+			log.info("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
-				log.fine("OF_LIST_TLV found");
+				log.info("OF_LIST_TLV found");
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);
 				log.fine(of_list_tlv.toString());
 				break;
@@ -330,6 +344,11 @@ public class OPEN extends PCEPObject{
 				log.fine("PCEP_TLV_PCE_ID found");
 				pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
 				log.fine(pce_id_tlv.toString());
+				break;
+			case ObjectParameters.PCEP_TLV_TYPE_GMPLS_CAPABILITY:
+				log.info("PCEP_TLV_GMPLS_CAPABILITY found");
+				gmplsCapabilityTLV=new GMPLSCapabilityTLV(this.getObject_bytes(), offset);
+				log.info(gmplsCapabilityTLV.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_STATEFUL_CAPABILITY:
 				log.fine("PCEP_TLV_TYPE_STATEFUL_CAPABILITY found");
@@ -512,6 +531,14 @@ public class OPEN extends PCEPObject{
 	public void setRedundancy_indetifier_tlv(
 			PCE_Redundancy_Group_Identifier_TLV redundancy_indetifier_tlv) {
 		this.redundancy_indetifier_tlv = redundancy_indetifier_tlv;
+	}
+
+	public GMPLSCapabilityTLV getGmplsCapabilityTLV() {
+		return gmplsCapabilityTLV;
+	}
+
+	public void setGmplsCapabilityTLV(GMPLSCapabilityTLV gmplsCapabilityTLV) {
+		this.gmplsCapabilityTLV = gmplsCapabilityTLV;
 	}
 
 	public String toString() {

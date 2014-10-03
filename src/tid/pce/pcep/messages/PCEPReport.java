@@ -118,13 +118,13 @@ public class PCEPReport extends PCEPMessage
 		
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		System.out.println("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
-		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			System.out.println("There should be at least one RSP Object");
 			//throw new PCEPProtocolViolationException();
 		}
 		//It has to be at least one!
-		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			sr = new StateReport(this.getBytes(),offset);
 			try

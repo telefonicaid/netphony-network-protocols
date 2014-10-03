@@ -13,23 +13,14 @@ import tid.protocol.commons.ByteHandler;
 
 /**
  * 
- * http://tools.ietf.org/html/draft-ietf-pce-stateful-pce-05#page-36
+ * http://tools.ietf.org/html/draft-ietf-pce-stateful-pce-9
  * 
  * 
-7.2. LSP Object
+7.3. LSP Object
 
-
-  The LSP object MUST be present within PCRpt and PCUpd messages.  The
+The LSP object MUST be present within PCRpt and PCUpd messages.  The
    LSP object MAY be carried within PCReq and PCRep messages if the
    stateful PCE capability has been negotiated on the session.  The LSP
-
-
-
-Crabbe, et al.           Expires January 1, 2014               [Page 41]
- 
-Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
-
-
    object contains a set of fields used to specify the target LSP, the
    operation to be performed on the LSP, and LSP Delegation.  It also
    contains a flag indicating to a PCE that the LSP state
@@ -41,31 +32,30 @@ Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
 
    LSP Object-Type is 1.
 
-   The format of the LSP object body is shown in Figure 18:
+   The format of the LSP object body is shown in Figure 11:
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                PLSP-ID                |     Flags |  O|A|R|S|D|
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |         Reserved                            |  LSP-sig-type   |
+     |                PLSP-ID                |    Flag |    O|A|R|S|D|
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      //                        TLVs                                 //
      |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                     Figure 18: The LSP Object format
+                     Figure 11: The LSP Object format
 
-   PLSP-ID (20 bits): An identifier for the LSP.  A PCC creates a unique
-   PLSP-ID for each LSP that is constant for the life time of a PCEP
-   session.  The mapping of the Symbolic Path Name to PLSP-ID is
-   communicated to the PCE by sending a PCRpt message containing the
-   SYMBOLIC-PATH-NAME TLV.  All subsequent PCEP messages then address
-   the LSP by the PLSP-ID.  The values of 0 and 0xFFFFF are reserved.
-   Note that the PLSP-ID is a value that is constant for the life time
-   of the PCEP session, during which time for an RSVP-signaled LSP there
-   might be a different RSVP identifiers (LSP-id, tunnel-id) allocated
-   it.
+   PLSP-ID (20 bits): A PCEP-specific identifier for the LSP.  A PCC
+   creates a unique PLSP-ID for each LSP that is constant for the
+   lifetime of a PCEP session.  The PCC will advertise the same PLSP-ID
+   on all PCEP sessions it maintains at a given times.  The mapping of
+   the Symbolic Path Name to PLSP-ID is communicated to the PCE by
+   sending a PCRpt message containing the SYMBOLIC-PATH-NAME TLV.  All
+   subsequent PCEP messages then address the LSP by the PLSP-ID.  The
+   values of 0 and 0xFFFFF are reserved.  Note that the PLSP-ID is a
+   value that is constant for the lifetime of the PCEP session, during
+   which time for an RSVP-signaled LSP there might be a different RSVP
+   identifiers (LSP-id, tunnel-id) allocated it.
 
    Flags (12 bits):
 
@@ -78,13 +68,11 @@ Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
       set to 0 revokes the delegation.  To keep the delegation, the PCE
       must set the D flag to 1 on each PCUpd message for the duration of
       the delegation - the first PCUpd with the D flag set to 0 returns
-
-
       the delegation.
 
-   S (SYNC - 1 bit):  the S Flag MUST be set to 1 on each LSP State
-      Report sent from a PCC during State Synchronization.  The S Flag
-      MUST be set to 0 otherwise.
+   S (SYNC - 1 bit):  the S Flag MUST be set to 1 on each PCRpt sent
+      from a PCC during State Synchronization.  The S Flag MUST be set
+      to 0 in other PCRpt messages sent from the PCC.
 
    R(Remove - 1 bit):  On PCRpt messages the R Flag indicates that the
       LSP has been removed from the PCC and the PCE SHOULD remove all
@@ -120,29 +108,17 @@ Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
 
       4 - GOING-UP:  LSP is being signalled.
 
-      5-7 - Reserved:  these values MUST be set to 0 on transmission and
-         MUST be ignored on receipt.
+      5-7 - Reserved:  these values are reserved for future use.
 
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
 
-   LSP-sig-type (8 bits) - identifies the method used for signaling the
-   LSP.  If a PCEP speaker receives an LSP object with LSP-sig-type that
-
-
-   had not been previously negotiated, a PCErr with error type 19, error
-   value 5, "Unsupported LSP signaling type", (see Section 8.4) MUST be
-   sent.  If there is a mismatch in the LSP signaling type for a
-   particular LSP between the PCEP speakers, a PCErr with error type 19,
-   error value 4, "Mismatched LSP signaling type" (see Section 8.4) MUST
-   be sent by the party identifying the mismatch.
-
-   Optional TLVs that may be included in the LSP Object are described in
-   the following sections.
+   TLVs that may be included in the LSP Object are described in the
+   following sections.
 
  * 
  * @author Fernando Mu�oz del Nuevo
- *
+ * @author Oscar Gonzalez de Dios
  */
 
 public class LSP extends PCEPObject{
@@ -189,7 +165,7 @@ public class LSP extends PCEPObject{
 	@Override
 	public void encode() 
 	{
-		ObjectLength = 4 + 4 + 4;
+		ObjectLength = 4 + 4;
 		if (symbolicPathNameTLV_tlv!=null){
 			symbolicPathNameTLV_tlv.encode();
 			ObjectLength=ObjectLength+symbolicPathNameTLV_tlv.getTotalTLVLength();
@@ -214,7 +190,6 @@ public class LSP extends PCEPObject{
 			lspDBVersion_tlv.encode();
 			ObjectLength=ObjectLength+lspDBVersion_tlv.getTotalTLVLength();
 		}
-		
 		object_bytes = new byte[ObjectLength];
 		encode_header();
 		
@@ -231,10 +206,10 @@ public class LSP extends PCEPObject{
 		ByteHandler.BoolToBuffer(6 + offset*8, sFlag,object_bytes);
 		ByteHandler.BoolToBuffer(7 + offset*8, dFlag,object_bytes);
 
-		offset += 1;
-		offset += 3;
-		
-		ByteHandler.IntToBuffer(0,offset*8, 8, LSP_sig_type, this.object_bytes);
+//		offset += 1;
+//		offset += 3;
+//		
+//		ByteHandler.IntToBuffer(0,offset*8, 8, LSP_sig_type, this.object_bytes);
 		
 		offset += 1;
 

@@ -43,7 +43,7 @@ import tid.protocol.commons.ByteHandler;
    be greater than 0.
 
  
- * @author smta
+ * @author smta fixed by ogondio
  *
  */
 public class SymbolicPathNameTLV extends PCEPTLV 
@@ -71,9 +71,9 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	public void encode() 
 	{
 		log.info("Encoding SymbolicPathName TLV");
-		int length=4;
-		this.setTLVValueLength(length + SymbolicPathNameID.length);
+		this.setTLVValueLength(SymbolicPathNameID.length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		log.info("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
 		this.encodeHeader();
 		int offset=4;
 		System.arraycopy(SymbolicPathNameID, 0, this.tlv_bytes, offset, SymbolicPathNameID.length);

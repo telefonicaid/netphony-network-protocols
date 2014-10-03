@@ -9,15 +9,16 @@ import tid.pce.pcep.objects.tlvs.EndPointServerTLV;
 import tid.pce.pcep.objects.tlvs.EndPointStorageTLV;
 import tid.pce.pcep.objects.tlvs.EndPointsIPv4TLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
+import tid.pce.pcep.objects.tlvs.UnnumberedEndpointTLV;
 import tid.pce.pcep.objects.tlvs.XifiEndPointTLV;
 
 public class EndPoint extends PCEPConstruct {
 	
 	//private 
 	
-	private EndPointsIPv4TLV endPointsIPv4;
-	
 	private EndPointIPv4TLV endPointIPv4;
+	
+	private UnnumberedEndpointTLV unnumberedEndpoint;
 	
 	private EndPointStorageTLV endPointStorage;
 	
@@ -45,6 +46,10 @@ public class EndPoint extends PCEPConstruct {
 			endPointIPv4.encode();
 			length=length+endPointIPv4.getTotalTLVLength();
 		}
+		if (unnumberedEndpoint!=null){
+			unnumberedEndpoint.encode();
+			length=length+unnumberedEndpoint.getTotalTLVLength();
+		}
 		
 		if (endPointStorage!=null){
 			endPointStorage.encode();
@@ -66,7 +71,7 @@ public class EndPoint extends PCEPConstruct {
 			xifiEndPointTLV.encode();
 			length = length + xifiEndPointTLV.getTotalTLVLength();
 		}
-		
+		System.out.println("LENGTH: "+length);
 		this.setLength(length);
 		//encodeHeader(); //FIXME!!!!!
 		this.bytes=new byte[this.getLength()];
@@ -77,22 +82,27 @@ public class EndPoint extends PCEPConstruct {
 			offset=offset+endPointIPv4.getTotalTLVLength();
 		}
 		
-		if (endPointStorage!=null){
+		else if (unnumberedEndpoint!=null){
+			System.arraycopy(unnumberedEndpoint.getTlv_bytes(),0,this.bytes,offset,unnumberedEndpoint.getTotalTLVLength());
+			offset=offset+unnumberedEndpoint.getTotalTLVLength();
+		}
+		
+		else if (endPointStorage!=null){
 			System.arraycopy(endPointStorage.getTlv_bytes(),0,this.bytes,offset,endPointStorage.getTotalTLVLength());
 			offset=offset+endPointStorage.getTotalTLVLength();
 		}
 		
-		if (endPointServer!=null){
+		else if (endPointServer!=null){
 			System.arraycopy(endPointServer.getTlv_bytes(),0,this.bytes,offset,endPointServer.getTotalTLVLength());
 			offset=offset+endPointServer.getTotalTLVLength();
 		}
 		
-		if (endPointApplication!=null){
+		else if (endPointApplication!=null){
 			System.arraycopy(endPointApplication.getTlv_bytes(),0,this.bytes,offset,endPointApplication.getTotalTLVLength());
 			offset=offset+endPointApplication.getTotalTLVLength();
 		}
 		
-		if (xifiEndPointTLV != null)
+		else if (xifiEndPointTLV != null)
 		{
 			System.arraycopy(xifiEndPointTLV.getTlv_bytes(),0,this.bytes,offset,xifiEndPointTLV.getTotalTLVLength());
 			offset = offset + xifiEndPointTLV.getTotalTLVLength();
@@ -106,29 +116,31 @@ public class EndPoint extends PCEPConstruct {
 		int tlvtype=PCEPTLV.getType(bytes, offset);
 		int tlvlength=PCEPTLV.getTotalTLVLength(bytes, offset);
 		this.setLength(tlvlength);
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_IPV4){
-			endPointsIPv4=new EndPointsIPv4TLV(bytes, offset);
-		}else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_IPV6){
+
+		
+		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_IPV4_ADDRESS){
+			log.info("OSCAR IPV4");
+			endPointIPv4=new EndPointIPv4TLV(bytes, offset);
+		}
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT){
+			log.info("OSCAR UNNUM");
+			unnumberedEndpoint=new UnnumberedEndpointTLV(bytes, offset);
 			
 		}
 		
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINT_IPV4){
-			endPointIPv4=new EndPointIPv4TLV(bytes, offset);
-		}
-		
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_STORAGE){
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_STORAGE){
 			endPointStorage=new EndPointStorageTLV(bytes, offset);
 		}
 		
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_SERVER){
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_SERVER){
 			endPointServer=new EndPointServerTLV(bytes, offset);
 		}
 		
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_APPLICATION){
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_APPLICATION){
 			endPointApplication=new EndPointApplicationTLV(bytes, offset);
 		}
 		
-		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_XIFI)
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_XIFI)
 		{
 			xifiEndPointTLV = new XifiEndPointTLV(bytes, offset);
 		}
@@ -176,7 +188,27 @@ public class EndPoint extends PCEPConstruct {
 	{
 		this.xifiEndPointTLV = xifiEndPointTLV;
 	}
+
+
+	public UnnumberedEndpointTLV getUnnumberedEndpoint() {
+		return unnumberedEndpoint;
+	}
+
+
+	public void setUnnumberedEndpoint(UnnumberedEndpointTLV unnumberedEndpoint) {
+		this.unnumberedEndpoint = unnumberedEndpoint;
+	}
 	
+	
+	public String toString(){
+		if (endPointIPv4!=null){
+			return endPointIPv4.getIPv4address().getHostAddress();
+		}else if (unnumberedEndpoint != null ){
+			return unnumberedEndpoint.getIPv4address().getHostAddress()+":"+unnumberedEndpoint.getIfID();
+		}else {
+			return "";
+		}
+	}
 	
 
 }

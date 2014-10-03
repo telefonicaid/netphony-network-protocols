@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
+import tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.ObjectParameters;
-import tid.pce.pcep.objects.PCEPIntiatedLSP;
 import tid.pce.pcep.objects.PCEPObject;
 
 /**
@@ -33,7 +33,7 @@ public class PCEPInitiate extends PCEPMessage
 
 	public PCEPInitiate()
 	{
-		this.setMessageType(PCEPMessageTypes.MESSAGE_INTIATE);
+		this.setMessageType(PCEPMessageTypes.MESSAGE_INITIATE);
 		pcepIntiatedLSPList = new LinkedList<PCEPIntiatedLSP>();
 	}
 	public PCEPInitiate(byte [] bytes)  throws PCEPProtocolViolationException
@@ -66,11 +66,9 @@ public class PCEPInitiate extends PCEPMessage
 
 		this.setMessageLength(len);
 		messageBytes = new byte[len];
-		log.info("Inicio encodeHeader");
 		this.encodeHeader();
 		int offset = 4;		//Header
 		index=0;
-		log.info("Inicio array copy");
 
 		while(index < pcepIntiatedLSPList.size())
 		{
@@ -91,13 +89,13 @@ public class PCEPInitiate extends PCEPMessage
 
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		log.info("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
-		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
-			log.info("There should be at least one RSP Object");
+			log.warning("There should be at least one RSP Object");
 			throw new PCEPProtocolViolationException();
 		}
 		//It has to be at least one!
-		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		while (PCEPObject.getObjectClass(this.getBytes(), offset)==ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			try
 			{
@@ -128,6 +126,17 @@ public class PCEPInitiate extends PCEPMessage
 			LinkedList<PCEPIntiatedLSP> pcepIntiatedLSPList) 
 	{
 		this.pcepIntiatedLSPList = pcepIntiatedLSPList;
+	}
+	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(pcepIntiatedLSPList.size()*100);
+		sb.append("INITIATE MESSAGE: ");
+
+		for (int i=0;i<pcepIntiatedLSPList.size();++i){
+			sb.append(pcepIntiatedLSPList.get(i).toString());
+		}
+	
+		return sb.toString();
 	}
 
 
