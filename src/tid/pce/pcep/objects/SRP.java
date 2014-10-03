@@ -91,7 +91,7 @@ public class SRP extends PCEPObject
 	public SRP()
 	{
 		super();
-		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_RSP);
+		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_SRP);
 		this.setOT(1);
 	}
 	
@@ -101,10 +101,9 @@ public class SRP extends PCEPObject
 		decode();
 	}
 
-	@Override
 	public void encode() 
 	{
-		log.info("Encoding RSP!!");
+		log.finest("Encoding SRP!!");
 		ObjectLength = 4 + 4 + 4;
 		if (symPathName!=null)
 		{
@@ -128,9 +127,6 @@ public class SRP extends PCEPObject
 		log.info("Length  "+ObjectLength);
 		object_bytes = new byte[ObjectLength];
 		encode_header();
-		log.info("After encode Header");
-
-		
 		
 		
 		int offset = 4;
@@ -144,8 +140,6 @@ public class SRP extends PCEPObject
 		
 		offset += 4;
 		
-		log.info("SRP_ID_number: "+SRP_ID_number);
-		log.info("EL OFFSET ES "+offset);
 		if (symPathName != null)
 		{
 			log.info("copiamos "+symPathName.getTotalTLVLength()+" que es "+(symPathName.getTlv_bytes()[0]&0xFF));

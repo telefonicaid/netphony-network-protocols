@@ -479,7 +479,7 @@ public class ObjectParameters {
     public static final int PCEP_OBJECT_CLASS_LSP = 32;
     
     //RSP class
-    public static final int PCEP_OBJECT_CLASS_RSP = 33;
+    public static final int PCEP_OBJECT_CLASS_SRP = 33;
     
     /*******************************************************************/
     

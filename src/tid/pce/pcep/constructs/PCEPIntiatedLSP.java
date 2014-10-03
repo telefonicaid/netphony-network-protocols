@@ -49,15 +49,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 	public PCEPIntiatedLSP(byte []bytes, int offset)throws PCEPProtocolViolationException 
 	{
-		//super(bytes, offset);
 		decode(bytes, offset);
 	}
 
-	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-		//		log.finest("Encoding PCEP Response Message");
-		//		int len = 4;
+
 		int len = 0;
 
 		rsp.encode();
@@ -149,7 +146,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		log.info("Object Type::"+PCEPObject.getObjectClass(bytes, offset));
-		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_RSP) {
+		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
 			log.info("There should be at least one SRP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
@@ -199,16 +196,14 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			}
 		}
 
-		log.info("LETS SEE IF THERE ARE END-POINTS");
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS) {
-			log.info("There should be at least one EndPoint Object. Should throw Ex");
+			log.warning("There should be at least one EndPoint Object. Should throw Ex");
 			throw new PCEPProtocolViolationException();
 		} else {
 			try 
 			{
 				int ot=PCEPObject.getObjectType(bytes, offset);
 
-				log.info("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
 				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 					try {
 						endPoint=new P2MPEndPointsDataPathID(bytes,offset);
@@ -296,8 +291,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			len += endPoint.getLength();
 			if (offset>=max_offset){
 				this.setLength(len);
+				//In draft, ERO is mandatory... here we relax the draft
 				log.warning("Just one SRP, one LSP and one END-POINTS, object found, no more");
-				log.warning("TEMPORAL FIX");
 				//throw new PCEPProtocolViolationException();
 			}
 		}
@@ -337,8 +332,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
-			log.info("There should be at least one ERO or SRERO Object but we dont do it that way");
-			//log.info("There should be at least one ERO or SRERO Object");
+			log.info("There should be at least one ERO or SRERO Object, relaxed implementation");
 			//throw new PCEPProtocolViolationException();						
 		}
 

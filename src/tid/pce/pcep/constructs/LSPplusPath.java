@@ -99,7 +99,7 @@ public class LSPplusPath  extends PCEPConstruct
 		}
 		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
-		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RSP)
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			try 
 			{

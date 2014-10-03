@@ -99,15 +99,6 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 
       0 - DOWN:  not active.
 
-
-
-
-Crabbe, et al.          Expires December 24, 2014              [Page 31]
-
- 
-Internet-Draft      PCEP Extensions for Stateful PCE           June 2014
-
-
       1 - UP:  signalled.
 
       2 - ACTIVE:  up and carrying traffic.
@@ -127,7 +118,7 @@ Internet-Draft      PCEP Extensions for Stateful PCE           June 2014
 
  * 
  * @author Fernando Mu�oz del Nuevo
- *
+ * @author Oscar Gonzalez de Dios
  */
 
 public class LSP extends PCEPObject{
@@ -199,7 +190,6 @@ public class LSP extends PCEPObject{
 			lspDBVersion_tlv.encode();
 			ObjectLength=ObjectLength+lspDBVersion_tlv.getTotalTLVLength();
 		}
-		log.info("LA LEEEEN " +ObjectLength);
 		object_bytes = new byte[ObjectLength];
 		encode_header();
 		

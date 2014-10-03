@@ -21,7 +21,7 @@ public class PCEPTELinkSuggestion extends PCEPMessage {
 	 */
 	public PCEPTELinkSuggestion () {
 		super();
-		this.setMessageType(PCEPMessageTypes.MESSAGE_INTIATE);
+		this.setMessageType(PCEPMessageTypes.MESSAGE_INITIATE);
 		
 	}
 	
