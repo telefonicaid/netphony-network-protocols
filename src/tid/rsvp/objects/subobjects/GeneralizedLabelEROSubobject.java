@@ -1,13 +1,11 @@
 package tid.rsvp.objects.subobjects;
 
-import org.eclipse.jetty.util.log.Log;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 
 /**
  * Label ERO Subobject with Generalized LABEL.
- * 
+ * DWDM Wavelength Label Assumed
  * 
  * @author Oscar Gonzalez de Dios
  *
