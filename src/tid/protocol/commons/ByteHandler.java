@@ -248,7 +248,7 @@ public class ByteHandler {
     
     /**
 	 * macAddress = "AA:BB:CC:DD:EE:FF";
-	 * @return
+	 * @return byte array
 	 */
 	public static byte[] MACFormatStringtoByteArray(String macAddress)
 	{

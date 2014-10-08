@@ -99,12 +99,6 @@ public abstract class LinkStateNLRI extends NLRI {
 
 
 
-
-
-//	public int getNLRIValueLength() {
-//		return NLRIValueLength;
-//	}
-
 	public static int getNLRIType(byte[] bytes, int offset){
 		try {
 			int obc= ((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);//(int)(bytes[offset]&0xFF);
@@ -114,20 +108,7 @@ public abstract class LinkStateNLRI extends NLRI {
 			return 0;
 		}
 	}
-	/**
-	 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-	 * @param TLVValueLength
-	 */
-//	protected void setNLRIValueLength(int NLRIValueLength) {
-//		this.NLRIValueLength = NLRIValueLength;
-//		this.TotalNLRILength=NLRIValueLength+4;
-//		if ((this.TotalNLRILength%4)!=0){
-//			//Padding must be done!!
-//			this.TotalNLRILength=this.TotalNLRILength+4-(this.TotalNLRILength%4);
-//		}	
-//		
-//	}
-//	
+
 
 
 	public abstract void encode();
