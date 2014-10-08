@@ -61,7 +61,6 @@ public class EndPointDataPathID extends EndPoints
 	@Override
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		System.out.println("Decoding EndPointDataPathID");
 		if (this.ObjectLength!=20)
 		{
 			throw new MalformedPCEPObjectException();

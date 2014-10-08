@@ -7,15 +7,12 @@ import tid.pce.pcep.objects.tlvs.EndPointApplicationTLV;
 import tid.pce.pcep.objects.tlvs.EndPointIPv4TLV;
 import tid.pce.pcep.objects.tlvs.EndPointServerTLV;
 import tid.pce.pcep.objects.tlvs.EndPointStorageTLV;
-import tid.pce.pcep.objects.tlvs.EndPointsIPv4TLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
 import tid.pce.pcep.objects.tlvs.UnnumberedEndpointTLV;
 import tid.pce.pcep.objects.tlvs.XifiEndPointTLV;
 
 public class EndPoint extends PCEPConstruct {
-	
-	//private 
-	
+		
 	private EndPointIPv4TLV endPointIPv4;
 	
 	private UnnumberedEndpointTLV unnumberedEndpoint;
@@ -71,9 +68,7 @@ public class EndPoint extends PCEPConstruct {
 			xifiEndPointTLV.encode();
 			length = length + xifiEndPointTLV.getTotalTLVLength();
 		}
-		System.out.println("LENGTH: "+length);
 		this.setLength(length);
-		//encodeHeader(); //FIXME!!!!!
 		this.bytes=new byte[this.getLength()];
 		int offset=0;
 		

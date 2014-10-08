@@ -176,7 +176,6 @@ public class SenderDescriptorTE extends SenderDescriptor {
 		int cType = RSVPObject.getcType(bytes, offset);
 		int length = 0;
 		int bytesLeft = bytes.length - offset; 
-		System.out.println("offset: "+offset+"Length: "+RSVPObject.getLength(bytes,offset));
 
 		if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TEMPLATE){
 			
@@ -215,11 +214,9 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			throw new RSVPProtocolViolationException();
 			
 		}
-		System.out.println("offset: "+offset+"Length: "+RSVPObject.getLength(bytes,offset));
 
 		classNum = RSVPObject.getClassNum(bytes,offset);
 		cType = RSVPObject.getcType(bytes, offset);
-		System.out.println("ClassNum: "+classNum);
 		
 		
 		if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TSPEC){

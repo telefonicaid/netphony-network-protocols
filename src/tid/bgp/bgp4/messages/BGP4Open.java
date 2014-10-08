@@ -10,6 +10,8 @@ import tid.bgp.bgp4.open.BGP4CapabilitiesOptionalParameter;
 
 
 /**
+ * BGP Open Message.
+ * 
  * <h1>BGP Open Message Format (RFC 4271). <h1>
  * <p>From RFC 4271, Section 4.2</p>
  * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
@@ -157,14 +159,7 @@ public class BGP4Open extends BGP4Message {
 		decode();
 		
 	}
-	public void printByte(byte bytes){
-		if((bytes&0xFF)<=0x0F){
-			System.out.print("0"+Integer.toHexString(bytes&0xFF));
-		
-		}else{
-		System.out.print(Integer.toHexString(bytes&0xFF));
-		}
-	}
+
 	public void encode(){// throws PCEPProtocolViolationException {	
 		
 		int len=BGPHeaderLength+BGPOpenMessageMandatoryFileds;		
