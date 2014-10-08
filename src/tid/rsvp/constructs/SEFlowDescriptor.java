@@ -1,9 +1,7 @@
 package tid.rsvp.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.objects.FilterSpec;
 import tid.rsvp.objects.FilterSpecIPv4;

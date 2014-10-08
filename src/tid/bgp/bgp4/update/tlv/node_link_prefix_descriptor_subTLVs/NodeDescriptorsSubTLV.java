@@ -1,9 +1,5 @@
 package tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.net.Inet4Address;
-import java.util.logging.Logger;
-
-
 /**
  * 3.2.1.3.  Node Descriptor Sub-TLVs
 

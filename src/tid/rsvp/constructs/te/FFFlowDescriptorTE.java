@@ -10,7 +10,6 @@ import tid.rsvp.objects.FilterSpecLSPTunnelIPv4;
 import tid.rsvp.objects.FilterSpecLSPTunnelIPv6;
 import tid.rsvp.objects.FlowSpec;
 import tid.rsvp.objects.Label;
-import tid.rsvp.objects.LabelRequest;
 import tid.rsvp.objects.RRO;
 import tid.rsvp.objects.RSVPObject;
 import tid.rsvp.objects.RSVPObjectParameters;

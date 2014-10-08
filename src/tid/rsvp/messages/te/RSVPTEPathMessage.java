@@ -1,9 +1,7 @@
 package tid.rsvp.messages.te;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.constructs.SenderDescriptor;
 import tid.rsvp.constructs.te.SenderDescriptorTE;
@@ -516,10 +514,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					ero = new ERO();
-					ero.setLength(RSVPObject.getLength(bytes,offset));
-					ero.decode(bytes, offset);
-					offset = offset + ero.getLength(bytes, offset);
+					ero = new ERO(bytes, offset);			
+					offset = offset + ero.getLength();
 										
 				}else{
 					

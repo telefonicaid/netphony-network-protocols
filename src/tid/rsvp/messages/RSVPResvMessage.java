@@ -1,14 +1,11 @@
 package tid.rsvp.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.constructs.FFFlowDescriptor;
 import tid.rsvp.constructs.FlowDescriptor;
 import tid.rsvp.constructs.SEFlowDescriptor;
-import tid.rsvp.constructs.SenderDescriptor;
 import tid.rsvp.constructs.WFFlowDescriptor;
 import tid.rsvp.objects.Integrity;
 import tid.rsvp.objects.PolicyData;

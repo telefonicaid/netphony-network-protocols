@@ -4,9 +4,6 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
-import tid.protocol.commons.ByteHandler;
-
-
 public class AutonomousSystemNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{	
 	private Inet4Address AS_ID;
 	

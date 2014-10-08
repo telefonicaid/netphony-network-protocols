@@ -8,7 +8,6 @@ import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AutonomousSys
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.BGP4SubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.BGPLSIdentifierNodeDescriptorSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
-import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6RouterIDSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLVTypes;
 

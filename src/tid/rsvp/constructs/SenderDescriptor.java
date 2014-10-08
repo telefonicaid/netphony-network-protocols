@@ -1,8 +1,6 @@
 package tid.rsvp.constructs;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.objects.FlowLabelSenderTemplateIPv6;
 import tid.rsvp.objects.IntservADSPEC;

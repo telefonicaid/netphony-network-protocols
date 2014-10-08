@@ -1,7 +1,6 @@
 package tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import tid.ospf.ospfv2.lsa.tlv.subtlv.OSPFSubTLVTypes;
 
 public class UnreservedBandwidthLinkAttribTLV extends BGP4TLVFormat{
 public float[] unreservedBandwidth;

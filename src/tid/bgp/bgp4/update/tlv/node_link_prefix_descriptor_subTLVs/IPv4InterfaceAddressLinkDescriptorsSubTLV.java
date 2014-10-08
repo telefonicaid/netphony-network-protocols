@@ -2,9 +2,7 @@ package tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-
 import tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import tid.pce.pcep.objects.MalformedPCEPObjectException;
 
 /**
  *  

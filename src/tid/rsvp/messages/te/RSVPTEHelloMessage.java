@@ -1,8 +1,6 @@
 package tid.rsvp.messages.te;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.messages.RSVPMessage;
 import tid.rsvp.messages.RSVPMessageTypes;

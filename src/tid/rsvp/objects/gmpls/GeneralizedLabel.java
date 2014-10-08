@@ -1,11 +1,8 @@
 package tid.rsvp.objects.gmpls;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.objects.Label;
-import tid.rsvp.objects.LabelRequest;
 import tid.rsvp.objects.RSVPObjectParameters;
 
 /**

@@ -126,7 +126,7 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     
     private int lengthofNextHopNetworkAddress;
     
-    private byte[]  networkAddressofNextHop;
+    //private byte[]  networkAddressofNextHop;
 	
 	/*
 	

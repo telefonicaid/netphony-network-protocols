@@ -1,7 +1,6 @@
 package tid.rsvp.objects;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import tid.rsvp.RSVPProtocolViolationException;
@@ -86,6 +85,12 @@ public class ERO extends RSVPObject{
 		log = Logger.getLogger("ROADM");
 
 		log.finest("ERO Object Created");
+		try {
+			decode(bytes,offset);
+		} catch (RSVPProtocolViolationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

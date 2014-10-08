@@ -1,29 +1,14 @@
 package tid.bgp.bgp4.update.tlv;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.logging.Logger;
-
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AreaIDNodeDescriptorSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AutonomousSystemNodeDescriptorSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.BGP4SubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.BGPLSIdentifierNodeDescriptorSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
-import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6RouterIDSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLV;
 import tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLVTypes;
-import tid.pce.pcep.objects.ObjectParameters;
-import tid.rsvp.objects.subobjects.ASNumberEROSubobject;
-import tid.rsvp.objects.subobjects.EROSubobject;
-import tid.rsvp.objects.subobjects.GeneralizedLabelEROSubobject;
-import tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
-import tid.rsvp.objects.subobjects.IPv6prefixEROSubobject;
-import tid.rsvp.objects.subobjects.LabelEROSubobject;
-import tid.rsvp.objects.subobjects.OBSMAINSLabelEROSubobject;
-import tid.rsvp.objects.subobjects.ServerLayerInfo;
-import tid.rsvp.objects.subobjects.SubObjectValues;
-import tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
-import tid.rsvp.objects.subobjects.WavebandLabelEROSubobject;
+
 
 /**
  * 3.2.1.1.  Local Node Descriptors

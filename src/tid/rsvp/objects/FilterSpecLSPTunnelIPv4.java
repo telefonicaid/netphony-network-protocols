@@ -2,7 +2,6 @@ package tid.rsvp.objects;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**

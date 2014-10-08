@@ -1,9 +1,7 @@
 package tid.rsvp.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.constructs.SenderDescriptor;
 import tid.rsvp.objects.ErrorSpec;

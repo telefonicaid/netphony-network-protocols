@@ -1,6 +1,5 @@
 package tid.rsvp.objects;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import tid.rsvp.RSVPProtocolViolationException;

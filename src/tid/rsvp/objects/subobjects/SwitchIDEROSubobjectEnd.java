@@ -45,4 +45,13 @@ public class SwitchIDEROSubobjectEnd extends EROSubobject
 		
 	}
 
+	public byte[] getSwitchID() {
+		return switchID;
+	}
+
+	public void setSwitchID(byte[] switchID) {
+		this.switchID = switchID;
+	}
+	
+
 }

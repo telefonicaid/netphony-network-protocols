@@ -1,9 +1,5 @@
 package tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-import java.util.logging.Logger;
-
 import tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
@@ -72,6 +68,13 @@ public class MultiTopologyIDLinkDescriptorSubTLV extends BGP4TLVFormat{
 		log.info("Decoding MultiTopologyIDTLV");
 		
 	}
+	public int getMultitopologyID() {
+		return multitopologyID;
+	}
+	public void setMultitopologyID(int multitopologyID) {
+		this.multitopologyID = multitopologyID;
+	}
+	
 	
 
 }

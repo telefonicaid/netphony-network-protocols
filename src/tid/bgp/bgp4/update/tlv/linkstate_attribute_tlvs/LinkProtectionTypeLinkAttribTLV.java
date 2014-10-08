@@ -45,14 +45,14 @@ public class LinkProtectionTypeLinkAttribTLV extends BGP4TLVFormat {
 	
 	private int protection_type;
 	
-	private static final int EXTRA_TRAFFIC = 0x01;
-	private static final int UNPROTECTED = 0x02;
-	private static final int SHARED = 0x04;
-	private static final int DEDICATED_1_1 = 0x08;
-	private static final int DEDICATED_1_PLUS_1 = 0x10;
-	private static final int ENHANCED = 0x20;
-	private static final int RESERVED1 = 0x40;
-	private static final int RESERVED2 = 0x80;
+	public static final int EXTRA_TRAFFIC = 0x01;
+	public static final int UNPROTECTED = 0x02;
+	public static final int SHARED = 0x04;
+	public static final int DEDICATED_1_1 = 0x08;
+	public static final int DEDICATED_1_PLUS_1 = 0x10;
+	public static final int ENHANCED = 0x20;
+	public static final int RESERVED1 = 0x40;
+	public static final int RESERVED2 = 0x80;
 	
 	
 

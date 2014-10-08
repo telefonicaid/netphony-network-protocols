@@ -29,7 +29,7 @@ public class RouteTagPrefixAttribTLV extends BGP4TLVFormat {
 		this.setTLVValueLength(4*number);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
-		int offset = 4;	
+		//int offset = 4;	
 		// TODO Auto-generated method stub
 
 	}

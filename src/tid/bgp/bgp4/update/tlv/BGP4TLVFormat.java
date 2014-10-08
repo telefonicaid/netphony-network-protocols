@@ -2,8 +2,6 @@ package tid.bgp.bgp4.update.tlv;
 
 import java.util.logging.Logger;
 
-import tid.protocol.commons.ByteHandler;
-
 /**
  * Information in the new link state NLRIs and attributes is encoded in
    Type/Length/Value triplets.  The TLV format is shown in Figure 4.
