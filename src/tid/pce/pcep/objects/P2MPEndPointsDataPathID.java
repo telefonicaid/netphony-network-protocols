@@ -114,7 +114,7 @@ public class P2MPEndPointsDataPathID extends EndPoints
 	 */
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		System.out.println("Decoding P2MPEndPointsDataPathID");
+		log.finest("Decoding P2MPEndPointsDataPathID");
 		if (this.ObjectLength < 24 || this.ObjectLength % 4 != 0)
 		{
 			log.info("object size doesnt match");

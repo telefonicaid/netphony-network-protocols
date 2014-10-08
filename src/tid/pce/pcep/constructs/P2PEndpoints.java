@@ -160,6 +160,7 @@ public class P2PEndpoints extends PCEPConstruct {
 		StringBuffer sb=new StringBuffer(100);
 		sb.append("<GEP_P2P src = ");
 		sb.append(sourceEndpoint.toString());
+		sb.append(" dst = ");
 		sb.append(destinationEndpoint.toString());
 		sb.append(">");
 		return sb.toString();

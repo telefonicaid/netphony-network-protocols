@@ -104,7 +104,7 @@ public abstract class NetQuotationNSAP extends PCEPObject{
 			EPQuotationList.add(epquotation);
 			offset=offset+20+20;
 			if (offset>=ObjectLength){
-				System.out.println("No more End Points");
+				//No more End Points
 				fin=true;
 			}
 		}
@@ -140,7 +140,6 @@ public abstract class NetQuotationNSAP extends PCEPObject{
     		if (EPQuotationlength!=44){
     			throw new MalformedPCEPObjectException();
     		}
-    		System.out.println("Decoding NSAP Addreess"); 
     		System.arraycopy(this.EPQuotation_bytes,0, sourceNSAP, 0, 20);
     		System.arraycopy(this.EPQuotation_bytes,20, destNSAP, 0, 20);    		
     		System.arraycopy(this.EPQuotation_bytes,40, cost, 0, 4);

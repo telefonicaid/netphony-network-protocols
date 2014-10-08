@@ -20,15 +20,6 @@ import tid.protocol.commons.ByteHandler;
    The format of the SRP object body is shown in Figure 17:
 
 
-
-
-
-
-Crabbe, et al.           Expires January 1, 2014               [Page 40]
- 
-Internet-Draft      PCEP Extensions for Stateful PCE           June 2013
-
-
               0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -108,7 +99,6 @@ public class SRP extends PCEPObject
 		if (symPathName!=null)
 		{
 			symPathName.encode();
-			log.info("ElE");
 			ObjectLength=ObjectLength+symPathName.getTotalTLVLength();
 		}
 		
@@ -249,12 +239,14 @@ public class SRP extends PCEPObject
 	}
 	
 	public String toString() {
+		StringBuffer sb=new StringBuffer(100);
+		sb.append("<SRP id = ");
+		sb.append(SRP_ID_number);	
 		if (symPathName!=null){
-			return "[SRP: "+symPathName.toString()+"]";
-		}else {
-			return "[SRP: ]";
+			sb.append(symPathName.toString());
 		}
-		
+		sb.append(">");
+		return sb.toString();	
 	}
 
 }

@@ -86,7 +86,7 @@ public class EndPointApplicationTLV extends PCEPTLV {
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		System.out.println("Decoding Application EndPoint TLV");
+		log.finest("Decoding Application EndPoint TLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){

@@ -53,7 +53,7 @@ public class XifiEndPointTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		System.out.println("Decoding Xifi EndPoint TLV");
+		log.finest("Decoding Xifi EndPoint TLV");
 		
 		int offset = 4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){

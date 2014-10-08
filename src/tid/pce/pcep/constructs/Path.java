@@ -13,7 +13,6 @@ import tid.pce.pcep.objects.Bandwidth;
 import tid.pce.pcep.objects.IncludeRouteObject;
 import tid.pce.pcep.objects.InterLayer;
 import tid.pce.pcep.objects.LabelSet;
-import tid.pce.pcep.objects.LabelSetInclusiveList;
 import tid.pce.pcep.objects.ObjectiveFunction;
 import tid.pce.pcep.objects.SuggestedLabel;
 import tid.pce.pcep.objects.SwitchLayer;

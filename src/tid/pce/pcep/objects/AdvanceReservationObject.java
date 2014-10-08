@@ -101,7 +101,7 @@ public class AdvanceReservationObject extends PCEPObject{
 			ARList.add(advancereservation);
 			offset=offset+8;
 			if (offset>=ObjectLength){
-				System.out.println("No more Advance Reservations");
+				//No more Advance Reservations
 				fin=true;
 			}
 			i=i+1;

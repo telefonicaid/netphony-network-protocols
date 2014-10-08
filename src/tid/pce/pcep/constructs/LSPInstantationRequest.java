@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.objects.*;
-import tid.rsvp.objects.ERO;
-
 
 /**
  <lsp-instantiation-request> ::= <END-POINTS>

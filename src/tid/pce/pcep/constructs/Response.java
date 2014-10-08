@@ -9,7 +9,6 @@ import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import tid.pce.pcep.objects.IncludeRouteObject;
 import tid.pce.pcep.objects.LSPA;
-import tid.pce.pcep.objects.LabelSet;
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.Metric;
 import tid.pce.pcep.objects.Monitoring;
@@ -19,7 +18,6 @@ import tid.pce.pcep.objects.PCEPObject;
 import tid.pce.pcep.objects.PccReqId;
 import tid.pce.pcep.objects.RequestParameters;
 import tid.pce.pcep.objects.ReservationConf;
-import tid.pce.pcep.objects.SuggestedLabel;
 
 /**
  * <p> Represents a PCEP Response. </p>  

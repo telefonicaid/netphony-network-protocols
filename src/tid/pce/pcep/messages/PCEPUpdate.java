@@ -4,17 +4,12 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.Request;
-import tid.pce.pcep.constructs.SVECConstruct;
-import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.constructs.UpdateRequest;
-import tid.pce.pcep.objects.MalformedPCEPObjectException;
-import tid.pce.pcep.objects.Monitoring;
 import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcep.objects.PCEPObject;
-import tid.pce.pcep.objects.PccReqId;
 
 /**
+ * PCUpd Message.
  * 
  * http://tools.ietf.org/html/draft-crabbe-pce-stateful-pce-mpls-te-00
  * 

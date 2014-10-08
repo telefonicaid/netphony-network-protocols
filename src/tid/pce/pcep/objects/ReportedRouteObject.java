@@ -152,7 +152,7 @@ public class ReportedRouteObject extends PCEPObject{
 //							WavebandLabelEROSubobject subwl=new WavebandLabelEROSubobject(this.getObject_bytes(), offset);
 //							IROList.add(subwl);
 //						default:
-//							System.out.println("ERO LABEL Subobject Ctype Unknown");
+//							log.info("ERO LABEL Subobject Ctype Unknown");
 //							break;							
 //					}
 				default:

@@ -2,8 +2,6 @@ package tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 import java.util.logging.Logger;
 
-import tid.rsvp.RSVPProtocolViolationException;
-
 /**
  * Base class for OSPF Sub TLVs
  * RFC 3630            TE Extensions to OSPF Version 2       September 2003

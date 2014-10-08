@@ -1,15 +1,9 @@
 package tid.pce.pcep.constructs;
 
 
-import tid.rsvp.RSVPProtocolViolationException;
-import tid.rsvp.objects.SSONSenderTSpec;
-
-import java.util.LinkedList;
-import java.lang.String;
-import tid.pce.pcep.objects.tlvs.PCEPTLV;
-import tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
-
 /**
+ * Generalized Bandwidth Construct.
+ * 
  * 	<p>Represents a PCEP GENERALIZED-BANDWIDTH as defined in PCEP extensions for GMPLS              
  *	draft-ietf-pce-gmpls-pcep-extensions-04</p>
  *

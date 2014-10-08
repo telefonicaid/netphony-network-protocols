@@ -107,7 +107,7 @@ public class EndPointsNSAPTLV extends PCEPTLV {
 
 	
 	public void decode(){
-		System.out.println("Decoding NSAP Addreess");
+		log.finest("Decoding NSAP Addreess");
 		System.arraycopy(this.tlv_bytes,4, sourceNSAP, 0, 20);
 		System.arraycopy(this.tlv_bytes,24, destNSAP, 0, 20); 	 
 	}

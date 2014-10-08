@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import tid.pce.pcep.objects.subobjects.SREROSubobject;
-import tid.rsvp.objects.subobjects.ServerLayerInfo;
-import tid.rsvp.objects.subobjects.SubObjectValues;
 
 /*
 
@@ -108,7 +106,7 @@ public class SRERO extends PCEPObject{
 			fin=true;
 		}
 		while (!fin) {
-			int subojectclass=SREROSubobject.getType(this.getObject_bytes(), offset);
+			//int subojectclass=SREROSubobject.getType(this.getObject_bytes(), offset);
 			int subojectlength=SREROSubobject.getLength(this.getObject_bytes(), offset);
 			SREROSubobject sobjt = new SREROSubobject(this.getObject_bytes(), offset);
 			this.addSREROSubobject(sobjt);

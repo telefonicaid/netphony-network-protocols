@@ -45,7 +45,7 @@ public class TrafficEngineeringMetric extends OSPFSubTLV {
 	}
 	
 	protected void decode ()throws MalformedOSPFSubTLVException{		
-		int offset=4;
+		//int offset=4;
 		linkMetric=0;
 			for (int k = 0; k < 4; k++) {
 				linkMetric = (linkMetric << 8) | ((long)tlv_bytes[k+4] & (long)0xff);

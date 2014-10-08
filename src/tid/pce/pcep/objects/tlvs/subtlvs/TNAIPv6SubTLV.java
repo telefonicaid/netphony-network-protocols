@@ -79,7 +79,7 @@ public class TNAIPv6SubTLV extends PCEPSubTLV {
 
 	
 	public void decode() {
-		System.out.println("Decoding TNA IPv6 Addreess");
+		log.finest("Decoding TNA IPv6 Addreess");
 		this.Addr_length=(int)this.subtlv_bytes[4];
 		byte[] ip=new byte[16]; 
 		System.arraycopy(this.subtlv_bytes,8, ip, 0, 16);

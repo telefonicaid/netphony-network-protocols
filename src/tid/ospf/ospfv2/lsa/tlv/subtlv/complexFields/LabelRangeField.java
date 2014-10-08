@@ -1,7 +1,6 @@
 package tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 
 import tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
-import tid.rsvp.RSVPProtocolViolationException;
 
 /**
  *  2.2.2. Inclusive/Exclusive Label Ranges

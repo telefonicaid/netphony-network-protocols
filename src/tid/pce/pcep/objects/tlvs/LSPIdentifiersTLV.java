@@ -84,8 +84,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{
-		System.out.println("Encoding LSPIdentifiersTLV TLV");
-		log.info("Encoding LSPIdentifiersTLV TLV");
+		log.finest("Encoding LSPIdentifiersTLV TLV");
 		
 		int length = 12;
 		this.setTLVValueLength(length);
@@ -96,7 +95,6 @@ public class LSPIdentifiersTLV extends PCEPTLV
 		System.arraycopy(tunnelSenderIPAddress.getAddress(),0, this.tlv_bytes, offset, 4);
 		
 		offset += 4;
-		//FuncionesUtiles.IntToBuffer(begS, begD, length, value, dest)
 		ByteHandler.IntToBuffer(0,(offset) * 8 ,16,lspID,tlv_bytes);
 		ByteHandler.IntToBuffer(0,(offset + 2) * 8,16,tunnelID,tlv_bytes);
 		
@@ -109,7 +107,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		log.info("Decoding LSPIdentifiersTLV TLV");
+		log.finest("Decoding LSPIdentifiersTLV TLV");
 		
 		byte[] ip=new byte[4]; 
 		int offset = 4;

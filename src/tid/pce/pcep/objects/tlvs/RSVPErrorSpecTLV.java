@@ -2,9 +2,7 @@ package tid.pce.pcep.objects.tlvs;
 
 import tid.pce.pcep.objects.MalformedPCEPObjectException;
 import tid.pce.pcep.objects.ObjectParameters;
-import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.objects.ErrorSpecIPv4;
-import tid.rsvp.objects.ErrorSpecIPv6;
 import tid.rsvp.objects.RSVPObject;
 
 /*

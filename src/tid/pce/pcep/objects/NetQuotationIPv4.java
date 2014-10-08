@@ -115,7 +115,7 @@ public abstract class NetQuotationIPv4 extends PCEPObject{
 			EPQuotationList.add(epquotation);
 			offset=offset+4+4+4;
 			if (offset>=ObjectLength){
-				System.out.println("No more End Points");
+				//No more End Points
 				fin=true;
 			}
 		}
@@ -151,7 +151,6 @@ public abstract class NetQuotationIPv4 extends PCEPObject{
     		if (EPQuotationlength!=12){
     			throw new MalformedPCEPObjectException();
     		}
-    		System.out.println("Decoding IPv4 Quotation");
     		byte[] ip=new byte[4]; 
     		System.arraycopy(this.EPQuotation_bytes,0, ip, 0, 4);
     		try {

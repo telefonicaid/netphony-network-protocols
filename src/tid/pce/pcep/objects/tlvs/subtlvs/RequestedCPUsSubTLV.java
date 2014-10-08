@@ -114,7 +114,7 @@ public class RequestedCPUsSubTLV extends PCEPSubTLV {
 			minSpeedCPUList.add(minSpeedCPU);
 			maxSpeedCPUList.add(maxSpeedCPU);
 			if (offset>=this.getTotalSubTLVLength()){
-				System.out.println("No more Requested CPUs");
+				//No more Requested CPUs
 				fin=true;
 			}
 		}

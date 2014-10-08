@@ -132,7 +132,7 @@ public class NetQuotationIPv6 extends EndPoints {
 			EPQuotationList.add(epquotation);
 			offset=offset+16+16;
 			if (offset>=ObjectLength){
-				System.out.println("No more End Points");
+				//No more End Points
 				fin=true;
 			}
 		}
@@ -168,7 +168,6 @@ public class NetQuotationIPv6 extends EndPoints {
     		if (EPQuotationlength!=32){
     			throw new MalformedPCEPObjectException();
     		}
-    		System.out.println("Decoding IPv6 Addreess");
     		byte[] ip=new byte[16]; 
     		System.arraycopy(this.EPQuotation_bytes,0, ip, 0, 16);
     		try {

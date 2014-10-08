@@ -455,6 +455,16 @@ public class LSP extends PCEPObject{
 		this.lspDBVersion_tlv = lspDBVersion_tlv;
 	}
 	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(100);
+		sb.append("<LSP id = ");
+		sb.append(lspId);	
+		if (symbolicPathNameTLV_tlv!=null){
+			sb.append(symbolicPathNameTLV_tlv.toString());
+		}
+		sb.append(">");
+		return sb.toString();	
+	}
 
 	
 	

@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.Request;
-import tid.pce.pcep.constructs.Response;
 import tid.pce.pcep.constructs.SVECConstruct;
 import tid.pce.pcep.objects.*;
 

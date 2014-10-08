@@ -1,7 +1,6 @@
 package tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 
 import java.net.Inet4Address;
-import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 import tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;

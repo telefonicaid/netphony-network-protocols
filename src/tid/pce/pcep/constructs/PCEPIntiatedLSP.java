@@ -23,10 +23,19 @@ import tid.pce.pcep.objects.SRP;
 import tid.pce.pcep.objects.XifiEndPoints;
 import tid.pce.pcep.objects.XifiUniCastEndPoints;
 
+/**
+ *   <PCE-initiated-lsp-request> ::= <SRP>
+                                   <LSP>
+                                   <END-POINTS>
+                                   <ERO>
+                                   [<attribute-list>]
+ * @author ogondio
+ *
+ */
 public class PCEPIntiatedLSP extends PCEPConstruct
 {
 
-	private SRP rsp;
+	private SRP srp;
 	private LSP lsp;
 	private ExplicitRouteObject ero;
 	private SRERO srero;
@@ -57,9 +66,9 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 		int len = 0;
 
-		rsp.encode();
+		srp.encode();
 		lsp.encode();
-		len += rsp.getLength();
+		len += srp.getLength();
 		len += lsp.getLength();
 
 
@@ -99,8 +108,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		log.info("Leeeength:::"+len);
 		int offset=0;
 
-		System.arraycopy(rsp.getBytes(), 0, this.getBytes(), offset, rsp.getLength());
-		offset=offset + rsp.getLength();
+		System.arraycopy(srp.getBytes(), 0, this.getBytes(), offset, srp.getLength());
+		offset=offset + srp.getLength();
 
 
 		System.arraycopy(lsp.getBytes(), 0, this.getBytes(), offset, lsp.getLength());
@@ -152,7 +161,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		} else {
 			try 
 			{
-				rsp = new SRP(bytes,offset);
+				srp = new SRP(bytes,offset);
 
 			} 
 			catch (MalformedPCEPObjectException e) 
@@ -160,8 +169,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				log.warning("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
-			offset=offset+rsp.getLength();
-			len += rsp.getLength();
+			offset=offset+srp.getLength();
+			len += srp.getLength();
 			if (offset>=max_offset){
 				this.setLength(len);
 				log.warning("Just one SRP object found, no more");
@@ -383,12 +392,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 	public SRP getRsp() 
 	{
-		return rsp;
+		return srp;
 	}
 
 	public void setRsp(SRP rsp) 
 	{
-		this.rsp = rsp;
+		this.srp = rsp;
 	}
 
 	public LSP getLsp() 
@@ -431,7 +440,16 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	
 	public String toString(){
 		StringBuffer sb=new StringBuffer();
-		
+		sb.append("Initiated LSP: ");
+		if (srp!=null){
+			sb.append(srp.toString());
+		}
+		if (lsp!=null){
+			sb.append(lsp.toString());
+		}
+		if (ero!=null){
+			sb.append(ero.toString());
+		}
 		if (endPoint!=null){
 			sb.append(endPoint.toString());
 		}
@@ -444,9 +462,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			sb.append(bandwidth.toString());
 		}		
 		
-		if (rsp!=null){
-			sb.append(rsp.toString());
-		}
+		
 		
 		return sb.toString();
 	}

@@ -77,7 +77,7 @@ public class TNANSAPSubTLV extends PCEPSubTLV {
 
 	
 	public void decode() {
-		System.out.println("Decoding TNA NSAP Addreess");
+		log.finest("Decoding TNA NSAP Addreess");
 		Addr_length=(int)this.subtlv_bytes[4]; 
 		System.arraycopy(this.subtlv_bytes,8, NSAPaddress, 0, 20);
 	}

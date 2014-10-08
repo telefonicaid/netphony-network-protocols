@@ -70,7 +70,7 @@ public class TNA extends PCEPConstruct {
 	public void decode(byte[] bytes, int offset) {
 		
 		int subtlvtype=PCEPSubTLV.getType(bytes, offset);
-		int subtlvlength=PCEPSubTLV.getTotalSubTLVLength(bytes, offset);
+		//int subtlvlength=PCEPSubTLV.getTotalSubTLVLength(bytes, offset);
 		
 		if (subtlvtype==PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv4){
 			TNAIPv4SubTLV=new TNAIPv4SubTLV(bytes, offset);
