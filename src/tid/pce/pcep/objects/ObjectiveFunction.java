@@ -1,14 +1,8 @@
 package tid.pce.pcep.objects;
 
 import tid.pce.pcep.objects.tlvs.BandwidthTLV;
-import tid.pce.pcep.objects.tlvs.DomainIDTLV;
-import tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
-import tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
 import tid.pce.pcep.objects.tlvs.PCEPTLV;
-import tid.pce.pcep.objects.tlvs.PCE_ID_TLV;
-import tid.pce.pcep.objects.tlvs.PCE_Redundancy_Group_Identifier_TLV;
-import tid.pce.pcep.objects.tlvs.SRCapabilityTLV;
-import tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV;
+
 
 /**
  * <p> Represents a PCEP Objective Function (OF) Object, as defined in RFC 5541</p>

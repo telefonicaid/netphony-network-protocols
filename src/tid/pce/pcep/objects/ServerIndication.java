@@ -68,7 +68,6 @@ public class ServerIndication extends PCEPObject {
 	 * Decode SwitchLayer PCEP Object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
-		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (ObjectLength<8){
 			throw new MalformedPCEPObjectException();

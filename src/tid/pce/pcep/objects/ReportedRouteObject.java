@@ -156,13 +156,13 @@ public class ReportedRouteObject extends PCEPObject{
 //							break;							
 //					}
 				default:
-					System.out.println("ERO Subobject Unknown");
+					log.info("ERO Subobject Unknown");
 					//FIXME What do we do??
 					break;
 			}
 			offset=offset+subojectlength;
 			if (offset>=ObjectLength){
-				System.out.println("No more subobjects in ERO");
+				//No more subobjects in ERO
 				fin=true;
 			}
 		}		

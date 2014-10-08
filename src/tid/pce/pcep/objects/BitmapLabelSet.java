@@ -2,9 +2,6 @@ package tid.pce.pcep.objects;
 
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.NCF;
-import tid.rsvp.RSVPProtocolViolationException;
-import tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
-import tid.rsvp.objects.subobjects.SubObjectValues;
 
 /**
  * ¥	Attaching a new LABEL object (class 129, type 1) as an attribute of the computed path. If there is only one label object it is the SUGGESTED_LABEL.

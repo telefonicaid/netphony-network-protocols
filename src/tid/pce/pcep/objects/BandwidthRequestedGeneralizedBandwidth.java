@@ -102,7 +102,6 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 			offset=offset+reverseGeneralizedBandwidth.getLength();
 			
 		}
-		System.out.println("HOLAAAA VALE "+offset);
 		if (optionalTLVs!=null){
 			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
 				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, offset, optionalTLVs.get(k).getTotalTLVLength());
@@ -117,7 +116,6 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 		for (int k = 0; k < 2; k++) {
 			bwSpecLength = (bwSpecLength << 8) | (object_bytes[offset+k] & 0xff);
 		} 
-		log.info("BW SPEC LENGTH ES "+bwSpecLength);
 		offset = 6;
 		revBwSpecLength=0;
 		for (int k = 0; k < 2; k++) {
@@ -129,7 +127,6 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 		if (bwSpecLength==0){
 			throw new MalformedPCEPObjectException();
 		}else {
-			System.out.println("POR AQUIIII "+offset);
 			if (this.bwSpecType == ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON){
 				generalizedBandwidth = new GeneralizedBandwidthSSON ();
 				generalizedBandwidth.decode(this.getBytes(),offset);
@@ -159,9 +156,6 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 	
 	public Bandwidth duplicate(){
 		Bandwidth bw= new BandwidthRequestedGeneralizedBandwidth();
-		if (this.getGeneralizedBandwidth()==null) {
-			log.info("OSCAR SUPER NULL");
-		}
 		((BandwidthRequestedGeneralizedBandwidth)bw).setGeneralizedBandwidth(this.getGeneralizedBandwidth());
 		((BandwidthRequestedGeneralizedBandwidth)bw).setReverseGeneralizedBandwidth(this.getReverseGeneralizedBandwidth());
 		return bw;
