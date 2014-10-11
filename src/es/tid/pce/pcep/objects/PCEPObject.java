@@ -143,7 +143,6 @@ public abstract class PCEPObject implements PCEPElement {
 		log=Logger.getLogger("PCEPParser");
 		ObjectLength=((bytes[offset+2]<<8)& 0xFF00) |  (bytes[offset+3] & 0xFF);
 		this.object_bytes=new byte[ObjectLength];
-		log.info("bytes::::"+bytes);
 		System.arraycopy(bytes, offset, object_bytes, 0, ObjectLength);
 		decodeHeader();	
 	}

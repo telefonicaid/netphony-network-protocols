@@ -60,15 +60,6 @@ import es.tid.pce.pcep.objects.PCEPObject;
    in Section 7.5) may also contain other information (e.g, reasons for
    the path computation failure).
 
-
-
-
-Vasseur & Le Roux           Standards Track                    [Page 20]
-
- 
-RFC 5440                          PCEP                        March 2009
-
-
    The format of a PCRep message is as follows:
 
 
@@ -121,7 +112,7 @@ public class PCEPResponse extends PCEPMessage {
 	{
 		super(bytes);
 		ResponseList = new LinkedList<Response>();
-		decode(bytes);
+		decode();
 
 	}
 
@@ -169,11 +160,9 @@ public class PCEPResponse extends PCEPMessage {
 	/**
 	 * Decode the PCEP Response message
 	 */
-	public void decode(byte[] bytes) throws PCEPProtocolViolationException {
+	public void decode() throws PCEPProtocolViolationException {
 		log.finest("Decoding PCEP Response Message");
-		this.messageBytes=new byte[bytes.length];
-		log.finest("There is a total of "+bytes.length);
-		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
+		byte[] bytes=this.getBytes();
 		int offset=4;//We start after the object header
 		while (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_RP){
 			Response res=new Response();

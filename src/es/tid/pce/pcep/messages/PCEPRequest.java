@@ -114,7 +114,7 @@ public class PCEPRequest extends PCEPMessage {
 		super(bytes);
 		SvecList=new LinkedList<SVECConstruct>();
 		RequestList=new LinkedList<Request>();
-		decode(bytes);
+		decode();
 
 	}
 
@@ -166,16 +166,14 @@ public class PCEPRequest extends PCEPMessage {
 		}
 
 	}
-
+	
 	/**
 	 * Decodes a PCEP Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521 
 	 */
-	public void decode(byte[] bytes) throws PCEPProtocolViolationException{
+	public void decode() throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 
 		log.finest("Decoding PCEP Request Message");
-		log.finest("Length in bytes: "+bytes.length);
-		this.messageBytes=new byte[bytes.length];
-		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
+		byte[] bytes=this.messageBytes;
 		int offset=4;//We start after the object header
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_MONITORING){

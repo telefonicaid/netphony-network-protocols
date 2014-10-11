@@ -258,9 +258,7 @@ public class OPEN extends PCEPObject{
 		}
 
 		object_bytes=new byte[ObjectLength];
-		
-		log.info("OPEN: Header size: "+ObjectLength);
-		
+				
 		encode_header();
 		object_bytes[4]=(byte)( ((Ver<<5) & 0xE0) |( ((parentPCEIndicationBit?1:0)<<3 ) &0x08 ) | ((parentPCERequestBit?1:0<<4) &0x10 ) );
 		object_bytes[5]=(byte)Keepalive;
@@ -306,7 +304,7 @@ public class OPEN extends PCEPObject{
 	 * Decodes the OPEN object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
-		log.info("Beginning decoding of OPEN object");
+		log.finest("Beginning decoding of OPEN object");
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
 		stateful_capability_tlv = null;
@@ -325,55 +323,37 @@ public class OPEN extends PCEPObject{
 			fin=true;
 		}
 		while (!fin) {
-			log.info("Beginning TLV decoding");
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.info("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
+			log.finest("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
-				log.info("OF_LIST_TLV found");
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);
-				log.fine(of_list_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
-				log.fine("DOMAIN_ID TLV found");
 				domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
-				log.fine(domain_id_tlv.toString());				
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
-				log.fine("PCEP_TLV_PCE_ID found");
 				pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
-				log.fine(pce_id_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_GMPLS_CAPABILITY:
-				log.info("PCEP_TLV_GMPLS_CAPABILITY found");
 				gmplsCapabilityTLV=new GMPLSCapabilityTLV(this.getObject_bytes(), offset);
-				log.info(gmplsCapabilityTLV.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_STATEFUL_CAPABILITY:
-				log.fine("PCEP_TLV_TYPE_STATEFUL_CAPABILITY found");
 				stateful_capability_tlv=new StatefulCapabilityTLV(this.getObject_bytes(), offset);
-				log.fine(stateful_capability_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_SR_CAPABILITY:
-				log.fine("PCEP_TLV_TYPE_SR_CAPABILITY found");
 				SR_capability_tlv=new SRCapabilityTLV(this.getObject_bytes(), offset);
-				log.fine(SR_capability_tlv.toString());
 				break;					
 			case ObjectParameters.PCEP_TLV_TYPE_LSP_DATABASE_VERSION:
-				log.fine("PCEP_TLV_TYPE_LSP_DATABASE_VERSION found");
 				lsp_database_version_tlv=new LSPDatabaseVersionTLV(this.getObject_bytes(), offset);
-				log.fine(lsp_database_version_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER:
-				log.fine("PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER found");
 				redundancy_indetifier_tlv=new PCE_Redundancy_Group_Identifier_TLV(this.getObject_bytes(), offset);
 				break;
 		
 			default:
-				log.info("UNKNOWN TLV found");
-				//UnknownTLV unknownTLV = new UnknownTLV();			
-				//FIXME: Que hacemos con los desconocidos????
+				log.fine("UNKNOWN TLV found");
 				break;
 			}
 			offset=offset+tlvlength;
