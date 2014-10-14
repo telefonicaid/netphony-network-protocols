@@ -113,7 +113,7 @@ public class PrefixNLRI extends LinkStateNLRI {
 				this.OSPFRouteType=new OSPFRouteTypePrefixDescriptorSubTLV(bytes, offset);
 				break;
 			default:
-				log.finest("Unknown sub TLV found, subtype "+subTLVType);
+				log.warning("Unknown sub TLV found, subtype "+subTLVType);
 			}
 		
 		offset=offset+subTLVLength;

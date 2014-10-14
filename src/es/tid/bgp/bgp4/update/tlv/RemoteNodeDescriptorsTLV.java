@@ -101,7 +101,7 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 					addNodeDescriptorsSubTLV(IGPRouterID);		
 					break;
 				default:
-					log.finest("Remote Node Descriptor Unknown, subtlvType: "+subtlvType);
+					log.warning("Remote Node Descriptor Unknown, subtlvType: "+subtlvType);
 					break;
 			}
 			

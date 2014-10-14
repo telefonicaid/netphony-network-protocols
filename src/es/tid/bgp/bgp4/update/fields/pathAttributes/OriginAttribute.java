@@ -44,7 +44,6 @@ public class OriginAttribute extends PathAttribute{
 	}
 	@Override
 	public void encode() {
-		log.finest("Origin Attribute");
 		pathAttributeLength = 1;
 		this.length=pathAttributeLength+mandatoryLength;
 
