@@ -79,11 +79,16 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 
 	public void decode() {
 		int offset=2;
-		while (offset<=this.getLength()) {
+
+		while (offset<this.getLength()) {
 			int capabilityCode = BGP4Capability.getCapalitityCode(this.bytes, offset);
 			if (capabilityCode == BGP4OptionalParametersTypes.CAPABILITY_CODE_MULTIPROTOCOLEXTENSION)
 			{
-				capabilityList.add(new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset));
+				MultiprotocolExtensionCapabilityAdvertisement meca = new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset);
+				capabilityList.add(meca);
+				offset=offset+meca.getLength();
+			}else {
+				offset= offset+BGP4Capability.getCapabilityLength(this.bytes, offset);
 			}
 		}
 
