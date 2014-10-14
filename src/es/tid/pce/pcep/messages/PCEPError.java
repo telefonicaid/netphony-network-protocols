@@ -141,7 +141,7 @@ public class PCEPError extends PCEPMessage {
 
 	
 	private void decode() throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP Error Message");		
+		//Decoding PCEP Error Message"		
 		int offset=4;//We start after the object header
 		if (offset>=this.getLength()){
 			log.warning("Empty Error message");
@@ -149,10 +149,8 @@ public class PCEPError extends PCEPMessage {
 		}
 		int oc=PCEPObject.getObjectClass(this.messageBytes, 4);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
-			log.finest(" Error Construct begins with RP");
 			//If the first thing is an error construct, then, we have to fill the Error list
 			while ((oc==ObjectParameters.PCEP_OBJECT_CLASS_RP)||(oc==ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR))  {
-				log.finest("Error Construct Found");
 				ErrorConstruct errc;
 				try {
 					errc = new ErrorConstruct(this.messageBytes,offset);
@@ -172,7 +170,6 @@ public class PCEPError extends PCEPMessage {
 			while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR){
 				PCEPErrorObject perrobj;
 				try {
-					log.finest("Error Object found");
 					perrobj=new PCEPErrorObject(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warning("Problem Decoding Error Object");
@@ -201,7 +198,6 @@ public class PCEPError extends PCEPMessage {
 				oc=PCEPObject.getObjectClass(this.messageBytes, offset);
 			}
 			while ((oc==ObjectParameters.PCEP_OBJECT_CLASS_RP)||(oc==ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR))  {
-					log.finest("Error Construct Found");
 					ErrorConstruct errc;
 					try {
 						errc = new ErrorConstruct(this.messageBytes,offset);

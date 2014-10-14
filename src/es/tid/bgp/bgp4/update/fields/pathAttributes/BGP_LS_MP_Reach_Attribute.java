@@ -23,19 +23,14 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 	
 	public BGP_LS_MP_Reach_Attribute(byte [] bytes, int offset) {
 		super(bytes, offset);
-		log.finest("mandatory length:"+this.mandatoryLength);
 		int offset2=offset+this.mandatoryLength+5+this.getLengthofNextHopNetworkAddress();
 		int type= LinkStateNLRI.getType(bytes, offset2);
-		log.finest("nlri del tipo:"+type);
 		if (type==NLRITypes.Link_NLRI){
-			log.finest(">>Link_NLRI");
 			lsNLRI=new LinkNLRI(bytes, offset2);	
 		}else if (type==NLRITypes.Node_NLRI){
-			log.finest(">>Node_NLRI");
 			lsNLRI=new NodeNLRI(bytes, offset2);	
 		}
 		else if (type == NLRITypes.Prefix_v4_NLRI){
-			log.finest(">>Prefix_NLRI");
 			lsNLRI = new PrefixNLRI(bytes, offset2);
 		}
 		else{
@@ -46,7 +41,7 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 	
 	
 	public void encode() {
-		log.finest("Encoding BGP_LS_MP_Reach_Attribute");
+		//Encoding BGP_LS_MP_Reach_Attribute
 		
 		if (lsNLRI!=null){
 			lsNLRI.encode();

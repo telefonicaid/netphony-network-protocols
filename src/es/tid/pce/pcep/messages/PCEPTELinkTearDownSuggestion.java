@@ -67,7 +67,7 @@ public class PCEPTELinkTearDownSuggestion extends PCEPMessage {
 	 * The byte array is copied in messageBytes
 	 */
 	private void decode()  throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP TE Link Suggestion Message");
+		//Decoding PCEP TE Link Suggestion Message");
 		int offset=4;//We start after the object header
 		int oc=PCEPObject.getObjectClass(this.messageBytes, offset);
 		oc=PCEPObject.getObjectClass(this.messageBytes, offset);

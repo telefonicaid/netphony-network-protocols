@@ -374,23 +374,18 @@ public class Notification extends PCEPObject{
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.finest("TLV type "+tlvtype+"TLV length "+tlvlength);
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OVERLOADED_DURATION:
-				log.finest("OVERLOADED_DURATION TLV found");
 				odtlv=new OverloadedDurationTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_REACHABILITY_TLV:
-				log.finest("Reachability TLV found");
 				if (reachabilityTLVList==null){
-					log.finest("Creating reachabilityTLVList");
 					reachabilityTLVList=new LinkedList<ReachabilityTLV>();
 				}
 				ReachabilityTLV rtlv=new ReachabilityTLV(this.getObject_bytes(), offset);
 				reachabilityTLVList.add(rtlv);
 				break;
 			case ObjectParameters.PCEP_TLV_OSPFTE_LSA_TLV:
-				log.finest("OSPF TE LSA TLV found");
 				if (LSATLVList==null){
 					LSATLVList=new LinkedList<OSPFTE_LSA_TLV>();
 				}
@@ -398,33 +393,24 @@ public class Notification extends PCEPObject{
 				LSATLVList.add(lsa_tlv);
 				break;
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
-				log.finest("DOMAIN_ID TLV found");
 				//domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
-				//log.finest(domain_id_tlv.toString());				
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
-				log.finest("PCEP_TLV_PCE_ID found");
 				//pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
-				//log.finest(pce_id_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_IT_ADV:
-				log.finest("IT adv TLV found");
 				ITadvTLV=new ITAdvertisementTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_STORAGE:
-				log.finest("Storage TLV found");
 				StorageTLV=new StorageTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_SERVER:
-				log.finest("Server TLV found");
 				ServerTLV=new ServerTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_RESERVATION_ID:
-				log.finest("RESERVATION ID TLV found");
 				reservationIDTLV=new ReservationIDTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_PATH_RESERVATION:
-				log.finest("PATH_RESERVATION TLV found");
 				notificationTLV=new PathReservationTLV(this.getObject_bytes(), offset);				
 				break;
 			default:
@@ -436,7 +422,6 @@ public class Notification extends PCEPObject{
 			}
 			offset=offset+tlvlength;
 			if (offset>=ObjectLength){
-				log.finest("No more TLVs in Notification");//FIXME: Cambiar a log.fine cuando esté estable!!!
 				fin=true;
 			}
 		}

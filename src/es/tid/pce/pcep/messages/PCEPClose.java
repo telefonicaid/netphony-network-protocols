@@ -88,7 +88,7 @@ public class PCEPClose extends PCEPMessage {
 	 * The byte array is copied in messageBytes
 	 */
 	private void decode()  throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP Close Message");
+		//Decoding PCEP Close Message"
 		int offset=4;//We start after the object header
 		// TODO Auto-generated method stub
 		if (PCEPObject.getObjectClass(this.messageBytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_CLOSE){

@@ -304,7 +304,7 @@ public class OPEN extends PCEPObject{
 	 * Decodes the OPEN object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
-		log.finest("Beginning decoding of OPEN object");
+		//Beginning decoding of OPEN object
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
 		stateful_capability_tlv = null;
@@ -319,13 +319,11 @@ public class OPEN extends PCEPObject{
 		boolean fin=false;
 		int offset=8;
 		if (ObjectLength==8){
-			log.finest("Prematurely ending. OPEN message too short");
 			fin=true;
 		}
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.finest("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);

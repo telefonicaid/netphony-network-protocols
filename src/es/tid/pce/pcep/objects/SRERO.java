@@ -6,48 +6,11 @@ import java.util.logging.Logger;
 import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 
 /*
-
-RFC 3209     RSVP-TE
-
-  4.3. Explicit Route Object
-
-   Explicit routes are specified via the EXPLICIT_ROUTE object (ERO).
-   The Explicit Route Class is 20.  Currently one C_Type is defined,
-   Type 1 Explicit Route.  The EXPLICIT_ROUTE object has the following
-   format:
-
-   Class = 20, C_Type = 1
-
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
-   //                        (Subobjects)                          //
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-   Subobjects
-
-   The contents of an EXPLICIT_ROUTE object are a series of variable-
-   length data items called subobjects.  The subobjects are defined in
-   section 4.3.3 below.
-
-   If a Path message contains multiple EXPLICIT_ROUTE objects, only the
-   first object is meaningful.  Subsequent EXPLICIT_ROUTE objects MAY be
-   ignored and SHOULD NOT be propagated.
-
-
+ * SRERO.
+ * 
  */
 
-public class SRERO extends PCEPObject{
-
-
-	/**
-	 * Log
-	 */
-		
-	private Logger log;
-	
+public class SRERO extends PCEPObject{	
 	
 	public LinkedList<SREROSubobject> SREROSubobjectList;
 	
@@ -70,7 +33,6 @@ public class SRERO extends PCEPObject{
 	public SRERO (byte []bytes, int offset)throws MalformedPCEPObjectException{
 		super(bytes, offset);
 		log=Logger.getLogger("PCEServer");
-		log.finest("Entrando en SRERO con parametros "+offset);
 		SREROSubobjectList=new LinkedList<SREROSubobject>();
 		decode();
 	}
@@ -115,14 +77,11 @@ public class SRERO extends PCEPObject{
 				fin=true;
 			}
 		}
-		log.finest("decoded: "+this.toString());
 		
 	}
 	
 	//Getters and setters
-	
-	//FIXME: Ver si es mejor Vector o LInkedList, y A�ADIR MAS METODOS UTILES, estos son escasos.
-	
+		
 	public void addSREROSubobject(SREROSubobject eroso){
 		SREROSubobjectList.add(eroso);
 	}

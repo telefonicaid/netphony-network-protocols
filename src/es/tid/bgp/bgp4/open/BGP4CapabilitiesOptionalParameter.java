@@ -85,8 +85,6 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 			{
 				capabilityList.add(new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset));
 			}
-			else 
-				log.finest("Unknown Capability Code");
 		}
 
 

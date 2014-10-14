@@ -124,7 +124,6 @@ public class LinkNLRI extends LinkStateNLRI {
 	}
 	@Override
 	public void encode() {
-		log.finest("Encoding Link NLRI..........");
 		int len=4+1+8;//The four bytes of the header plus the 4 first bytes (Primeros cuatro bytes (protocol-id,reserved, instance identifier))
 		if (localNodeDescriptors!=null){
 			localNodeDescriptors.encode();
@@ -176,9 +175,7 @@ public class LinkNLRI extends LinkStateNLRI {
 		this.bytes[12]=(byte)(routingUniverseIdentifier & 0xFF);
 		
 		int offset=13;
-		
-		log.finest("nlri header done...");
-		
+				
 		if (localNodeDescriptors!=null){
 			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset, localNodeDescriptors.getTotalTLVLength());
 			offset=offset+localNodeDescriptors.getTotalTLVLength();
@@ -230,7 +227,6 @@ public class LinkNLRI extends LinkStateNLRI {
 		
 	}
 	public void decode(){
-		log.finest("Decoding LinkNLRI");
 		int offset = 4; //Cabecera del LinkState NLRI
 		protocolID = this.bytes[offset];
 		offset=offset +1; //identifier
@@ -242,48 +238,39 @@ public class LinkNLRI extends LinkStateNLRI {
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
 		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-		log.finest("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
 		offset = offset +8;
 	
 		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
 		offset = offset + localNodeDescriptors.getTotalTLVLength();
 		this.remoteNodeDescriptorsTLV=new RemoteNodeDescriptorsTLV(this.bytes, offset);
 		offset = offset + remoteNodeDescriptorsTLV.getTotalTLVLength();
-		log.finest("Offset "+offset);
 		boolean fin=false;
 		
 		while (!fin) {
 			int subTLVType=BGP4TLVFormat.getType(bytes, offset);
 			int subTLVLength=BGP4TLVFormat.getTotalTLVLength(bytes, offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			
 				switch (subTLVType){
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_LINKIDENTIFIERS:
-					log.finest("LinkLocalRemoteIdentifiers found");
 					this.linkIdentifiersTLV=new LinkLocalRemoteIdentifiersLinkDescriptorSubTLV(bytes, offset);
 					break;
 					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv4INTERFACE:
 					this.ipv4InterfaceAddressTLV=new IPv4InterfaceAddressLinkDescriptorsSubTLV(bytes, offset);
-					log.finest("IPv4InterfaceAddress found "+ipv4InterfaceAddressTLV.getIpv4Address().toString());
 					break;
 					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv4NEIGHBOR:
-					log.finest("IPv4InterfaceAddress found");
 					this.ipv4NeighborAddressTLV=new IPv4NeighborAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6INTERFACE:
-					log.finest("IPv6InterfaceAddress found");
 					this.ipv6InterfaceAddressTLV=new IPv6InterfaceAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
 					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6NEIGHBOR:
-					log.finest("IPv6InterfaceAddress found");
 					this.ipv6NeighborAddressTLV=new IPv6NeighborAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
 					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MULTITOPOLOGY_ID:
-					log.finest("multiTopologyID found");
 					this.multiTopologyIDTLV=new MultiTopologyIDLinkDescriptorSubTLV(bytes, offset);
 					break;				
 					

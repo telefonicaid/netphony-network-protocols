@@ -79,7 +79,7 @@ public class Request extends PCEPConstruct{
 	}
 
 	public void encode() throws PCEPProtocolViolationException{
-		log.finest("Encoding Request Construct");
+		//Encoding Request Construct
 		int len=0;
 		if (requestParameters!=null){
 			requestParameters.encode();
@@ -213,7 +213,7 @@ public class Request extends PCEPConstruct{
 	 * Decode a Request rule;
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		log.finest("Decoding Request Rule");
+		//Decoding Request Rule
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
@@ -245,7 +245,6 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			ot=PCEPObject.getObjectType(bytes, offset);
-			log.finest("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 				try {
 					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
@@ -318,7 +317,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
-			log.finest("LSPA Object found");
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -336,7 +334,6 @@ public class Request extends PCEPConstruct{
 		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
-				log.finest("BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -344,7 +341,6 @@ public class Request extends PCEPConstruct{
 					throw new PCEPProtocolViolationException();
 				}			
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthExistingLSP(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -353,7 +349,6 @@ public class Request extends PCEPConstruct{
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -362,7 +357,6 @@ public class Request extends PCEPConstruct{
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -385,7 +379,6 @@ public class Request extends PCEPConstruct{
 	
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
-			log.finest("METRIC Object found");
 			Metric metric;
 			try {
 				metric = new Metric(bytes,offset);
@@ -404,7 +397,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
-			log.finest("OBJECTIVE FUNCTION Object found");
 			try {
 				objectiveFunction=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -420,7 +412,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RESERVATION){
-			log.finest("RESERVATION Object found");
 			try {
 				reservation=new Reservation(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -436,7 +427,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
-			log.finest("RRO Object found");
 			rROBandwidth=new RROBandwidth(bytes, offset);
 			offset=offset+rROBandwidth.getLength();
 			len=len+rROBandwidth.getLength();
@@ -447,7 +437,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_IRO){
-			log.finest("IRO Object found");
 			try {
 				iRO=new IncludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -463,7 +452,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LOADBALANCING){
-			log.finest("LOADBALANCING Object found");
 			try {
 				loadBalancing=new LoadBalancing(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -479,7 +467,6 @@ public class Request extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_XRO){
-			log.finest("XRO Object found");
 			try {
 				xro=new ExcludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -496,7 +483,6 @@ public class Request extends PCEPConstruct{
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_INTER_LAYER){
-			log.finest("INTER_LAYER Object found");
 			try {
 				interLayer=new InterLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -513,7 +499,6 @@ public class Request extends PCEPConstruct{
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
-			log.finest("INTER_LAYER Object found");
 			try {
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {

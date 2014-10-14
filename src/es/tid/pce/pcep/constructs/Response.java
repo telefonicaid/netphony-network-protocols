@@ -238,7 +238,6 @@ public class Response extends PCEPConstruct{
 		if (requestParameters!=null){
 			requestParameters.encode();
 			len=len+requestParameters.getLength();
-			log.finest("despues de RP llevamos "+len);
 
 		}
 		else {
@@ -287,15 +286,12 @@ public class Response extends PCEPConstruct{
 			for (int i=0;i<pathList.size();++i){
 				(pathList.get(i)).encode();
 				len=len+(pathList.get(i)).getLength();
-				log.finest("despues de path llevamos "+len);
 			}
 		}
 		if (metricPCEList!=null){
 			for (int i=0;i<metricPCEList.size();++i){
 				(metricPCEList.get(i)).encode();
 				len=len+(metricPCEList.get(i)).getLength();
-				log.finest("despues de metricpce llevamos "+len);
-
 			}
 		}
 		
@@ -353,13 +349,12 @@ public class Response extends PCEPConstruct{
 
 	public void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
-		log.finest("Decoding Response Rule");
+		//Decoding Response Rule
 		int len=0;
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
 		//IF UNKNOWN OBJECTS ARE PRESENT, EXCEPTION IS THROWN...
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
-			log.finest("RP Object found");
 			try {
 				requestParameters=new RequestParameters(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -379,7 +374,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_MONITORING){
-			log.finest("Monitoring Object found");
 			try {
 				monitoring=new Monitoring(bytes, offset);							
 			} catch (MalformedPCEPObjectException e) {
@@ -395,7 +389,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCC_REQ_ID){
-			log.finest("PCC ID REQ Object found");
 			try {
 				pccIdreq=new PccReqId(bytes, offset);							
 			} catch (MalformedPCEPObjectException e) {
@@ -411,7 +404,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_NOPATH){
-			log.finest("NOPATH Object found");
 			try {
 				noPath=new NoPath(bytes, offset);							
 			} catch (MalformedPCEPObjectException e) {
@@ -427,7 +419,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
-			log.finest("LSPA Object found");
 			try {
 				lSPA=new LSPA(bytes, offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -445,7 +436,6 @@ public class Response extends PCEPConstruct{
 		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
-				log.finest("BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -453,7 +443,6 @@ public class Response extends PCEPConstruct{
 					throw new PCEPProtocolViolationException();
 				}			
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthExistingLSP(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -462,7 +451,6 @@ public class Response extends PCEPConstruct{
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -471,7 +459,6 @@ public class Response extends PCEPConstruct{
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -480,7 +467,6 @@ public class Response extends PCEPConstruct{
 				}		
 				
 			} else {
-				log.warning("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			
@@ -495,7 +481,6 @@ public class Response extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
-			log.finest("METRIC Object found");
 			Metric metric;
 			try {
 				metric = new Metric(bytes,offset);
@@ -514,7 +499,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_IRO){
-			log.finest("IRO Object found");
 			try {
 				iRO=new IncludeRouteObject(bytes, offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -530,7 +514,6 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RESERVATION_CONF){
-			log.finest("RESERVATION CONF Object found");
 			try {
 				resConf=new ReservationConf(bytes, offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -546,13 +529,11 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
-			log.finest("ERO Object found, New Path Construct found");
 			Path path=new Path(bytes,offset);
 			pathList.add(path);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}
@@ -560,13 +541,11 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
-			log.finest("SRERO Object found, New Path Construct found");
 			Path path=new Path(bytes,offset);
 			pathList.add(path);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}
@@ -576,7 +555,6 @@ public class Response extends PCEPConstruct{
 
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCE_ID){
-			log.finest("PCE ID Object found, New Metri PCE Construct found");
 			MetricPCE metricPCE=new MetricPCE(bytes,offset);
 			metricPCEList.add(metricPCE);
 			offset=offset+metricPCE.getLength();

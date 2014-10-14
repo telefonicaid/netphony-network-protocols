@@ -78,7 +78,6 @@ public class Notify extends PCEPConstruct {
 	
 	private void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
-		log.finest("Decoding Notify Construct");		
 		int len=0;
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
@@ -87,7 +86,6 @@ public class Notify extends PCEPConstruct {
 		}
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
-			log.finest("RP Object found");
 			RequestParameters rp;
 			try {
 				rp = new RequestParameters(bytes,offset);
@@ -107,7 +105,6 @@ public class Notify extends PCEPConstruct {
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		//while ((oc==ObjectParameters.PCEP_OBJECT_CLASS_NOTIFICATION)&&(len<this.getLength())){
 		while ((oc==ObjectParameters.PCEP_OBJECT_CLASS_NOTIFICATION)){
-			log.finest("NOTIFICATION Object found");
 			Notification notif;
 			try {
 				notif = new Notification(bytes,offset);
@@ -122,7 +119,6 @@ public class Notify extends PCEPConstruct {
 				oc=PCEPObject.getObjectClass(bytes, offset);	
 			}
 			if (offset>=max_offset){
-				log.finest("End of NOTIFY Construct (length reached)");//FIXME: Cambiar a finest despues
 				this.setLength(len);
 				return;
 			}

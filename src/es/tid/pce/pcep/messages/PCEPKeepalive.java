@@ -68,23 +68,12 @@ public class PCEPKeepalive extends PCEPMessage {
 	public PCEPKeepalive(byte[] bytes) throws PCEPProtocolViolationException {
 		super(bytes);
 	}
-	
-	
 
-
-	@Override
 	public void encode() throws PCEPProtocolViolationException {
 		this.setMessageLength(4);
 		this.messageBytes=new byte[this.getLength()];
 		encodeHeader();
 	}
 
-//	public void decode(byte[] bytes) throws PCEPProtocolViolationException {		
-//		//log.finest("Decoding KA Message");
-//		this.messageBytes=new byte[bytes.length];
-//		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
-//		decodeHeader();
-//		// KA Message has no objects		
-//	}
 	
 }

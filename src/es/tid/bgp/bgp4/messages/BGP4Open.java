@@ -185,7 +185,6 @@ public class BGP4Open extends BGP4Message {
 		System.arraycopy(BGPIdentifier.getAddress(),0, messageBytes, offset, 4);	
 		offset=offset+4;
 		messageBytes[offset] = (byte)(optionalParameterLength & 0xff);
-		//log.finest("offset del optional Parameter length ("+optionalParameterLength+")"+ offset);
 		offset++;
 		for (int i=0;i<parametersList.size();++i){
 			System.arraycopy(parametersList.get(i).getBytes(), 0, messageBytes, offset, parametersList.get(i).getLength());
@@ -215,7 +214,6 @@ public class BGP4Open extends BGP4Message {
 		optionalParameterLength = (int)(messageBytes[offset] & 0xFF);
 		offset++;
 		
-		//log.finest("optionalParameterLength is "+optionalParameterLength);
 		if (optionalParameterLength != 0){
 			
 			
@@ -224,15 +222,10 @@ public class BGP4Open extends BGP4Message {
 				
 				int optionalParameterType = BGP4OptionalParameter.getType(messageBytes, offset);
 				int parameterLength = BGP4OptionalParameter.getLength(messageBytes, offset);				
-				//log.finest("parameterLength is: "+parameterLength+"!!!");
 				if (optionalParameterType == BGP4OptionalParametersTypes.CAPABILITY_OPTIONAL_PARAMETER){
-					//log.finest("Capability Optional Parameter Type");
 					BGP4CapabilitiesOptionalParameter cop = new BGP4CapabilitiesOptionalParameter(this.getBytes(),offset);
 					parametersList.add(cop);
 				}
-//				else {
-//					log.finest("Unknown Optional Parameter Type ("+optionalParameterType+")");
-//				}		
 				offset = offset + parameterLength;
 				len =  len +parameterLength;
 			

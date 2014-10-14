@@ -192,7 +192,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	}
 	@Override
 	public void encode() {
-		log.finest("Encode LinkStateAttribute");
+		//Encode LinkStateAttribute
 
 		//LINK ATTRIBUTES
 		if (maximumLinkBandwidthTLV!=null){
@@ -200,7 +200,6 @@ public class LinkStateAttribute  extends PathAttribute{
 			pathAttributeLength=pathAttributeLength+maximumLinkBandwidthTLV.getTotalTLVLength();
 		}
 		if (maxReservableBandwidthTLV!=null){
-			log.finest("maxReservableBandwidthTLV");
 			maxReservableBandwidthTLV.encode();
 			pathAttributeLength=pathAttributeLength+maxReservableBandwidthTLV.getTotalTLVLength();
 		}
@@ -216,29 +215,24 @@ public class LinkStateAttribute  extends PathAttribute{
 		}
 
 		if(administrativeGroupTLV!=null){
-			log.finest("administrativeGroupTLV");
 			administrativeGroupTLV.encode();
 			pathAttributeLength=pathAttributeLength+administrativeGroupTLV.getTotalTLVLength();
 		}
 
 		if(linkProtectionTLV!=null){
-			log.finest("linkProtectionTLV");
 			linkProtectionTLV.encode();
 			pathAttributeLength=pathAttributeLength+linkProtectionTLV.getTotalTLVLength();
 		}
 
 		if(IPv4RouterIDLocalNodeLATLV!=null){
-			log.finest("IPv4RouterIDLocalNodeLATLV");
 			IPv4RouterIDLocalNodeLATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeLATLV.getTotalTLVLength();
 		}
 		if(IPv4RouterIDRemoteNodeLATLV!=null){
-			log.finest("IPv4RouterIDRemoteNodeLATLV");
 			IPv4RouterIDRemoteNodeLATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength();
 		}
 		if(TEMetricTLV!=null){
-			log.finest("TEMetricTLV");
 			TEMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+TEMetricTLV.getTotalTLVLength();
 		}
@@ -246,28 +240,23 @@ public class LinkStateAttribute  extends PathAttribute{
 		//NODE Attributes
 
 		if(nodeFlagBitsTLV!=null){
-			log.finest("nodeFlagBitsTLV");
 			nodeFlagBitsTLV.encode();
 			pathAttributeLength=pathAttributeLength+nodeFlagBitsTLV.getTotalTLVLength();
 		}
 		if(nodeNameTLV!=null){
-			log.finest("nodeNameTLV");
 			nodeNameTLV.encode();
 			pathAttributeLength=pathAttributeLength+nodeNameTLV.getTotalTLVLength();
 		}
 		if(areaIDTLV!=null){
-			log.finest("areaIDTLV");
 			areaIDTLV.encode();
 			pathAttributeLength=pathAttributeLength+areaIDTLV.getTotalTLVLength();
 		}
 		if(IPv4RouterIDLocalNodeNATLV!=null){
-			log.finest("IPv4RouterIDLocalNodeNATLV");
 			IPv4RouterIDLocalNodeNATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
 		}
 
 		if(sidLabelTLV!=null){
-			log.finest("sidLabelTLV");
 			sidLabelTLV.encode();
 			pathAttributeLength=pathAttributeLength+sidLabelTLV.getTotalTLVLength();
 		}
@@ -275,32 +264,27 @@ public class LinkStateAttribute  extends PathAttribute{
 		//PREFIX Attributes
 
 		if(igpFlagBitsTLV!=null){
-			log.finest("igpFlagBitsTLV");
 			igpFlagBitsTLV.encode();
 			pathAttributeLength=pathAttributeLength+igpFlagBitsTLV.getTotalTLVLength();
 		}
 
 		if(routeTagTLV!=null){
-			log.finest("routeTagTLV");
 			routeTagTLV.encode();
 			pathAttributeLength=pathAttributeLength+routeTagTLV.getTotalTLVLength();
 		}
 
 		if(prefixMetricTLV!=null){
-			log.finest("prefixMetricTLV");
 			prefixMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+prefixMetricTLV.getTotalTLVLength();
 		}
 
 		if(OSPFForwardingAddrTLV!=null){
-			log.finest("OSPFForwardingAddrTLV");
 			OSPFForwardingAddrTLV.encode();
 			pathAttributeLength=pathAttributeLength+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}			
 
 		if (availableLabels != null){
 			try {
-				log.finest("Available labels not null");
 				availableLabels.encode();
 			} catch (MalformedOSPFSubTLVException e) {
 				// TODO Auto-generated catch block
@@ -312,8 +296,6 @@ public class LinkStateAttribute  extends PathAttribute{
 		//Length
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];
-
-		log.finest("BGP Header to be encoded");
 
 		//Encode Header
 		encodeHeader();
@@ -417,52 +399,41 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void decode(){
 		boolean fin=false;
 		int offset = mandatoryLength;
-		log.finest("Decoding LinkState Attribute");
+		//Decoding LinkState Attribute
 		while (!fin) {
 			int TLVType=BGP4TLVFormat.getType(this.bytes, offset);
 			int TLVLength=BGP4TLVFormat.getTotalTLVLength(this.bytes, offset);
-			log.finest("subTLVType: "+TLVType+" subTLVLength: "+TLVLength);
 			//diferenciar en links y nodes para que no de error de compilacion ya que los id de los IPv4 son iguales 
 			switch (TLVType){
 			//LINK ATTRIBUTES
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MAX_RESERVABLE_BANDWITH:
-				log.finest("MAX_RESERVABLE_BANDWITH found");					
 				this.maxReservableBandwidthTLV=new MaxReservableBandwidthLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MAXIMUM_BANDWITH:
-				log.finest("TYPE_MAXIMUM_BANDWITH found");
 				this.maximumLinkBandwidthTLV=new MaximumLinkBandwidthLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_UNRESERVED_BANDWITH:
-				log.finest("UNRESERVABLE_BANDWITH found");
 				this.unreservedBandwidthTLV=new UnreservedBandwidthLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_ADMINISTRATIVE_GROUP:
-				log.finest("ADMINISTRATIVE GROUP found");					
 				this.administrativeGroupTLV=new AdministrativeGroupLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_LINK_PROTECTION_TYPE:
-				log.finest("LINK PROTECTION TYPE found");					
 				this.linkProtectionTLV=new LinkProtectionTypeLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_METRIC:
-				log.finest("METRIC found");					
 				this.metricTLV=new MetricLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE:
-				log.finest("ROUTER ID OF LOCAL NODE found");					
 				this.IPv4RouterIDLocalNodeLATLV=new IPv4RouterIDLocalNodeLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_REMOTE_NODE:
-				log.finest("ROUTER ID OF REMOTE NODE found");					
 				this.IPv4RouterIDRemoteNodeLATLV=new IPv4RouterIDRemoteNodeLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TE_DEFAULT_METRIC:
-				log.finest("TE_DEFAULT METRIC found");					
 				this.TEMetricTLV=new DefaultTEMetricLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
-				log.finest("AVAILABLE LABELS found");
 				try {
 					this.availableLabels=new AvailableLabels(this.bytes, offset);
 				} catch (MalformedOSPFSubTLVException e) {
@@ -481,45 +452,35 @@ public class LinkStateAttribute  extends PathAttribute{
 
 				 */	
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_FLAG_BITS:
-				log.finest("NODE FLAG BITS found");					
 				this.nodeFlagBitsTLV=new NodeFlagBitsNodeAttribTLV(this.bytes, offset);
 				break;
 
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME:
-				log.finest("NODE NAME found");					
 				this.nodeNameTLV=new NodeNameNodeAttribTLV(this.bytes, offset);
 				break;
 
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID:
-				log.finest("AREA ID found");					
 				this.areaIDTLV=new IS_IS_AreaIdentifierNodeAttribTLV(this.bytes, offset);
 				break;
-
 
 				//PREFIX ATTRIBUTES
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS:
-				log.finest("IGP FLAGS found");	//				
 				this.igpFlagBitsTLV=new IGPFlagBitsPrefixAttribTLV(this.bytes, offset);
 				break;
 
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_OSPF_FORWARDING_ADDRESS:
-				log.finest("OSPF FORWARDING ADDRESS found");					
 				this.OSPFForwardingAddrTLV=new OSPFForwardingAddressPrefixAttribTLV(this.bytes, offset);
 				break;
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_METRIC:
-				log.finest("PREFIX METRIC found");					
 				this.prefixMetricTLV=new PrefixMetricPrefixAttribTLV(this.bytes, offset);
 				break;
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG:
-				log.finest("ROUTE TAG found");					
 				this.routeTagTLV=new RouteTagPrefixAttribTLV(this.bytes, offset);
 				break;
-
-
 
 			default:
 				log.finest("Unknown TLV found");

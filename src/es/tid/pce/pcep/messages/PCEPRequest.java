@@ -122,7 +122,7 @@ public class PCEPRequest extends PCEPMessage {
 	 * Encodes the PCEP Request message
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding PCEP Request Message");
+		//Encoding PCEP Request Message
 		if (RequestList.size()==0){
 			log.warning("There should be at least one request in a PCEP Request message");
 			throw new PCEPProtocolViolationException();
@@ -172,7 +172,7 @@ public class PCEPRequest extends PCEPMessage {
 	 */
 	public void decode() throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 
-		log.finest("Decoding PCEP Request Message");
+		//Decoding PCEP Request Message
 		byte[] bytes=this.messageBytes;
 		int offset=4;//We start after the object header
 		int oc=PCEPObject.getObjectClass(bytes, offset);
@@ -198,7 +198,6 @@ public class PCEPRequest extends PCEPMessage {
 			//len=len+pccReqId.getLength();
 		}
 		while (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SVEC){
-			log.finest("Svec construct");
 			SVECConstruct c_svec;
 			try {
 				c_svec = new SVECConstruct(bytes,offset);

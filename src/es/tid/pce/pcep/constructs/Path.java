@@ -77,7 +77,7 @@ public class Path extends PCEPConstruct {
 	
 	public void encode() throws PCEPProtocolViolationException {
 
-		log.finest("Encoding Request Rule");
+		//Encoding Request Rule
 		int len=0;
 		if (eRO!=null){
 			eRO.encode();
@@ -95,22 +95,18 @@ public class Path extends PCEPConstruct {
 			of.encode();
 			len=len+of.getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		if (lSPA!=null){
 			lSPA.encode();
 			len=len+lSPA.getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			(metricList.get(i)).encode();
 			len=len+(metricList.get(i)).getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		if (iRO!=null){
 			iRO.encode();
 			len=len+iRO.getLength();
@@ -166,12 +162,10 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
 			offset=offset+metricList.get(i).getLength();
 		}
-		//log.finest("Path encoding "+z);z++;
 		if (iRO!=null){
 			System.arraycopy(iRO.getBytes(), 0, bytes, offset, iRO.getLength());
 			offset=offset+iRO.getLength();
@@ -205,12 +199,11 @@ public class Path extends PCEPConstruct {
 	}
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		log.finest("Decoding Path Rule");
+		//Decoding Path Rule
 		int len=0;		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
-			log.finest("ERO Object found");
 			try {
 				eRO=new ExplicitRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -221,7 +214,6 @@ public class Path extends PCEPConstruct {
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
-			log.finest("SRERO Object found");
 			try {
 				SRERO=new SRERO(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -232,7 +224,6 @@ public class Path extends PCEPConstruct {
 		}		
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
-			log.finest("OF Object found");
 			try {
 				of=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -244,7 +235,6 @@ public class Path extends PCEPConstruct {
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
-			log.finest("LSPA Object found");
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -258,7 +248,6 @@ public class Path extends PCEPConstruct {
 		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
-				log.finest("BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -266,7 +255,6 @@ public class Path extends PCEPConstruct {
 					throw new PCEPProtocolViolationException();
 				}			
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthExistingLSP(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -275,7 +263,6 @@ public class Path extends PCEPConstruct {
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Request Object found");
 				try {
 					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -284,7 +271,6 @@ public class Path extends PCEPConstruct {
 				}		
 				
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
-				log.finest("BANDWIDTH GENERALIZED BANDWIDTH Existing TE LSP Object found");
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -307,7 +293,6 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
-			log.finest("METRIC Object found");
 			Metric metric;
 			try {
 				metric = new Metric(bytes,offset);
@@ -322,7 +307,6 @@ public class Path extends PCEPConstruct {
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_IRO){
-			log.finest("IRO Object found");
 			try {
 				iRO=new IncludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -335,7 +319,6 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_INTER_LAYER){
-			log.finest("interLayer Object found");
 			try {
 				interLayer=new InterLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -348,7 +331,6 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
-			log.finest("switchLayer Object found");
 			try {
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -361,7 +343,6 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_REQ_ADAP_CAP){
-			log.finest("reqAdapCap Object found");
 			try {
 				reqAdapCap=new ReqAdapCap(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -374,7 +355,6 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SERVER_INDICATION){
-			log.finest("serverIndication Object found");
 			try {
 				serverIndication=new ServerIndication(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -384,13 +364,11 @@ public class Path extends PCEPConstruct {
 			offset=offset+serverIndication.getLength();
 			len=len+serverIndication.getLength();
 		}
-		log.finest("A VER SI HAY Label Set!!!");
 		oc=PCEPObject.getObjectClass(bytes, offset);	
 		ot=PCEPObject.getObjectType(bytes, offset);
 	
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LABEL_SET){
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_LABEL_SET_BITMAP){
-				log.finest("Label Set Bitmap Object found");
 				try {
 					labelSet=new BitmapLabelSet(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -404,7 +382,6 @@ public class Path extends PCEPConstruct {
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SUGGESTED_LABEL){
-			log.finest("Suggested Label Object found");
 			try {
 				suggestedLabel=new SuggestedLabel(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {

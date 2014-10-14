@@ -135,18 +135,17 @@ public class PCEPResponse extends PCEPMessage {
 	 * Encodes the PCEP Response Message
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding PCEP Response Message");
+		//Encoding PCEP Response Message
 		if (ResponseList.size()==0){
 			log.warning("There should be at least one request in a PCEP Response message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
-		log.finest("Ending "+ResponseList.size()+" different responses");
+		//Ending "+ResponseList.size()+" different responses
 		for (int i=0;i<ResponseList.size();++i){
 			ResponseList.get(i).encode();
 			len=len+ResponseList.get(i).getLength();
 		}
-		log.finest("Total length of the Response Message"+len);
 		this.setMessageLength(len);
 		messageBytes=new byte[len];
 		encodeHeader();
@@ -161,7 +160,7 @@ public class PCEPResponse extends PCEPMessage {
 	 * Decode the PCEP Response message
 	 */
 	public void decode() throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP Response Message");
+		//Decoding PCEP Response Message
 		byte[] bytes=this.getBytes();
 		int offset=4;//We start after the object header
 		while (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_RP){

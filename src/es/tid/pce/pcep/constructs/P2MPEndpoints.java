@@ -25,8 +25,7 @@ public class P2MPEndpoints extends PCEPConstruct {
 
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		// TODO Auto-generated method stub
-		log.finest("Encoding P2MPEndpoints Construct");
+		//Encoding P2MPEndpoints Construct
 		
 		int len=0;
 		if (EndpointAndRestrictionsList.size()>0){
@@ -40,8 +39,6 @@ public class P2MPEndpoints extends PCEPConstruct {
 			EndpointAndRestrictions.encode();
 			len=len+EndpointAndRestrictions.getLength();
 		}
-
-		log.finest("P2MPEndpoints Construct Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -63,14 +60,11 @@ public class P2MPEndpoints extends PCEPConstruct {
 	private void decode(byte[] bytes, int offset)
 	throws PCEPProtocolViolationException, MalformedPCEPObjectException {
 		
-		log.finest("Decoding P2MPEndpoints Construct");
-		log.finest("bytes.length::"+bytes.length);
 		int max_offset = bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty P2MPEndpoints construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
-		log.finest("Offset::"+offset);
 		
 		EndpointAndRestrictions = new EndPointAndRestrictions(bytes, offset);
 		offset = offset + EndpointAndRestrictions.getLength();
