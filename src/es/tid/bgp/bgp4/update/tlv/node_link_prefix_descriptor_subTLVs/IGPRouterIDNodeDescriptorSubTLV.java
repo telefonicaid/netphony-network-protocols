@@ -46,7 +46,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		int offset = 4; //SubTLV header
 		switch(length){
 		case 4:
-			log.finest("IGP Node ID Type: OSPF NON PSEUDO");
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO);
 			
 		    address=new byte[4]; 
@@ -59,7 +58,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			} 	
 			break;
 		case 6:
-			log.finest("IGP Node ID Type: IS_IS_NON_PSEUDO");
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_IS_IS_NON_PSEUDO);
 			
 			address=new byte[6]; 
@@ -69,7 +67,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			break;
 			
 		case 7:
-			log.finest("IGP Node ID Type: IS IS PSEUDO");
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_IS_IS_PSEUDO);
 			
 
@@ -81,7 +78,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			break;
 		
 		case 8:
-			log.finest("IGP Node ID Type: OSPF PSEUDO");
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_OSPF_PSEUDO);
 			
 			 address=new byte[4]; 

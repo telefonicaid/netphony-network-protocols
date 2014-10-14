@@ -162,7 +162,7 @@ public class Monitoring extends PCEPObject {
 				break;
 			
 			default:
-				log.finest("UNKNOWN TLV found");
+				log.warning("UNKNOWN TLV found: "+tlvtype);
 				//UnknownTLV unknownTLV = new UnknownTLV();			
 				//FIXME: Que hacemos con los desconocidos????
 				break;

@@ -52,7 +52,7 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 	}
 	
 	public void encode(){		
-		log.finest("Encode RemoteNodeDescriptorsTLV");
+		//Encode RemoteNodeDescriptorsTLV
 		if ((nodeDescriptorsSubTLVList.size() == 0))
 			log.warning("RemoteNodeDescriptorsTLV sub TLV with 0 elements");
 		
@@ -74,7 +74,7 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 		}	
 	}
 	public void decode(){
-		log.finest("Decoding RemoteNodeDescriptorsTLV");
+		//Decoding RemoteNodeDescriptorsTLV
 		boolean fin=false;
 		int offset=4;
 		while (!fin) {
@@ -101,17 +101,13 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 					addNodeDescriptorsSubTLV(IGPRouterID);		
 					break;
 				default:
-					log.finest("Remote Node Descriptor Unknown");
-					//FIXME What do we do??
+					log.finest("Remote Node Descriptor Unknown, subtlvType: "+subtlvType);
 					break;
 			}
 			
 			offset=offset+subtlvLength;
 			if (offset>=this.TLVValueLength){
 				fin=true;
-			}
-			else{
-				log.finest("sigo leyendo NodeDescriptorsSubTLV ");
 			}
 		}
 	}

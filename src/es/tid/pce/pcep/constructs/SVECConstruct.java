@@ -87,7 +87,6 @@ public class SVECConstruct extends PCEPConstruct{
 	
 	public void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
-		log.finest("Decoding SVEC Construct ");
 		int len=0;
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		//EMPEZAMOS HACIENDO IMPLEMENTACION ESTRICTA

@@ -44,8 +44,6 @@ public class FullAnycastEndpoints extends PCEPConstruct {
 
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		// TODO Auto-generated method stub
-		log.finest("Encoding FullAnycastEndpoints Construct");
 		
 		int len=0;
 		
@@ -67,7 +65,6 @@ public class FullAnycastEndpoints extends PCEPConstruct {
 			}
 		}
 
-		log.finest("Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -96,7 +93,6 @@ public class FullAnycastEndpoints extends PCEPConstruct {
 	
 	private void decode(byte[] bytes, int offset)
 	throws PCEPProtocolViolationException, MalformedPCEPObjectException {
-		log.finest("Decoding FullAnycastEndpoints Construct");
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty FullAnycastEndpoints construct!!!");

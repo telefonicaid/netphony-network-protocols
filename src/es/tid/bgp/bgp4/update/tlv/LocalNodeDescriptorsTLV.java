@@ -54,7 +54,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	}
 	
 	public void encode(){		
-		log.finest("Encode LocalNodeDescriptorsTLV");
+		//Encode LocalNodeDescriptorsTLV
 		if ((nodeDescriptorsSubTLVList.size() == 0))
 			log.warning("LocalNodeDescriptorsTLV sub TLV with 0 elements");
 		
@@ -77,7 +77,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	
 	}
 	public void decode(){
-		log.finest("Decoding LocalNodeDescriptorsTLV");
+		//Decoding LocalNodeDescriptorsTLV
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 //		if (ObjectLength==4){
@@ -109,9 +109,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 					break;
 					
 				default:
-					log.finest("TYPE: " +subtlvType);
-					log.finest("Local Node Descriptor Unknown");
-					//FIXME What do we do??
+					log.finest("Local Node Descriptor subtlv Unknown, "+subtlvType);
 					break;
 			}
 			offset=offset+subtlvLength;

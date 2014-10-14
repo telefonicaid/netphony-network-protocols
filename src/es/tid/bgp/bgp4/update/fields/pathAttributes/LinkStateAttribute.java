@@ -389,11 +389,9 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}
 		if (availableLabels!=null){
-			log.finest("BGP LSA to encode requested length: "+availableLabels.getTotalTLVLength() + " available space: " + (this.bytes.length - offset));
 			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
 			offset=offset+availableLabels.getTotalTLVLength();
 		}
-		log.finest("BGP-LSA Encoded");
 
 	}
 	public void decode(){
@@ -447,7 +445,6 @@ public class LinkStateAttribute  extends PathAttribute{
 
 				/* Se utiliza tanto en link attrib tlvs como en nodos ya que tiene el mismo type code para ambos*/
 				/**case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE:
-						log.finest("ROUTER ID OF LOCAL NODE FOUND");	//				
 						this.IPv4RouterIDLocalNodeNATLV=new IPv4RouterIDLocalNodeNodeAttribTLV(this.bytes, offset);
 
 				 */	
@@ -483,15 +480,13 @@ public class LinkStateAttribute  extends PathAttribute{
 				break;
 
 			default:
-				log.finest("Unknown TLV found");
+				log.warning("Unknown TLV found: "+TLVType);
 
 
 			}
 
 			offset=offset+TLVLength;
-			log.finest("offset:" +offset);
 			if (offset>=(this.pathAttributeLength)){
-				log.finest("No more SubTLVs in LinkTLV");
 				fin=true;
 			}
 

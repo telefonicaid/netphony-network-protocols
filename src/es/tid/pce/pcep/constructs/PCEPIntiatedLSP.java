@@ -334,7 +334,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
-			log.finest("There should be at least one ERO or SRERO Object, relaxed implementation");
+			//There should be at least one ERO or SRERO Object, relaxed implementation
 			//throw new PCEPProtocolViolationException();						
 		}
 

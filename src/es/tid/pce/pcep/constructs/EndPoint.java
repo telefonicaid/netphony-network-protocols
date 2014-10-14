@@ -104,23 +104,16 @@ public class EndPoint extends PCEPConstruct {
 		}
 
 	}
-	public void decode(byte[] bytes, int offset) throws MalformedPCEPObjectException {
-		
-		log.finest("Decoding EndPoint");
-		
+	public void decode(byte[] bytes, int offset) throws MalformedPCEPObjectException {		
 		int tlvtype=PCEPTLV.getType(bytes, offset);
 		int tlvlength=PCEPTLV.getTotalTLVLength(bytes, offset);
 		this.setLength(tlvlength);
 
-		
 		if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_IPV4_ADDRESS){
-			log.finest("OSCAR IPV4");
 			endPointIPv4=new EndPointIPv4TLV(bytes, offset);
 		}
 		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT){
-			log.finest("OSCAR UNNUM");
 			unnumberedEndpoint=new UnnumberedEndpointTLV(bytes, offset);
-			
 		}
 		
 		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_STORAGE){

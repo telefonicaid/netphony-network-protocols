@@ -191,7 +191,6 @@ public class ServerTLV extends PCEPTLV {
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding Storage EndPoint TLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){
@@ -200,23 +199,18 @@ public class ServerTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_RESOURCE_ID:
-				log.finest("Storage Resource ID");
 				this.resourceID=new ResourceIDSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_LOCATION:
-				log.finest("Location SubTLV");
 				this.location=new LocationSubTLV(this.getTlv_bytes(), offset);
 				break;
 			
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_COST:
 				CostSubTLV cost = new CostSubTLV(this.getTlv_bytes(), offset);
-				log.finest("Cost SubTLV");
 				if (costList==null){
-					log.finest("Creating CostSubTLVList");
 					costList=new LinkedList<CostSubTLV>();
 				}
 				this.costList.add(cost);

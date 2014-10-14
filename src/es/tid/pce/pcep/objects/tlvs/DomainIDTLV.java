@@ -41,12 +41,10 @@ public class DomainIDTLV extends PCEPTLV {
 		if (this.TLVValueLength!=4){
 			throw new MalformedPCEPObjectException();
 		}
-		log.finest("Decoding Domain ID TLV");
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.tlv_bytes,4, ip, 0, 4);
 		try {
 			domainId=(Inet4Address)Inet4Address.getByAddress(ip);
-			log.finest("El domainId de la TLV vale "+domainId);
 		} catch (UnknownHostException e) {			
 			e.printStackTrace();
 			throw new MalformedPCEPObjectException();

@@ -90,14 +90,9 @@ public abstract class PathAttribute extends BGP4Object {
 		}
 		else //It is one octec
 			pathAttributeLength =  bytes[offset+2]&0xFF;
-		//log.finest("pathAttributeLength: "+ pathAttributeLength+ "   ossfet "+ (offset+2));
 		this.length= pathAttributeLength+ mandatoryLength;
-		//log.finest("longitud del path Attribute:"+ this.length);
-//		
-//		log.finest("longitud del path Attribute:"+ this.length);
 		this.bytes=new byte[this.length];
-		System.arraycopy(bytes, offset, this.bytes, 0, this.length);
-//		
+		System.arraycopy(bytes, offset, this.bytes, 0, this.length);	
 	}
 	public void encodeHeader(){
 		bytes[0] = 0x00;

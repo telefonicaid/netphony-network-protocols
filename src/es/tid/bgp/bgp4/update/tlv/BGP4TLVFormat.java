@@ -45,9 +45,7 @@ public abstract class BGP4TLVFormat {
 	public BGP4TLVFormat(byte []bytes, int offset) {
 		log=Logger.getLogger("BGP4Parser");		
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
-		log.finest("TLVType:"+TLVType);
 		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
-		log.finest("TLVValueLength:"+TLVValueLength);
 		this.TotalTLVLength=TLVValueLength+4;
 		this.tlv_bytes=new byte[TotalTLVLength];
 		System.arraycopy(bytes, offset, tlv_bytes, 0, TotalTLVLength);

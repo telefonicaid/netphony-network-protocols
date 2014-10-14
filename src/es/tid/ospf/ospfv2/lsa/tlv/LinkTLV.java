@@ -254,89 +254,72 @@ public class LinkTLV extends OSPFTLV {
 		while (!fin) {
 			int subTLVType=OSPFSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=OSPFSubTLV.getTotalTLVLength(this.getTlv_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			try {
 				switch (subTLVType){
 				case OSPFSubTLVTypes.LinkID:
-					log.finest("LinkID found");
 					this.linkID=new LinkID(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.LinkType:
-					log.finest("LinkType found");
 					this.linkType=new LinkType(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.LocalInterfaceIPAddress:
-					log.finest("LocalInterfaceIPAddress found");
 					this.localInterfaceIPAddress=new LocalInterfaceIPAddress(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.RemoteInterfaceIPAddress:
-					log.finest("RemoteInterfaceIPAddress found");
 					this.remoteInterfaceIPAddress=new RemoteInterfaceIPAddress(this.getTlv_bytes(), offset);
 					break;
 				case OSPFSubTLVTypes.TrafficEngineeringMetric:
-					log.finest("TrafficEngineeringMetric found");
 					this.trafficEngineeringMetric=new TrafficEngineeringMetric(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.MaximumBandwidth:
-					log.finest("MaximumBandwidth found");
 					this.maximumBandwidth=new MaximumBandwidth(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.MaximumReservableBandwidth:
-					log.finest("MaximumReservableBandwidth found");
 					this.maximumReservableBandwidth=new MaximumReservableBandwidth(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.UnreservedBandwidth:
-					log.finest("UnreservedBandwidth found");
 					this.unreservedBandwidth=new UnreservedBandwidth(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.AdministrativeGroup:
-					log.finest("AdministrativeGroup found");
 					this.administrativeGroup=new AdministrativeGroup(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.LinkLocalRemoteIdentifiers:
-					log.finest("linkLocalRemoteIdentifiers found");
 					this.linkLocalRemoteIdentifiers=new LinkLocalRemoteIdentifiers(this.getTlv_bytes(), offset);
 					break;
 
 				case OSPFSubTLVTypes.LinkProtectionType:
-					log.finest("LinkProtectionType found");
 					this.linkProtectionType=new LinkProtectionType(this.getTlv_bytes(), offset);
 					break;
 
 				case OSPFSubTLVTypes.InterfaceSwitchingCapabilityDescriptor:
-					log.finest("InterfaceSwitchingCapabilityDescriptor found");
 					this.interfaceSwitchingCapabilityDescriptor=new InterfaceSwitchingCapabilityDescriptor(this.getTlv_bytes(), offset);
 					break;
 
 				case OSPFSubTLVTypes.SharedRiskLinkGroup:
-					log.finest("SharedRiskLinkGroup found");
 					this.sharedRiskLinkGroup=new SharedRiskLinkGroup(this.getTlv_bytes(), offset);
 					break;
 
 					
 				case OSPFSubTLVTypes.RemoteASNumber:
-					log.finest("RemoteASNumber found");
 					this.remoteASNumber=new RemoteASNumber(this.getTlv_bytes(), offset);
 					break;
 					
 				case OSPFSubTLVTypes.IPv4RemoteASBRID:
-					log.finest("AdministrativeGroup found");
 					this.iPv4RemoteASBRID=new IPv4RemoteASBRID(this.getTlv_bytes(), offset);
 					break;
 				case OSPFSubTLVTypes.AvailableLabels:
-					log.finest("Available Labels found");
 					this.availableLabels = new AvailableLabels(this.getTlv_bytes(), offset);
 					break;
 				default:
-					log.finest("Unknown TLV found");
+					log.warning("Unknown TLV found: "+subTLVType);
 					
 
 				}
@@ -346,7 +329,6 @@ public class LinkTLV extends OSPFTLV {
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.finest("No more SubTLVs in LinkTLV");
 				fin=true;
 			}
 

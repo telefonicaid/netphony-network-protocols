@@ -25,7 +25,6 @@ The format of the Link-State NLRI is shown in the following figure.
 public abstract class LinkStateNLRI extends NLRI {
 	protected int NLRIType;
 	
-	//protected int NLRIValueLength;
 	protected int TotalNLRILength;
 	
 
@@ -33,16 +32,15 @@ public abstract class LinkStateNLRI extends NLRI {
 	protected Logger log;
 	
 	public LinkStateNLRI(){
-		log=Logger.getLogger("BGP4LogFile");
+		log=Logger.getLogger("BGP4Parser");
 	}
 	
 	
 	public LinkStateNLRI(byte []bytes, int offset) {
-		log=Logger.getLogger("BGP4LogFile");		
+		log=Logger.getLogger("BGP4Parser");		
 		this.NLRIType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 		int valueNLRILength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 		this.TotalNLRILength=valueNLRILength+4;
-		log.finest("TotalNLRILength "+TotalNLRILength);
 		this.bytes=new byte[TotalNLRILength];
 		System.arraycopy(bytes, offset, this.bytes, 0, TotalNLRILength);
 	}

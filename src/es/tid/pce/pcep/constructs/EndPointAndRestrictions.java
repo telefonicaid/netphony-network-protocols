@@ -23,7 +23,6 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 	}
 
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding EndpointAndRestrictions Construct");
 		
 		int len=0;
 	
@@ -36,7 +35,6 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 			}
 		}
 		
-		log.finest("EndPointAndRestriction Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -55,8 +53,6 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 	public void decode(byte[] bytes, int offset) throws MalformedPCEPObjectException
 	{
 		int len=0;
-		
-		log.finest("Decoding EndPointAndRestrictions");
 		endPoint = new EndPoint(bytes, offset);
 		offset = offset + endPoint.getLength();
 		len += endPoint.getLength();

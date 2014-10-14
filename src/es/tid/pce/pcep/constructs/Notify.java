@@ -45,7 +45,6 @@ public class Notify extends PCEPConstruct {
 	 * Encode Notify Construct
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding Notify Construct");
 		if (notificationList.size()==0){
 			log.warning("Notify must have at least a Nofitication object");
 			throw new PCEPProtocolViolationException();
@@ -59,8 +58,6 @@ public class Notify extends PCEPConstruct {
 			(notificationList.get(i)).encode();
 			len=len+(notificationList.get(i)).getLength();
 		}
-
-		log.finest("Notify Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

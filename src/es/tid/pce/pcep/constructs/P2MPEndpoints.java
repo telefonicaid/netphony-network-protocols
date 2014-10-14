@@ -74,7 +74,6 @@ public class P2MPEndpoints extends PCEPConstruct {
 			EndPointAndRestrictions EndpointAndRestrictions = new EndPointAndRestrictions(bytes, offset);
 			EndpointAndRestrictionsList.add(EndpointAndRestrictions);
 			offset = offset + EndpointAndRestrictions.getLength();
-			log.finest("EndpointAndRestrictions.getLength():"+EndpointAndRestrictions.getLength());
 		}
 	}
 	

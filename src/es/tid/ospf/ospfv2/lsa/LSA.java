@@ -100,7 +100,6 @@ public abstract class LSA {
 	 */
 	public LSA(byte[] bytes, int offset) throws MalformedOSPFLSAException{
 		log=Logger.getLogger("OSPFParser");
-		log.finest("Decoding LSA");		
 		this.LSage= ((bytes[offset]&0xFF)<<8) |  (bytes[offset+1] & 0xFF);		
 		this.options=bytes[offset+2]&0xFF;
 		this.LStype=bytes[offset+3]&0xFF;	

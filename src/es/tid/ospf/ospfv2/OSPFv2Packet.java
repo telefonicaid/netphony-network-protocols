@@ -100,7 +100,7 @@ public abstract class OSPFv2Packet {
 	 */
 	public OSPFv2Packet(byte[] bytes, int offset){
 		log=Logger.getLogger("OSPFParser");
-		log.finest("Decoding OSPFv2 Packet");
+		//Decoding OSPFv2 Packet
 		this.version=bytes[offset]&0xFF;
 		this.type=bytes[offset+1]&0xFF;
 		this.length=((bytes[offset+2]&0xFF)<<8) |  (bytes[offset+3]&0xFF);
@@ -128,7 +128,6 @@ public abstract class OSPFv2Packet {
 	 * 
 	 */
 	public void encodeOSPFV2PacketHeader(){
-		log.finest("version: "+version);
 		this.bytes[0]=(byte)version;
 		this.bytes[1]=(byte)type;
 		this.bytes[2]=(byte)(this.length>>>8);

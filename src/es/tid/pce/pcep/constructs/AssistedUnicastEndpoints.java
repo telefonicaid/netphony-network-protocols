@@ -29,7 +29,6 @@ public class AssistedUnicastEndpoints extends PCEPConstruct {
 
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding AssistedUnicast Construct");
 		int len=0;
 		if (sourceEndpointsList.size()>0){
 			for (int i=0;i<sourceEndpointsList.size();++i){
@@ -44,7 +43,6 @@ public class AssistedUnicastEndpoints extends PCEPConstruct {
 			}
 		}
 
-		log.finest("AssistedUnicast Construct Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -62,7 +60,6 @@ public class AssistedUnicastEndpoints extends PCEPConstruct {
 
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException {
 
-		log.finest("Decoding AssistedUnicastEndpoints Construct");
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty AssistedUnicastEndpoints construct!!!");

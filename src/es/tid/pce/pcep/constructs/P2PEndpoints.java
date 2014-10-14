@@ -60,8 +60,6 @@ public class P2PEndpoints extends PCEPConstruct {
 				len=len+(destinationEndpointRestrictionList.get(i)).getLength();
 			}
 		}
-
-		log.finest("Notify Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

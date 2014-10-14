@@ -276,14 +276,14 @@ public class LinkNLRI extends LinkStateNLRI {
 					
 			
 				default:
-					log.finest("Unknown TLV found");
+					log.finest("Unknown TLV found, type :"+subTLVType);
 					
 
 				}
 			
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTotalNLRILength()/*+4*/)){
-				log.finest("No more SubTLVs in LinkTLV");
+				//No more SubTLVs in LinkTLV
 				fin=true;
 			}
 		}
