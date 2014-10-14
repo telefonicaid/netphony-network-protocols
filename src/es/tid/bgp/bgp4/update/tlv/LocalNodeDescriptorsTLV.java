@@ -54,7 +54,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	}
 	
 	public void encode(){		
-		log.info("Encode LocalNodeDescriptorsTLV");
+		log.finest("Encode LocalNodeDescriptorsTLV");
 		if ((nodeDescriptorsSubTLVList.size() == 0))
 			log.warning("LocalNodeDescriptorsTLV sub TLV with 0 elements");
 		
@@ -77,7 +77,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	
 	}
 	public void decode(){
-		log.info("Decoding LocalNodeDescriptorsTLV");
+		log.finest("Decoding LocalNodeDescriptorsTLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 //		if (ObjectLength==4){
@@ -109,8 +109,8 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 					break;
 					
 				default:
-					log.info("TYPE: " +subtlvType);
-					log.info("Local Node Descriptor Unknown");
+					log.finest("TYPE: " +subtlvType);
+					log.finest("Local Node Descriptor Unknown");
 					//FIXME What do we do??
 					break;
 			}
@@ -119,7 +119,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 				fin=true;
 			}
 			else{
-				log.info("sigo leyendo NodeDescriptorsSubTLV ");
+				log.finest("sigo leyendo NodeDescriptorsSubTLV ");
 			}
 		}
 	}

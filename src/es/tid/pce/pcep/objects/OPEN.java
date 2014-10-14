@@ -319,7 +319,7 @@ public class OPEN extends PCEPObject{
 		boolean fin=false;
 		int offset=8;
 		if (ObjectLength==8){
-			log.info("Prematurely ending. OPEN message too short");
+			log.finest("Prematurely ending. OPEN message too short");
 			fin=true;
 		}
 		while (!fin) {

@@ -148,42 +148,42 @@ public class PowerSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER_INFO:
-				log.info("Power Info found");
+				log.finest("Power Info found");
 				this.powerInfo=new PowerInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MAXIMUM_CONSUMPTION:
-				log.info("Maximum Consumption found");
+				log.finest("Maximum Consumption found");
 				this.maximumConsumption=new MaximumConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_IDLE_CONSUMPTION:
-				log.info("Idle Consumption found");
+				log.finest("Idle Consumption found");
 				this.idleConsumption=new IdleConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_SLEEP_CONSUMPTION:
-				log.info("Sleep Consumption found");
+				log.finest("Sleep Consumption found");
 				this.sleepConsumption=new SleepConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_INTER_STATE_LATENCIES:
-				log.info("Inter State Latencies found");
+				log.finest("Inter State Latencies found");
 				this.interStateLatencies=new InterStateLatenciesSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER_STATE:
-				log.info("Power State found");
+				log.finest("Power State found");
 				this.state=new PowerStateSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 			
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.info("No more SubTLVs in Power Sub-TLV");
+				log.finest("No more SubTLVs in Power Sub-TLV");
 				fin=true;
 			}
 

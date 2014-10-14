@@ -105,7 +105,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 		this.bytes = new byte[len];
 
-		log.info("Leeeength:::"+len);
+		log.finest("Leeeength:::"+len);
 		int offset=0;
 
 		System.arraycopy(srp.getBytes(), 0, this.getBytes(), offset, srp.getLength());
@@ -130,7 +130,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		else if (srero!=null)
 		{
 			System.arraycopy(srero.getBytes(), 0, this.getBytes(), offset, srero.getLength());
-			log.info("SRERO leength:: "+srero.getLength());
+			log.finest("SRERO leength:: "+srero.getLength());
 			offset=offset + srero.getLength();			
 		}
 
@@ -147,16 +147,16 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	{
 		int len=0;
 		//Current implementation is strict, does not accept unknown objects 
-		log.info("Decoding PCEP Intiate!!offset: "+offset+", bytes.length:" + bytes.length);
+		log.finest("Decoding PCEP Intiate!!offset: "+offset+", bytes.length:" + bytes.length);
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty Request construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
-		log.info("Object Type::"+PCEPObject.getObjectClass(bytes, offset));
+		log.finest("Object Type::"+PCEPObject.getObjectClass(bytes, offset));
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
-			log.info("There should be at least one SRP Object");
+			log.finest("There should be at least one SRP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
 			try 
@@ -182,7 +182,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_LSP) {
-			log.info("There should be at least one LSP Object");
+			log.finest("There should be at least one LSP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
 			try 
@@ -222,7 +222,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 					}
 				}else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
 					try {
-						log.info("P2MP ENDPOOOINTS");
+						log.finest("P2MP ENDPOOOINTS");
 						endPoint=new P2MPEndPointsIPv4(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warning("Malformed P2MP ENDPOINTS IPV4 Object found");
@@ -341,7 +341,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
-			log.info("There should be at least one ERO or SRERO Object, relaxed implementation");
+			log.finest("There should be at least one ERO or SRERO Object, relaxed implementation");
 			//throw new PCEPProtocolViolationException();						
 		}
 

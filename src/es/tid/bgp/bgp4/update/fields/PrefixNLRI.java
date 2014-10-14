@@ -65,10 +65,10 @@ public class PrefixNLRI extends LinkStateNLRI {
 		
 		if (localNodeDescriptors!=null){
 			if (localNodeDescriptors.getTlv_bytes() == null){
-				log.info("ERROR");
+				log.finest("ERROR");
 			}
-			log.info("�localNodeDescriptors.getTlv_bytes() "+ localNodeDescriptors.getTlv_bytes().length);
-			log.info("localNodeDescriptors.getTotalTLVLength():"+ localNodeDescriptors.getTotalTLVLength());
+			log.finest("�localNodeDescriptors.getTlv_bytes() "+ localNodeDescriptors.getTlv_bytes().length);
+			log.finest("localNodeDescriptors.getTotalTLVLength():"+ localNodeDescriptors.getTotalTLVLength());
 			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset,localNodeDescriptors.getTotalTLVLength());
 			offset=offset+localNodeDescriptors.getTotalTLVLength();
 		}
@@ -87,7 +87,7 @@ public class PrefixNLRI extends LinkStateNLRI {
 
 	private void decode() {
 		
-		log.info("Decoding Prefix NLRI");
+		log.finest("Decoding Prefix NLRI");
 		int offset = 4; //Cabecera del LinkState NLRI
 		protocolID = this.bytes[offset];
 		offset=offset +1; //identifier
@@ -99,7 +99,7 @@ public class PrefixNLRI extends LinkStateNLRI {
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
 		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-		log.info("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
+		log.finest("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
 		offset = offset +8;
 	
 		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
@@ -110,17 +110,17 @@ public class PrefixNLRI extends LinkStateNLRI {
 		while (!fin) {
 			int subTLVType=BGP4TLVFormat.getType(bytes, offset);
 			int subTLVLength=BGP4TLVFormat.getTotalTLVLength(bytes, offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			
 			switch (subTLVType){
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO:
-				log.info("IPv4 Reachability INFO found");
+				log.finest("IPv4 Reachability INFO found");
 				this.ipReachability=new IPReachabilityInformationPrefixDescriptorSubTLV(bytes, offset);
 				break;
 				
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_OSPF_ROUTE_TYPE:
 				this.OSPFRouteType=new OSPFRouteTypePrefixDescriptorSubTLV(bytes, offset);
-				log.info("OSPF Route Type Found");
+				log.finest("OSPF Route Type Found");
 				break;
 			default:
 				log.finest("Unknown TLV found");

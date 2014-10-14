@@ -128,7 +128,7 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 			try {
 				switch (TLVType){
 				case OSPFTLVTypes.RouterAddressTLVType:
-					log.info("routerAddressTLV found");					
+					log.finest("routerAddressTLV found");					
 					this.routerAddressTLV=new RouterAddressTLV(this.LSAbytes, offset);
 					break;
 					

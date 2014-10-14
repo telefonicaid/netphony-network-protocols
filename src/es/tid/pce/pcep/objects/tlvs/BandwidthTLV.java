@@ -42,7 +42,7 @@ public class BandwidthTLV extends PCEPTLV {
 	 * Encodes the maximum Request Time TLV.
 	 */
 	public void encode() {
-		log.info("codificando Bandwidth TLV");
+		log.finest("codificando Bandwidth TLV");
 		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();

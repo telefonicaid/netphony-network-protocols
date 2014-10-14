@@ -64,7 +64,7 @@ public class P2PEndpoints extends PCEPConstruct {
 			}
 		}
 
-		log.info("Notify Length = "+len);
+		log.finest("Notify Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -94,7 +94,7 @@ public class P2PEndpoints extends PCEPConstruct {
 	private void decode(byte[] bytes, int offset)
 	throws PCEPProtocolViolationException, MalformedPCEPObjectException {
 		
-		log.info("Decoding P2PEndpoints Construct");
+		log.finest("Decoding P2PEndpoints Construct");
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
 			log.warning("Empty P2PEndpoints construct!!!");

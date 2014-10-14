@@ -20,7 +20,7 @@ public class BGPLSIdentifierNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 	}
 
 	private void decode() {
-		log.info("Decoding BGPLS_ID_TLV");		
+		log.finest("Decoding BGPLS_ID_TLV");		
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
 		try {
@@ -35,7 +35,7 @@ public class BGPLSIdentifierNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 
 	@Override
 	public void encode() {
-		log.info("Encoding BGPLSIdentifier Sub-TLV");
+		log.finest("Encoding BGPLSIdentifier Sub-TLV");
 		this.setSubTLVValueLength(4);//AS_ID		
 		this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 		encodeHeader();

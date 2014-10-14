@@ -118,7 +118,7 @@ public class PCEPUpdate extends PCEPMessage{
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
 		// TODO Auto-generated method stub
-		log.info("Empezando enconde");
+		log.finest("Empezando enconde");
 		int len = 4;
 		int index = 0;
         while(index < updateRequestList.size()){
@@ -126,19 +126,19 @@ public class PCEPUpdate extends PCEPMessage{
 			len+=updateRequestList.get(index).getLength();
 			index++;			
         }
-        log.info("CCCC");
+        log.finest("CCCC");
 		if (updateRequestList.size()==0){
 			log.warning("There should be at least one update request in a PCEP update Request message");
 			throw new PCEPProtocolViolationException();
 		}
-		log.info("DDDD "+len);
+		log.finest("DDDD "+len);
 		this.setMessageLength(len);
 		messageBytes=new byte[len];
-		log.info("Vamos a por el encodeHeaer");
+		log.finest("Vamos a por el encodeHeaer");
 		this.encodeHeader();
 		int offset = 4;		//Header
 		index=0;
-		log.info("a por array copy");
+		log.finest("a por array copy");
 		while(index < updateRequestList.size()){
 			System.arraycopy(updateRequestList.get(index).getBytes(), 0, this.messageBytes, offset, updateRequestList.get(index).getLength());
 			offset = offset + updateRequestList.get(index).getLength();

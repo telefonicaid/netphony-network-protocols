@@ -70,10 +70,10 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	 */
 	public void encode() 
 	{
-		log.info("Encoding SymbolicPathName TLV");
+		log.finest("Encoding SymbolicPathName TLV");
 		this.setTLVValueLength(SymbolicPathNameID.length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
-		log.info("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
+		log.finest("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
 		this.encodeHeader();
 		int offset=4;
 		System.arraycopy(SymbolicPathNameID, 0, this.tlv_bytes, offset, SymbolicPathNameID.length);
@@ -82,7 +82,7 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.info("Decoding SymbolicPathName TLV");
+		log.finest("Decoding SymbolicPathName TLV");
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0)
 		{

@@ -115,7 +115,6 @@ public abstract class BGP4Message  implements BGP4Element {
 		log=Logger.getLogger("BGP4Parser");
 
 		messageLength=(bytes[16] & 0xFF)* 256 + (bytes[17]& 0xFF);
-		//log.info("messageLength:"+messageLength);
 		if (bytes.length!=this.getLength()){
 			log.warning("Bytes and length in BGP header do not match");			
 		}

@@ -95,22 +95,22 @@ public class EndPointApplicationTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_OS:
-				log.info("OperativeSystem is requested");
+				log.finest("OperativeSystem is requested");
 				this.operativeSystem = new OperativeSystemSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_APPLICATION:
-				log.info("Application is requested");
+				log.finest("Application is requested");
 				this.application = new ApplicationSubTLV(this.getTlv_bytes(), offset);
 				break;
 		
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.info("No more SubTLVs in Application TLV");
+				log.finest("No more SubTLVs in Application TLV");
 				fin=true;
 			}
 

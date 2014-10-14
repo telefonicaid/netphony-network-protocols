@@ -161,40 +161,40 @@ public class NetworkSpecSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_EP_ADDRESS:
-				log.info("EP addres");
+				log.finest("EP addres");
 				this.epaddress=new EPaddressSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv4:
-				log.info("TNA IPv4 found");
+				log.finest("TNA IPv4 found");
 				this.tnaIPv4=new TNAIPv4SubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv6:
-				log.info("TNA IPv6 found");
+				log.finest("TNA IPv6 found");
 				this.tnaIPv6=new TNAIPv6SubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_NSAP:
-				log.info("TNA NSAP found");
+				log.finest("TNA NSAP found");
 				this.tnaNSAP=new TNANSAPSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MTU:
-				log.info("MTU found");
+				log.finest("MTU found");
 				this.mtu=new MTUSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MAX_SPEED:
-				log.info("Max Speed found");
+				log.finest("Max Speed found");
 				this.maxSpeed=new MaxSpeedSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_NETWORK_ADAPTER:
-				log.info("Network adapter found");
+				log.finest("Network adapter found");
 				this.networkAdapter=new NetworkAdapterSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
@@ -202,7 +202,7 @@ public class NetworkSpecSubTLV extends PCEPSubTLV {
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.info("No more SubTLVs in Network Spec SubTLV");
+				log.finest("No more SubTLVs in Network Spec SubTLV");
 				fin=true;
 			}
 

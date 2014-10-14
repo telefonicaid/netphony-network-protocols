@@ -18,7 +18,7 @@ public float[] unreservedBandwidth;
 	}
 	
 	public void encode() {
-		log.info("Encoding UnreservedBandwidthTLV");
+		log.finest("Encoding UnreservedBandwidthTLV");
 		this.setTLVValueLength(32);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
@@ -36,7 +36,7 @@ public float[] unreservedBandwidth;
 	}
 	
 	protected void decode(){
-		log.info("Decoding UnreservedBandwidthTLV");
+		log.finest("Decoding UnreservedBandwidthTLV");
 		if (this.getTLVValueLength()!=32){
 			//throw new MalformedOSPFSubTLVException();
 		}

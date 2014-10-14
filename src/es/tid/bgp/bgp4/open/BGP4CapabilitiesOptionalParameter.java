@@ -47,20 +47,20 @@ import java.util.logging.Logger;
 public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 
 	LinkedList<BGP4Capability> capabilityList;
-	
+
 	public BGP4CapabilitiesOptionalParameter(){
 		log=Logger.getLogger("BGP4Parser");	
 		this.type = BGP4OptionalParametersTypes.CAPABILITY_OPTIONAL_PARAMETER;
 		capabilityList = new LinkedList<BGP4Capability>();
 	}
-	
-	
+
+
 	public BGP4CapabilitiesOptionalParameter(byte []bytes, int offset) {
 		super(bytes, offset);
 		capabilityList = new LinkedList<BGP4Capability>();
 		decode();
 	}
-	
+
 	public void encode() {
 		this.parameterLength=0;
 		for (int k=0; k<capabilityList.size();++k){
@@ -76,19 +76,20 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 			offset=offset+capabilityList.get(k).getLength();
 		}
 	}
-	
+
 	public void decode() {
-		/**
-		 * 			
-					//Mirar el capability code
-					int capabilityCode = BGP4CapabilitiesOptionalParameter.getCapalitityCode(messageBytes, offset+2);
-					if (capabilityCode == BGP4OptionalParametersTypes.CAPABILITY_CODE_MULTIPROTOCOLEXTENSION){
-						log.info("Multi Protocol Extension Capability Code");
-						parametersList.add(new  MultiprotocolExtensionCapabilityAdvertisement(messageBytes, offset));
-					}
-					else 
-						log.info("Unknown Capability Code");
-		 */
+		int offset=2;
+		while (offset<=this.getLength()) {
+			int capabilityCode = BGP4Capability.getCapalitityCode(this.bytes, offset);
+			if (capabilityCode == BGP4OptionalParametersTypes.CAPABILITY_CODE_MULTIPROTOCOLEXTENSION)
+			{
+				capabilityList.add(new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset));
+			}
+			else 
+				log.finest("Unknown Capability Code");
+		}
+
+
 	}
 
 
@@ -100,6 +101,6 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 	public void setCapabilityList(LinkedList<BGP4Capability> capabilityList) {
 		this.capabilityList = capabilityList;
 	}
-	
-	
+
+
 }

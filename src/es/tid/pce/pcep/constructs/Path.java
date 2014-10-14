@@ -95,22 +95,22 @@ public class Path extends PCEPConstruct {
 			of.encode();
 			len=len+of.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		if (lSPA!=null){
 			lSPA.encode();
 			len=len+lSPA.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		if (bandwidth!=null){
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			(metricList.get(i)).encode();
 			len=len+(metricList.get(i)).getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		if (iRO!=null){
 			iRO.encode();
 			len=len+iRO.getLength();
@@ -166,12 +166,12 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
 			offset=offset+metricList.get(i).getLength();
 		}
-		//log.info("Path encoding "+z);z++;
+		//log.finest("Path encoding "+z);z++;
 		if (iRO!=null){
 			System.arraycopy(iRO.getBytes(), 0, bytes, offset, iRO.getLength());
 			offset=offset+iRO.getLength();
@@ -384,7 +384,7 @@ public class Path extends PCEPConstruct {
 			offset=offset+serverIndication.getLength();
 			len=len+serverIndication.getLength();
 		}
-		log.info("A VER SI HAY Label Set!!!");
+		log.finest("A VER SI HAY Label Set!!!");
 		oc=PCEPObject.getObjectClass(bytes, offset);	
 		ot=PCEPObject.getObjectType(bytes, offset);
 	

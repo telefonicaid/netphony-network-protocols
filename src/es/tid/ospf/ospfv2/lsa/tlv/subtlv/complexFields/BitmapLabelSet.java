@@ -258,8 +258,8 @@ public class BitmapLabelSet  extends LabelSetField {
 		int sum=0;
 		int sumaTotal=0;
 		for (int i=0; i<bytesBitmap.length*8; i++){
-			//log.info("BytesBitmap :"+Integer.toBinaryString((bytesBitmap[i/8])&0xFF));
-			//log.info("BytesBitmapNegados :"+Integer.toBinaryString((~bytesBitmap[i/8])&0xFF));
+			//log.finest("BytesBitmap :"+Integer.toBinaryString((bytesBitmap[i/8])&0xFF));
+			//log.finest("BytesBitmapNegados :"+Integer.toBinaryString((~bytesBitmap[i/8])&0xFF));
 			if (((~bytesBitmap[i/8])&(0x80>>(i%8))) == (0x80>>i%8)){
 				sum++;
 			}else{
@@ -273,11 +273,11 @@ public class BitmapLabelSet  extends LabelSetField {
 			sumaTotal=sum;
 			sum=0;
 		}
-		log.info("Numero de bits libres consecutivos : "+sumaTotal);
+		log.finest("Numero de bits libres consecutivos : "+sumaTotal);
 		return sumaTotal;
 	}
 	public void resetBitmap(){
-		log.info("Reseting bitmap");
+		log.finest("Reseting bitmap");
 		for(int i=0; i<bytesBitmap.length*8; i++){
 			bytesBitmap[i/8]=0x00;
 		}

@@ -383,7 +383,7 @@ public class Notification extends PCEPObject{
 			case ObjectParameters.PCEP_TLV_REACHABILITY_TLV:
 				log.finest("Reachability TLV found");
 				if (reachabilityTLVList==null){
-					log.info("Creating reachabilityTLVList");
+					log.finest("Creating reachabilityTLVList");
 					reachabilityTLVList=new LinkedList<ReachabilityTLV>();
 				}
 				ReachabilityTLV rtlv=new ReachabilityTLV(this.getObject_bytes(), offset);
@@ -400,12 +400,12 @@ public class Notification extends PCEPObject{
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
 				log.finest("DOMAIN_ID TLV found");
 				//domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
-				//log.info(domain_id_tlv.toString());				
+				//log.finest(domain_id_tlv.toString());				
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
 				log.finest("PCEP_TLV_PCE_ID found");
 				//pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
-				//log.info(pce_id_tlv.toString());
+				//log.finest(pce_id_tlv.toString());
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_IT_ADV:
 				log.finest("IT adv TLV found");

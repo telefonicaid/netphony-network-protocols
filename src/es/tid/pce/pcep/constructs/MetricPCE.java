@@ -51,7 +51,7 @@ public class MetricPCE extends PCEPConstruct{
 			procTime.encode();
 			len=len+procTime.getLength();
 		}		
-		log.info("Metric PCE Length = "+len);
+		log.finest("Metric PCE Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

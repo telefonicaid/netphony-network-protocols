@@ -43,7 +43,7 @@ public class RROBandwidth extends PCEPConstruct{
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}		
-		log.info("RRO/Bandwidth Length = "+len);
+		log.finest("RRO/Bandwidth Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

@@ -172,7 +172,7 @@ public class PCEPError extends PCEPMessage {
 			while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR){
 				PCEPErrorObject perrobj;
 				try {
-					log.info("Error Object found");
+					log.finest("Error Object found");
 					perrobj=new PCEPErrorObject(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warning("Problem Decoding Error Object");

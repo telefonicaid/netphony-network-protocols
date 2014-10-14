@@ -116,7 +116,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 		try 
 		{
 			tunnelSenderIPAddress=(Inet4Address)Inet4Address.getByAddress(ip);
-			log.info("Sender IP adress, tunnel: "+tunnelSenderIPAddress);
+			log.finest("Sender IP adress, tunnel: "+tunnelSenderIPAddress);
 		} 
 		catch (UnknownHostException e) 
 		{			

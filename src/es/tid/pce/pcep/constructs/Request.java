@@ -245,7 +245,7 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			ot=PCEPObject.getObjectType(bytes, offset);
-			log.info("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
+			log.finest("PCEPObject.getObjectType(bytes, offset):"+PCEPObject.getObjectType(bytes, offset));
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 				try {
 					endPoints=new P2MPEndPointsDataPathID(bytes,offset);

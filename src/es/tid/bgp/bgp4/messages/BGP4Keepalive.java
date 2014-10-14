@@ -1,11 +1,11 @@
 package es.tid.bgp.bgp4.messages;
 
 /**
- * <h1>BGP KeepAlive Message Format (RFC 4271). <h1>
+ * BGP KeepAlive Message (RFC 4271).
  * <p>From RFC 4271, Section 4.4</p>
  * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
  * 
- * 4.4.  KEEPALIVE Message Format 
+ * KEEPALIVE Message Format 
 
    BGP does not use any TCP-based, keep-alive mechanism to determine if
    peers are reachable.  Instead, KEEPALIVE messages are exchanged
@@ -38,12 +38,7 @@ public class BGP4Keepalive extends BGP4Message{
 		super(bytes);
 	}
 	
-	
-
-
-	@Override
-	public void encode(){// throws PCEPProtocolViolationException {
-		log.info("KeepAlive");
+	public void encode(){
 		this.setMessageLength(BGPHeaderLength);
 		this.messageBytes=new byte[this.getLength()];
 		encodeHeader();

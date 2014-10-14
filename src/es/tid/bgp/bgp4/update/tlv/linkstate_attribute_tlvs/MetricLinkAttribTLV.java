@@ -32,7 +32,7 @@ public class MetricLinkAttribTLV extends BGP4TLVFormat{
 			this.setMetric_type(METRIC_TYPE_IS_IS_LONG);
 			break;
 		default:
-			log.info("No metric tlv defined for this tlv length");
+			log.finest("No metric tlv defined for this tlv length");
 			break;
 		}
 		decode();
@@ -57,7 +57,7 @@ public class MetricLinkAttribTLV extends BGP4TLVFormat{
 			setMetric(((this.tlv_bytes[offset]&0xFF)<<16) | ((this.tlv_bytes[offset+1]&0xFF)<<8) | ((this.tlv_bytes[offset+2]&0xFF)));	
 			break;
 		default:
-			log.info("This metric type does not exist");
+			log.finest("This metric type does not exist");
 			break;
 		}
 		

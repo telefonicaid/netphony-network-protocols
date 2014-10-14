@@ -70,7 +70,7 @@ public class SRERO extends PCEPObject{
 	public SRERO (byte []bytes, int offset)throws MalformedPCEPObjectException{
 		super(bytes, offset);
 		log=Logger.getLogger("PCEServer");
-		log.info("Entrando en SRERO con parametros "+offset);
+		log.finest("Entrando en SRERO con parametros "+offset);
 		SREROSubobjectList=new LinkedList<SREROSubobject>();
 		decode();
 	}
@@ -115,7 +115,7 @@ public class SRERO extends PCEPObject{
 				fin=true;
 			}
 		}
-		log.info("decoded: "+this.toString());
+		log.finest("decoded: "+this.toString());
 		
 	}
 	

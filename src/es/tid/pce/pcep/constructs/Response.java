@@ -560,13 +560,13 @@ public class Response extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
-			log.info("SRERO Object found, New Path Construct found");
+			log.finest("SRERO Object found, New Path Construct found");
 			Path path=new Path(bytes,offset);
 			pathList.add(path);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.info("No more bytes");
+				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}

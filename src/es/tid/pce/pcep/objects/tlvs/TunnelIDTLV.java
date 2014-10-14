@@ -51,7 +51,7 @@ public class TunnelIDTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{
-		log.info("Encoding TunnelIDTLV TLV");
+		log.finest("Encoding TunnelIDTLV TLV");
 		
 		int length=4;
 		this.setTLVValueLength(length);
@@ -65,7 +65,7 @@ public class TunnelIDTLV extends PCEPTLV
 	
 	public void decode() 
 	{
-		log.info("Decoding TunnelIDTLV TLV");
+		log.finest("Decoding TunnelIDTLV TLV");
 		int offset = 4;
 		tunnelID = ByteHandler.easyCopy(0, 15, tlv_bytes[offset+2],tlv_bytes[offset+3]);
 	}

@@ -53,7 +53,7 @@ public class ErrorConstruct extends PCEPConstruct {
 			(errorObjList.get(i)).encode();
 			len=len+(errorObjList.get(i)).getLength();
 		}
-		//log.info("Path Length = "+len);
+		//log.finest("Path Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

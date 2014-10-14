@@ -154,7 +154,7 @@ public class PCEPMonReq  extends PCEPMessage {
 	 */
 	public void decode(byte[] bytes) throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 
-		//log.info("Decoding PCEP Mon Request Message");
+		//log.finest("Decoding PCEP Mon Request Message");
 		//log.finest("Length in bytes: "+bytes.length);
 		this.messageBytes=new byte[bytes.length];
 		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);

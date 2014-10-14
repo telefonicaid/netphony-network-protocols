@@ -36,7 +36,7 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 			}
 		}
 		
-		log.info("EndPointAndRestriction Length = "+len);
+		log.finest("EndPointAndRestriction Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -56,7 +56,7 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 	{
 		int len=0;
 		
-		log.info("Decoding EndPointAndRestrictions");
+		log.finest("Decoding EndPointAndRestrictions");
 		endPoint = new EndPoint(bytes, offset);
 		offset = offset + endPoint.getLength();
 		len += endPoint.getLength();

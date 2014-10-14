@@ -59,13 +59,13 @@ public class MultiTopologyIDLinkDescriptorSubTLV extends BGP4TLVFormat{
 	}
 	@Override
 	public void encode() {
-		log.info("Encode MultiTopologyIDTLV");
+		log.finest("Encode MultiTopologyIDTLV");
 	
 		
 	}
 
 	public void decode(){
-		log.info("Decoding MultiTopologyIDTLV");
+		log.finest("Decoding MultiTopologyIDTLV");
 		
 	}
 	public int getMultitopologyID() {

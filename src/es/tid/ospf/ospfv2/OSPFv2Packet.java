@@ -128,7 +128,7 @@ public abstract class OSPFv2Packet {
 	 * 
 	 */
 	public void encodeOSPFV2PacketHeader(){
-		log.info("version: "+version);
+		log.finest("version: "+version);
 		this.bytes[0]=(byte)version;
 		this.bytes[1]=(byte)type;
 		this.bytes[2]=(byte)(this.length>>>8);

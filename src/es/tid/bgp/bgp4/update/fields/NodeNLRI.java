@@ -84,10 +84,10 @@ public class NodeNLRI extends LinkStateNLRI {
 		
 		if (localNodeDescriptors!=null){
 			if (localNodeDescriptors.getTlv_bytes() == null){
-				log.info("ERROR");
+				log.finest("ERROR");
 			}
-			log.info("�localNodeDescriptors.getTlv_bytes() "+ localNodeDescriptors.getTlv_bytes().length);
-			log.info("localNodeDescriptors.getTotalTLVLength():"+ localNodeDescriptors.getTotalTLVLength());
+			log.finest("�localNodeDescriptors.getTlv_bytes() "+ localNodeDescriptors.getTlv_bytes().length);
+			log.finest("localNodeDescriptors.getTotalTLVLength():"+ localNodeDescriptors.getTotalTLVLength());
 			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset,localNodeDescriptors.getTotalTLVLength());
 			offset=offset+localNodeDescriptors.getTotalTLVLength();
 		}
@@ -95,10 +95,10 @@ public class NodeNLRI extends LinkStateNLRI {
 		
 	}
 	public void decode(){
-		log.info("Decoding NodeNLRI");
+		log.finest("Decoding NodeNLRI");
 		int offset = 4; //Cabecera del LinkState NLRI
 		protocolID = this.bytes[offset];
-		log.info("protocolID:"+protocolID);
+		log.finest("protocolID:"+protocolID);
 		offset=offset +1; //identifier
 		
 		byte[] ip=new byte[8]; 
@@ -108,7 +108,7 @@ public class NodeNLRI extends LinkStateNLRI {
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
 		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-		log.info("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
+		log.finest("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
 		offset = offset +8;
 		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
 	}

@@ -39,8 +39,8 @@ public class XifiEndPointTLV extends PCEPTLV
 		this.encodeHeader();
 		int offset = 4;
 
-		log.info("switchID:::::"+switchID);
-		log.info("mac:::::"+mac);
+		log.finest("switchID:::::"+switchID);
+		log.finest("mac:::::"+mac);
 		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(switchID),0, this.tlv_bytes, offset, 8);
 		
 		offset += 8;
@@ -59,14 +59,14 @@ public class XifiEndPointTLV extends PCEPTLV
 		if (this.getTLVValueLength()==0){
 			throw new MalformedPCEPObjectException();
 		}
-		log.info("TLV Length:" + this.getTLVValueLength());
+		log.finest("TLV Length:" + this.getTLVValueLength());
 		
 
 		byte[] mac=new byte[8]; 
 		System.arraycopy(this.tlv_bytes, offset, mac, 0, 8);
 		switchID=ByteHandler.ByteMACToString(mac);
-		log.info("switchID:::::"+switchID);
-		log.info("mac:::::"+mac);
+		log.finest("switchID:::::"+switchID);
+		log.finest("mac:::::"+mac);
 		
 		offset += 8;
 		port = ByteHandler.easyCopy(0,31,tlv_bytes[offset],tlv_bytes[offset + 1],tlv_bytes[offset + 2],tlv_bytes[offset + 3]);

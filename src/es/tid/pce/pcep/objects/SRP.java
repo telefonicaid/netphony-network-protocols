@@ -103,10 +103,10 @@ public class SRP extends PCEPObject
 		}
 		
 		if (pathSetupTLV!=null){
-			log.info("HAY pathSetupTLV");
+			log.finest("HAY pathSetupTLV");
 			try {
 				pathSetupTLV.encode();
-				log.info("codificado pathSetupTLV");
+				log.finest("codificado pathSetupTLV");
 				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
@@ -114,7 +114,7 @@ public class SRP extends PCEPObject
 			}
 						
 		}
-		log.info("Length  "+ObjectLength);
+		log.finest("Length  "+ObjectLength);
 		object_bytes = new byte[ObjectLength];
 		encode_header();
 		
@@ -132,7 +132,7 @@ public class SRP extends PCEPObject
 		
 		if (symPathName != null)
 		{
-			log.info("copiamos "+symPathName.getTotalTLVLength()+" que es "+(symPathName.getTlv_bytes()[0]&0xFF));
+			log.finest("copiamos "+symPathName.getTotalTLVLength()+" que es "+(symPathName.getTlv_bytes()[0]&0xFF));
 			System.arraycopy(symPathName.getTlv_bytes(),0,this.object_bytes,offset,symPathName.getTotalTLVLength());
 			offset=offset+symPathName.getTotalTLVLength();
 		}
@@ -147,7 +147,7 @@ public class SRP extends PCEPObject
 	@Override
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		log.info("Decoding RSP!!");
+		log.finest("Decoding RSP!!");
 		
 		if (ObjectLength<12){
 			throw new MalformedPCEPObjectException();
@@ -157,7 +157,7 @@ public class SRP extends PCEPObject
 		
 		SRP_ID_number = ByteHandler.easyCopy(0,31,object_bytes[8],object_bytes[9],object_bytes[10],object_bytes[11]);
 		
-		log.info("SRP_ID_number: "+SRP_ID_number);
+		log.finest("SRP_ID_number: "+SRP_ID_number);
 		
 		boolean fin;
 		int offset = 12;
@@ -177,10 +177,10 @@ public class SRP extends PCEPObject
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
 					log.finest("Symbolic path name tlv found");
 					symPathName=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
-					log.info(symPathName.toString());	
+					log.finest(symPathName.toString());	
 					break;		
 				case ObjectParameters.PCEP_TLV_PATH_SETUP:
-					log.info("PCEP_TLV_PATH_SETUP found");
+					log.finest("PCEP_TLV_PATH_SETUP found");
 					pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
 					break;								
 				default:
@@ -196,7 +196,7 @@ public class SRP extends PCEPObject
 			}
 		}
 		
-		log.info("RSP decoded!!");
+		log.finest("RSP decoded!!");
 		
 	}
 

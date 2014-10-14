@@ -119,23 +119,23 @@ public class ServerStorageSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_SIZE:
-				log.info("StorageSize SubTLV found");
+				log.finest("StorageSize SubTLV found");
 				this.storageSize=new StorageSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_INFO:
-				log.info("StorageInfo SubTLV found");
+				log.finest("StorageInfo SubTLV found");
 				this.storageInfo=new StorageInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME:
 				VolumeSubTLV volume = new VolumeSubTLV(this.getSubTLV_bytes(), offset);
-				log.info("Volume SubTLV found");
+				log.finest("Volume SubTLV found");
 				if (volumeList==null){
-					log.info("Creating VolumeSubTLVList");
+					log.finest("Creating VolumeSubTLVList");
 					volumeList=new LinkedList<VolumeSubTLV>();
 				}
 				this.volumeList.add(volume);			
@@ -143,7 +143,7 @@ public class ServerStorageSubTLV extends PCEPSubTLV {
 			
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.info("No more SubTLVs in ServerStorage Sub-TLV");
+				log.finest("No more SubTLVs in ServerStorage Sub-TLV");
 				fin=true;
 			}
 

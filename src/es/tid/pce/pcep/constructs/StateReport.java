@@ -146,6 +146,10 @@ public class StateReport extends PCEPConstruct
 				lsp = new LSP(bytes,offset);
 				offset=offset+lsp.getLength();
 				len=len+lsp.getLength();
+				if (offset>=bytes.length){
+					this.setLength(len);
+					return;
+				}
 				
 			} 
 			catch (MalformedPCEPObjectException e) 
@@ -186,7 +190,7 @@ public class StateReport extends PCEPConstruct
 		else
 		{
 			log.warning("Malformed Report Message. There must be at least one ERO or SRERO message!");
-			throw new PCEPProtocolViolationException();
+			//throw new PCEPProtocolViolationException();
 		}
 	}
 

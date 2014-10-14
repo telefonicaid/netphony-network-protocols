@@ -65,7 +65,7 @@ public class SVECConstruct extends PCEPConstruct{
 			}
 		}
 		
-		log.info("SVEC Construct Length = "+len);
+		log.finest("SVEC Construct Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;

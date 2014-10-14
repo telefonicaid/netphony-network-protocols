@@ -142,7 +142,7 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 	 */
 	public void decode() throws MalformedPCEPObjectException {
 		if (this.ObjectLength<16 || this.ObjectLength%4 != 0){
-			log.info("object size doesnt match");
+			log.finest("object size doesnt match");
 			throw new MalformedPCEPObjectException();
 		}
 		
@@ -150,11 +150,11 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 		for (int k = 0; k < 4; k++) {
 			leafType = (leafType << 8) | (this.object_bytes[k+4] & 0xff);
 		}	
-		log.info("leafType: "+leafType);
+		log.finest("leafType: "+leafType);
 		
 		
 		int numDestId = (int)((this.ObjectLength-4-4-4)/4);
-		log.info("num of Dest Ids: "+numDestId);
+		log.finest("num of Dest Ids: "+numDestId);
 
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.object_bytes,8, ip, 0, 4);

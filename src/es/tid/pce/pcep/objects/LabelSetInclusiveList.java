@@ -79,9 +79,9 @@ public  class LabelSetInclusiveList extends LabelSet{
 
 	@Override
 	public void decode() throws MalformedPCEPObjectException {
-		log.info("VAMOS A CREAR EL NCFList");
+		log.finest("VAMOS A CREAR EL NCFList");
 		this.ncfList=new LinkedList<NCF>();
-		log.info("LENGTH vale "+this.getLength());
+		log.finest("LENGTH vale "+this.getLength());
 
 		int offset=8;
 		if (offset>=this.getLength()){
@@ -92,7 +92,7 @@ public  class LabelSetInclusiveList extends LabelSet{
 			NCF ncf= new NCF(this.getBytes(),offset);
 			
 			ncfList.add(ncf);
-			log.info("EN NCF mide "+ncf.getLength());
+			log.finest("EN NCF mide "+ncf.getLength());
 			offset=offset+ncf.getLength();
 			if (offset>=this.getLength()){
 				fin=true;

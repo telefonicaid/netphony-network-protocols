@@ -95,22 +95,22 @@ public class EndPointStorageTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_STORAGE_SIZE:
-				log.info("StorageSize is requested");
+				log.finest("StorageSize is requested");
 				this.requestedStorageSize=new RequestedStorageSizeSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_VOLUME_SIZE:
-				log.info("VolumeSize is requested");
+				log.finest("VolumeSize is requested");
 				this.requestedVolumeSize=new RequestedVolumeSizeSubTLV(this.getTlv_bytes(), offset);
 				break;
 		
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.info("No more SubTLVs in Storage TLV");
+				log.finest("No more SubTLVs in Storage TLV");
 				fin=true;
 			}
 

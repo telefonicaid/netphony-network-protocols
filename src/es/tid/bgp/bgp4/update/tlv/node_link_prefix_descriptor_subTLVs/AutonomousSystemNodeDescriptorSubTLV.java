@@ -19,7 +19,7 @@ public class AutonomousSystemNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 	}
 	@Override
 	public void encode() {
-		log.info("Encode AutonomousSystemSubTLV");
+		log.finest("Encode AutonomousSystemSubTLV");
 		this.setSubTLVValueLength(4);//AS_ID		
 		this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 		encodeHeader();
@@ -28,7 +28,7 @@ public class AutonomousSystemNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 
 	}
 	public void decode(){
-		log.info("Decoding AutonomousSystemSubTLV");		
+		log.finest("Decoding AutonomousSystemSubTLV");		
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
 		try {

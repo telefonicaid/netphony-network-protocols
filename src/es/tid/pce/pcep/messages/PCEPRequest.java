@@ -198,7 +198,7 @@ public class PCEPRequest extends PCEPMessage {
 			//len=len+pccReqId.getLength();
 		}
 		while (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SVEC){
-			log.info("Svec construct");
+			log.finest("Svec construct");
 			SVECConstruct c_svec;
 			try {
 				c_svec = new SVECConstruct(bytes,offset);

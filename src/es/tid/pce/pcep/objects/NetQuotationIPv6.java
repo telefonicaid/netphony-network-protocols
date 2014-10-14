@@ -92,7 +92,7 @@ public class NetQuotationIPv6 extends EndPoints {
 			(EPQuotationList.get(i)).encode();
 			len=len+(EPQuotationList.get(i)).getEPQuotationlength();
 		}
-		//log.info("Path Length = "+len);
+		//log.finest("Path Length = "+len);
 		this.ObjectLength=len;
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();

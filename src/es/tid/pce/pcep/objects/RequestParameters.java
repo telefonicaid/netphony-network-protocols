@@ -228,10 +228,10 @@ public class RequestParameters extends PCEPObject{
 	/*Por ahora no hay flags opcionales*/
 		ObjectLength=12;
 		if (maxRequestTimeTLV!=null){
-			log.info("HAY maxRequestTimeTLV");
+			log.finest("HAY maxRequestTimeTLV");
 			try {
 				maxRequestTimeTLV.encode();
-				log.info("codificado maxRequestTimeTLV");
+				log.finest("codificado maxRequestTimeTLV");
 				this.ObjectLength+=maxRequestTimeTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
@@ -240,10 +240,10 @@ public class RequestParameters extends PCEPObject{
 			
 		}
 		if (pathSetupTLV!=null){
-			log.info("HAY pathSetupTLV");
+			log.finest("HAY pathSetupTLV");
 			try {
 				pathSetupTLV.encode();
-				log.info("codificado pathSetupTLV");
+				log.finest("codificado pathSetupTLV");
 				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
@@ -303,18 +303,18 @@ public class RequestParameters extends PCEPObject{
 		while (!endObject) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.info("TLV type "+tlvtype+"TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
+			log.finest("TLV type "+tlvtype+"TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_TYPE_MAX_REQ_TIME:
-				log.info("PCEP_TLV_TYPE_MAX_REQ_TIME TLV found");
+				log.finest("PCEP_TLV_TYPE_MAX_REQ_TIME TLV found");
 				maxRequestTimeTLV=new MaxRequestTimeTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_PATH_SETUP:
-				log.info("PCEP_TLV_PATH_SETUP found");
+				log.finest("PCEP_TLV_PATH_SETUP found");
 				pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
 				break;					
 			default:
-				log.info("Unknown or unexpected TLV found");
+				log.finest("Unknown or unexpected TLV found");
 				//UnknownTLV unknownTLV = new UnknownTLV();
 				//tLVList.add(unknownTLV);
 				//FIXME: Que hacemos con los desconocidos????
@@ -322,7 +322,7 @@ public class RequestParameters extends PCEPObject{
 			}
 			offset=offset+tlvlength;
 			if (offset>=ObjectLength){
-				log.info("No more TLVs in Request Parameters Object");//FIXME: Cambiar a log.fine cuando est� estable!!!
+				log.finest("No more TLVs in Request Parameters Object");//FIXME: Cambiar a log.fine cuando est� estable!!!
 				endObject=true;
 			}
 		}
