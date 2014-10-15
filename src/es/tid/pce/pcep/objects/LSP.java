@@ -240,9 +240,7 @@ public class LSP extends PCEPObject{
 	}
 
 	@Override
-	public void decode() throws MalformedPCEPObjectException {
-		log.info("decoding LSP!!");
-		
+	public void decode() throws MalformedPCEPObjectException {		
 		symbolicPathNameTLV_tlv = null;
 		lspIdentifiers_tlv = null;
 		lspErrorCodes_tlv = null;
@@ -254,17 +252,13 @@ public class LSP extends PCEPObject{
 		}
 		
 		lspId = ByteHandler.easyCopy(0,19,object_bytes[4],object_bytes[5],object_bytes[6]);
-		
-		log.info("LSP ID found:"+lspId);
-		
+				
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
 		aFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
 		rFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
 		sFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
 		dFlag = (ByteHandler.easyCopy(7,7,object_bytes[7]) == 1) ? true : false ;
-	
-		log.info("LSP_ID: "+lspId);
-		
+			
 		boolean fin;
 		int offset = 8;
 		
@@ -276,39 +270,26 @@ public class LSP extends PCEPObject{
 		}else {
 			fin = false;
 		}
-		
-		log.info("ObjectLength: "+ObjectLength);
-		
+				
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.info("TLV type "+tlvtype+"TLV length "+tlvlength);
 			
 			switch (tlvtype){
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
-					log.info("Symbolic path name tlv found");
 					symbolicPathNameTLV_tlv=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
-					log.info(symbolicPathNameTLV_tlv.toString());	
 					break;
 				case ObjectParameters.PCEP_TLV_TYPE_LSP_IDENTIFIERS:
-					log.info("PCEP_TLV_TYPE_LSP_IDENTIFIERS(TLV) found");
 					lspIdentifiers_tlv =new LSPIdentifiersTLV(this.getObject_bytes(), offset);
-					log.info(lspIdentifiers_tlv.toString());	
 					break;
 				case ObjectParameters.PCEP_TLV_TYPE_LSP_ERROR_CODE:
-					log.info("PCEP_TLV_TYPE_LSP_ERROR_CODE(TLV) found");
 					lspErrorCodes_tlv =new LSPErrorCodeTLV(this.getObject_bytes(), offset);
-					log.info(lspErrorCodes_tlv.toString());	
 					break;
 				case ObjectParameters.PCEP_TLV_TYPE_RSVP_ERROR_SPEC:
-					log.info("PCEP_TLV_TYPE_RSVP_ERROR_SPEC(TLV) found");
 					rsvpErrorSpec_tlv =new RSVPErrorSpecTLV(this.getObject_bytes(), offset);
-					log.info(rsvpErrorSpec_tlv.toString());	
 					break;
 				case ObjectParameters.PCEP_TLV_TYPE_LSP_DATABASE_VERSION:
-					log.info("PCEP_TLV_TYPE_RSVP_ERROR_SPEC(TLV) found");
 					lspDBVersion_tlv =new LSPDatabaseVersionTLV(this.getObject_bytes(), offset);
-					log.info(lspDBVersion_tlv.toString());	
 					break;
 				
 				/*
@@ -323,11 +304,9 @@ public class LSP extends PCEPObject{
 			
 			offset=offset+tlvlength;
 			if (offset>=ObjectLength){
-				log.finest("No more TLVs in Notification");
 				fin=true;
 			}
 		}
-		log.info("LSP decoded!!");
 		
 	}
 	

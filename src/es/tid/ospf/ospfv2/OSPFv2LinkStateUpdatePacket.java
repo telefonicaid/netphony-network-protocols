@@ -106,14 +106,12 @@ public class OSPFv2LinkStateUpdatePacket extends OSPFv2Packet{
 		this.bytes[26]=(byte)(num_lsas>>>8);
 		this.bytes[27]=(byte)num_lsas;
 		int offset=28;
-		log.info("num_lsas "+num_lsas);
 	
 		for (int i=0;i<num_lsas;++i){	
 			LSA lsa=LSAlist.get(i);
 			System.arraycopy(lsa.getLSAbytes(), 0, this.bytes, offset, lsa.getLength());
 			
 		}
-//		log.info("El mensaje es "+printHexString());
 	}
 
 	public LinkedList<LSA> getLSAlist() {

@@ -37,7 +37,7 @@ public class MetricPCE extends PCEPConstruct{
 	 * 
 	 */
 	public void encode() throws PCEPProtocolViolationException{
-		log.finest("Encoding MetricPCE Rule");
+		//Encoding MetricPCE Rule"
 		int len=0;
 		if (pceId!=null){
 			pceId.encode();
@@ -51,7 +51,6 @@ public class MetricPCE extends PCEPConstruct{
 			procTime.encode();
 			len=len+procTime.getLength();
 		}		
-		log.info("Metric PCE Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -70,13 +69,11 @@ public class MetricPCE extends PCEPConstruct{
 	 * Decoding RRO - Bandwidth Rule
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		log.finest("Decoding MetricPCE Rule");
 		int len=0;		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCE_ID){
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_PCE_ID_IPV4){
-				log.finest("PCE ID IPV4 Object found");
 				try {
 					pceId=new PceIdIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
@@ -92,7 +89,6 @@ public class MetricPCE extends PCEPConstruct{
 		}		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_PROC_TIME){
-			log.finest("PROC TIME Object found");
 			try {
 				procTime=new ProcTime(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {

@@ -83,7 +83,6 @@ public class P2MPEndPointsDataPathID extends EndPoints
 	 */
 	public void encode() 
 	{
-		log.info("Encoding P2MPEndPointsDataPathID");
 		this.ObjectLength= 4 + 4 + 8 + 8 * destDatapathIDList.size();
 
 
@@ -115,10 +114,8 @@ public class P2MPEndPointsDataPathID extends EndPoints
 	 */
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		log.finest("Decoding P2MPEndPointsDataPathID");
 		if (this.ObjectLength < 24 || this.ObjectLength % 4 != 0)
 		{
-			log.info("object size doesnt match");
 			throw new MalformedPCEPObjectException();
 		}
 		
@@ -127,11 +124,9 @@ public class P2MPEndPointsDataPathID extends EndPoints
 		{
 			leafType = (leafType << 8) | (this.object_bytes[k+4] & 0xff);
 		}	
-		log.info("leafType: "+leafType);
 		
 		
 		int numDestId = (int)((this.ObjectLength - 4 - 4 - 8)/8);
-		log.info("num of Dest Ids: "+numDestId);
 
 		byte[] datapath_id = new byte[8]; 
 		System.arraycopy(this.object_bytes,8, datapath_id, 0, 8);

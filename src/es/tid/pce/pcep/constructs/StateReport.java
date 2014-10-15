@@ -77,7 +77,7 @@ public class StateReport extends PCEPConstruct
 	}
 
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding State Report");
+		//Encoding State Report
 		int length=0;
 		if (srp!=null){
 			srp.encode();
@@ -117,7 +117,7 @@ public class StateReport extends PCEPConstruct
 	}
 	
 	public void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException {
-		log.finest("Decoding State Report Construct");
+		//Decoding State Report Construct
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset)
@@ -146,6 +146,10 @@ public class StateReport extends PCEPConstruct
 				lsp = new LSP(bytes,offset);
 				offset=offset+lsp.getLength();
 				len=len+lsp.getLength();
+				if (offset>=bytes.length){
+					this.setLength(len);
+					return;
+				}
 				
 			} 
 			catch (MalformedPCEPObjectException e) 
@@ -173,12 +177,11 @@ public class StateReport extends PCEPConstruct
 		}
 		else if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
 		{
-			log.finest("SRERO Object found, New Path Construct found");
+			//SRERO Object found, New Path Construct found
 			path=new Path(bytes,offset);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}			
@@ -186,7 +189,7 @@ public class StateReport extends PCEPConstruct
 		else
 		{
 			log.warning("Malformed Report Message. There must be at least one ERO or SRERO message!");
-			throw new PCEPProtocolViolationException();
+			//throw new PCEPProtocolViolationException();
 		}
 	}
 

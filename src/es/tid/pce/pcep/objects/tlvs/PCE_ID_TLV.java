@@ -23,7 +23,6 @@ public class PCE_ID_TLV extends PCEPTLV {
 		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.TotalTLVLength];
 		encodeHeader();
-		log.info("Encoding PCE ID "+pceId);//FIXME: Pasar a fine al terminar
 		System.arraycopy(pceId.getAddress(),0, this.tlv_bytes, 4, 4);
 
 	}
@@ -33,12 +32,10 @@ public class PCE_ID_TLV extends PCEPTLV {
 		if (this.TLVValueLength!=4){
 			throw new MalformedPCEPObjectException();
 		}
-		log.info("Decoding PCE ID");//FIXME: Pasar a fine al terminar
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.tlv_bytes,4, ip, 0, 4);
 		try {
 			pceId=(Inet4Address)Inet4Address.getByAddress(ip);
-			log.info("PCE ID: "+pceId);//FIXME: Pasar a fine al terminar
 		} catch (UnknownHostException e) {			
 			e.printStackTrace();
 			throw new MalformedPCEPObjectException();

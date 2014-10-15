@@ -83,9 +83,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 
 	@Override
 	public void encode() 
-	{
-		log.finest("Encoding LSPIdentifiersTLV TLV");
-		
+	{		
 		int length = 12;
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -106,9 +104,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 
 	
 	public void decode() throws MalformedPCEPObjectException 
-	{
-		log.finest("Decoding LSPIdentifiersTLV TLV");
-		
+	{		
 		byte[] ip=new byte[4]; 
 		int offset = 4;
 		System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
@@ -116,7 +112,7 @@ public class LSPIdentifiersTLV extends PCEPTLV
 		try 
 		{
 			tunnelSenderIPAddress=(Inet4Address)Inet4Address.getByAddress(ip);
-			log.info("Sender IP adress, tunnel: "+tunnelSenderIPAddress);
+			log.finest("Sender IP adress, tunnel: "+tunnelSenderIPAddress);
 		} 
 		catch (UnknownHostException e) 
 		{			

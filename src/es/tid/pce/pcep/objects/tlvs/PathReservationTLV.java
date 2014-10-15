@@ -77,7 +77,7 @@ public class PathReservationTLV extends PCEPTLV {
 	}
 
 	public void decode() throws MalformedPCEPObjectException{
-		log.info("Decoding PathReservation TLV");
+		log.finest("Decoding PathReservation TLV");
 		int offset=4;
 		//Time
 		for (int k = 0; k < 4; k++) {

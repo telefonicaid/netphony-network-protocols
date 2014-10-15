@@ -166,7 +166,7 @@ public class ExplicitRouteObject extends PCEPObject{
 					}
 					break;
 				default:
-					log.info("ERO Subobject Unknown");
+					log.warning("ERO Subobject Unknown subojectclass: "+subojectclass);
 					//FIXME What do we do??
 					break;
 			}

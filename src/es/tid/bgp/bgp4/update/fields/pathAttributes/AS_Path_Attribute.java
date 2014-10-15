@@ -52,7 +52,7 @@ public class AS_Path_Attribute extends PathAttribute{
 	}
 	@Override
 	public void encode() {
-		log.info("As_Path");
+		//As_Path
 		pathAttributeLength = 4;
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];

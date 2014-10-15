@@ -55,7 +55,7 @@ public class RSVPErrorSpecTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{
-		log.info("Encoding RSVPErrorSpecTLV TLV");
+		log.finest("Encoding RSVPErrorSpecTLV TLV");
 		
 		int length = errorSpecObject4.getLength();
 		this.setTLVValueLength(length);
@@ -71,7 +71,7 @@ public class RSVPErrorSpecTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.info("Decoding RSVPErrorSpecTLV TLV");
+		log.finest("Decoding RSVPErrorSpecTLV TLV");
 		int offset = 4;
 		
 		int classNum = RSVPObject.getClassNum(tlv_bytes,offset);

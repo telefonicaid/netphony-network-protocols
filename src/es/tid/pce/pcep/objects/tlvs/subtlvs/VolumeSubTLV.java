@@ -112,27 +112,27 @@ public class VolumeSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME_SIZE:
-				log.info("VolumeSize SubTLV found");
+				log.finest("VolumeSize SubTLV found");
 				this.volumeSize=new VolumeSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_BLOCK_SIZE:
-				log.info("BlockSize SubTLV found");
+				log.finest("BlockSize SubTLV found");
 				this.blockSize=new BlockSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME_INFO:
-				log.info("VolumeInfo SubTLV found");
+				log.finest("VolumeInfo SubTLV found");
 				this.volumeInfo=new VolumeInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;			
 			}
 			
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.info("No more SubTLVs in Volume Sub-TLV");
+				log.finest("No more SubTLVs in Volume Sub-TLV");
 				fin=true;
 			}
 

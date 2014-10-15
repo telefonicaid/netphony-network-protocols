@@ -158,7 +158,7 @@ public class SERO extends PCEPObject{
 					}
 					break;
 				default:
-					log.info("ERO Subobject Unknown");
+					log.warning("ERO Subobject Unknown: "+subojectclass);
 					//FIXME What do we do??
 					break;
 			}

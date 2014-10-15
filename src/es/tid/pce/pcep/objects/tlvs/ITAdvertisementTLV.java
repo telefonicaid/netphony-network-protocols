@@ -73,7 +73,7 @@ public class ITAdvertisementTLV extends PCEPTLV {
 	}
 
 	public void decode() throws MalformedPCEPObjectException {
-		log.info("Decoding IT Advertisement TLV");//FIXME: Cambiar a fine
+		log.finest("Decoding IT Advertisement TLV");//FIXME: Cambiar a fine
 		//Adv_ID=new byte[4];
 		byte[] ip=new byte[4];
 		System.arraycopy(this.tlv_bytes, 4, ip, 0, 4);

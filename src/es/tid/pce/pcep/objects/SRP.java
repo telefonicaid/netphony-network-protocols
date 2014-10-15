@@ -6,6 +6,7 @@ import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
+ * SRP Object.
  * The SRP (Stateful PCE Request Parameters) object MUST be carried
    within each PCUpd and PCRpt message and MAY be carried within PCNtf
    and PCEerr messages.  The SRP object is used to correlate between
@@ -94,7 +95,6 @@ public class SRP extends PCEPObject
 
 	public void encode() 
 	{
-		log.finest("Encoding SRP!!");
 		ObjectLength = 4 + 4 + 4;
 		if (symPathName!=null)
 		{
@@ -103,10 +103,8 @@ public class SRP extends PCEPObject
 		}
 		
 		if (pathSetupTLV!=null){
-			log.info("HAY pathSetupTLV");
 			try {
 				pathSetupTLV.encode();
-				log.info("codificado pathSetupTLV");
 				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
@@ -114,13 +112,9 @@ public class SRP extends PCEPObject
 			}
 						
 		}
-		log.info("Length  "+ObjectLength);
 		object_bytes = new byte[ObjectLength];
-		encode_header();
-		
-		
+		encode_header();		
 		int offset = 4;
-		
 		offset += 3;
 		ByteHandler.BoolToBuffer(7 + offset*8, rFlag,object_bytes);
 		
@@ -132,7 +126,6 @@ public class SRP extends PCEPObject
 		
 		if (symPathName != null)
 		{
-			log.info("copiamos "+symPathName.getTotalTLVLength()+" que es "+(symPathName.getTlv_bytes()[0]&0xFF));
 			System.arraycopy(symPathName.getTlv_bytes(),0,this.object_bytes,offset,symPathName.getTotalTLVLength());
 			offset=offset+symPathName.getTotalTLVLength();
 		}
@@ -147,7 +140,6 @@ public class SRP extends PCEPObject
 	@Override
 	public void decode() throws MalformedPCEPObjectException 
 	{
-		log.info("Decoding RSP!!");
 		
 		if (ObjectLength<12){
 			throw new MalformedPCEPObjectException();
@@ -156,9 +148,7 @@ public class SRP extends PCEPObject
 		rFlag = (ByteHandler.easyCopy(7,7,object_bytes[7]) == 1) ? true : false ;
 		
 		SRP_ID_number = ByteHandler.easyCopy(0,31,object_bytes[8],object_bytes[9],object_bytes[10],object_bytes[11]);
-		
-		log.info("SRP_ID_number: "+SRP_ID_number);
-		
+				
 		boolean fin;
 		int offset = 12;
 		
@@ -171,16 +161,12 @@ public class SRP extends PCEPObject
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.finest("TLV type "+tlvtype+"TLV length "+tlvlength);
 			
 			switch (tlvtype){
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
-					log.finest("Symbolic path name tlv found");
 					symPathName=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
-					log.info(symPathName.toString());	
 					break;		
 				case ObjectParameters.PCEP_TLV_PATH_SETUP:
-					log.info("PCEP_TLV_PATH_SETUP found");
 					pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
 					break;								
 				default:
@@ -191,13 +177,9 @@ public class SRP extends PCEPObject
 			
 			offset=offset+tlvlength;
 			if (offset>=ObjectLength){
-				log.finest("No more TLVs in Notification");
 				fin=true;
 			}
-		}
-		
-		log.info("RSP decoded!!");
-		
+		}		
 	}
 
 	public long getSRP_ID_number() 

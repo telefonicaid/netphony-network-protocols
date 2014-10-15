@@ -8,9 +8,7 @@ public class Generic_MP_Reach_Attribute extends MP_Reach_Attribute {
 		super(bytes, offset);
 	}
 	public void encode() {
-		log.info("Encoding  Generic MP_Reach_Attribute");
-		
-		
+		//Encoding  Generic MP_Reach_Attribute
 		//FIXME: SUPONEMOS lengthofNextHopNetworkAddress cero
 		pathAttributeLength = 5;
 		this.setPathAttributeLength(pathAttributeLength);

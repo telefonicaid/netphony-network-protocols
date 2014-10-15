@@ -41,7 +41,7 @@ public class SVECConstruct extends PCEPConstruct{
 	
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding SVEC Construct");		
+		//Encoding SVEC Construct	
 		int len=0;		
 		if (svec!=null){
 			svec.encode();
@@ -64,8 +64,6 @@ public class SVECConstruct extends PCEPConstruct{
 				len=len+(metricList.get(i)).getLength();
 			}
 		}
-		
-		log.info("SVEC Construct Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -89,7 +87,6 @@ public class SVECConstruct extends PCEPConstruct{
 	
 	public void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
-		log.finest("Decoding SVEC Construct ");
 		int len=0;
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		//EMPEZAMOS HACIENDO IMPLEMENTACION ESTRICTA
@@ -109,7 +106,6 @@ public class SVECConstruct extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
-			log.finest("OBJECTIVE FUNCTION Object found");
 			ObjectiveFunction objectiveFunction = new ObjectiveFunction();
 			try {
 				objectiveFunction=new ObjectiveFunction(bytes,offset);
@@ -124,7 +120,6 @@ public class SVECConstruct extends PCEPConstruct{
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
-			log.finest("METRIC Object found");
 			Metric metric;
 			try {
 				metric = new Metric(bytes,offset);

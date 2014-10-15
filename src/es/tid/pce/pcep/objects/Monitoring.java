@@ -156,16 +156,13 @@ public class Monitoring extends PCEPObject {
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.info("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando esté estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_REQUEST_INFO:
-				log.info("Request_Info_TLV found");
 				requestInfoTLV=new RequestInfoTLV(this.getObject_bytes(), offset);
-				log.info(requestInfoTLV.toString());
 				break;
 			
 			default:
-				log.info("UNKNOWN TLV found");
+				log.warning("UNKNOWN TLV found: "+tlvtype);
 				//UnknownTLV unknownTLV = new UnknownTLV();			
 				//FIXME: Que hacemos con los desconocidos????
 				break;

@@ -20,8 +20,7 @@ public class AreaIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 	}
 
 	private void decode() {
-		// TODO Auto-generated method stub
-		log.info("Decoding AREA ID");		
+		//Decoding AREA ID	
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
 		try {
@@ -34,7 +33,7 @@ public class AreaIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 
 	@Override
 	public void encode() {
-		log.info("Encoding AreaIdentifier Sub-TLV");
+		//Encoding AreaIdentifier Sub-TLV
 		this.setSubTLVValueLength(4);//AS_ID		
 		this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 		encodeHeader();

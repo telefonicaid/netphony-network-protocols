@@ -59,7 +59,7 @@ public class OSPFRouteTypePrefixDescriptorSubTLV extends BGP4TLVFormat{
 			case 0x6:
 				this.setRoute_type(NSSA_2);
 			default:
-				log.info("No such OSPF route type");
+				log.finest("No such OSPF route type");
 		}
 		
 	}

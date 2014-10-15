@@ -60,15 +60,6 @@ import es.tid.pce.pcep.objects.PCEPObject;
    in Section 7.5) may also contain other information (e.g, reasons for
    the path computation failure).
 
-
-
-
-Vasseur & Le Roux           Standards Track                    [Page 20]
-
- 
-RFC 5440                          PCEP                        March 2009
-
-
    The format of a PCRep message is as follows:
 
 
@@ -121,7 +112,7 @@ public class PCEPResponse extends PCEPMessage {
 	{
 		super(bytes);
 		ResponseList = new LinkedList<Response>();
-		decode(bytes);
+		decode();
 
 	}
 
@@ -144,18 +135,17 @@ public class PCEPResponse extends PCEPMessage {
 	 * Encodes the PCEP Response Message
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		log.finest("Encoding PCEP Response Message");
+		//Encoding PCEP Response Message
 		if (ResponseList.size()==0){
 			log.warning("There should be at least one request in a PCEP Response message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
-		log.finest("Ending "+ResponseList.size()+" different responses");
+		//Ending "+ResponseList.size()+" different responses
 		for (int i=0;i<ResponseList.size();++i){
 			ResponseList.get(i).encode();
 			len=len+ResponseList.get(i).getLength();
 		}
-		log.finest("Total length of the Response Message"+len);
 		this.setMessageLength(len);
 		messageBytes=new byte[len];
 		encodeHeader();
@@ -169,11 +159,9 @@ public class PCEPResponse extends PCEPMessage {
 	/**
 	 * Decode the PCEP Response message
 	 */
-	public void decode(byte[] bytes) throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP Response Message");
-		this.messageBytes=new byte[bytes.length];
-		log.finest("There is a total of "+bytes.length);
-		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
+	public void decode() throws PCEPProtocolViolationException {
+		//Decoding PCEP Response Message
+		byte[] bytes=this.getBytes();
 		int offset=4;//We start after the object header
 		while (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_RP){
 			Response res=new Response();

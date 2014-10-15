@@ -110,7 +110,7 @@ public class ObjectiveFunction extends PCEPObject {
 			
 		
 			default:
-				log.info("UNKNOWN TLV found");
+				log.warning("UNKNOWN TLV found: "+tlvtype);
 				//UnknownTLV unknownTLV = new UnknownTLV();			
 				//FIXME: Que hacemos con los desconocidos????
 				break;

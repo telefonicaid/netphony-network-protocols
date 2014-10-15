@@ -57,7 +57,7 @@ public class SRCapabilityTLV extends PCEPTLV
 		encodeHeader();
 		int Zero = 0;
 		int offset = 4;
-		log.info("Encoding SRCapabilityTLV: MSD ="+MSD+" bytes: "+this.getTotalTLVLength());
+		log.finest("Encoding SRCapabilityTLV: MSD ="+MSD+" bytes: "+this.getTotalTLVLength());
 
 		ByteHandler.IntToBuffer(0,offset * 8, 32,Zero,this.tlv_bytes);
 		
@@ -66,19 +66,19 @@ public class SRCapabilityTLV extends PCEPTLV
 		byte[] aux = new byte[1];
 		aux[0] = (byte)(MSD & 0x000000ff);
 		System.arraycopy(aux, 0, tlv_bytes, 7, 1);
-		log.info("finished Encoding SRCapabilityTLV: MSD ="+MSD);		
+		log.finest("finished Encoding SRCapabilityTLV: MSD ="+MSD);		
 	}
 	
 	public void decode()
 	{
 
-		log.info("Decoding SRCapabilityTLV");
+		log.finest("Decoding SRCapabilityTLV");
 		int offset = 7;
 		//TODO: No se si lo hace bien
 		byte[] aux = new byte[1];
 		System.arraycopy(this.tlv_bytes,offset, aux, 0, 1);
 		MSD = (aux[0]&0xff);
-		log.info("MSD decoded, value: "+MSD);
+		log.finest("MSD decoded, value: "+MSD);
 	}
 
 	public int getMSD() 

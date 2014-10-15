@@ -1,7 +1,5 @@
 package es.tid.bgp.bgp4.update.fields;
 
-import java.util.logging.Logger;
-
 import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import es.tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
 
@@ -42,9 +40,7 @@ public class NodeNLRI extends LinkStateNLRI {
 	private int protocolID;//inicializado a 0(unknown)
 	private long routingUniverseIdentifier;
 	private LocalNodeDescriptorsTLV localNodeDescriptors;
-	
-	private Logger log = Logger.getLogger("BGPParser");
-		
+			
 	public NodeNLRI(){
 		this.setNLRIType(NLRITypes.Node_NLRI);
 		this.setRoutingUniverseIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
@@ -83,11 +79,6 @@ public class NodeNLRI extends LinkStateNLRI {
 		int offset=13;
 		
 		if (localNodeDescriptors!=null){
-			if (localNodeDescriptors.getTlv_bytes() == null){
-				log.info("ERROR");
-			}
-			log.info("�localNodeDescriptors.getTlv_bytes() "+ localNodeDescriptors.getTlv_bytes().length);
-			log.info("localNodeDescriptors.getTotalTLVLength():"+ localNodeDescriptors.getTotalTLVLength());
 			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset,localNodeDescriptors.getTotalTLVLength());
 			offset=offset+localNodeDescriptors.getTotalTLVLength();
 		}
@@ -95,10 +86,9 @@ public class NodeNLRI extends LinkStateNLRI {
 		
 	}
 	public void decode(){
-		log.info("Decoding NodeNLRI");
+		//Decoding NodeNLRI
 		int offset = 4; //Cabecera del LinkState NLRI
 		protocolID = this.bytes[offset];
-		log.info("protocolID:"+protocolID);
 		offset=offset +1; //identifier
 		
 		byte[] ip=new byte[8]; 
@@ -108,7 +98,6 @@ public class NodeNLRI extends LinkStateNLRI {
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
 		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-		log.info("Decoded Routing Universe Identifier!!!!:"+routingUniverseIdentifier);
 		offset = offset +8;
 		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
 	}

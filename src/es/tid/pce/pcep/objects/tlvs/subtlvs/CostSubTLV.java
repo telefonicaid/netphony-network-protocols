@@ -76,14 +76,14 @@ public class CostSubTLV extends PCEPSubTLV {
 		System.arraycopy(unitaryPrice, 0, this.subtlv_bytes, 4, 4);
 		System.arraycopy(usageUnit, 0, this.subtlv_bytes, 8, 2);
 		
-		log.info("Encoding UnitaryPrice: "+(unitaryPrice).toString());
+		log.finest("Encoding UnitaryPrice: "+(unitaryPrice).toString());
 	}
 
 	
 	public void decode() {
 		this.unitaryPrice=new byte[4];
 		this.usageUnit=new byte[2];
-		log.info("Tamaño del SubTLV:"+String.valueOf(this.getSubTLVValueLength()));
+		log.finest("Tamaño del SubTLV:"+String.valueOf(this.getSubTLVValueLength()));
 //		System.arraycopy(this.subtlv_bytes, 4, prueba, 0, 4);
 //		this.usageUnit= prueba;
 		System.arraycopy(this.subtlv_bytes, 4, this.unitaryPrice, 0, 4);
@@ -93,7 +93,7 @@ public class CostSubTLV extends PCEPSubTLV {
 //		this.unitaryPrice[3]=this.subtlv_bytes[7];
 		//this.usageUnit[0]=this.subtlv_bytes[8];
 		System.arraycopy(this.subtlv_bytes, 8, this.usageUnit, 0, 2);
-		log.info("Decoding UnitaryPrice"+(this.unitaryPrice).toString());
+		log.finest("Decoding UnitaryPrice"+(this.unitaryPrice).toString());
 	}
 
 

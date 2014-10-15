@@ -97,7 +97,7 @@ public class PCEPMonReq  extends PCEPMessage {
 	}
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
-		//log.finest("Encoding PCEP Monitoring Request Message");
+		//Encoding PCEP Monitoring Request Message
 
 		if ((monitoring==null)||(pccReqId==null)){
 			log.warning("There should be at least one request in a PCEP Request message");
@@ -154,8 +154,6 @@ public class PCEPMonReq  extends PCEPMessage {
 	 */
 	public void decode(byte[] bytes) throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 
-		//log.info("Decoding PCEP Mon Request Message");
-		//log.finest("Length in bytes: "+bytes.length);
 		this.messageBytes=new byte[bytes.length];
 		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
 		int offset=4;//We start after the object header

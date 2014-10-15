@@ -47,7 +47,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	}
 
 	public void encode() throws PCEPProtocolViolationException{
-		log.finest("Encoding Request Construct");
 		int len=0;
 		
 		if (endPoints!=null){
@@ -103,7 +102,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	 * Decode a Request rule;
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		log.finest("Decoding Request Rule");
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
@@ -156,7 +154,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		// LSPA
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
-			log.finest("LSPA Object found");
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -175,7 +172,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		// ERO
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
-			log.finest("ERO object Found");
 			try {
 				eRO=new ExplicitRouteObject(bytes, offset);
 			}catch (MalformedPCEPObjectException e){
@@ -193,7 +189,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		// Bandwidth
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
-			log.finest("BANDWIDTH Object found");
 			try {
 				bandwidth=new BandwidthRequested(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -210,7 +205,6 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		// Metric List
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
-			log.finest("METRIC Object found");
 			Metric metric;
 			try {
 				metric = new Metric(bytes,offset);

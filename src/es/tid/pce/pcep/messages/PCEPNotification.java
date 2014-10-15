@@ -96,8 +96,7 @@ public class PCEPNotification extends PCEPMessage {
 	 * Decode the PCEP Notification Message
 	 */
 	public void decode() throws PCEPProtocolViolationException {
-		log.finest("Decoding PCEP Notification Message");
-		log.finest("Length in bytes: "+this.getLength());
+		//Decoding PCEP Notification Message
 		int offset=4;//We start after the object header
 		if (offset>=this.getLength()){
 			log.warning("Empty notification message");

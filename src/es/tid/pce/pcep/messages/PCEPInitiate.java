@@ -47,7 +47,6 @@ public class PCEPInitiate extends PCEPMessage
 	@Override
 	public void encode() throws PCEPProtocolViolationException 
 	{
-		log.info("Inicio encode");
 		int len = 4;
 		int index = 0;
 
@@ -85,10 +84,6 @@ public class PCEPInitiate extends PCEPMessage
 		int offset = 4;//We start after the object header
 		boolean atLeastOne = false;
 		PCEPIntiatedLSP sr;
-		log.info("Decoding PCEP Intiate!!:: len :: "+this.getBytes().length);
-
-		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
-		log.info("Object Type::"+PCEPObject.getObjectClass(this.getBytes(), offset));
 		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 			log.warning("There should be at least one RSP Object");
@@ -116,7 +111,6 @@ public class PCEPInitiate extends PCEPMessage
 			log.warning("Malformed Report Message. There must be at least one state-report object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
-		log.info("PCEP Report decoded!!");
 	}
 	public LinkedList<PCEPIntiatedLSP> getPcepIntiatedLSPList() 
 	{

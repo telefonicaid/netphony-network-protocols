@@ -54,7 +54,7 @@ public class MultiprotocolExtensionCapabilityAdvertisement extends BGP4Capabilit
 		decode();
 	}
 	public void encode(){
-		log.info("Encoding MultiprotocolExtensionCapabilityAdvertisement");
+		//Encoding MultiprotocolExtensionCapabilityAdvertisement
 		this.setCapabilityLength(4);
 		this.bytes = new byte[this.getLength()];
 		encodeHeader();
@@ -65,7 +65,7 @@ public class MultiprotocolExtensionCapabilityAdvertisement extends BGP4Capabilit
 	}
 	
 	public void decode(){
-		log.info("Decoding MultiprotocolExtensionCapabilityAdvertisement");
+		//"Decoding MultiprotocolExtensionCapabilityAdvertisement"
 		int offset = 2;
 		
 		AFI = ((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);

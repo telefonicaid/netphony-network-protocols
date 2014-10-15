@@ -191,7 +191,6 @@ public class ServerTLV extends PCEPTLV {
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding Storage EndPoint TLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){
@@ -200,68 +199,63 @@ public class ServerTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.info("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_RESOURCE_ID:
-				log.info("Storage Resource ID");
 				this.resourceID=new ResourceIDSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_LOCATION:
-				log.info("Location SubTLV");
 				this.location=new LocationSubTLV(this.getTlv_bytes(), offset);
 				break;
 			
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_COST:
 				CostSubTLV cost = new CostSubTLV(this.getTlv_bytes(), offset);
-				log.info("Cost SubTLV");
 				if (costList==null){
-					log.info("Creating CostSubTLVList");
 					costList=new LinkedList<CostSubTLV>();
 				}
 				this.costList.add(cost);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_NETWORK_SPEC:
-				log.info("NetworkSpec SubTLV");
+				log.finest("NetworkSpec SubTLV");
 				this.networkSpec=new NetworkSpecSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER:
-				log.info("Power SubTLV");
+				log.finest("Power SubTLV");
 				this.power=new PowerSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_SERVER_STORAGE:
-				log.info("ServerStorage SubTLV");
+				log.finest("ServerStorage SubTLV");
 				this.serverStorage=new ServerStorageSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_PROCESSOR:
-				log.info("Procesor SubTLV");
+				log.finest("Procesor SubTLV");
 				ProcessorSubTLV processor = new ProcessorSubTLV(this.getTlv_bytes(), offset);
 				if (processorList==null){
-					log.info("Creating ProcessorSubTLVList");
+					log.finest("Creating ProcessorSubTLVList");
 					processorList=new LinkedList<ProcessorSubTLV>();
 				}
 				this.processorList.add(processor);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MEMORY:
-				log.info("Memory SubTLV");
+				log.finest("Memory SubTLV");
 				this.memory = new MemorySubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_OS:
-				log.info("OperativeSystem SubTLV");
+				log.finest("OperativeSystem SubTLV");
 				this.operativeSystem = new OperativeSystemSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_APPLICATION:
 				ApplicationSubTLV application = new ApplicationSubTLV(this.getTlv_bytes(), offset);
-				log.info("Application SubTLV");
+				log.finest("Application SubTLV");
 				if (applicationList==null){
-					log.info("Creating VolumeSubTLVList");
+					log.finest("Creating VolumeSubTLVList");
 					applicationList=new LinkedList<ApplicationSubTLV>();
 				}
 				this.applicationList.add(application);
@@ -270,7 +264,7 @@ public class ServerTLV extends PCEPTLV {
 		}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.info("No more SubTLVs in Server TLV");
+				log.finest("No more SubTLVs in Server TLV");
 				fin=true;
 			}
 

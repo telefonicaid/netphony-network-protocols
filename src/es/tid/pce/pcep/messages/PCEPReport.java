@@ -136,10 +136,10 @@ public class PCEPReport extends PCEPMessage
 		//Current implementation is strict, does not accept unknown objects 
 		int offset=4;//We start after the object header
 		StateReport sr;
-		log.finest("Decoding PCEP Report");
+		//Decoding PCEP Report
 		
 		int oc=PCEPObject.getObjectClass(this.getBytes(), offset); // Get the object class
-		if ((oc!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)||(oc!=ObjectParameters.PCEP_OBJECT_CLASS_LSP))
+		if ((oc!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)&&(oc!=ObjectParameters.PCEP_OBJECT_CLASS_LSP))
 		{
 			log.warning("At least one state-report is needed");
 			throw new PCEPProtocolViolationException();

@@ -8,7 +8,7 @@ import es.tid.rsvp.objects.subobjects.RROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 
 /**
- * PCEP Reported Route Object (RRO) as defined in RFC 5440
+ * PCEP Reported Route Object (RRO) (RFC 5440).
  * 
  * From RFC 5440 Section 7.10. Reported Route Object
 
@@ -152,12 +152,10 @@ public class ReportedRouteObject extends PCEPObject{
 //							WavebandLabelEROSubobject subwl=new WavebandLabelEROSubobject(this.getObject_bytes(), offset);
 //							IROList.add(subwl);
 //						default:
-//							log.info("ERO LABEL Subobject Ctype Unknown");
 //							break;							
 //					}
 				default:
-					log.info("ERO Subobject Unknown");
-					//FIXME What do we do??
+					//ERO Subobject Unknown
 					break;
 			}
 			offset=offset+subojectlength;

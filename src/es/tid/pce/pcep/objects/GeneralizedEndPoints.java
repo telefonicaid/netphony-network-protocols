@@ -201,7 +201,6 @@ public class GeneralizedEndPoints extends EndPoints{
 		
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES){		
 			try {
-				log.info("this.object_bytes:::"+this.object_bytes);
 				p2mpEndpoints= new P2MPEndpoints(this.object_bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
 				// TODO Auto-generated catch block

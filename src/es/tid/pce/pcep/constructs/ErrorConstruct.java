@@ -53,7 +53,6 @@ public class ErrorConstruct extends PCEPConstruct {
 			(errorObjList.get(i)).encode();
 			len=len+(errorObjList.get(i)).getLength();
 		}
-		//log.info("Path Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -73,7 +72,6 @@ public class ErrorConstruct extends PCEPConstruct {
 	 */
 	private void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
-		log.finest("Decoding Error Construct");
 		int len=0;	
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
@@ -82,7 +80,6 @@ public class ErrorConstruct extends PCEPConstruct {
 		}
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
-			log.finest("RP Object found");
 			RequestParameters rp;
 			try {
 				rp = new RequestParameters(bytes,offset);
@@ -101,7 +98,6 @@ public class ErrorConstruct extends PCEPConstruct {
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR){
-			log.finest("PCEP Error Object found");
 			PCEPErrorObject perror;
 			try {
 				perror = new PCEPErrorObject(bytes,offset);

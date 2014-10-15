@@ -86,7 +86,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		{
 			System.arraycopy(this.tlv_bytes, offset, redundancyId, 0, redundancyId.length);
 			
-			log.info("Redundancy ID is : ");
+			log.finest("Redundancy ID is : ");
 		}
 		catch (Exception e)
 		{
@@ -107,7 +107,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		
 		if (isZero)
 		{
-			log.info("Received redundancy group identifier value can not be zero");
+			log.finest("Received redundancy group identifier value can not be zero");
 			//throw new MalformedPCEPObjectException();
 		}
 		
@@ -115,7 +115,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		boolean firstBit = (ByteHandler.easyCopy(0,0,redundancyId[0]) == 1) ? true : false ;
 		if (firstBit)
 		{
-			log.info("Received redundancy group identifier value can not be negative");
+			log.finest("Received redundancy group identifier value can not be negative");
 			throw new MalformedPCEPObjectException();
 		}
 		

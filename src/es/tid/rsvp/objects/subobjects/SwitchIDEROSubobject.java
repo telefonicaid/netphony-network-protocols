@@ -100,16 +100,16 @@ public class SwitchIDEROSubobject extends EROSubobject
 		
 		if (associated_mac != null)
 		{		
-			//PCEServer.Log.info("associated_mac.length::"+associated_mac.length);
-			//PCEServer.Log.info("subobject_bytes.length::"+subobject_bytes.length);
+			//PCEServer.log.finest("associated_mac.length::"+associated_mac.length);
+			//PCEServer.log.finest("subobject_bytes.length::"+subobject_bytes.length);
 			System.arraycopy(associated_mac, 0, this.subobject_bytes, offset, 6);
 		}
 		offset += 6;
 		
 		if (second_associated_mac != null)
 		{		
-			//PCEServer.Log.info("associated_mac.length::"+associated_mac.length);
-			//PCEServer.Log.info("subobject_bytes.length::"+subobject_bytes.length);
+			//PCEServer.log.finest("associated_mac.length::"+associated_mac.length);
+			//PCEServer.log.finest("subobject_bytes.length::"+subobject_bytes.length);
 			System.arraycopy(second_associated_mac, 0, this.subobject_bytes, offset, 6);
 		}
 		offset += 6;

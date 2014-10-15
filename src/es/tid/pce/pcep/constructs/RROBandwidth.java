@@ -29,7 +29,7 @@ public class RROBandwidth extends PCEPConstruct{
 	 * 
 	 */
 	public void encode() throws PCEPProtocolViolationException{
-		log.finest("Encoding RRO/BANDWIDTH Rule");
+		//Encoding RRO/BANDWIDTH Rule");
 		int len=0;
 		if (rRO!=null){
 			rRO.encode();
@@ -43,7 +43,6 @@ public class RROBandwidth extends PCEPConstruct{
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}		
-		log.info("RRO/Bandwidth Length = "+len);
 		this.setLength(len);
 		bytes=new byte[len];
 		int offset=0;
@@ -61,11 +60,10 @@ public class RROBandwidth extends PCEPConstruct{
 	 * Decoding RRO - Bandwidth Rule
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		log.finest("Decoding RRO-Bandwidth Rule");
+		//Decoding RRO-Bandwidth Rule
 		int len=0;		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
-			log.finest("RRO Object found");
 			try {
 				rRO=new ReportedRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
@@ -80,7 +78,6 @@ public class RROBandwidth extends PCEPConstruct{
 		}		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
-			log.finest("BANDWDITH Object found");
 			try {
 				rRO=new ReportedRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {

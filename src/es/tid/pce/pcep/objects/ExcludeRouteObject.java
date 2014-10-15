@@ -184,7 +184,6 @@ public class ExcludeRouteObject extends PCEPObject {
 	@Override
 	public void encode() {
 		int len=8;//The four bytes of the header
-		log.info("XROSubobjectList size is "+XROSubobjectList.size());
 		for (int k=0; k<XROSubobjectList.size();k=k+1){
 			XROSubobjectList.get(k).encode();			
 			len=len+XROSubobjectList.get(k).getErosolength();
@@ -215,12 +214,9 @@ public class ExcludeRouteObject extends PCEPObject {
 		fail=(object_bytes[7]&0x01)==0x01;
 		while (!fin) {
 			int subojectclass=XROSubobject.getType(this.getObject_bytes(), offset);
-			log.info("SUBOBJETCT CLASS "+subojectclass);
 			int subojectlength=XROSubobject.getLength(this.getObject_bytes(), offset);
-			log.info("SUBOBJETCT LENGTH "+subojectlength);
 			switch(subojectclass) {
 				case XROSubObjectValues.XRO_SUBOBJECT_IPV4PREFIX:
-					log.info("IPV4PREFIX XRO FOUND");
 					IPv4PrefixXROSubobject sobjt4=new IPv4PrefixXROSubobject(this.getObject_bytes(), offset);
 					this.addXROSubobject(sobjt4);
 					break;
@@ -236,18 +232,16 @@ public class ExcludeRouteObject extends PCEPObject {
 					break;
 				
 				case XROSubObjectValues.XRO_SUBOBJECT_UNNUMBERED_IF_ID:
-					log.info("UNNUMBERED IF ID FOUND");
 					UnnumberIfIDXROSubobject subun=new UnnumberIfIDXROSubobject(this.getObject_bytes(), offset);
 					addXROSubobject(subun);
 					break;
 				case XROSubObjectValues.XRO_SUBOBJECT_SRLG:
-					log.info("UNNUMBERED IF ID FOUND");
 					SRLGXROSubobject subsrlg=new SRLGXROSubobject(this.getObject_bytes(), offset);
 					addXROSubobject(subsrlg);
 					break;					
 
 				default:
-					log.info("XRO Subobject Unknown");
+					log.warning("XRO Subobject Unknown");
 					fin=true;
 					//FIXME What do we do??
 					break;

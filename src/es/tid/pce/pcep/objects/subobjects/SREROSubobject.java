@@ -145,7 +145,6 @@ public class SREROSubobject {
 		log=Logger.getLogger("PCEServer");
 		erosolength=(int)bytes[offset+1];
 		this.subobject_bytes=new byte[erosolength];
-		log.info("creating new SRERO subobject with size "+erosolength);
 		System.arraycopy(bytes, offset, subobject_bytes, 0, erosolength);
 		decode();
 		
@@ -193,7 +192,6 @@ public class SREROSubobject {
 		for (int k = 0; k < 4; k++) {
 			SID = (SID << 8) | (this.subobject_bytes[k+4] & 0xff);
 		}		
-		log.info("decoded: "+this.toString());
 		
 	}
 	

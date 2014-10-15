@@ -94,7 +94,6 @@ public class BitmapLabelSet extends LabelSet{
 	public void decode() throws MalformedPCEPObjectException{
 		int offset=4;
 		this.numLabels=((this.getBytes()[offset]&0x0F)<<8)|((this.getBytes()[offset+1]&0xFF));
-		log.info("numLabels "+ numLabels);
 		ncf=new NCF(this.getBytes(),offset);
 
 		offset=offset+ncf.getLength();	
@@ -102,7 +101,6 @@ public class BitmapLabelSet extends LabelSet{
 		offset=offset+ncf.getLength();	
 		
 		int numberBytes = getNumberBytes(this.numLabels);
-		log.info("numberBytes "+ numberBytes);
 		bytesBitmap =  new byte[numberBytes];		
 		System.arraycopy(this.getBytes(),offset, bytesBitmap , 0, numberBytes);
 	}

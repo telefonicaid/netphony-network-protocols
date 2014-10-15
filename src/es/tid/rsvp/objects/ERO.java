@@ -66,7 +66,7 @@ public class ERO extends RSVPObject{
 		eroSubobjects = new LinkedList<EROSubobject>();
 		
 		log = Logger.getLogger("ROADM");
-		log.info("ERO Object Created");
+		log.finest("ERO Object Created");
 	}
 	
 	/**

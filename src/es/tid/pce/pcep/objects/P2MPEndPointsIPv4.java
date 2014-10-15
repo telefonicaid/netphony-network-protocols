@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 /**
+ * PCEP P2MPEND-POINTS object.
  * <p> Represents a PCEP P2MPEND-POINTS object IPv4 Type, as defined in RFC 6006</p>
  * <p>From RFC 6006 Section 3.3.2 END-POINTS Object</p>
  * <pre>
@@ -64,19 +65,15 @@ import java.util.LinkedList;
  */
 public class P2MPEndPointsIPv4 extends EndPoints{
 
-	/*
+	/**
 	 * Leaf type
 	 */
 	private int leafType;
-	
 	
 	/**
 	 * Source IPv4 address
 	 */
 	private Inet4Address sourceIP;
-
-
-
 
 	
 	/**
@@ -125,10 +122,6 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 		this.object_bytes[7]=(byte)(leafType & 0xff);	
 		
 		
-		
-		
-		
-		
 		System.arraycopy(sourceIP.getAddress(),0, this.object_bytes, 8, 4);
 		
 		// TODO what if its size is 0?
@@ -142,7 +135,6 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 	 */
 	public void decode() throws MalformedPCEPObjectException {
 		if (this.ObjectLength<16 || this.ObjectLength%4 != 0){
-			log.info("object size doesnt match");
 			throw new MalformedPCEPObjectException();
 		}
 		
@@ -150,11 +142,9 @@ public class P2MPEndPointsIPv4 extends EndPoints{
 		for (int k = 0; k < 4; k++) {
 			leafType = (leafType << 8) | (this.object_bytes[k+4] & 0xff);
 		}	
-		log.info("leafType: "+leafType);
 		
 		
 		int numDestId = (int)((this.ObjectLength-4-4-4)/4);
-		log.info("num of Dest Ids: "+numDestId);
 
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.object_bytes,8, ip, 0, 4);

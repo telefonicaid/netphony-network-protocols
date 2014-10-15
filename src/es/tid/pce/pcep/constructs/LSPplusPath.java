@@ -59,7 +59,6 @@ public class LSPplusPath  extends PCEPConstruct
 	
 	public void encode()throws PCEPProtocolViolationException
 	{
-		log.info("en encode de LSPplusPath Construct");
 		int length=0;
 
 		rsp.encode();
@@ -84,12 +83,10 @@ public class LSPplusPath  extends PCEPConstruct
 		System.arraycopy(path.getBytes(), 0, bytes, offset, path.getLength());
 		offset = offset+path.getLength();
 		
-		log.info("LSPplusPath Construct encoded!!");
 	}
 
 	protected void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException
 	{
-		log.info("en decode de LSPplusPath Construct");
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset)
@@ -145,24 +142,20 @@ public class LSPplusPath  extends PCEPConstruct
 		
 		if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_ERO)
 		{
-			log.finest("ERO Object found, New Path Construct found");
 			path=new Path(bytes,offset);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}
 		}
 		else if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
 		{
-			log.finest("SRERO Object found, New Path Construct found");
 			path=new Path(bytes,offset);
 			offset=offset+path.getLength();
 			len=len+path.getLength();
 			if (offset>=bytes.length){
-				log.finest("No more bytes");
 				this.setLength(len);
 				return;
 			}			

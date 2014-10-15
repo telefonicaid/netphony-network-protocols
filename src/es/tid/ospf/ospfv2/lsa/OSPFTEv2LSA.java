@@ -113,38 +113,32 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 	 * @throws MalformedOSPFLSAException
 	 */
 	private void decode() throws MalformedOSPFLSAException{
-		log.finest("Decoding OSPFTEv2LSA");
+		//Decoding OSPFTEv2LSA
 		boolean fin=false;
 		int offset=20;//Position of the next subobject
 		if (this.getLength()==20){
 			//Empty LSA!!
-			log.finest("Empty LSA");
+			log.warning("Empty LSA");
 			throw new MalformedOSPFLSAException();
 		}
 		while (!fin) {
 			int TLVType=OSPFTLV.getType(this.LSAbytes, offset);
 			int TLVLength=OSPFTLV.getTotalTLVLength(this.LSAbytes, offset);
-			log.finest("TLVType: "+TLVType+" TLVLength: "+TLVLength);			
 			try {
 				switch (TLVType){
 				case OSPFTLVTypes.RouterAddressTLVType:
-					log.info("routerAddressTLV found");					
 					this.routerAddressTLV=new RouterAddressTLV(this.LSAbytes, offset);
 					break;
 					
 				case OSPFTLVTypes.LinkTLV:
-					log.finest("linkTLV found");					
 					this.linkTLV=new LinkTLV(this.LSAbytes, offset);
-
 					break;
-
 				}
 			} catch (MalformedOSPFTLVException e) {
 				throw new MalformedOSPFLSAException();
 			}
 			offset=offset+TLVLength;
 			if (offset>=this.getLength()){
-				log.finest("No more TLVs in LSA");
 				fin=true;
 			}
 
