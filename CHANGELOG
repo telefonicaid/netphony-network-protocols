@@ -1,0 +1,5 @@
+v1.0.1
+- Support for Generalized Bandwidth (draft-ietf-pce-gmpls-pcep-extensions-09)
+- Bugfixes
+v1.0.0
+First Release
