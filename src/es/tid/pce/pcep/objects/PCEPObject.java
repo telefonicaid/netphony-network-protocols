@@ -1,10 +1,10 @@
  package es.tid.pce.pcep.objects;
 
-import java.util.logging.Logger;
-
 import es.tid.pce.pcep.PCEPElement;
- 
-/**
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+ /**
  * Base class for PCEPObject.
  * Implements PCEP Object Header as defined in RFC 5440.
  * PCEP Object must extend this class.
@@ -119,7 +119,7 @@ public abstract class PCEPObject implements PCEPElement {
 	 */
 	protected byte object_bytes[];
 	
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	
 	/**
 	 * Constructs a PCEPObject 
@@ -129,8 +129,7 @@ public abstract class PCEPObject implements PCEPElement {
 		Res=0;
 		Pbit=false;
 		Ibit=false;
-		log=Logger.getLogger("PCEPParser");
-		
+
 	}
 	
 	/**
@@ -140,7 +139,6 @@ public abstract class PCEPObject implements PCEPElement {
 	 * @throws MalformedPCEPObjectException
 	 */
 	public PCEPObject(byte []bytes, int offset) throws MalformedPCEPObjectException{
-		log=Logger.getLogger("PCEPParser");
 		ObjectLength=((bytes[offset+2]<<8)& 0xFF00) |  (bytes[offset+3] & 0xFF);
 		this.object_bytes=new byte[ObjectLength];
 		System.arraycopy(bytes, offset, object_bytes, 0, ObjectLength);

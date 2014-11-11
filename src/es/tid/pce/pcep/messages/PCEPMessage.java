@@ -6,10 +6,10 @@ package es.tid.pce.pcep.messages;
  * @author Oscar Gonzalez de Dios
 **/
 
-import java.util.logging.Logger;
-
 import es.tid.pce.pcep.PCEPElement;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Base class for PCEP Messages.
  * 
@@ -29,7 +29,7 @@ public abstract class PCEPMessage implements PCEPElement {
 	private int Flags;//By default to 0x00
 	private int messageLength;
 
-	protected Logger log;
+	protected final Logger log = LoggerFactory.getLogger("PCEPParser");
 
 
 
@@ -57,10 +57,9 @@ public abstract class PCEPMessage implements PCEPElement {
 	 * @throws PCEPProtocolViolationException
 	 */
 	public PCEPMessage(byte []bytes) throws PCEPProtocolViolationException{
-		log=Logger.getLogger("PCEPParser");
 		messageLength=(bytes[2] & 0xFF)* 256 + (bytes[3]& 0xFF);
 		if (bytes.length!=this.getLength()){
-			log.warning("Bytes and length in header do not match");
+			log.warn("Bytes and length in header do not match");
 			throw new PCEPProtocolViolationException();
 		}
 		this.messageBytes=new byte[messageLength];

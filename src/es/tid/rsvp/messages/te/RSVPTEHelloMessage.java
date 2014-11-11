@@ -1,6 +1,6 @@
 package es.tid.rsvp.messages.te;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.messages.RSVPMessage;
@@ -11,6 +11,7 @@ import es.tid.rsvp.objects.HelloRequest;
 import es.tid.rsvp.objects.Integrity;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -94,8 +95,8 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new RSVP-TE Hello Message wanted to be sent
@@ -111,9 +112,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		reserved = 0x00;
 		length = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("RSVP-TE Hello Message Created");
+		log.debug("RSVP-TE Hello Message Created");
 	}
 	
 	/**
@@ -127,9 +126,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		this.bytes = bytes;
 		this.length = length;
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("RSVP-TE Hello Message Created");
+		log.debug("RSVP-TE Hello Message Created");
 	}
 	
 	
@@ -190,7 +187,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		bytes[5]= (byte) reserved;
 		bytes[6]= (byte)((length>>8) & 0xFF);
 		bytes[7]= (byte)(length & 0xFF);
-		log.finest("RSVP-TE Hello Message Header encoded");
+		log.debug("RSVP-TE Hello Message Header encoded");
 		
 	}
 
@@ -201,24 +198,24 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 	
 	public void encode() throws RSVPProtocolViolationException {
 		
-		log.finest("RSVP-TE Hello Message Header encoding started");
+		log.debug("RSVP-TE Hello Message Header encoding started");
 		
 		// Calculamos la longitud
 		
 		if(integrity != null){
 			
 			length = length + integrity.getLength();
-			log.finest("Integrity RSVP Object found");
+			log.debug("Integrity RSVP Object found");
 			
 		}if(hello != null){
 			
 			length = length + hello.getLength();
-			log.finest("Hello RSVP Object found");
+			log.debug("Hello RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Hello RSVP Object NOT found");
+			log.error("Hello RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -241,7 +238,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		System.arraycopy(hello.getBytes(), 0, bytes, currentIndex, hello.getLength());
 		currentIndex = currentIndex + hello.getLength();
 		
-		log.finest("RSVP-TE Hello Message encoding accomplished");
+		log.debug("RSVP-TE Hello Message encoding accomplished");
 		
 	}
 

@@ -62,7 +62,7 @@ public class AssistedUnicastEndpoints extends PCEPConstruct {
 
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty AssistedUnicastEndpoints construct!!!");
+			log.warn("Empty AssistedUnicastEndpoints construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		while (offset<max_offset){

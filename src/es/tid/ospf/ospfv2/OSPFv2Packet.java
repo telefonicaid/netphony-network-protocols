@@ -1,9 +1,10 @@
 package es.tid.ospf.ospfv2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Base class for OSPFv2 Packet
@@ -77,7 +78,7 @@ A.3.1 The OSPF packet header
 
 public abstract class OSPFv2Packet {
 	
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("OSPFParser");
 	
 	
 	private int version;
@@ -88,9 +89,7 @@ public abstract class OSPFv2Packet {
 	protected byte[] bytes;
 	
 	public OSPFv2Packet(){
-		log=Logger.getLogger("OSPFParser");
 		this.version=2;
-		log.setLevel(Level.SEVERE);
 	}
 	
 	/**
@@ -99,7 +98,6 @@ public abstract class OSPFv2Packet {
 	 * @param offset
 	 */
 	public OSPFv2Packet(byte[] bytes, int offset){
-		log=Logger.getLogger("OSPFParser");
 		//Decoding OSPFv2 Packet
 		this.version=bytes[offset]&0xFF;
 		this.type=bytes[offset+1]&0xFF;
@@ -110,13 +108,13 @@ public abstract class OSPFv2Packet {
 		try {
 			this.routerID=(Inet4Address)Inet4Address.getByAddress(ip);
 		} catch (UnknownHostException e) {
-			log.warning("ERROR IN routerID: "+e.toString());
+			log.warn("ERROR IN routerID: "+e.toString());
 		}
 		System.arraycopy(bytes,offset+8, ip, 0, 4);
 		try {
 			this.areaID=(Inet4Address)Inet4Address.getByAddress(ip);
 		} catch (UnknownHostException e) {
-			log.warning("ERROR in areaID: "+e.toString());
+			log.warn("ERROR in areaID: "+e.toString());
 		}
 		
 		//FIXME: Faltan checksum, autype, authentication....

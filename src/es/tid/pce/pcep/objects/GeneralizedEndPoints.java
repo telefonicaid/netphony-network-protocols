@@ -152,8 +152,8 @@ public class GeneralizedEndPoints extends EndPoints{
 		this.object_bytes[5]=0x00;
 		this.object_bytes[6]=(byte)((generalizedendpointType>>8)&0xFF);
 		this.object_bytes[7]=(byte)((generalizedendpointType)&0xFF);
-		log.warning("Generalized End Points TYPE:"+generalizedendpointType);
-		log.warning("Generalized End Points LENGTH:"+len);
+		log.warn("Generalized End Points TYPE:"+generalizedendpointType);
+		log.warn("Generalized End Points LENGTH:"+len);
 		//System.arraycopy((byte)generalizedendpointType,0, this.object_bytes, 6, 2);
 		int pos=8;
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P){
@@ -183,7 +183,7 @@ public class GeneralizedEndPoints extends EndPoints{
 	 */
 	public void decode() throws MalformedPCEPObjectException {
 		if (ObjectLength<=8){
-			log.warning("Generalized End Points does not have TLVs");
+			log.warn("Generalized End Points does not have TLVs");
 			throw new MalformedPCEPObjectException();
 		}
 		int offset=4;

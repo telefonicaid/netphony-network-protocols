@@ -97,7 +97,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			}			
 			break;			
 		default:
-			log.finest("IGP Node ID Type: UNKNOWN/GENERIC");
+			log.debug("IGP Node ID Type: UNKNOWN/GENERIC");
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_GENERIC);
 		
 		}
@@ -108,7 +108,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	public void encode() {
 		switch(igp_router_id_type){
 		case IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO:
-			log.finest("Encoding IGP Node ID Type: OSPF NON PSEUDO");
+			log.debug("Encoding IGP Node ID Type: OSPF NON PSEUDO");
 			this.length = 4;
 			this.setSubTLVValueLength(length);		
 			this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
@@ -121,7 +121,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			}
 			break;
 		default:
-			log.severe("Please set the type code");	
+			log.error("Please set the type code");
 		}
 	}
 

@@ -95,7 +95,7 @@ public class FullAnycastEndpoints extends PCEPConstruct {
 	throws PCEPProtocolViolationException, MalformedPCEPObjectException {
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty FullAnycastEndpoints construct!!!");
+			log.warn("Empty FullAnycastEndpoints construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		

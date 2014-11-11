@@ -2,19 +2,20 @@ package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AutonomousSystemNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{	
 	private Inet4Address AS_ID;
-	
+
+  private static final Logger log = LoggerFactory.getLogger("BGP4Parser");
+
 	public AutonomousSystemNodeDescriptorSubTLV(){
 		super();
-		log=Logger.getLogger("BGP4Parser");
 		this.setSubTLVType(NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AUTONOMOUS_SYSTEM);
 	}
 	public AutonomousSystemNodeDescriptorSubTLV(byte [] bytes, int offset){
 		super(bytes, offset);
-		log=Logger.getLogger("BGP4Parser");
 		decode();
 	}
 	@Override

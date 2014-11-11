@@ -234,7 +234,7 @@ public class RequestParameters extends PCEPObject{
 				this.ObjectLength+=maxRequestTimeTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
-				log.warning(e.getMessage());
+				log.warn(e.getMessage());
 			}
 			
 		}
@@ -244,7 +244,7 @@ public class RequestParameters extends PCEPObject{
 				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
-				log.warning(e.getMessage());
+				log.warn(e.getMessage());
 			}
 						
 		}

@@ -168,7 +168,7 @@ public class PCEPOpen extends PCEPMessage {
 		//Decoding PCEP OPEN Message
 		int offset=4;//We start after the object header
 		if (offset>=this.getLength()){
-			log.warning("Empty OPEN message");
+			log.warn("Empty OPEN message");
 			throw new PCEPProtocolViolationException();
 		}
 		if (PCEPObject.getObjectClass(this.messageBytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_OPEN){

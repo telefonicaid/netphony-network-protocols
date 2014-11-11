@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /*
 
@@ -47,8 +48,8 @@ public class LabelRequestWOLabelRange extends LabelRequest{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Label Request Without Label Range Object 
@@ -65,9 +66,7 @@ public class LabelRequestWOLabelRange extends LabelRequest{
 		reserved = 0;
 		this.l3PID = l3PID;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Request Without Label Range Object Created");
+		log.debug("Label Request Without Label Range Object Created");
 
 	}
 	
@@ -83,9 +82,7 @@ public class LabelRequestWOLabelRange extends LabelRequest{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[RSVPObject.getLength(bytes, offset)];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Request Without Label Range Object Created");
+		log.debug("Label Request Without Label Range Object Created");
 		
 	}
 	
@@ -109,24 +106,15 @@ public class LabelRequestWOLabelRange extends LabelRequest{
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 
-		log.finest("Starting Label Request Without Label Range Object decoding");
+		log.debug("Starting Label Request Without Label Range Object decoding");
 		
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		l3PID = (int)(bytes[currentIndex+2] | bytes[currentIndex+3]);
 		
-		log.finest("Label Request Without Label Range Object decoded");
+		log.debug("Label Request Without Label Range Object decoded");
 		
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-
 
 }

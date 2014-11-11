@@ -1,7 +1,7 @@
 package es.tid.rsvp.constructs.te;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.SenderDescriptor;
@@ -13,6 +13,7 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 import es.tid.rsvp.objects.SenderTemplate;
 import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
 import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv6;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -41,8 +42,8 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Builder to be used when a received Sender Descriptor TE and it is wanted to decode it
@@ -50,9 +51,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	
 	public SenderDescriptorTE(){
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-		log.finest("Sender Descriptor TE Created");
+		log.debug("Sender Descriptor TE Created");
 		
 	}
 	
@@ -67,19 +66,16 @@ public class SenderDescriptorTE extends SenderDescriptor {
 		
 	public SenderDescriptorTE(SenderTemplate senderTemplate, IntservSenderTSpec senderTSPEC, IntservADSPEC adspec, RRO rro) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-
 		if(senderTemplate != null){
 			
 			this.length = this.length + senderTemplate.getLength();
 			this.senderTemplate = senderTemplate;
-			log.finest("Sender Template found");
+			log.debug("Sender Template found");
 
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender Template not found, It is mandatory");
+			log.error("Sender Template not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -87,12 +83,12 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			
 			this.length = this.length + senderTSPEC.getLength();
 			this.senderTSPEC = senderTSPEC;
-			log.finest("Intserv Sender TSpec found");
+			log.debug("Intserv Sender TSpec found");
 
 		}else{
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Intserv Sender TSpec not found, It is mandatory");
+			log.error("Intserv Sender TSpec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -100,7 +96,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 
 			this.adspec = adspec;
 			this.length = this.length + adspec.getLength();
-			log.finest("Intserv ADSPEC found");
+			log.debug("Intserv ADSPEC found");
 
 			
 		}
@@ -109,10 +105,10 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			this.rro = rro;
 			rro.encode();
 			this.length = this.length + rro.getLength();
-			log.finest("RRO found");
+			log.debug("RRO found");
 			
 		}
-		log.finest("Sender Descriptor TE Created");
+		log.debug("Sender Descriptor TE Created");
 		
 	}
 		
@@ -126,7 +122,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Sender Descriptor TE Encode");
+		log.debug("Starting Sender Descriptor TE Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -157,7 +153,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			System.arraycopy(rro.getBytes(), 0, bytes, offset, rro.getLength());
 		}
 		
-		log.finest("Encoding Sender Descriptor TE Accomplished");
+		log.debug("Encoding Sender Descriptor TE Accomplished");
 		
 	}
 
@@ -170,7 +166,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("Starting Sender Descriptor TE Decode");
+		log.debug("Starting Sender Descriptor TE Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -190,7 +186,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Sender Template cType field");
+				log.error("Malformed Sender Template cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -198,19 +194,19 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			offset = offset + senderTemplate.getLength();
 			length = length + senderTemplate.getLength();
 			bytesLeft = bytesLeft - senderTemplate.getLength();
-			log.finest("Sender Template decoded");
+			log.debug("Sender Template decoded");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender Template not found, It is mandatory");
+			log.error("Sender Template not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		
 		if(bytesLeft <= 0){
 			
-			log.severe("Incomplete Sender Descriptor");
+			log.error("Incomplete Sender Descriptor");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -228,7 +224,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Sender TSPEC cType field");
+				log.error("Malformed Sender TSPEC cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -236,12 +232,12 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			offset = offset + senderTSPEC.getLength();
 			length = length + senderTSPEC.getLength();
 			bytesLeft = bytesLeft - senderTSPEC.getLength();
-			log.finest("Sender TSPEC decoded");
+			log.debug("Sender TSPEC decoded");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender TSPEC not found, It is mandatory");
+			log.error("Sender TSPEC not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -260,14 +256,14 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				}else{
 					
 					// No se ha formado correctamente el objeto sender template
-					log.severe("Malformed ADSPEC cType field");
+					log.error("Malformed ADSPEC cType field");
 					throw new RSVPProtocolViolationException();
 					
 				}
 				adspec.decode(bytes,offset);
 				offset = offset + adspec.getLength();
 				length = length + adspec.getLength();
-				log.finest("ADSPEC decoded");
+				log.debug("ADSPEC decoded");
 				
 			}
 			
@@ -287,21 +283,21 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				}else{
 					
 					// No se ha formado correctamente el objeto sender template
-					log.severe("Malformed RRO cType field");
+					log.error("Malformed RRO cType field");
 					throw new RSVPProtocolViolationException();
 					
 				}
 				rro.decode(bytes,offset);
 				offset = offset + rro.getLength();
 				length = length + rro.getLength();
-				log.finest("RRO decoded");
+				log.debug("RRO decoded");
 				
 			}
 			
 		}
 		
 		this.setLength(length);
-		log.finest("Decoding Sender Descriptor TE Accomplished");
+		log.debug("Decoding Sender Descriptor TE Accomplished");
 		
 
 	}
@@ -314,18 +310,4 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	public void setRro(RRO rro) {
 		this.rro = rro;
 	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-	
-	
-
-	
-	
-	
 }

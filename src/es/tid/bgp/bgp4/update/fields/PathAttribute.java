@@ -1,8 +1,8 @@
 package es.tid.bgp.bgp4.update.fields;
 
-import java.util.logging.Logger;
-
 import es.tid.bgp.bgp4.objects.BGP4Object;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Path Attributes
@@ -36,7 +36,7 @@ import es.tid.bgp.bgp4.objects.BGP4Object;
  *
  */
 public abstract class PathAttribute extends BGP4Object {
-	public Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 	//protected byte attributeFlags;
 	protected int typeCode;
 	/**
@@ -68,13 +68,11 @@ public abstract class PathAttribute extends BGP4Object {
 	protected int mandatoryLength = 3;
 	protected int pathAttributeLength;
 	public PathAttribute(){
-		log=Logger.getLogger("BGP4Parser");
 	}
 
 	
 	public PathAttribute(byte []bytes, int offset){
-		log=Logger.getLogger("BGP4Parser");	
-		
+
 		//Atribute Flags
 		optionalBit=(bytes[offset]&0x80)==0x80;
 		transitiveBit = (bytes[offset]&0x40)==0x40;

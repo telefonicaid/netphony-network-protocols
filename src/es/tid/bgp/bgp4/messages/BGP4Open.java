@@ -234,7 +234,7 @@ public class BGP4Open extends BGP4Message {
 			
 		}
 		if (offset> this.getLength()){
-			log.warning("Empty BGP OPEN message");
+			log.warn("Empty BGP OPEN message");
 			//throw new PCEPProtocolViolationException();
 		}
 	}

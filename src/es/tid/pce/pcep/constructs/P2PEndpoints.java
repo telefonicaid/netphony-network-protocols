@@ -92,7 +92,7 @@ public class P2PEndpoints extends PCEPConstruct {
 		//Decoding P2PEndpoints Construct");
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty P2PEndpoints construct!!!");
+			log.warn("Empty P2PEndpoints construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		

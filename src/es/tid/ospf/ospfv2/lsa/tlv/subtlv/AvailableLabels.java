@@ -48,17 +48,17 @@ public class AvailableLabels extends OSPFSubTLV {
 	@Override
 	public void encode()throws MalformedOSPFSubTLVException{
 		// TODO Auto-generated method stub
-		//log.finest("Inicio encode labelset");
+		//log.debug("Inicio encode labelset");
 		if (labelSet==null){
-			log.warning("Label Set de Availables Labels is null");
+			log.warn("Label Set de Availables Labels is null");
 			throw new MalformedOSPFSubTLVException();
 			
 		}
 		else{
 			
-			//log.finest("BAISSSH: "+labelSet.toString());
+			//log.debug("BAISSSH: "+labelSet.toString());
 			labelSet.encode();
-			//log.finest("Encode correcto");
+			//log.debug("Encode correcto");
 			
 		}
 		this.setTLVValueLength(labelSet.getLength());

@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.*;
+import org.slf4j.LoggerFactory;
 
 /*	RSVP Object. From RFC 2205
  * 
@@ -157,10 +158,9 @@ public abstract class RSVPObject implements RSVPElement{
 	protected int classNum;//Identifies the object class
 	protected int cType;//Object type, unique within Class-Num
 	protected byte[] bytes; // Byte Object representation
-	protected Logger log;
+  private static final Logger log = LoggerFactory.getLogger("RSVPParser");
 	
 	public RSVPObject(byte[] bytes, int offset){
-		log=Logger.getLogger("RSVPParser");
 		this.length=((bytes[offset]<<8)& 0xFF00) |  (bytes[offset+1] & 0xFF);
 		this.bytes=new byte[this.length];
 		System.arraycopy(bytes, offset, this.bytes, 0, this.length);
@@ -169,7 +169,6 @@ public abstract class RSVPObject implements RSVPElement{
 	}
 	
 	public RSVPObject(){
-		log=Logger.getLogger("RSVPParser");
 	}
 	
 	/**

@@ -59,7 +59,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 	public void encode() 
 	{
 		
-		log.fine("Encoding PCE_Redundancy_Group_Identifier_TLV TLV");
+		log.debug("Encoding PCE_Redundancy_Group_Identifier_TLV TLV");
 		
 		//You have to set the correct TLVValueLength length before encoding!!
 		
@@ -70,14 +70,14 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		encodeHeader();
 		
 		int offset = 4;
-		log.fine("Redundancy ID length is: "+ redundancyId.length);
+		log.debug("Redundancy ID length is: "+ redundancyId.length);
 		
 		System.arraycopy(redundancyId, 0, this.tlv_bytes, offset, redundancyId.length);	
 	}
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.fine("Decoding PCE_Redundancy_Group_Identifier_TLV TLV");
+		log.debug("Decoding PCE_Redundancy_Group_Identifier_TLV TLV");
 		
 		redundancyId = new byte[this.getTotalTLVLength()-4];
 		int offset = 4;
@@ -86,11 +86,11 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		{
 			System.arraycopy(this.tlv_bytes, offset, redundancyId, 0, redundancyId.length);
 			
-			log.finest("Redundancy ID is : ");
+			log.debug("Redundancy ID is : ");
 		}
 		catch (Exception e)
 		{
-			log.severe("Exception occurred, Possibly TLV size is not what expected");
+			log.error("Exception occurred, Possibly TLV size is not what expected");
 			throw new MalformedPCEPObjectException();
 		}
 		//Check if array zero
@@ -107,7 +107,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		
 		if (isZero)
 		{
-			log.finest("Received redundancy group identifier value can not be zero");
+			log.debug("Received redundancy group identifier value can not be zero");
 			//throw new MalformedPCEPObjectException();
 		}
 		
@@ -115,7 +115,7 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 		boolean firstBit = (ByteHandler.easyCopy(0,0,redundancyId[0]) == 1) ? true : false ;
 		if (firstBit)
 		{
-			log.finest("Received redundancy group identifier value can not be negative");
+			log.debug("Received redundancy group identifier value can not be negative");
 			throw new MalformedPCEPObjectException();
 		}
 		

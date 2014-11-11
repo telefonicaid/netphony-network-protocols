@@ -13,6 +13,13 @@
       <url>http://www.gnu.org/licenses/agpl-3.0.txt</url>
     </license>
   </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.7</version>
+    </dependency>
+  </dependencies>
   <build>
     <sourceDirectory>${basedir}/src</sourceDirectory>
     <plugins>
@@ -26,4 +33,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

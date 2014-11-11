@@ -319,12 +319,12 @@ public class LinkTLV extends OSPFTLV {
 					this.availableLabels = new AvailableLabels(this.getTlv_bytes(), offset);
 					break;
 				default:
-					log.warning("Unknown TLV found: "+subTLVType);
+					log.warn("Unknown TLV found: "+subTLVType);
 					
 
 				}
 			} catch (MalformedOSPFSubTLVException e) {
-				log.warning("Malformed SubTLV found ");
+				log.warn("Malformed SubTLV found ");
 				throw new MalformedOSPFTLVException();
 			}
 			offset=offset+subTLVLength;

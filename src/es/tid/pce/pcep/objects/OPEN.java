@@ -351,7 +351,7 @@ public class OPEN extends PCEPObject{
 				break;
 		
 			default:
-				log.fine("UNKNOWN TLV found");
+				log.debug("UNKNOWN TLV found");
 				break;
 			}
 			offset=offset+tlvlength;

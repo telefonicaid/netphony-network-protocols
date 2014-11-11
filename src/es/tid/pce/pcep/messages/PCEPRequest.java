@@ -1,12 +1,13 @@
 package es.tid.pce.pcep.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.Request;
 import es.tid.pce.pcep.constructs.SVECConstruct;
 import es.tid.pce.pcep.objects.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -98,7 +99,7 @@ public class PCEPRequest extends PCEPMessage {
 	/**
 	 * Logger
 	 */
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 
 	/**
 	 * Construct new PCEP Request from scratch
@@ -124,7 +125,7 @@ public class PCEPRequest extends PCEPMessage {
 	public void encode() throws PCEPProtocolViolationException {
 		//Encoding PCEP Request Message
 		if (RequestList.size()==0){
-			log.warning("There should be at least one request in a PCEP Request message");
+			log.warn("There should be at least one request in a PCEP Request message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
@@ -180,7 +181,7 @@ public class PCEPRequest extends PCEPMessage {
 			try {
 				monitoring=new Monitoring(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed Monitoring Object found");
+				log.warn("Malformed Monitoring Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+monitoring.getLength();
@@ -191,7 +192,7 @@ public class PCEPRequest extends PCEPMessage {
 			try {
 				pccReqId=new PccReqId(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed PccReqId Object found");
+				log.warn("Malformed PccReqId Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+pccReqId.getLength();
@@ -202,7 +203,7 @@ public class PCEPRequest extends PCEPMessage {
 			try {
 				c_svec = new SVECConstruct(bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
-				log.warning("Malformed SVEC Construct");
+				log.warn("Malformed SVEC Construct");
 				throw new PCEPProtocolViolationException();
 			}
 			SvecList.add(c_svec);

@@ -297,7 +297,7 @@ public class LSP extends PCEPObject{
 				 */
 				 
 				default:
-					log.warning("Unknown or unexpected TLV found");
+					log.warn("Unknown or unexpected TLV found");
 					//FIXME: Que hacemos con los desconocidos
 					break;
 			}

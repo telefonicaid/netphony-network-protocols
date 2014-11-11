@@ -106,27 +106,27 @@ public class EndPointServerTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_CPU:
-				log.finest("CPU is requested");
+				log.debug("CPU is requested");
 				this.requestedCPUs=new RequestedCPUsSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_MEMORY:
-				log.finest("Memory is requested");
+				log.debug("Memory is requested");
 				this.requestedMemory=new RequestedMemorySubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_DISK_SPACE:
-				log.finest("Disk Space is requested");
+				log.debug("Disk Space is requested");
 				this.requestedDiskSpace=new RequestedDiskSpaceSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Server TLV");
+				log.debug("No more SubTLVs in Server TLV");
 				fin=true;
 			}
 

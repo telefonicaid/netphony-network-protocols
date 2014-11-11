@@ -28,10 +28,10 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
    described in Section 9.
 
 In GEYSERS,
-The format of the TNA’s TLVs is the same defined in [OIF-ENNI-OSPF] (see Figure 3.4). The following types are defined:
-•	IPv4 TNA: 32776
-•	IPv6 TNA: 32778
-•	NSAP TNA: 32779
+The format of the TNAï¿½s TLVs is the same defined in [OIF-ENNI-OSPF] (see Figure 3.4). The following types are defined:
+ï¿½	IPv4 TNA: 32776
+ï¿½	IPv6 TNA: 32778
+ï¿½	NSAP TNA: 32779
 The address length (in bits) is used to represent the TNA address prefix. 
           0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -48,7 +48,7 @@ Figure 3.4: TNA TLV
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class TNAIPv4SubTLV extends PCEPSubTLV {
@@ -79,7 +79,7 @@ public class TNAIPv4SubTLV extends PCEPSubTLV {
 
 	
 	public void decode() {
-		log.finest("Decoding TNA IPv4 Addreess");
+		log.debug("Decoding TNA IPv4 Addreess");
 		this.Addr_length=(int)this.subtlv_bytes[4];
 		byte[] ip=new byte[4]; 
 		System.arraycopy(this.subtlv_bytes,8, ip, 0, 4);

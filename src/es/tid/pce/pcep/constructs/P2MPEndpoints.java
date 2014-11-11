@@ -62,7 +62,7 @@ public class P2MPEndpoints extends PCEPConstruct {
 		
 		int max_offset = bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty P2MPEndpoints construct!!!");
+			log.warn("Empty P2MPEndpoints construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		

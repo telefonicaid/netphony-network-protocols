@@ -1,12 +1,13 @@
 package es.tid.pce.pcep.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.Response;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PCEP Response Message (RFC 5440).
@@ -97,7 +98,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
 public class PCEPResponse extends PCEPMessage {
 
 	public LinkedList<Response> ResponseList;
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 
 	/**
 	 * Construct new PCEP Request from scratch
@@ -137,7 +138,7 @@ public class PCEPResponse extends PCEPMessage {
 	public void encode() throws PCEPProtocolViolationException {
 		//Encoding PCEP Response Message
 		if (ResponseList.size()==0){
-			log.warning("There should be at least one request in a PCEP Response message");
+			log.warn("There should be at least one request in a PCEP Response message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
@@ -174,7 +175,7 @@ public class PCEPResponse extends PCEPMessage {
 		}
 
 		if (ResponseList.size()==0){
-			log.warning("No Responses in the PCEP Response message");
+			log.warn("No Responses in the PCEP Response message");
 			throw new PCEPProtocolViolationException();
 		}
 	}

@@ -1,7 +1,7 @@
 package es.tid.rsvp.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.SenderDescriptor;
@@ -14,6 +14,7 @@ import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.Session;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.SessionIPv6;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -124,7 +125,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	/**
 	 * Log
 	 */
-	private Logger log;
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor that has to be used in case of creating a new Path Error Message to
@@ -144,9 +145,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RSVP Path Error Message Created");
+		log.debug("RSVP Path Error Message Created");
 		
 		
 	}
@@ -165,9 +164,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RSVP Path Error Message Created");
+		log.debug("RSVP Path Error Message Created");
 	}
 	
 	@Override
@@ -186,7 +183,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	@Override
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting RSVP Path Error Message encode");
+		log.debug("Starting RSVP Path Error Message encode");
 		
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
@@ -196,29 +193,29 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		if(integrity != null){
 			
 			length = length + integrity.getLength();
-			log.finest("Integrity RSVP Object found");
+			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
 			
 			length = length + session.getLength();
-			log.finest("Session RSVP Object found");
+			log.debug("Session RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Session RSVP Object NOT found");
+			log.error("Session RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}if(errorSpec != null){
 			
 			length = length + errorSpec.getLength();
-			log.finest("ErrorSpec RSVP Object found");
+			log.debug("ErrorSpec RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("ErrorSpec RSVP Object NOT found");
+			log.error("ErrorSpec RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -228,7 +225,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
 			length = length + pd.getLength();
-			log.finest("Policy Data RSVP Object found");
+			log.debug("Policy Data RSVP Object found");
 				
 		}						
 		
@@ -238,7 +235,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
 			length = length + sd.getLength();
-			log.finest("Sender Descriptor RSVP Construct found");
+			log.debug("Sender Descriptor RSVP Construct found");
 			
 		}
 		
@@ -286,13 +283,13 @@ public class RSVPPathErrMessage extends RSVPMessage {
 
 			}catch(RSVPProtocolViolationException e){
 				
-				log.severe("Errors during Sender Descriptor number "+i+" encoding");
+				log.error("Errors during Sender Descriptor number " + i + " encoding");
 				
 			}
 						
 		}
 	
-		log.finest("RSVP Path Error Message encoding accomplished");
+		log.debug("RSVP Path Error Message encoding accomplished");
 		
 	}
 
@@ -469,16 +466,5 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	public void setSenderDescriptors(LinkedList<SenderDescriptor> senderDescriptors) {
 		this.senderDescriptors = senderDescriptors;
 	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-	
-	
-	
 
 }

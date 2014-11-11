@@ -1,7 +1,7 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.Bandwidth;
@@ -88,7 +88,7 @@ public class Path extends PCEPConstruct {
 			len+=SRERO.getLength();
 		}
 		else {
-			log.warning("Path must start with ERO or SRERO object");
+			log.warn("Path must start with ERO or SRERO object");
 			throw new PCEPProtocolViolationException();
 		}
 		if (of!=null){
@@ -227,7 +227,7 @@ public class Path extends PCEPConstruct {
 			try {
 				of=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed OF Object found");
+				log.warn("Malformed OF Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+of.getLength();
@@ -238,7 +238,7 @@ public class Path extends PCEPConstruct {
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed LSPA Object found");
+				log.warn("Malformed LSPA Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lSPA.getLength();
@@ -251,14 +251,14 @@ public class Path extends PCEPConstruct {
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}			
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
 				try {
 					bandwidth=new BandwidthExistingLSP(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
@@ -266,7 +266,7 @@ public class Path extends PCEPConstruct {
 				try {
 					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
@@ -274,12 +274,12 @@ public class Path extends PCEPConstruct {
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
 			} else {
-				log.warning("Malformed BANDWIDTH Object found");
+				log.warn("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			
@@ -297,7 +297,7 @@ public class Path extends PCEPConstruct {
 			try {
 				metric = new Metric(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			metricList.add(metric);
@@ -310,7 +310,7 @@ public class Path extends PCEPConstruct {
 			try {
 				iRO=new IncludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed IRO Object found");
+				log.warn("Malformed IRO Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+iRO.getLength();
@@ -322,7 +322,7 @@ public class Path extends PCEPConstruct {
 			try {
 				interLayer=new InterLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed interLayer Object found");
+				log.warn("Malformed interLayer Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+interLayer.getLength();
@@ -334,7 +334,7 @@ public class Path extends PCEPConstruct {
 			try {
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed switchLayer Object found");
+				log.warn("Malformed switchLayer Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+switchLayer.getLength();
@@ -346,7 +346,7 @@ public class Path extends PCEPConstruct {
 			try {
 				reqAdapCap=new ReqAdapCap(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed reqAdapCap Object found");
+				log.warn("Malformed reqAdapCap Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+reqAdapCap.getLength();
@@ -358,7 +358,7 @@ public class Path extends PCEPConstruct {
 			try {
 				serverIndication=new ServerIndication(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed serverIndication Object found");
+				log.warn("Malformed serverIndication Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+serverIndication.getLength();
@@ -372,7 +372,7 @@ public class Path extends PCEPConstruct {
 				try {
 					labelSet=new BitmapLabelSet(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed Suggested Label Object found");
+					log.warn("Malformed Suggested Label Object found");
 					throw new PCEPProtocolViolationException();
 				}
 				offset=offset+labelSet.getLength();
@@ -385,7 +385,7 @@ public class Path extends PCEPConstruct {
 			try {
 				suggestedLabel=new SuggestedLabel(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed Suggested Label Object found");
+				log.warn("Malformed Suggested Label Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+suggestedLabel.getLength();
@@ -403,10 +403,6 @@ public class Path extends PCEPConstruct {
 	
 	public void seteRO(ExplicitRouteObject eRO) {
 		this.eRO = eRO;
-	}
-	
-	public void setLog(Logger log) {
-		this.log = log;
 	}
 	
 	public void setiRO(IncludeRouteObject iRO) {
@@ -442,10 +438,6 @@ public class Path extends PCEPConstruct {
 		return lSPA;
 	}
 
-	public Logger getLog() {
-		return log;
-	}
-	
 	public ExplicitRouteObject geteRO() {
 		return eRO;
 	}

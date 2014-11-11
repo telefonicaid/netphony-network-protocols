@@ -1,10 +1,11 @@
 package es.tid.rsvp.objects;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.subobjects.*;
+import org.slf4j.LoggerFactory;
 
 /*
 
@@ -52,7 +53,7 @@ public class ERO extends RSVPObject{
 	 * Log
 	 */
 		
-	private Logger log;
+	private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new ERO Object wanted to be attached to a new message
@@ -65,8 +66,7 @@ public class ERO extends RSVPObject{
 		length = 4;
 		eroSubobjects = new LinkedList<EROSubobject>();
 		
-		log = Logger.getLogger("ROADM");
-		log.finest("ERO Object Created");
+		log.debug("ERO Object Created");
 	}
 	
 	/**
@@ -82,9 +82,8 @@ public class ERO extends RSVPObject{
 		System.arraycopy(bytes, offset, this.bytes, 0, this.getLength());
 		eroSubobjects = new LinkedList<EROSubobject>();
 		
-		log = Logger.getLogger("ROADM");
 
-		log.finest("ERO Object Created");
+		log.debug("ERO Object Created");
 		try {
 			decode(bytes,offset);
 		} catch (RSVPProtocolViolationException e) {
@@ -186,7 +185,7 @@ public class ERO extends RSVPObject{
 					}
 					break;
 				default:
-					log.severe("ERO Subobject Unknown");
+					log.error("ERO Subobject Unknown");
 					//FIXME What do we do??
 					break;
 			}
@@ -204,11 +203,4 @@ public class ERO extends RSVPObject{
 		this.eroSubobjects = eroSubobjects;
 	}
 	
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 }

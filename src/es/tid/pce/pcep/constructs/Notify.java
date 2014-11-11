@@ -1,7 +1,6 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
@@ -9,6 +8,8 @@ import es.tid.pce.pcep.objects.Notification;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.RequestParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Notify Construct RFC 5440
@@ -29,7 +30,7 @@ public class Notify extends PCEPConstruct {
 	private LinkedList<RequestParameters> requestIdList;
 	private LinkedList<Notification> notificationList;
 	
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 	
 	public Notify() {
 		requestIdList=new LinkedList<RequestParameters> ();
@@ -46,7 +47,7 @@ public class Notify extends PCEPConstruct {
 	 */
 	public void encode() throws PCEPProtocolViolationException {
 		if (notificationList.size()==0){
-			log.warning("Notify must have at least a Nofitication object");
+			log.warn("Notify must have at least a Nofitication object");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=0;
@@ -78,7 +79,7 @@ public class Notify extends PCEPConstruct {
 		int len=0;
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty Notify construct!!!");
+			log.warn("Empty Notify construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		int oc=PCEPObject.getObjectClass(bytes, offset);
@@ -87,7 +88,7 @@ public class Notify extends PCEPConstruct {
 			try {
 				rp = new RequestParameters(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed RP Object found");
+				log.warn("Malformed RP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			requestIdList.add(rp);
@@ -106,7 +107,7 @@ public class Notify extends PCEPConstruct {
 			try {
 				notif = new Notification(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed NOTIFICATION Object found");
+				log.warn("Malformed NOTIFICATION Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			notificationList.add(notif);

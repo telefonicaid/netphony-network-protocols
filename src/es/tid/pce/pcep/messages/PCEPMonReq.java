@@ -100,7 +100,7 @@ public class PCEPMonReq  extends PCEPMessage {
 		//Encoding PCEP Monitoring Request Message
 
 		if ((monitoring==null)||(pccReqId==null)){
-			log.warning("There should be at least one request in a PCEP Request message");
+			log.warn("There should be at least one request in a PCEP Request message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len = 4;
@@ -162,14 +162,14 @@ public class PCEPMonReq  extends PCEPMessage {
 			try {
 				monitoring=new Monitoring(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed Monitoring Object found");
+				log.warn("Malformed Monitoring Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+monitoring.getLength();
 			//len=len+monitoring.getLength();
 		}
 		else{
-			log.warning("Malformed PCEP Mon Request");
+			log.warn("Malformed PCEP Mon Request");
 			throw new PCEPProtocolViolationException();
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -177,14 +177,14 @@ public class PCEPMonReq  extends PCEPMessage {
 			try {
 				pccReqId=new PccReqId(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed PccReqId Object found");
+				log.warn("Malformed PccReqId Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+pccReqId.getLength();
 			//len=len+pccReqId.getLength();
 		}
 		else{
-			log.warning("Malformed PCEP Mon Request");
+			log.warn("Malformed PCEP Mon Request");
 			throw new PCEPProtocolViolationException();
 		}
 		while (PCEPObject.getObjectClass(bytes, offset) == ObjectParameters.PCEP_OBJECT_CLASS_PCE_ID){
@@ -204,7 +204,7 @@ public class PCEPMonReq  extends PCEPMessage {
 			try {
 				c_svec = new SVECConstruct(bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
-				log.warning("Malformed SVEC Construct");
+				log.warn("Malformed SVEC Construct");
 				throw new PCEPProtocolViolationException();
 			}
 			svecList.add(c_svec);

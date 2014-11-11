@@ -44,7 +44,7 @@ TBD				Volume			Contains information about the volumes	0..n
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class ServerStorageSubTLV extends PCEPSubTLV {
@@ -119,23 +119,23 @@ public class ServerStorageSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_SIZE:
-				log.finest("StorageSize SubTLV found");
+				log.debug("StorageSize SubTLV found");
 				this.storageSize=new StorageSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_INFO:
-				log.finest("StorageInfo SubTLV found");
+				log.debug("StorageInfo SubTLV found");
 				this.storageInfo=new StorageInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME:
 				VolumeSubTLV volume = new VolumeSubTLV(this.getSubTLV_bytes(), offset);
-				log.finest("Volume SubTLV found");
+				log.debug("Volume SubTLV found");
 				if (volumeList==null){
-					log.finest("Creating VolumeSubTLVList");
+					log.debug("Creating VolumeSubTLVList");
 					volumeList=new LinkedList<VolumeSubTLV>();
 				}
 				this.volumeList.add(volume);			
@@ -143,7 +143,7 @@ public class ServerStorageSubTLV extends PCEPSubTLV {
 			
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.finest("No more SubTLVs in ServerStorage Sub-TLV");
+				log.debug("No more SubTLVs in ServerStorage Sub-TLV");
 				fin=true;
 			}
 

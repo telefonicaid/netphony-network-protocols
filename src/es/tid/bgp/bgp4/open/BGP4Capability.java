@@ -1,6 +1,8 @@
 package es.tid.bgp.bgp4.open;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * 
@@ -24,14 +26,12 @@ public abstract class BGP4Capability {
 	
 	protected byte[] bytes;
 	
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 	
 	public BGP4Capability(){
-		log=Logger.getLogger("BGP4Parser");	
 	}
 	
 	public BGP4Capability (byte [] bytes, int offset){
-		log=Logger.getLogger("BGP4Parser");	
 		this.capabitityCode =bytes[offset] & 0xFF;
 		this.capabilityLength= ((int)bytes[offset+1] & 0xFF);
 		this.length=capabilityLength+2; //1 octet code, 1 octet, length
