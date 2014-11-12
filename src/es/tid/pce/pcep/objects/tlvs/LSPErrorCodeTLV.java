@@ -4,7 +4,10 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/**
+ * LSP-ERROR-CODE TLV draft-ietf-pce-stateful-pce-09.
+ * Encoding: follows draft-ietf-pce-stateful-pce-09
+ * TLV Type: 5559 (non-standard)
  * If an LSP Update Request failed, an LSP State Report MUST be sent to
    all connected stateful PCEs.  LSP State Report MUST contain the LSP
    Error Code TLV, indicating the cause of the failure.

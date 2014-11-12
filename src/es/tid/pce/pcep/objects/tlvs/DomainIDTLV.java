@@ -6,6 +6,15 @@ import java.net.UnknownHostException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
+/**
+ * DomainID TLV, non-standard encoding implemented.
+ * Defined in draft-ietf-pce-hierarchy-extensions-01.
+ * Enconding: propietary based on STRONGEST project interoperability.
+ * TLV ID: 32771, non-standard
+ * 
+ * @author ogondio
+ *
+ */
 public class DomainIDTLV extends PCEPTLV {
 
 	Inet4Address domainId;

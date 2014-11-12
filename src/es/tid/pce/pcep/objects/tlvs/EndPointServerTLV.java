@@ -11,7 +11,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.RequestedMemorySubTLV;
 
 
 /**
-  * From GEYSERS
+  * Server END-POINT TLV Experimental & Propietary From GEYSERS.
   *  
 	Server description � in this case the End-point description field includes the
 	description of the characteristics of the requested Server and is structured in
