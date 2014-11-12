@@ -20,6 +20,9 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.ServerStorageSubTLV;
 
 
 /**
+ * ServerTLV from GEYSERS.
+ * Enconding: propietary from GEYSERS EU project.
+ * TLV Type: 1012 (non-standard)
   * From GEYSERS
   *  
 	Storage description – is part of the Notification, it includes the

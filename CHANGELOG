@@ -1,3 +1,6 @@
+- Removed Delegation Parameters TLVs (removed in stateful pce draft since version -03)
+- Removed unused propiertary TLVs
+- Updated documentation on protocol support
 v1.0.1
 - Support for Generalized Bandwidth (draft-ietf-pce-gmpls-pcep-extensions-09)
 - Bugfixes

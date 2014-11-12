@@ -4,7 +4,11 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/**
+ * LSP-DB-VERSION TLV draft-ietf-pce-stateful-sync-optimizations-00.
+ * Encoding: follows draft-ietf-pce-stateful-sync-optimizations-00
+ * TLV Type: 5556 (non-standard) 
+ * 
  * LSP-DB-VERSION is an optional TLV that MAY be included in the OPEN
    Object when a PCEP Speaker wishes to determine if State
    Synchronization can be skipped when a PCEP session is restarted.  If
