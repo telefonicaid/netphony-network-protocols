@@ -1,6 +1,5 @@
 package es.tid.pce.pcep.objects;
 
-import es.tid.pce.pcep.objects.tlvs.DelegationParametersTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPErrorCodeTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
@@ -146,9 +145,6 @@ public class LSP extends PCEPObject{
 	private RSVPErrorSpecTLV rsvpErrorSpec_tlv = null;
 	
 	private LSPDatabaseVersionTLV lspDBVersion_tlv = null;
-	//Not defined yet in draft
-		//http://datatracker.ietf.org/doc/draft-ietf-pce-stateful-pce/?include_text=1
-	private DelegationParametersTLV delegationParamaters_tlv = null;
 		
 	public LSP(){
 		super();
@@ -182,10 +178,7 @@ public class LSP extends PCEPObject{
 			rsvpErrorSpec_tlv.encode();
 			ObjectLength=ObjectLength+rsvpErrorSpec_tlv.getTotalTLVLength();
 		}
-		if (delegationParamaters_tlv!=null){
-			delegationParamaters_tlv.encode();
-			ObjectLength=ObjectLength+delegationParamaters_tlv.getTotalTLVLength();
-		}
+	
 		if (lspDBVersion_tlv!=null){
 			lspDBVersion_tlv.encode();
 			ObjectLength=ObjectLength+lspDBVersion_tlv.getTotalTLVLength();
@@ -229,10 +222,7 @@ public class LSP extends PCEPObject{
 			System.arraycopy(rsvpErrorSpec_tlv.getTlv_bytes(),0,this.object_bytes,offset,rsvpErrorSpec_tlv.getTotalTLVLength());
 			offset=offset+rsvpErrorSpec_tlv.getTotalTLVLength();
 		}
-		if (delegationParamaters_tlv!=null){
-			System.arraycopy(delegationParamaters_tlv.getTlv_bytes(),0,this.object_bytes,offset,delegationParamaters_tlv.getTotalTLVLength());
-			offset=offset+delegationParamaters_tlv.getTotalTLVLength();
-		}
+
 		if (lspDBVersion_tlv!=null){
 			System.arraycopy(lspDBVersion_tlv.getTlv_bytes(),0,this.object_bytes,offset,lspDBVersion_tlv.getTotalTLVLength());
 			offset=offset+lspDBVersion_tlv.getTotalTLVLength();
@@ -358,17 +348,6 @@ public class LSP extends PCEPObject{
 	public void setRsvpErrorSpec_tlv(RSVPErrorSpecTLV rsvpErrorSpec_tlv) 
 	{
 		this.rsvpErrorSpec_tlv = rsvpErrorSpec_tlv;
-	}
-
-	public DelegationParametersTLV getDelegationParamaters_tlv() 
-	{
-		return delegationParamaters_tlv;
-	}
-
-	public void setDelegationParamaters_tlv(
-			DelegationParametersTLV delegationParamaters_tlv) 
-	{
-		this.delegationParamaters_tlv = delegationParamaters_tlv;
 	}
 
 	public void setLspId(int lspId) 

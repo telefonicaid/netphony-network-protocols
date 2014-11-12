@@ -4,6 +4,10 @@ package es.tid.pce.pcep.objects.tlvs;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
+ * EndPointsNSAP TLV, Experimental & Propietary from GEYSERS.
+ * Encoding: propietary from GEYSERS
+ * TLV Type: 999 (non-standard)
+ * 
  All PCEP TLVs have the following format:
 
    Type:   2 bytes

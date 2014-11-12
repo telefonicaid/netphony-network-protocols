@@ -4,8 +4,9 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * Represents the maximum time that a Request can be in the PCE.
- * It is made of 4 bytes and represents a postive integer.
+ * Bandwidth TLV, Experimental & Proprietary.
+ * Encoding: non-standard
+ * TLV Type: 502, non-standard
  * 
  * @author ogondio
  *

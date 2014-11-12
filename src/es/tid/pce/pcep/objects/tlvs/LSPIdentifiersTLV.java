@@ -7,7 +7,9 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/** IPV4-LSP-IDENTIFIERS TLV draft-ietf-pce-stateful-pce-09.
+ * Encoding: 
+ * TLV Type: 5558 (non standard)
  * Whenever the value of an LSP identifier changes, a PCC MUST send out
    an LSP State Report, where the LSP Object carries the LSP Identifiers
    TLV that contains the new value.  The LSP Identifiers TLV MUST also

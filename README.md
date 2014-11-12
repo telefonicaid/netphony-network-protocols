@@ -1,5 +1,5 @@
-cne-network-protocols
-=====================
+netphony-network-protocols v1.0.1
+=================================
 
 Java Library of Networking Protocols: PCEP, RSVP, OSPF, BGP-LS
 
@@ -42,12 +42,15 @@ ENCODING
    out.flush();
 ```
 # PCEP Support
+
+Detailed PCEP Support [click here](doc/PCEP_Support.md)
+
 * RFC 5440: Full compliance
 * RFC 5521: Path-key not supported
-RFC 5886: Full compliance
-RFC 6006: Only P2MP END-POINTS Object for IPv4
-draft-ietf-pce-gmpls-pcep-extensions-01 
-draft-ietf-pce-inter-layer-ext-05
+* RFC 5886: Full compliance
+* RFC 6006: Only P2MP END-POINTS Object for IPv4
+* draft-ietf-pce-gmpls-pcep-extensions-10 (partial)
+* draft-ietf-pce-inter-layer-ext-05 (partial)
 draft-ietf-pce-hierarchy-extensions-01
 draft-ietf-pce-stateful-pce-05
 draft-ietf-pce-pcep-stateful-pce-gmpls-00
