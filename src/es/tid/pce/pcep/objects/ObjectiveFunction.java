@@ -97,20 +97,20 @@ public class ObjectiveFunction extends PCEPObject {
 		}
 		int offset=8;
 		while (!fin) {
-			log.fine("Beginning TLV decoding");
+			log.debug("Beginning TLV decoding");
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.fine("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.fine cuando est� estable!!!
+			log.debug("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.debug cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
-				log.fine("OF_LIST_TLV found");
+				log.debug("OF_LIST_TLV found");
 				bwTLV=new BandwidthTLV(this.getObject_bytes(), offset);
-				log.fine(bwTLV.toString());
+				log.debug(bwTLV.toString());
 				break;
 			
 		
 			default:
-				log.warning("UNKNOWN TLV found: "+tlvtype);
+				log.warn("UNKNOWN TLV found: "+tlvtype);
 				//UnknownTLV unknownTLV = new UnknownTLV();			
 				//FIXME: Que hacemos con los desconocidos????
 				break;

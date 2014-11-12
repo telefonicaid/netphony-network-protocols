@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /**
 
@@ -190,8 +191,8 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Session Attribute With Resource Affinities Object 
@@ -227,9 +228,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		int sessionName4BytesAlignLength = ((int) Math.ceil(sessionNameLength/4))*4; // Redondeo a 4 bytes
 		length = length + sessionName4BytesAlignLength;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session Attribute With Resource Affinities Object Created");
+		log.debug("Session Attribute With Resource Affinities Object Created");
 
 	}
 	
@@ -245,9 +244,8 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
 
-		log.finest("Session Attribute With Resource Affinities Object Created");
+		log.debug("Session Attribute With Resource Affinities Object Created");
 		
 	}
 	
@@ -273,7 +271,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Session Attribute With Resource Affinities encode");
+		log.debug("Starting Session Attribute With Resource Affinities encode");
 		
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -313,7 +311,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		byte[] padding = new byte[this.length-currentIndex];
 		System.arraycopy(padding, 0, bytes, currentIndex, this.length-currentIndex);
 		
-		log.finest("Encoding Session Attribute With Resource Affinities accomplished");
+		log.debug("Encoding Session Attribute With Resource Affinities accomplished");
 		
 		
 	}
@@ -339,7 +337,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 
-		log.finest("Starting Session Attribute With Resource Affinities decode");
+		log.debug("Starting Session Attribute With Resource Affinities decode");
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -366,7 +364,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		System.arraycopy(bytes, currentIndex, sessionNameBytes, 0, nameLength);
 		sessionName = new String(sessionNameBytes);
 		
-		log.finest("Decoding Session Attribute With Resource Affinities accomplished");
+		log.debug("Decoding Session Attribute With Resource Affinities accomplished");
 		
 	}
 	
@@ -410,14 +408,6 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 
 	public void setSessionName(String sessionName) {
 		this.sessionName = sessionName;
-	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
 	}
 
 	public int getExcludeAny() {

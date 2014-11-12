@@ -1,12 +1,13 @@
 package es.tid.pce.pcep.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
+import org.slf4j.LoggerFactory;
 
 /**
  * <PCInitiate Message> ::= <Common Header>
@@ -29,7 +30,7 @@ public class PCEPInitiate extends PCEPMessage
 {
 
 	protected LinkedList<PCEPIntiatedLSP> pcepIntiatedLSPList; 
-	private Logger log = Logger.getLogger("PCEPParser");
+	private static final Logger log = LoggerFactory.getLogger("PCEPParser");
 
 	public PCEPInitiate()
 	{
@@ -59,7 +60,7 @@ public class PCEPInitiate extends PCEPMessage
         
 		if (pcepIntiatedLSPList.size() == 0)
 		{
-			log.warning("There should be at least one update request in a PCEP update Request message");
+			log.warn("There should be at least one update request in a PCEP update Request message");
 			throw new PCEPProtocolViolationException();
 		}
 
@@ -86,7 +87,7 @@ public class PCEPInitiate extends PCEPMessage
 		PCEPIntiatedLSP sr;
 		if(PCEPObject.getObjectClass(this.getBytes(), offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
-			log.warning("There should be at least one RSP Object");
+			log.warn("There should be at least one RSP Object");
 			throw new PCEPProtocolViolationException();
 		}
 		//It has to be at least one!
@@ -98,7 +99,7 @@ public class PCEPInitiate extends PCEPMessage
 			}
 			catch(PCEPProtocolViolationException e)
 			{
-				log.warning("Malformed UpdateRequest Construct");
+				log.warn("Malformed UpdateRequest Construct");
 				throw new PCEPProtocolViolationException();
 			}
 			offset = offset + sr.getLength();
@@ -108,7 +109,7 @@ public class PCEPInitiate extends PCEPMessage
 
 		if (!atLeastOne)
 		{
-			log.warning("Malformed Report Message. There must be at least one state-report object. Exception will be throwed");
+			log.warn("Malformed Report Message. There must be at least one state-report object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
 	}

@@ -1,11 +1,11 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 
-import java.util.logging.Logger;
-
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
 import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -52,7 +52,7 @@ public class BitmapLabelSet  extends LabelSetField {
 	private int sumBytesBitmap;
 	//private int n;
 	private DWDMWavelengthLabel dwdmWavelengthLabel;
-	Logger log= Logger.getLogger("PCEServer");
+	private static final Logger log= LoggerFactory.getLogger("PCEServer");
 	
     public BitmapLabelSet() {
     	action = 4;	
@@ -258,8 +258,8 @@ public class BitmapLabelSet  extends LabelSetField {
 		int sum=0;
 		int sumaTotal=0;
 		for (int i=0; i<bytesBitmap.length*8; i++){
-			//log.finest("BytesBitmap :"+Integer.toBinaryString((bytesBitmap[i/8])&0xFF));
-			//log.finest("BytesBitmapNegados :"+Integer.toBinaryString((~bytesBitmap[i/8])&0xFF));
+			//log.debug("BytesBitmap :"+Integer.toBinaryString((bytesBitmap[i/8])&0xFF));
+			//log.debug("BytesBitmapNegados :"+Integer.toBinaryString((~bytesBitmap[i/8])&0xFF));
 			if (((~bytesBitmap[i/8])&(0x80>>(i%8))) == (0x80>>i%8)){
 				sum++;
 			}else{
@@ -273,11 +273,11 @@ public class BitmapLabelSet  extends LabelSetField {
 			sumaTotal=sum;
 			sum=0;
 		}
-		log.finest("Numero de bits libres consecutivos : "+sumaTotal);
+		log.debug("Numero de bits libres consecutivos : "+sumaTotal);
 		return sumaTotal;
 	}
 	public void resetBitmap(){
-		log.finest("Reseting bitmap");
+		log.debug("Reseting bitmap");
 		for(int i=0; i<bytesBitmap.length*8; i++){
 			bytesBitmap[i/8]=0x00;
 		}

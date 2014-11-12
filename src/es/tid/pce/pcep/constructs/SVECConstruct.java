@@ -1,7 +1,7 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
@@ -10,6 +10,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.Svec;
+import org.slf4j.LoggerFactory;
 
 /**
  * From RFC 5440 y 5541
@@ -26,7 +27,7 @@ public class SVECConstruct extends PCEPConstruct{
 	private Svec svec;
 	private LinkedList<ObjectiveFunction> objectiveFunctionList;
 	private LinkedList<Metric> metricList;
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 	
 	public SVECConstruct(){
 		metricList=new LinkedList<Metric>(); 
@@ -48,7 +49,7 @@ public class SVECConstruct extends PCEPConstruct{
 			len=len+svec.getLength();
 		}
 		else {
-			log.warning("svec  not found!  compulsory");
+			log.warn("svec  not found!  compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (objectiveFunctionList!=null){
@@ -94,14 +95,14 @@ public class SVECConstruct extends PCEPConstruct{
 			try {
 				svec=new Svec(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed RP Object found");
+				log.warn("Malformed RP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+svec.getLength();
 			len=len+svec.getLength();
 		}
 		else {
-			log.warning("SVEC Construct must start with SVEC object");
+			log.warn("SVEC Construct must start with SVEC object");
 			throw new PCEPProtocolViolationException();
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -110,7 +111,7 @@ public class SVECConstruct extends PCEPConstruct{
 			try {
 				objectiveFunction=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed OBJECTIVE FUNCTION Object found");
+				log.warn("Malformed OBJECTIVE FUNCTION Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			objectiveFunctionList.add(objectiveFunction);
@@ -124,7 +125,7 @@ public class SVECConstruct extends PCEPConstruct{
 			try {
 				metric = new Metric(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			metricList.add(metric);

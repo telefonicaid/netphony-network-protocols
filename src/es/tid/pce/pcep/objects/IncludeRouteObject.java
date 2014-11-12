@@ -139,12 +139,12 @@ public class IncludeRouteObject extends PCEPObject{
 							WavebandLabelEROSubobject subwl=new WavebandLabelEROSubobject(this.getObject_bytes(), offset);
 							IROList.add(subwl);
 						default:
-							log.warning("ERO LABEL Subobject Ctype Unknown: "+ctype);
+							log.warn("ERO LABEL Subobject Ctype Unknown: "+ctype);
 							break;							
 					}
 					break;
 				default:
-					log.warning("ERO Subobject Unknown subojectclass: "+subojectclass);
+					log.warn("ERO Subobject Unknown subojectclass: "+subojectclass);
 					//FIXME What do we do??
 					break;
 			}

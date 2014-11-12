@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /*
 
@@ -122,8 +123,8 @@ public class Label extends RSVPObject{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Label Object wanted to be attached to a new message
@@ -139,9 +140,7 @@ public class Label extends RSVPObject{
 		length = 4;
 		this.label = label;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Object Created");
+		log.debug("Label Object Created");
 
 	}
 	
@@ -162,9 +161,7 @@ public class Label extends RSVPObject{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Object Created");
+		log.debug("Label Object Created");
 		
 	}
 	
@@ -193,14 +190,6 @@ public class Label extends RSVPObject{
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 
 	public int getLabel() {
 		return label;

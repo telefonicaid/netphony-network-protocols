@@ -70,10 +70,10 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	 */
 	public void encode() 
 	{
-		log.finest("Encoding SymbolicPathName TLV");
+		log.debug("Encoding SymbolicPathName TLV");
 		this.setTLVValueLength(SymbolicPathNameID.length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
-		log.finest("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
+		log.debug("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
 		this.encodeHeader();
 		int offset=4;
 		System.arraycopy(SymbolicPathNameID, 0, this.tlv_bytes, offset, SymbolicPathNameID.length);
@@ -82,7 +82,7 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.finest("Decoding SymbolicPathName TLV");
+		log.debug("Decoding SymbolicPathName TLV");
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0)
 		{
@@ -96,7 +96,7 @@ public class SymbolicPathNameTLV extends PCEPTLV
 		}
 		catch (Exception e)
 		{
-			log.severe("Exception occurred, Possibly TLV size is not what expected");
+			log.error("Exception occurred, Possibly TLV size is not what expected");
 			throw new MalformedPCEPObjectException();			
 		}
 		
@@ -113,7 +113,7 @@ public class SymbolicPathNameTLV extends PCEPTLV
 		
 		if (isZero)
 		{
-			log.severe("Received redundancy group identifier value can not be zero");
+			log.error("Received redundancy group identifier value can not be zero");
 			//throw new MalformedPCEPObjectException();
 		}
 		
@@ -121,7 +121,7 @@ public class SymbolicPathNameTLV extends PCEPTLV
 		boolean firstBit = (ByteHandler.easyCopy(0,0,SymbolicPathNameID[0]) == 1) ? true : false ;
 		if (firstBit)
 		{
-			log.severe("Received redundancy group identifier value can not be negative");
+			log.error("Received redundancy group identifier value can not be negative");
 			throw new MalformedPCEPObjectException();
 		}
 	}

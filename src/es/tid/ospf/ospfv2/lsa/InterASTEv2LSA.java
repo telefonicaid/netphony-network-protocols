@@ -111,7 +111,7 @@ public class InterASTEv2LSA extends OpaqueLSA {
 		int offset=20;//Position of the next subobject
 		if (this.getLength()==20){
 			//Empty LSA!!
-			log.warning("Empty LSA");
+			log.warn("Empty LSA");
 			throw new MalformedOSPFLSAException();
 		}
 		while (!fin) {

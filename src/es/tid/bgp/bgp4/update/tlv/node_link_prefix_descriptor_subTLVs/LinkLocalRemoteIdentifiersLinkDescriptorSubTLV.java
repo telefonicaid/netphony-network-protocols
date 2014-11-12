@@ -111,7 +111,7 @@ public class LinkLocalRemoteIdentifiersLinkDescriptorSubTLV extends BGP4TLVForma
 	
 	protected void decode(){
 		if (this.getTLVValueLength()!=8){
-			log.severe("PROBLEM in Link Local/Remote Identifier");
+			log.error("PROBLEM in Link Local/Remote Identifier");
 		}
 		int offset=4;
 		this.linkLocalIdentifier=(((long)(this.tlv_bytes[offset]<<24)& (long)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );

@@ -1,7 +1,7 @@
 package es.tid.rsvp.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.SenderDescriptor;
@@ -15,6 +15,7 @@ import es.tid.rsvp.objects.Session;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.SessionIPv6;
 import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
+import org.slf4j.LoggerFactory;
 
 /*
 RFC 2205: RSVP		Path Teardown Messages
@@ -150,7 +151,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	/**
 	 * Log
 	 */
-	private Logger log;
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor that has to be used in case of creating a new Path Teardown Message to
@@ -168,9 +169,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RSVP Path Teardown Message Created");
+		log.debug("RSVP Path Teardown Message Created");
 		
 	}
 	
@@ -185,9 +184,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 		this.length = length;
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RSVP Path Message Created");
+		log.debug("RSVP Path Message Created");
 	}
 	
 	/**
@@ -211,7 +208,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	
 	public void encode() throws RSVPProtocolViolationException {
 
-		log.finest("Starting RSVP Path TearDown Message encode");
+		log.debug("Starting RSVP Path TearDown Message encode");
 		
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
@@ -219,23 +216,23 @@ public class RSVPPathTearMessage extends RSVPMessage {
 		// Obtencion del tama�o completo del mensaje
 		if(integrity != null){
 			length = length + integrity.getLength();
-			log.finest("Integrity RSVP Object found");
+			log.debug("Integrity RSVP Object found");
 		}
 		if(session != null){
 			length = length + session.getLength();
-			log.finest("Session RSVP Object found");
+			log.debug("Session RSVP Object found");
 			
 		}else{
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Session RSVP Object NOT found");
+			log.error("Session RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 		}
 		if(rsvpHop != null){
 			length = length + rsvpHop.getLength();
-			log.finest("Hop RSVP Object found");
+			log.debug("Hop RSVP Object found");
 		}else{
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Hop RSVP Object NOT found");
+			log.error("Hop RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 		}
 		int sdSize = senderDescriptors.size();
@@ -243,7 +240,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 		for(int i = 0; i < sdSize; i++){
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
 			length = length + sd.getLength();
-			log.finest("Sender Descriptor RSVP Construct found");
+			log.debug("Sender Descriptor RSVP Construct found");
 		}
 		
 		bytes = new byte[length];
@@ -275,10 +272,10 @@ public class RSVPPathTearMessage extends RSVPMessage {
 				currentIndex = currentIndex + sd.getLength();
 
 			}catch(RSVPProtocolViolationException e){
-				log.severe("Errors during Sender Descriptor number "+i+" encoding");
+				log.error("Errors during Sender Descriptor number " + i + " encoding");
 			}
 		}
-		log.finest("RSVP Path TearDown Message encoding accomplished");
+		log.debug("RSVP Path TearDown Message encoding accomplished");
 	}
 
 	/**
@@ -420,16 +417,5 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	public void setSenderDescriptors(LinkedList<SenderDescriptor> senderDescriptors) {
 		this.senderDescriptors = senderDescriptors;
 	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-
-	
-
 
 }

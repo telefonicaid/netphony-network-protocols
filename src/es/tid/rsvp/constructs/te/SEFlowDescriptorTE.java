@@ -2,13 +2,14 @@ package es.tid.rsvp.constructs.te;
 
 import java.util.LinkedList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.SEFlowDescriptor;
 import es.tid.rsvp.objects.FlowSpec;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -26,7 +27,7 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 
   
 
- * @author Fernando Muñoz del Nuevo fmn@tid.es
+ * @author Fernando Muï¿½oz del Nuevo fmn@tid.es
  *
  */
 
@@ -50,8 +51,8 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	/**
 	 * Log
 	 */
-	
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a SE Flow Descriptor TE is received and it is wanted to decode it
@@ -59,10 +60,8 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	public SEFlowDescriptorTE() {
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
 		filterSpecTEList = new LinkedList<FilterSpecTE>();
-		log.finest("FF Flow Descriptor TE Created");
+		log.debug("FF Flow Descriptor TE Created");
 		
 	}
 	
@@ -75,19 +74,16 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 		
 	public SEFlowDescriptorTE(FlowSpec flowSpec, FilterSpecTE filterSpec) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-		
 		if(flowSpec != null){
 		
 			this.length = this.length + flowSpec.getLength();
 			this.flowSpec = flowSpec;
-			log.finest("Flow Spec found");
+			log.debug("Flow Spec found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Flow Spec not found, It is mandatory");
+			log.error("Flow Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -96,17 +92,17 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			this.length = this.length + filterSpec.getLength();
 			filterSpecTEList = new LinkedList<FilterSpecTE>();
 			filterSpecTEList.add(filterSpec);
-			log.finest("Filter Spec TE found");
+			log.debug("Filter Spec TE found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Filter Spec TE not found, It is mandatory");
+			log.error("Filter Spec TE not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
 
-		log.finest("SE Flow Descriptor TE Created");
+		log.debug("SE Flow Descriptor TE Created");
 		
 	}
 	
@@ -132,7 +128,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting SE Flow Descriptor TE Encode");
+		log.debug("Starting SE Flow Descriptor TE Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -144,7 +140,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			offset = offset + flowSpec.getLength();
 		}else{
 			
-			log.severe("Mandatory field Flow Spec not found");
+			log.error("Mandatory field Flow Spec not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -165,10 +161,10 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			}
 		}else{
 			
-			log.severe("Mandatory field Filter Spec TE not found");
+			log.error("Mandatory field Filter Spec TE not found");
 			throw new RSVPProtocolViolationException();
 		}
-		log.finest("Encoding SE Flow Descriptor TE Accomplished");
+		log.debug("Encoding SE Flow Descriptor TE Accomplished");
 		
 	}
 
@@ -181,7 +177,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("SE Flow Descriptor Decode");
+		log.debug("SE Flow Descriptor Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -197,7 +193,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Flow Spec cType field");
+				log.error("Malformed Flow Spec cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -205,12 +201,12 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();
-			log.finest("Sender Template decoded");
+			log.debug("Sender Template decoded");
 			
 		}else{
 			
 			// No se ha formado correctamente el objeto sender template
-			log.severe("Malformed SE Flow Descriptor, Flow Spec object not found");
+			log.error("Malformed SE Flow Descriptor, Flow Spec object not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -239,11 +235,11 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto Filter Spec
-				log.severe("Malformed Filter Spec cType field");
+				log.error("Malformed Filter Spec cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
-			log.finest("Filter Spec decoded");
+			log.debug("Filter Spec decoded");
 		}
 		while(bytesLeft > 0){
 			
@@ -274,22 +270,22 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 				}else{
 					
 					// No se ha formado correctamente el objeto Filter Spec
-					log.severe("Malformed Filter Spec cType field");
+					log.error("Malformed Filter Spec cType field");
 					throw new RSVPProtocolViolationException();
 					
 				}
-				log.finest("Filter Spec decoded");
+				log.debug("Filter Spec decoded");
 					
 			}else{
 				// Otro objeto diferente
-				log.severe("Filter Spec expected and not found");
+				log.error("Filter Spec expected and not found");
 				throw new RSVPProtocolViolationException();			
 			}
 		
 		}
 			
 		this.setLength(length);
-		log.finest("Decoding FF Flow Descriptor TE Accomplished");
+		log.debug("Decoding FF Flow Descriptor TE Accomplished");
 		
 
 	}
@@ -302,14 +298,6 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 
 	public void setFlowSpec(FlowSpec flowSpec) {
 		this.flowSpec = flowSpec;
-	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
 	}
 
 	public LinkedList<FilterSpecTE> getFilterSpecTEList() {

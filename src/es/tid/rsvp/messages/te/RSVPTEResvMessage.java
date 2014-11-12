@@ -1,7 +1,7 @@
 package es.tid.rsvp.messages.te;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.FFFlowDescriptor;
@@ -12,6 +12,7 @@ import es.tid.rsvp.constructs.te.SEFlowDescriptorTE;
 import es.tid.rsvp.messages.RSVPMessageTypes;
 import es.tid.rsvp.messages.RSVPResvMessage;
 import es.tid.rsvp.objects.*;
+import org.slf4j.LoggerFactory;
 
 /**
 
@@ -132,8 +133,8 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new RSVP-TE Resv Message wanted to be sent
@@ -152,9 +153,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 		policyData = new LinkedList<PolicyData>();
 		flowDescriptors = new LinkedList<FlowDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("RSVP-TE Resv Message Created");
+		log.debug("RSVP-TE Resv Message Created");
 	}
 	
 	/**
@@ -170,9 +169,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 		policyData = new LinkedList<PolicyData>();
 		flowDescriptors = new LinkedList<FlowDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RSVP-TE Resv Message Created");
+		log.debug("RSVP-TE Resv Message Created");
 	}
 	
 	@Override
@@ -192,7 +189,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 	@Override
 	public void encode() throws RSVPProtocolViolationException {
 
-		log.finest("Starting RSVP-TE Resv Message encode");
+		log.debug("Starting RSVP-TE Resv Message encode");
 		
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
@@ -200,49 +197,49 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 		// Obtencion del tama�o completo del mensaje
 		if(integrity != null){
 			length = length + integrity.getLength();
-			log.finest("Integrity RSVP Object found");
+			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
 			length = length + session.getLength();
-			log.finest("Session RSVP Object found");
+			log.debug("Session RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Session RSVP Object NOT found");
+			log.error("Session RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		if(rsvpHop != null){
 			length = length + rsvpHop.getLength();
-			log.finest("Hop RSVP Object found");
+			log.debug("Hop RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Hop RSVP Object NOT found");
+			log.error("Hop RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		if(timeValues != null){
 			length = length + timeValues.getLength();
-			log.finest("Time Values RSVP Object found");
+			log.debug("Time Values RSVP Object found");
 			
 		}else{
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Time Values RSVP Object NOT found");
+			log.error("Time Values RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();			
 			
 		}
 		if(resvConfirm != null){
 			length = length + resvConfirm.getLength();
-			log.finest("ResvConfirm RSVP Object found");
+			log.debug("ResvConfirm RSVP Object found");
 			
 		}
 		if(scope != null){
 			length = length + scope.getLength();
-			log.finest("Scope RSVP Object found");
+			log.debug("Scope RSVP Object found");
 		}
 		
 		int pdSize = policyData.size();
@@ -250,17 +247,17 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 		for(int i = 0; i < pdSize; i++){
 			PolicyData pd = (PolicyData) policyData.get(i);
 			length = length + pd.getLength();
-			log.finest("Policy Data RSVP Object found");
+			log.debug("Policy Data RSVP Object found");
 				
 		}					
 		
 		if(style != null){
 			length = length + style.getLength();
-			log.finest("Style RSVP Object found");
+			log.debug("Style RSVP Object found");
 			
 		}else{
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Style RSVP Object NOT found");
+			log.error("Style RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();			
 		}
 		
@@ -269,7 +266,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 		for(int i = 0; i < fdSize; i++){
 			FlowDescriptor fd = (FlowDescriptor) flowDescriptors.get(i);
 			length = length + fd.getLength();
-			log.finest("Flow Descriptor RSVP Construct found");
+			log.debug("Flow Descriptor RSVP Construct found");
 		}
 		
 		bytes = new byte[length];
@@ -337,10 +334,10 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				currentIndex = currentIndex + fd.getLength();
 
 			}catch(RSVPProtocolViolationException e){
-				log.severe("Errors during Flow Descriptor number "+i+" encoding");
+				log.error("Errors during Flow Descriptor number " + i + " encoding");
 			}
 		}
-		log.finest("RSVP-TE Resv Message encoding accomplished");
+		log.debug("RSVP-TE Resv Message encoding accomplished");
 	}
 
 	@Override
@@ -429,7 +426,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 					offset = offset + timeValues.getLength();
 					
 				}else{
-					log.severe("Error Deconding Time Values");
+					log.error("Error Deconding Time Values");
 					// Fallo en cType
 					throw new RSVPProtocolViolationException();
 					
@@ -542,13 +539,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				}else{
 					
 					// Malformed Resv Message
-					log.severe("Malformed RSVP-TE Resv Message, Style Object not Found");
+					log.error("Malformed RSVP-TE Resv Message, Style Object not Found");
 					throw new RSVPProtocolViolationException();
 				}
 			}	
 			else{
 				// Fallo en classNum
-				log.severe("Malformed RSVP-TE Resv Message, Object classNum incorrect");
+				log.error("Malformed RSVP-TE Resv Message, Object classNum incorrect");
 				throw new RSVPProtocolViolationException();
 			}
 		}

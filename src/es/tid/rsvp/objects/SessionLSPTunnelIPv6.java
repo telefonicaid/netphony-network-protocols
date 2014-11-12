@@ -2,7 +2,8 @@ package es.tid.rsvp.objects;
 
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -90,8 +91,8 @@ public class SessionLSPTunnelIPv6 extends Session{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Session LSP Tunnel IPv6 Object wanted to be
@@ -105,9 +106,7 @@ public class SessionLSPTunnelIPv6 extends Session{
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 36;
 		bytes = new byte[length];
 
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session LSP Tunnel IPv6 Object Created");
+		log.debug("Session LSP Tunnel IPv6 Object Created");
 		
 	}
 	
@@ -129,9 +128,7 @@ public class SessionLSPTunnelIPv6 extends Session{
 		this.tunnelId = tunnelId;
 		this.extendedTunnelId = extendedTunnelId;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session LSP Tunnel IPv6 Object Created");
+		log.debug("Session LSP Tunnel IPv6 Object Created");
 		
 	}
 	
@@ -147,9 +144,7 @@ public class SessionLSPTunnelIPv6 extends Session{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session LSP Tunnel IPv6 Object Created");
+		log.debug("Session LSP Tunnel IPv6 Object Created");
 		
 	}
 

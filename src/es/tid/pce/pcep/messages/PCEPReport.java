@@ -1,12 +1,13 @@
 package es.tid.pce.pcep.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  *  Path Computation State Report (PCRpt) Message.
@@ -81,7 +82,7 @@ Where:
 
 public class PCEPReport extends PCEPMessage
 {
-	private Logger log = Logger.getLogger("PCEPParser");
+	private static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	protected LinkedList<StateReport> stateReportList;
 	
 	public PCEPReport()
@@ -112,7 +113,7 @@ public class PCEPReport extends PCEPMessage
         
 		if (stateReportList.size()==0)
 		{
-			log.warning("There should be at least one state Report");
+			log.warn("There should be at least one state Report");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -141,7 +142,7 @@ public class PCEPReport extends PCEPMessage
 		int oc=PCEPObject.getObjectClass(this.getBytes(), offset); // Get the object class
 		if ((oc!=ObjectParameters.PCEP_OBJECT_CLASS_SRP)&&(oc!=ObjectParameters.PCEP_OBJECT_CLASS_LSP))
 		{
-			log.warning("At least one state-report is needed");
+			log.warn("At least one state-report is needed");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -158,7 +159,7 @@ public class PCEPReport extends PCEPMessage
 			}
 			catch(PCEPProtocolViolationException e)
 			{
-				log.warning("Malformed PCEP Report");
+				log.warn("Malformed PCEP Report");
 				throw new PCEPProtocolViolationException();
 			}
 		

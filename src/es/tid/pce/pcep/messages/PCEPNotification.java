@@ -73,7 +73,7 @@ public class PCEPNotification extends PCEPMessage {
 	 */
 	public void encode() throws PCEPProtocolViolationException {
 		if (notifyList.size()==0){
-			log.warning("There should be at least one notification in a PCEP Notification message");
+			log.warn("There should be at least one notification in a PCEP Notification message");
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
@@ -99,7 +99,7 @@ public class PCEPNotification extends PCEPMessage {
 		//Decoding PCEP Notification Message
 		int offset=4;//We start after the object header
 		if (offset>=this.getLength()){
-			log.warning("Empty notification message");
+			log.warn("Empty notification message");
 			throw new PCEPProtocolViolationException();
 		}
 		int oc=PCEPObject.getObjectClass(this.messageBytes, offset);

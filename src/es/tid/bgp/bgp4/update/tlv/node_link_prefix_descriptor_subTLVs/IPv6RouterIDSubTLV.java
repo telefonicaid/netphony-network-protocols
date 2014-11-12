@@ -1,6 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  Campo del Node Descriptor Sub TLV
@@ -14,15 +15,15 @@ import java.util.logging.Logger;
  *
  */
 public class IPv6RouterIDSubTLV extends NodeDescriptorsSubTLV{
-	
-	public IPv6RouterIDSubTLV(){
+
+  private static Logger log = LoggerFactory.getLogger("BGP4Parser");
+
+  public IPv6RouterIDSubTLV(){
 		super();
-		log=Logger.getLogger("BGP4Parser");
 		//this.setSubTLVType(NodeDescriptorsSubTLVTypes.BGP4_SUBTLV_TYPE_IPV6);
 	}
 	public IPv6RouterIDSubTLV(byte [] bytes, int offset){
 		//super(bytes, offset);
-		log=Logger.getLogger("BGP4Parser");
 		decode();
 	}
 	@Override

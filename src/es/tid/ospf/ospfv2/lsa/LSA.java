@@ -1,8 +1,10 @@
 package es.tid.ospf.ospfv2.lsa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
 
 /**
  * Base class for OSPF v2 LSA (Link State Advertisement) messages,
@@ -84,13 +86,12 @@ public abstract class LSA {
 	/**
 	 * The logger
 	 */
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("OSPFParser");
 	
 	/**
 	 * Default constructor
 	 */
 	public LSA(){	
-		log=Logger.getLogger("OSPFParser");
 	}
 	
 	/**
@@ -99,8 +100,7 @@ public abstract class LSA {
 	 * @param offset
 	 */
 	public LSA(byte[] bytes, int offset) throws MalformedOSPFLSAException{
-		log=Logger.getLogger("OSPFParser");
-		this.LSage= ((bytes[offset]&0xFF)<<8) |  (bytes[offset+1] & 0xFF);		
+		this.LSage= ((bytes[offset]&0xFF)<<8) |  (bytes[offset+1] & 0xFF);
 		this.options=bytes[offset+2]&0xFF;
 		this.LStype=bytes[offset+3]&0xFF;	
 		byte[] ip=new byte[4]; 
@@ -108,13 +108,13 @@ public abstract class LSA {
 		try {
 			this.LinkStateId=(Inet4Address)Inet4Address.getByAddress(ip);
 		} catch (UnknownHostException e) {
-			log.warning("ERROR IN Link State ID: "+e.toString());
+			log.warn("ERROR IN Link State ID: "+e.toString());
 		}
 		System.arraycopy(bytes,offset+8, ip, 0, 4);
 		try {
 			this.AdvertisingRouter=(Inet4Address)Inet4Address.getByAddress(ip);
 		} catch (UnknownHostException e) {
-			log.warning("ERROR in Advertising Router: "+e.toString());
+			log.warn("ERROR in Advertising Router: "+e.toString());
 		}
 		//LSequenceNumber is a 32bit SIGNED int
 		this.LSsequenceNumber=(((bytes[offset+12]&0xFF)<<24) | (((bytes[offset+13]&0xFF)<<16)) |(((bytes[offset+14]&0xFF)<<8)) |  (bytes[offset+15]&0xFF) );
@@ -125,7 +125,7 @@ public abstract class LSA {
 		try {
 			System.arraycopy(bytes, offset, this.LSAbytes, 0, this.length);	
 		}catch (Exception e){
-			log.warning("ERROR tam de bytes es "+bytes.length);
+			log.warn("ERROR tam de bytes es "+bytes.length);
 			throw new MalformedOSPFLSAException();
 		}
 	}

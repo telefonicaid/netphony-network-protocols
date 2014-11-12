@@ -1,6 +1,6 @@
 package es.tid.bgp.bgp4.update.tlv.complexFields;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 
 
@@ -51,8 +51,7 @@ public class BitmapLabelSet  extends LabelSetField {
 	private int sumBytesBitmap;
 	//private int n;
 	private DWDMWavelengthLabel dwdmWavelengthLabel;
-	Logger log= Logger.getLogger("PCEServer");
-	
+
     public BitmapLabelSet() {
     	action = 4;	
 	}

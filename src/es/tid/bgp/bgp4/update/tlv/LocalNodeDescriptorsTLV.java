@@ -56,7 +56,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	public void encode(){		
 		//Encode LocalNodeDescriptorsTLV
 		if ((nodeDescriptorsSubTLVList.size() == 0))
-			log.warning("LocalNodeDescriptorsTLV sub TLV with 0 elements");
+			log.warn("LocalNodeDescriptorsTLV sub TLV with 0 elements");
 		
 		int len = 0;//Header TLV
 
@@ -109,7 +109,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 					break;
 					
 				default:
-					log.finest("Local Node Descriptor subtlv Unknown, "+subtlvType);
+					log.debug("Local Node Descriptor subtlv Unknown, "+subtlvType);
 					break;
 			}
 			offset=offset+subtlvLength;
@@ -117,7 +117,7 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 				fin=true;
 			}
 			else{
-				log.finest("sigo leyendo NodeDescriptorsSubTLV ");
+				log.debug("sigo leyendo NodeDescriptorsSubTLV ");
 			}
 		}
 	}

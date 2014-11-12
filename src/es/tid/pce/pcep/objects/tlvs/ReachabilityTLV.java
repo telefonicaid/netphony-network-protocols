@@ -35,7 +35,7 @@ public class ReachabilityTLV extends PCEPTLV {
 			len=len+EROSubobjectList.get(k).getErosolength();
 		}
 		if (len==0){
-			log.severe("At least one ERO Subobject in the TLV must be set");
+			log.error("At least one ERO Subobject in the TLV must be set");
 			//throw new MalformedPCEPObjectException();
 			return;//FIXME: ARREGLAR PARA LANZAR EXCEPCIONES
 		}		
@@ -53,7 +53,7 @@ public class ReachabilityTLV extends PCEPTLV {
 
 	public void decode() throws MalformedPCEPObjectException{
 		int offset=4;
-		log.finest("Decoding Reachability TLV");//FIXME: Cambiar a fine
+		log.debug("Decoding Reachability TLV");//FIXME: Cambiar a fine
 		boolean fin=false;
 		if (this.TLVValueLength ==0){
 			fin=true;
@@ -65,34 +65,34 @@ public class ReachabilityTLV extends PCEPTLV {
 				switch(subojectclass) {
 				case SubObjectValues.ERO_SUBOBJECT_IPV4PREFIX:
 					IPv4prefixEROSubobject sobjt4=new IPv4prefixEROSubobject(this.tlv_bytes, offset);
-					log.finest("IPv4 prefix found:"+ sobjt4);		
+					log.debug("IPv4 prefix found:"+ sobjt4);
 					this.addEROSubobject(sobjt4);
 					break;
 
 				case SubObjectValues.ERO_SUBOBJECT_IPV6PREFIX:
 					IPv6prefixEROSubobject sobjt6=new IPv6prefixEROSubobject(this.tlv_bytes, offset);
-					log.finest("IPv6 prefix found:"+ sobjt6);					
+					log.debug("IPv6 prefix found:"+ sobjt6);
 					addEROSubobject(sobjt6);
 					break;		
 
 				case SubObjectValues.ERO_SUBOBJECT_ASNUMBER:
 					ASNumberEROSubobject sobjas=new ASNumberEROSubobject (this.tlv_bytes, offset);
-					log.finest("AS Number found found:"+ sobjas);					
+					log.debug("AS Number found found:"+ sobjas);
 					addEROSubobject(sobjas);
 					break;
 
 				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID:
 					UnnumberIfIDEROSubobject subun=new UnnumberIfIDEROSubobject(this.tlv_bytes, offset);
-					log.finest("Unnumbered If Id found:"+ subun);					
+					log.debug("Unnumbered If Id found:"+ subun);
 					addEROSubobject(subun);
 					break;	
 				default:
-					log.finest("ERO Subobject Unknown");
+					log.debug("ERO Subobject Unknown");
 					break;
 				}
 				offset=offset+subojectlength;
 				if (offset>=this.TLVValueLength){
-					log.finest("No more subobjects in the Reachability TLV");
+					log.debug("No more subobjects in the Reachability TLV");
 					fin=true;
 				}
 			}

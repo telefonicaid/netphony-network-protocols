@@ -1,6 +1,6 @@
 package es.tid.rsvp.constructs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.FilterSpec;
@@ -10,6 +10,7 @@ import es.tid.rsvp.objects.FlowLabelFilterSpecIPv6;
 import es.tid.rsvp.objects.FlowSpec;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -76,7 +77,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	 * Log
 	 */
 	
-	private Logger log;
+	private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * First attribute will be true in case of creating the first flow descriptor of the list
@@ -92,10 +93,8 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	
 	public FFFlowDescriptor(boolean first) {
 		
-		log = Logger.getLogger("ROADM");
-		
 		this.first = first;
-		log.finest("FF Flow Descriptor Created");
+		log.debug("FF Flow Descriptor Created");
 		
 	}
 	
@@ -109,21 +108,19 @@ public class FFFlowDescriptor extends FlowDescriptor {
 		
 	public FFFlowDescriptor(FlowSpec flowSpec, FilterSpec filterSpec, boolean first) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-	
-		
+
 		this.first = first;
 		
 		if(flowSpec != null){
 		
 			this.length = this.length + flowSpec.getLength();
 			this.flowSpec = flowSpec;
-			log.finest("Flow Spec found");
+			log.debug("Flow Spec found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Flow Spec not found, It is mandatory");
+			log.error("Flow Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -131,16 +128,16 @@ public class FFFlowDescriptor extends FlowDescriptor {
 			
 			this.length = this.length + filterSpec.getLength();
 			this.filterSpec = filterSpec;
-			log.finest("Filter Spec found");
+			log.debug("Filter Spec found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Filter Spec not found, It is mandatory");
+			log.error("Filter Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
-		log.finest("FF Flow Descriptor Created");
+		log.debug("FF Flow Descriptor Created");
 		
 	}
 	
@@ -154,7 +151,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting WF Flow Descriptor Encode");
+		log.debug("Starting WF Flow Descriptor Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -168,7 +165,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 		}else{
 			if(first){
 				// Campo obligatorio
-				log.severe("Mandatory field Flow Spec not found");
+				log.error("Mandatory field Flow Spec not found");
 				throw new RSVPProtocolViolationException();
 				
 			}			
@@ -181,12 +178,12 @@ public class FFFlowDescriptor extends FlowDescriptor {
 			
 		}else{
 			
-			log.severe("Mandatory field Filter Spec not found");
+			log.error("Mandatory field Filter Spec not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		
-		log.finest("Encoding FF Flow Descriptor Accomplished");
+		log.debug("Encoding FF Flow Descriptor Accomplished");
 		
 	}
 
@@ -199,7 +196,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("FF Flow Descriptor Decode");
+		log.debug("FF Flow Descriptor Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -215,7 +212,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Flow Spec cType field");
+				log.error("Malformed Flow Spec cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -223,7 +220,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();
-			log.finest("Sender Template decoded");
+			log.debug("Sender Template decoded");
 			
 		}
 		if(bytesLeft > 0){
@@ -259,26 +256,26 @@ public class FFFlowDescriptor extends FlowDescriptor {
 				}else{
 					
 					// No se ha formado correctamente el objeto sender template
-					log.severe("Malformed Filter Spec cType field");
+					log.error("Malformed Filter Spec cType field");
 					throw new RSVPProtocolViolationException();
 					
 				}
-				log.finest("Flow Template decoded");
+				log.debug("Flow Template decoded");
 			}else{	
 				// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-				log.severe("Flow Spec not found, It is mandatory");
+				log.error("Flow Spec not found, It is mandatory");
 				throw new RSVPProtocolViolationException();
 				
 			}
 		}else{
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Flow Spec not found, It is mandatory");
+			log.error("Flow Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 		}
 				
 		this.setLength(length);
-		log.finest("Decoding FF Flow Descriptor Accomplished");
+		log.debug("Decoding FF Flow Descriptor Accomplished");
 		
 
 	}
@@ -303,13 +300,4 @@ public class FFFlowDescriptor extends FlowDescriptor {
 		this.filterSpec = filterSpec;
 	}
 
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-
-	
 }

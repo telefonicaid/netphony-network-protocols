@@ -153,12 +153,12 @@ public class SERO extends PCEPObject{
 							addEROSubobject(oles);
 							break;	
 						default:
-							log.warning("ERO LABEL Subobject Ctype Unknown");
+							log.warn("ERO LABEL Subobject Ctype Unknown");
 							break;							
 					}
 					break;
 				default:
-					log.warning("ERO Subobject Unknown: "+subojectclass);
+					log.warn("ERO Subobject Unknown: "+subojectclass);
 					//FIXME What do we do??
 					break;
 			}

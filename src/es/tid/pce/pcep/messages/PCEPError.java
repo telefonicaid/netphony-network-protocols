@@ -144,7 +144,7 @@ public class PCEPError extends PCEPMessage {
 		//Decoding PCEP Error Message"		
 		int offset=4;//We start after the object header
 		if (offset>=this.getLength()){
-			log.warning("Empty Error message");
+			log.warn("Empty Error message");
 			throw new PCEPProtocolViolationException();
 		}
 		int oc=PCEPObject.getObjectClass(this.messageBytes, 4);
@@ -155,7 +155,7 @@ public class PCEPError extends PCEPMessage {
 				try {
 					errc = new ErrorConstruct(this.messageBytes,offset);
 				} catch (PCEPProtocolViolationException e) {
-					log.warning("Problem Decoding Error Construct");
+					log.warn("Problem Decoding Error Construct");
 					throw new PCEPProtocolViolationException();
 				}
 				errorList.add(errc);
@@ -172,7 +172,7 @@ public class PCEPError extends PCEPMessage {
 				try {
 					perrobj=new PCEPErrorObject(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Problem Decoding Error Object");
+					log.warn("Problem Decoding Error Object");
 					e.printStackTrace();
 					throw new PCEPProtocolViolationException();
 				}
@@ -187,7 +187,7 @@ public class PCEPError extends PCEPMessage {
 				try {
 					open=new OPEN(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Problem Decoding Error Object");
+					log.warn("Problem Decoding Error Object");
 					e.printStackTrace();
 					throw new PCEPProtocolViolationException();
 				}
@@ -202,7 +202,7 @@ public class PCEPError extends PCEPMessage {
 					try {
 						errc = new ErrorConstruct(this.messageBytes,offset);
 					} catch (PCEPProtocolViolationException e) {
-						log.warning("Problem Decoding Error Construct");
+						log.warn("Problem Decoding Error Construct");
 						throw new PCEPProtocolViolationException();
 					}
 					errorList.add(errc);

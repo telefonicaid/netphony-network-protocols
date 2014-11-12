@@ -1,6 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Information in the new link state NLRIs and attributes is encoded in
@@ -37,13 +38,11 @@ public abstract class BGP4TLVFormat {
 	
 	protected byte[] tlv_bytes;
 	
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 	public BGP4TLVFormat(){
-		log=Logger.getLogger("BGP4Parser");	
 	}
 	
 	public BGP4TLVFormat(byte []bytes, int offset) {
-		log=Logger.getLogger("BGP4Parser");		
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 		this.TotalTLVLength=TLVValueLength+4;

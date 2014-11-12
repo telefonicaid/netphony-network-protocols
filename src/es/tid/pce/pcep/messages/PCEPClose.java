@@ -95,7 +95,7 @@ public class PCEPClose extends PCEPMessage {
 			try {
 				close=new Close(this.messageBytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed PCEP Close object");
+				log.warn("Malformed PCEP Close object");
 				throw new PCEPProtocolViolationException();
 			}			
 		}

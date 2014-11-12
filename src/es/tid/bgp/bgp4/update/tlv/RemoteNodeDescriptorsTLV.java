@@ -1,7 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AreaIDNodeDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AutonomousSystemNodeDescriptorSubTLV;
@@ -10,6 +10,7 @@ import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.BGPLSIdent
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescriptorsSubTLVTypes;
+import org.slf4j.LoggerFactory;
 
 /**
  *    The Remote Node Descriptors TLV (Type 257) contains Node Descriptors
@@ -42,11 +43,11 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 		this.setTLVType(RemoteNodeDescriptorsTLV.Remote_Node_Descriptors_TLV);
 		//nodeDescriptorsSubTLVList=new ArrayList<NodeDescriptorsSubTLV>();
 	}
-	
-	
+
+  private static Logger log = LoggerFactory.getLogger("BGP4Parser");
+
 	public RemoteNodeDescriptorsTLV(byte []bytes, int offset) {		
 		super(bytes, offset);
-		log=Logger.getLogger("BGP4Parser");	
 		nodeDescriptorsSubTLVList=new ArrayList<NodeDescriptorsSubTLV>();
 		decode();
 	}
@@ -54,7 +55,7 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 	public void encode(){		
 		//Encode RemoteNodeDescriptorsTLV
 		if ((nodeDescriptorsSubTLVList.size() == 0))
-			log.warning("RemoteNodeDescriptorsTLV sub TLV with 0 elements");
+			log.warn("RemoteNodeDescriptorsTLV sub TLV with 0 elements");
 		
 		int len = 0;//Header TLV
 
@@ -101,7 +102,7 @@ public static final int Remote_Node_Descriptors_TLV = 257;
 					addNodeDescriptorsSubTLV(IGPRouterID);		
 					break;
 				default:
-					log.warning("Remote Node Descriptor Unknown, subtlvType: "+subtlvType);
+					log.warn("Remote Node Descriptor Unknown, subtlvType: " + subtlvType);
 					break;
 			}
 			

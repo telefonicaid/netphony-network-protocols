@@ -29,7 +29,7 @@ public class OSPFForwardingAddressPrefixAttribTLV extends BGP4TLVFormat {
 			this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 			encodeHeader();
 			System.arraycopy(OSPFAddress.getAddress(),0, this.tlv_bytes, 4, 4);
-		default: log.finest("IPv6 NOT IMPLEMENTED YET");
+		default: log.debug("IPv6 NOT IMPLEMENTED YET");
 		}
 		
 	}
@@ -46,7 +46,7 @@ public class OSPFForwardingAddressPrefixAttribTLV extends BGP4TLVFormat {
 			// TODO Auto-generated catch block
 				e.printStackTrace();
 		}
-		default: log.finest("IPv6 NOT SUPPORTED YET");
+		default: log.debug("IPv6 NOT SUPPORTED YET");
 		}
 		
 	}

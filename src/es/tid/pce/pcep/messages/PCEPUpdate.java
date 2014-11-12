@@ -1,12 +1,13 @@
 package es.tid.pce.pcep.messages;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.UpdateRequest;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PCUpd Message.
@@ -101,7 +102,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
 
 
 public class PCEPUpdate extends PCEPMessage{
-	private Logger log = Logger.getLogger("PCEPParser");
+	private static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	protected LinkedList<UpdateRequest> updateRequestList;
 	
 	public PCEPUpdate(){
@@ -126,7 +127,7 @@ public class PCEPUpdate extends PCEPMessage{
 			index++;			
         }
 		if (updateRequestList.size()==0){
-			log.warning("There should be at least one update request in a PCEP update Request message");
+			log.warn("There should be at least one update request in a PCEP update Request message");
 			throw new PCEPProtocolViolationException();
 		}
 		this.setMessageLength(len);
@@ -162,7 +163,7 @@ public class PCEPUpdate extends PCEPMessage{
 			}
 			catch(PCEPProtocolViolationException e)
 			{
-				log.warning("Malformed UpdateRequest Construct");
+				log.warn("Malformed UpdateRequest Construct");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+ur.getLength();
@@ -172,7 +173,7 @@ public class PCEPUpdate extends PCEPMessage{
 		
 		if (!atLeastOne)
 		{
-			log.warning("Malformed Report Message. There must be at least one update-list object. Exception will be throwed");
+			log.warn("Malformed Report Message. There must be at least one update-list object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
 	}

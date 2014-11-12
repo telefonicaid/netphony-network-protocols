@@ -1,7 +1,7 @@
 package es.tid.rsvp.messages.te;
 
 import java.util.*;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.SenderDescriptor;
@@ -9,6 +9,7 @@ import es.tid.rsvp.constructs.te.SenderDescriptorTE;
 import es.tid.rsvp.messages.RSVPMessageTypes;
 import es.tid.rsvp.messages.RSVPPathMessage;
 import es.tid.rsvp.objects.*;
+import org.slf4j.LoggerFactory;
 
 
 /*
@@ -122,8 +123,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new RSVP-TE Path Message wanted to be sent
@@ -142,9 +143,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-		
-		log.finest("RSVP-TE Path Message Created");
+		log.debug("RSVP-TE Path Message Created");
 				
 	}
 	
@@ -162,9 +161,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("RSVP-TE Path Message Created");
+		log.debug("RSVP-TE Path Message Created");
 	}
 	
 	
@@ -179,7 +176,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		bytes[5]= (byte) reserved;
 		bytes[6]= (byte)((length>>8) & 0xFF);
 		bytes[7]= (byte)(length & 0xFF);
-		log.finest("RSVP-TE Path Message Header encoded");
+		log.debug("RSVP-TE Path Message Header encoded");
 		
 	}
 
@@ -189,7 +186,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	public void encode() throws RSVPProtocolViolationException{
 
-		log.finest("Starting RSVP-TE Path Message encode");
+		log.debug("Starting RSVP-TE Path Message encode");
 		
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
@@ -199,44 +196,44 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		if(integrity != null){
 			
 			length = length + integrity.getLength();
-			log.finest("Integrity RSVP Object found");
+			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
 			
 			length = length + session.getLength();
-			log.finest("Session RSVP Object found");
+			log.debug("Session RSVP Object found");
 			
 
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Session RSVP Object NOT found");
+			log.error("Session RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		if(rsvpHop != null){
 			
 			length = length + rsvpHop.getLength();
-			log.finest("Hop RSVP Object found");
+			log.debug("Hop RSVP Object found");
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Hop RSVP Object NOT found");
+			log.error("Hop RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		if(timeValues != null){
 			
 			length = length + timeValues.getLength();
-			log.finest("Time Values RSVP Object found");
+			log.debug("Time Values RSVP Object found");
 
 			
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Time Values RSVP Object NOT found");
+			log.error("Time Values RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();			
 			
 		}
@@ -245,18 +242,18 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			// Campo Opcional
 			ero.encode();
 			length = length + ero.getLength();
-			log.finest("ERO RSVP Object found");
+			log.debug("ERO RSVP Object found");
 			
 		}
 		if(labelRequest != null){
 			
 			length = length + labelRequest.getLength();
-			log.finest("Label RSVP Object found");
+			log.debug("Label RSVP Object found");
 
 		}else{
 			
 			// Campo Obligatorio, si no existe hay fallo
-			log.severe("Label RSVP Object NOT found");
+			log.error("Label RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();		
 			
 		}
@@ -264,7 +261,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 			// Campo Opcional
 			length = length + sessionAttribute.getLength();
-			log.finest("Session Attribute RSVP Object found");
+			log.debug("Session Attribute RSVP Object found");
 
 		}
 		
@@ -276,7 +273,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
 			length = length + pd.getLength();
-			log.finest("Policy Data RSVP Object found");
+			log.debug("Policy Data RSVP Object found");
 				
 		}
 						
@@ -287,7 +284,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
 			length = length + sd.getLength();
-			log.finest("Sender Descriptor RSVP Construct found");
+			log.debug("Sender Descriptor RSVP Construct found");
 
 		}
 		
@@ -295,7 +292,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 			// Campo Opcional
 			length = length + this.suggestedLabel.getLength();
-			log.finest("Suggested Label RSVP Object found");
+			log.debug("Suggested Label RSVP Object found");
 
 		}
 		
@@ -303,7 +300,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 			// Campo Opcional
 			length = length + upstreamLabel.getLength();
-			log.finest("Upstream Label RSVP Object found");
+			log.debug("Upstream Label RSVP Object found");
 
 		}
 				
@@ -381,7 +378,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 
 			}catch(RSVPProtocolViolationException e){
 				
-				log.severe("Errors during Sender Descriptor number "+i+" encoding");
+				log.error("Errors during Sender Descriptor number " + i + " encoding");
 				
 			}
 						
@@ -409,7 +406,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		calculateChecksum();
 
 		
-		log.finest("RSVP-TE Path Message encoding accomplished");
+		log.debug("RSVP-TE Path Message encoding accomplished");
 		
 	}
 
@@ -419,7 +416,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	public void decode() throws RSVPProtocolViolationException {
 		decodeHeader();
-		log.finest("RSVP-TE Path Message Decode started");
+		log.debug("RSVP-TE Path Message Decode started");
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		while(offset < length){		// Mientras quede mensaje
@@ -610,7 +607,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				
 			}
 		}
-		log.finest("RSVP-TE Path Message decoding accomplished");
+		log.debug("RSVP-TE Path Message decoding accomplished");
 	}
 	
 	
@@ -628,14 +625,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		
 	
 	// GETTERS AND SETTERS
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 
 	public ERO getEro() {
 		return ero;

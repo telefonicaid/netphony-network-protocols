@@ -1,6 +1,8 @@
 package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * TLV Header
@@ -46,15 +48,13 @@ public abstract class BGP4SubTLV {
 	/**
 	 * Logger
 	 */
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 		
 		public BGP4SubTLV(){
-			log=Logger.getLogger("BGP4Parser");
 		}
 		
 		
 		public BGP4SubTLV(byte []bytes, int offset) {
-			log=Logger.getLogger("BGP4Parser");	
 			this.SubTLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 			this.SubTLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 			this.TotalSubTLVLength=SubTLVValueLength+4;

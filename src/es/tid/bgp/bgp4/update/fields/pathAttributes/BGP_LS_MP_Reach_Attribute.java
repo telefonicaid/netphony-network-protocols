@@ -34,7 +34,7 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 			lsNLRI = new PrefixNLRI(bytes, offset2);
 		}
 		else{
-			log.warning("UNKNOWN_NLRI: "+type);
+			log.warn("UNKNOWN_NLRI: "+type);
 		}
 		
 	}

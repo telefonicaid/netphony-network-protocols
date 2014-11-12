@@ -86,7 +86,7 @@ public class Request extends PCEPConstruct{
 			len=len+requestParameters.getLength();
 		}
 		else {
-			log.warning("Request Parameters not found! They are compulsory");
+			log.warn("Request Parameters not found! They are compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (endPoints!=null){
@@ -94,7 +94,7 @@ public class Request extends PCEPConstruct{
 			len=len+endPoints.getLength();
 		}
 		else {
-			log.warning("EndPoints not found! They are compulsory");
+			log.warn("EndPoints not found! They are compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (lSPA!=null){
@@ -217,7 +217,7 @@ public class Request extends PCEPConstruct{
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty Request construct!!!");
+			log.warn("Empty Request construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 
@@ -228,7 +228,7 @@ public class Request extends PCEPConstruct{
 			try {
 				requestParameters=new RequestParameters(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed RP Object found");
+				log.warn("Malformed RP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+requestParameters.getLength();
@@ -239,7 +239,7 @@ public class Request extends PCEPConstruct{
 			}
 		}
 		else {
-			log.warning("Request must start with RP object");
+			log.warn("Request must start with RP object");
 			throw new PCEPProtocolViolationException();
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -249,14 +249,14 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
+					log.warn("Malformed P2MP ENDPOINTS DataPathID Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
 				try {
 					endPoints=new P2MPEndPointsIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed P2MP ENDPOINTS DataPathID Object found");
+					log.warn("Malformed P2MP ENDPOINTS DataPathID Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}						
@@ -264,7 +264,7 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new EndPointsIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTS IPV4 Object found");
+					log.warn("Malformed ENDPOINTS IPV4 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -272,7 +272,7 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new EndPointsUnnumberedIntf(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTS Unnumbered Interface Object found");
+					log.warn("Malformed ENDPOINTS Unnumbered Interface Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -280,7 +280,7 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new XifiUniCastEndPoints(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed EndPointsMAC Object found");
+					log.warn("Malformed EndPointsMAC Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -288,7 +288,7 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new EndPointsIPv6(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTSIPV6 Object found");
+					log.warn("Malformed ENDPOINTSIPV6 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -296,12 +296,12 @@ public class Request extends PCEPConstruct{
 				try {
 					endPoints=new GeneralizedEndPoints(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZED END POINTS Object found");
+					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
 			else {
-				log.warning("END POINT TYPE NOT SUPPORTED");
+				log.warn("END POINT TYPE NOT SUPPORTED");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+endPoints.getLength();
@@ -312,7 +312,7 @@ public class Request extends PCEPConstruct{
 			}
 		}
 		else {
-			log.warning("ENDPOINTS COMPULSORY AFTER  RP object");
+			log.warn("ENDPOINTS COMPULSORY AFTER  RP object");
 			throw new PCEPProtocolViolationException();
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
@@ -320,7 +320,7 @@ public class Request extends PCEPConstruct{
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed LSPA Object found");
+				log.warn("Malformed LSPA Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lSPA.getLength();
@@ -337,14 +337,14 @@ public class Request extends PCEPConstruct{
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}			
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
 				try {
 					bandwidth=new BandwidthExistingLSP(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
@@ -352,7 +352,7 @@ public class Request extends PCEPConstruct{
 				try {
 					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
@@ -360,12 +360,12 @@ public class Request extends PCEPConstruct{
 				try {
 					bandwidth=new BandwidthRequested(bytes, offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed BANDWIDTH Object found");
+					log.warn("Malformed BANDWIDTH Object found");
 					throw new PCEPProtocolViolationException();
 				}		
 				
 			} else {
-				log.warning("Malformed BANDWIDTH Object found");
+				log.warn("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			
@@ -383,7 +383,7 @@ public class Request extends PCEPConstruct{
 			try {
 				metric = new Metric(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			metricList.add(metric);
@@ -400,7 +400,7 @@ public class Request extends PCEPConstruct{
 			try {
 				objectiveFunction=new ObjectiveFunction(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed OBJECTIVE FUNCTION Object found");
+				log.warn("Malformed OBJECTIVE FUNCTION Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+objectiveFunction.getLength();
@@ -415,7 +415,7 @@ public class Request extends PCEPConstruct{
 			try {
 				reservation=new Reservation(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed OBJECTIVE FUNCTION Object found");
+				log.warn("Malformed OBJECTIVE FUNCTION Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+reservation.getLength();
@@ -440,7 +440,7 @@ public class Request extends PCEPConstruct{
 			try {
 				iRO=new IncludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed IRO Object found");
+				log.warn("Malformed IRO Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+iRO.getLength();
@@ -455,7 +455,7 @@ public class Request extends PCEPConstruct{
 			try {
 				loadBalancing=new LoadBalancing(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed LOADBALANCING Object found");
+				log.warn("Malformed LOADBALANCING Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+loadBalancing.getLength();
@@ -470,7 +470,7 @@ public class Request extends PCEPConstruct{
 			try {
 				xro=new ExcludeRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed XRO Object found");
+				log.warn("Malformed XRO Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+xro.getLength();
@@ -486,7 +486,7 @@ public class Request extends PCEPConstruct{
 			try {
 				interLayer=new InterLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed INTER_LAYER Object found");
+				log.warn("Malformed INTER_LAYER Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+interLayer.getLength();
@@ -502,7 +502,7 @@ public class Request extends PCEPConstruct{
 			try {
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed SWITCH_LAYER Object found");
+				log.warn("Malformed SWITCH_LAYER Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+switchLayer.getLength();

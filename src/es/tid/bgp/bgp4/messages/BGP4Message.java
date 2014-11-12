@@ -1,8 +1,9 @@
 package es.tid.bgp.bgp4.messages;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.bgp.bgp4.BGP4Element;
+import org.slf4j.LoggerFactory;
 
 /**
  *  
@@ -84,7 +85,7 @@ public abstract class BGP4Message  implements BGP4Element {
 	/**
 	 * Logger
 	 */
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 	
 
 	public static int BGPHeaderLength = 19;
@@ -101,8 +102,6 @@ public abstract class BGP4Message  implements BGP4Element {
 	 * 
 	 */
 	public BGP4Message(){
-		log=Logger.getLogger("BGP4Parser");
-		
 	}
 	 
 	/**
@@ -112,11 +111,9 @@ public abstract class BGP4Message  implements BGP4Element {
 	 * @throws PCEPProtocolViolationException
 	 */
 	public BGP4Message(byte []bytes){
-		log=Logger.getLogger("BGP4Parser");
-
 		messageLength=(bytes[16] & 0xFF)* 256 + (bytes[17]& 0xFF);
 		if (bytes.length!=this.getLength()){
-			log.warning("Bytes and length in BGP header do not match");			
+			log.warn("Bytes and length in BGP header do not match");
 		}
 		this.messageBytes=new byte[messageLength];
 		System.arraycopy(bytes, 0, messageBytes, 0, messageLength);

@@ -49,7 +49,7 @@ public class LSPErrorCodeTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{
-		log.finest("Encoding LSPErrorCodeTLV TLV");
+		log.debug("Encoding LSPErrorCodeTLV TLV");
 		
 		int length=4;
 		this.setTLVValueLength(length);
@@ -63,7 +63,7 @@ public class LSPErrorCodeTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.finest("Decoding LSPErrorCodeTLV TLV");
+		log.debug("Decoding LSPErrorCodeTLV TLV");
 		int offset = 4;
 		errorCode = ByteHandler.easyCopy(0, 31, tlv_bytes[offset],tlv_bytes[offset+1],
 				tlv_bytes[offset+2],tlv_bytes[offset+3]);

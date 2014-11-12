@@ -19,7 +19,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
 /**
   * Storage TLV (From GEYSERS).
   *  
-	Storage description – is part of the Notification, it includes the
+	Storage description ï¿½ is part of the Notification, it includes the
 	description of the characteristics of the requested storage and is structured in
 	a set of TLVs.
 
@@ -37,7 +37,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
  
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class StorageTLV extends PCEPTLV {
@@ -158,13 +158,13 @@ public class StorageTLV extends PCEPTLV {
 			}
 		}
 		
-		log.finest("Encoding Storage TLV");
+		log.debug("Encoding Storage TLV");
 				
 	}
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding Storage EndPoint TLV");
+		log.debug("Decoding Storage EndPoint TLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){
@@ -173,53 +173,53 @@ public class StorageTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_RESOURCE_ID:
-				log.finest("Storage Resource ID");
+				log.debug("Storage Resource ID");
 				this.resourceID=new ResourceIDSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_LOCATION:
-				log.finest("Location SubTLV");
+				log.debug("Location SubTLV");
 				this.location=new LocationSubTLV(this.getTlv_bytes(), offset);
 				break;
 			
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_COST:
 				CostSubTLV cost = new CostSubTLV(this.getTlv_bytes(), offset);
-				log.finest("Cost SubTLV");
+				log.debug("Cost SubTLV");
 				if (costList==null){
-					log.finest("Creating CostSubTLVList");
+					log.debug("Creating CostSubTLVList");
 					costList=new LinkedList<CostSubTLV>();
 				}
 				this.costList.add(cost);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_NETWORK_SPEC:
-				log.finest("NetworkSpec SubTLV");
+				log.debug("NetworkSpec SubTLV");
 				this.networkSpec=new NetworkSpecSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER:
-				log.finest("Power SubTLV");
+				log.debug("Power SubTLV");
 				this.power=new PowerSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_SIZE:
-				log.finest("StorageSize SubTLV");
+				log.debug("StorageSize SubTLV");
 				this.storageSize=new StorageSizeSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_STORAGE_INFO:
-				log.finest("StorageINFO SubTLV");
+				log.debug("StorageINFO SubTLV");
 				this.storageInfo=new StorageInfoSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME:
 				VolumeSubTLV volume = new VolumeSubTLV(this.getTlv_bytes(), offset);
-				log.finest("Volume SubTLV");
+				log.debug("Volume SubTLV");
 				if (volumeList==null){
-					log.finest("Creating VolumeSubTLVList");
+					log.debug("Creating VolumeSubTLVList");
 					volumeList=new LinkedList<VolumeSubTLV>();
 				}
 				this.volumeList.add(volume);
@@ -228,7 +228,7 @@ public class StorageTLV extends PCEPTLV {
 		}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Storage TLV");
+				log.debug("No more SubTLVs in Storage TLV");
 				fin=true;
 			}
 

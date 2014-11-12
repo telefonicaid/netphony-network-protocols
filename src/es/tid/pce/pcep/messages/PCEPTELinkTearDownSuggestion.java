@@ -77,7 +77,7 @@ public class PCEPTELinkTearDownSuggestion extends PCEPMessage {
 				try {
 					endPoints=new EndPointsIPv4(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTS IPV4 Object found");
+					log.warn("Malformed ENDPOINTS IPV4 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -85,7 +85,7 @@ public class PCEPTELinkTearDownSuggestion extends PCEPMessage {
 				try {
 					endPoints=new EndPointsIPv6(this.messageBytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTSIPV6 Object found");
+					log.warn("Malformed ENDPOINTSIPV6 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}

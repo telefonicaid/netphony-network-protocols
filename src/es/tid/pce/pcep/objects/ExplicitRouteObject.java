@@ -161,12 +161,12 @@ public class ExplicitRouteObject extends PCEPObject{
 							addEROSubobject(oles);
 							break;	
 						default:
-							log.warning("ERO LABEL Subobject Ctype Unknown");
+							log.warn("ERO LABEL Subobject Ctype Unknown");
 							break;							
 					}
 					break;
 				default:
-					log.warning("ERO Subobject Unknown subojectclass: "+subojectclass);
+					log.warn("ERO Subobject Unknown subojectclass: "+subojectclass);
 					//FIXME What do we do??
 					break;
 			}

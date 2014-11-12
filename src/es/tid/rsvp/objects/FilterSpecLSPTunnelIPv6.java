@@ -2,7 +2,8 @@ package es.tid.rsvp.objects;
 
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -65,8 +66,8 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 	/**
 	 * <p>Log
 	 */
-	
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * <p>Parameters constructor to encode this kind of object. </p>
@@ -85,9 +86,7 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 20;
 		bytes = new byte[length];
 		
-		log=Logger.getLogger("ROADM");
-
-		log.finest("Filter Spec LSP Tunnel IPv6 Object Created");
+		log.debug("Filter Spec LSP Tunnel IPv6 Object Created");
 			
 	}
 	
@@ -103,9 +102,7 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Filter Spec LSP Tunnel IPv6 Object Created");
+		log.debug("Filter Spec LSP Tunnel IPv6 Object Created");
 		
 	}
 
@@ -144,7 +141,7 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		bytes[currentIndex+1] = (byte) 0;
 		bytes[currentIndex+2] = (byte)((LSPId>>8) & 0xFF);
 		bytes[currentIndex+3] = (byte)(LSPId & 0xFF);
-		log.finest("Filter Spec LSP Tunnel IPv6 Object Encoded");
+		log.debug("Filter Spec LSP Tunnel IPv6 Object Encoded");
 		
 	}
 
@@ -177,11 +174,11 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		try{
 			senderNodeAddress = (Inet6Address) Inet6Address.getByAddress(receivedAddress);
 		}catch(UnknownHostException e){
-			log.severe("Unknown Host received on Sender Template LSP IPv6 Object");
+			log.error("Unknown Host received on Sender Template LSP IPv6 Object");
 		}
 		offset = offset + receivedAddress.length;
 		LSPId = (int)(bytes[offset+2] | bytes[offset+3]);
-		log.finest("Filter Spec LSP Tunnel IPv6 Object Decoded");				
+		log.debug("Filter Spec LSP Tunnel IPv6 Object Decoded");
 		
 	}
 	
@@ -203,13 +200,4 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		LSPId = lSPId;
 	}
 
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-	
-	
 }

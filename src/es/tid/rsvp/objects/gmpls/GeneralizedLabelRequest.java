@@ -1,10 +1,11 @@
 package es.tid.rsvp.objects.gmpls;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.LabelRequest;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Fernando Mu�oz del Nuevo
@@ -245,8 +246,8 @@ public class GeneralizedLabelRequest extends LabelRequest {
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	public GeneralizedLabelRequest(int lspEncodingType, int switchingType, int gpid){
 		
@@ -259,9 +260,7 @@ public class GeneralizedLabelRequest extends LabelRequest {
 		
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 4;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Generalized Label Request Object Created");
+		log.debug("Generalized Label Request Object Created");
 		
 		
 	}
@@ -278,9 +277,7 @@ public class GeneralizedLabelRequest extends LabelRequest {
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Generalized Label Request Object Created");
+		log.debug("Generalized Label Request Object Created");
 		
 	}	
 	
@@ -303,14 +300,4 @@ public class GeneralizedLabelRequest extends LabelRequest {
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}	
-	
-
 }

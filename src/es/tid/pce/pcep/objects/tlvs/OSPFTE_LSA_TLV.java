@@ -24,7 +24,7 @@ public class OSPFTE_LSA_TLV extends PCEPTLV {
 	}
 	
 	public void encode() {
-		log.finest("Encoding OSPFTE LSA TLV");		
+		log.debug("Encoding OSPFTE LSA TLV");
 		interASTEv2LSA.encode();
 		this.setTLVValueLength(interASTEv2LSA.getLength());
 		this.tlv_bytes=new byte[this.TotalTLVLength];
@@ -34,12 +34,12 @@ public class OSPFTE_LSA_TLV extends PCEPTLV {
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding OSPFTE LSA TLV");
+		log.debug("Decoding OSPFTE LSA TLV");
 		try {
 			interASTEv2LSA= new InterASTEv2LSA(this.tlv_bytes,4);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			log.warning("Problem decoding OSPFTE LSA TLV");
+			log.warn("Problem decoding OSPFTE LSA TLV");
 			throw new MalformedPCEPObjectException();
 		}
 	}

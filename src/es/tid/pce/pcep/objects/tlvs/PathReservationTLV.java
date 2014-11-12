@@ -41,14 +41,14 @@ public class PathReservationTLV extends PCEPTLV {
 	 
 	@Override
 	public void encode() {
-		log.fine("Encoding PathReservation TLV");
+		log.debug("Encoding PathReservation TLV");
 		int len=0;
 		if (eRO!=null){
 			eRO.encode();
 			len=len+eRO.getLength();
 		}
 		else {
-			log.severe("There are not notificationSubTLV");
+			log.error("There are not notificationSubTLV");
 			//throw new MalformedPCEPObjectException();
 			return;//FIXME: ARREGLAR PARA LANZAR EXCEPCIONES
 		}
@@ -77,7 +77,7 @@ public class PathReservationTLV extends PCEPTLV {
 	}
 
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding PathReservation TLV");
+		log.debug("Decoding PathReservation TLV");
 		int offset=4;
 		//Time
 		for (int k = 0; k < 4; k++) {
@@ -90,7 +90,7 @@ public class PathReservationTLV extends PCEPTLV {
 		//ERO
 		int oc=PCEPObject.getObjectClass(this.tlv_bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
-			log.finest("ERO Object found");
+			log.debug("ERO Object found");
 			try {
 				eRO=new ExplicitRouteObject(this.tlv_bytes,offset);
 			} catch (MalformedPCEPObjectException e) {

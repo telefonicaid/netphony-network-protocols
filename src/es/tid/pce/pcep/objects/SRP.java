@@ -108,7 +108,7 @@ public class SRP extends PCEPObject
 				this.ObjectLength+=pathSetupTLV.getTotalTLVLength();	
 
 			}catch (Exception e){
-				log.warning(e.getMessage());
+				log.warn(e.getMessage());
 			}
 						
 		}
@@ -170,7 +170,7 @@ public class SRP extends PCEPObject
 					pathSetupTLV=new PathSetupTLV(this.getObject_bytes(), offset);				
 					break;								
 				default:
-					log.warning("Unknown or unexpected TLV found");
+					log.warn("Unknown or unexpected TLV found");
 					//FIXME: Que hacemos con los desconocidos
 					break;
 			}

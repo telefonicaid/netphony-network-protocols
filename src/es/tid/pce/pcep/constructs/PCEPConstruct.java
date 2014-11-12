@@ -1,8 +1,8 @@
 package es.tid.pce.pcep.constructs;
 
-import java.util.logging.Logger;
-
 import es.tid.pce.pcep.PCEPElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * A PCEP Construct is a rule that joins PCEP Objects and Constructions
@@ -11,7 +11,7 @@ import es.tid.pce.pcep.PCEPElement;
 public abstract class PCEPConstruct implements PCEPElement{
 	
 	
-	protected Logger log=Logger.getLogger("PCEPParser");
+	protected static final Logger log= LoggerFactory.getLogger("PCEPParser");
 
 	protected byte[] bytes;
 	protected int length;

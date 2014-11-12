@@ -1,6 +1,7 @@
 package es.tid.pce.pcep.objects.tlvs.subtlvs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,7 +29,7 @@ import java.util.logging.Logger;
 
    This memo defines Types 1 and 2.  See the IANA Considerations section
    for allocation of new Types.
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 
@@ -57,15 +58,13 @@ public abstract class PCEPSubTLV {
 		/**
 		 * Logger
 		 */
-		protected Logger log;
+		protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
 		
 		public PCEPSubTLV(){
-			log=Logger.getLogger("PCEPParser");
 		}
 		
 		
 		public PCEPSubTLV(byte []bytes, int offset) {
-			log=Logger.getLogger("Parser");	
 			this.SubTLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 			this.SubTLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 			this.TotalSubTLVLength=SubTLVValueLength+4;

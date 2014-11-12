@@ -43,7 +43,7 @@ TBD				Network Adapter	Type of adapter for network connectivity	0..1
  
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class NetworkSpecSubTLV extends PCEPSubTLV {
@@ -161,40 +161,40 @@ public class NetworkSpecSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_EP_ADDRESS:
-				log.finest("EP addres");
+				log.debug("EP addres");
 				this.epaddress=new EPaddressSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv4:
-				log.finest("TNA IPv4 found");
+				log.debug("TNA IPv4 found");
 				this.tnaIPv4=new TNAIPv4SubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv6:
-				log.finest("TNA IPv6 found");
+				log.debug("TNA IPv6 found");
 				this.tnaIPv6=new TNAIPv6SubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_NSAP:
-				log.finest("TNA NSAP found");
+				log.debug("TNA NSAP found");
 				this.tnaNSAP=new TNANSAPSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MTU:
-				log.finest("MTU found");
+				log.debug("MTU found");
 				this.mtu=new MTUSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MAX_SPEED:
-				log.finest("Max Speed found");
+				log.debug("Max Speed found");
 				this.maxSpeed=new MaxSpeedSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_NETWORK_ADAPTER:
-				log.finest("Network adapter found");
+				log.debug("Network adapter found");
 				this.networkAdapter=new NetworkAdapterSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
@@ -202,7 +202,7 @@ public class NetworkSpecSubTLV extends PCEPSubTLV {
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Network Spec SubTLV");
+				log.debug("No more SubTLVs in Network Spec SubTLV");
 				fin=true;
 			}
 

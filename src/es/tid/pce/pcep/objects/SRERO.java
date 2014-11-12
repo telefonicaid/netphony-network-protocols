@@ -1,9 +1,10 @@
 package es.tid.pce.pcep.objects;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
+import org.slf4j.LoggerFactory;
 
 /*
  * SRERO.
@@ -15,10 +16,10 @@ public class SRERO extends PCEPObject{
 	public LinkedList<SREROSubobject> SREROSubobjectList;
 	
 	//Constructors
+  private static Logger log = LoggerFactory.getLogger("PCEServer");
 
 	public SRERO() {
 		super();
-		log=Logger.getLogger("PCEServer");
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO);
 		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_SR_ERO);
 		SREROSubobjectList=new LinkedList<SREROSubobject>();
@@ -32,7 +33,6 @@ public class SRERO extends PCEPObject{
 	 */
 	public SRERO (byte []bytes, int offset)throws MalformedPCEPObjectException{
 		super(bytes, offset);
-		log=Logger.getLogger("PCEServer");
 		SREROSubobjectList=new LinkedList<SREROSubobject>();
 		decode();
 	}
