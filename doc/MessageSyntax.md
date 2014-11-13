@@ -22,9 +22,7 @@ Keepalive Message::=
 
 PCReq Message
 -------------
-| ```PCReq Message::=``` |  ```<Common Header>[<svec-tuple-list>]<request-list>  ```|
-|  a |  b| 
-|---|---|
+```PCReq Message::= <Common Header>[<svec-tuple-list>]<request-list>  ```
 
 ```
 PCReq Message::=
@@ -46,7 +44,7 @@ PCReq Message::=
 <path-key-expansion>::=
 						<PATH-KEY>
      
-``
+```
 PCRep Message
 -------------
 
