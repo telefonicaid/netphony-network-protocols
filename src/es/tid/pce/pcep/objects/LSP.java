@@ -161,7 +161,8 @@ public class LSP extends PCEPObject{
 	@Override
 	public void encode() 
 	{
-		ObjectLength = 4 + 4;
+		
+		ObjectLength = 4 + 4 + 4;
 		if (symbolicPathNameTLV_tlv!=null){
 			symbolicPathNameTLV_tlv.encode();
 			ObjectLength=ObjectLength+symbolicPathNameTLV_tlv.getTotalTLVLength();
@@ -205,7 +206,7 @@ public class LSP extends PCEPObject{
 //		ByteHandler.IntToBuffer(0,offset*8, 8, LSP_sig_type, this.object_bytes);
 		
 		offset += 1;
-
+		
 		if (symbolicPathNameTLV_tlv!=null){
 			System.arraycopy(symbolicPathNameTLV_tlv.getTlv_bytes(),0,this.object_bytes,offset,symbolicPathNameTLV_tlv.getTotalTLVLength());
 			offset=offset+symbolicPathNameTLV_tlv.getTotalTLVLength();		
@@ -226,7 +227,7 @@ public class LSP extends PCEPObject{
 		if (lspDBVersion_tlv!=null){
 			System.arraycopy(lspDBVersion_tlv.getTlv_bytes(),0,this.object_bytes,offset,lspDBVersion_tlv.getTotalTLVLength());
 			offset=offset+lspDBVersion_tlv.getTotalTLVLength();
-		}
+		}	
 	}
 
 	@Override

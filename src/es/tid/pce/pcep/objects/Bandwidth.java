@@ -1,5 +1,8 @@
 package es.tid.pce.pcep.objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p> Base abstract class for representing Bandwidth Object.</p>
  * <p> </p>
@@ -10,6 +13,7 @@ package es.tid.pce.pcep.objects;
  *
  */
 public abstract class Bandwidth extends PCEPObject{
+	protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	
 	public Bandwidth(){
 		super();

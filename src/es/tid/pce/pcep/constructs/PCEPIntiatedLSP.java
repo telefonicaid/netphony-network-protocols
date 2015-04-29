@@ -113,11 +113,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		System.arraycopy(lsp.getBytes(), 0, this.getBytes(), offset, lsp.getLength());
 		offset=offset + lsp.getLength();
 
-		if (endPoint!=null){
-
+		if (endPoint!=null)
+		{
 			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
 			offset=offset + endPoint.getLength();
-
 		}
 		
 		if (ero!=null)
@@ -131,10 +130,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			offset=offset + srero.getLength();			
 		}
 
-
-
-
-		if (bandwidth!=null){
+		if (bandwidth!=null)
+		{
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
 		}
@@ -151,6 +148,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
+			log.info("There should be at least one RSP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
 			try 
@@ -172,9 +170,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			}
 		}
 
-		
-
-
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_LSP) {
 			log.warn("There should be at least one LSP Object");
 			throw new PCEPProtocolViolationException();
@@ -186,7 +181,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			} 
 			catch (MalformedPCEPObjectException e) 
 			{
-				log.warn("Malformed LSP Object found");
+				log.warn("2. Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lsp.getLength();
@@ -201,7 +196,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS) {
 			log.warn("There should be at least one EndPoint Object. Should throw Ex");
-			throw new PCEPProtocolViolationException();
+			//throw new PCEPProtocolViolationException(); //Optional
 		} else {
 			try 
 			{
@@ -289,13 +284,16 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				log.warn("Malformed EndPoint Object found");
 				//throw new PCEPProtocolViolationException();
 			}
-			offset = offset + endPoint.getLength();
-			len += endPoint.getLength();
-			if (offset>=max_offset){
-				this.setLength(len);
-				//In draft, ERO is mandatory... here we relax the draft
-				log.warn("Just one SRP, one LSP and one END-POINTS, object found, no more");
-				//throw new PCEPProtocolViolationException();
+			if (endPoint!=null)
+			{
+				offset = offset + endPoint.getLength();
+				len += endPoint.getLength();
+				if (offset>=max_offset){
+					this.setLength(len);
+					//In draft, ERO is mandatory... here we relax the draft
+					log.warn("Just one SRP, one LSP and one END-POINTS, object found, no more");
+					//throw new PCEPProtocolViolationException();
+				}
 			}
 		}
 
@@ -313,10 +311,9 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			}
 			offset = offset + ero.getLength();
 			len += ero.getLength();
-
-
 			
-		}//ERO
+		}
+		
 		else if(PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
 		{
 			try 
@@ -334,6 +331,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		else
 		{
+			//log.info("There should be at least one ERO or SRERO Object but we dont do it that way");
 			//There should be at least one ERO or SRERO Object, relaxed implementation
 			//throw new PCEPProtocolViolationException();						
 		}
@@ -377,8 +375,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				throw new PCEPProtocolViolationException();
 			}
 		}
+		this.setLength(len);
 	}
 
+	
 	public SRP getRsp() 
 	{
 		return srp;
@@ -451,10 +451,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			sb.append(bandwidth.toString());
 		}		
 		
-		
-		
 		return sb.toString();
 	}
-
 
 }
