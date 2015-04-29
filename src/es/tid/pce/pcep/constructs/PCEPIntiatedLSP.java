@@ -181,7 +181,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			} 
 			catch (MalformedPCEPObjectException e) 
 			{
-				log.warn("2. Malformed LSP Object found");
+				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lsp.getLength();
