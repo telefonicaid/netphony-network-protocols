@@ -20,9 +20,12 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.ServerStorageSubTLV;
 
 
 /**
+ * ServerTLV from GEYSERS.
+ * Enconding: propietary from GEYSERS EU project.
+ * TLV Type: 1012 (non-standard)
   * From GEYSERS
   *  
-	Storage description – is part of the Notification, it includes the
+	Storage description ï¿½ is part of the Notification, it includes the
 	description of the characteristics of the requested storage and is structured in
 	a set of TLVs.
 
@@ -40,7 +43,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.ServerStorageSubTLV;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
  
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class ServerTLV extends PCEPTLV {
@@ -217,45 +220,45 @@ public class ServerTLV extends PCEPTLV {
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_NETWORK_SPEC:
-				log.finest("NetworkSpec SubTLV");
+				log.debug("NetworkSpec SubTLV");
 				this.networkSpec=new NetworkSpecSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER:
-				log.finest("Power SubTLV");
+				log.debug("Power SubTLV");
 				this.power=new PowerSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_SERVER_STORAGE:
-				log.finest("ServerStorage SubTLV");
+				log.debug("ServerStorage SubTLV");
 				this.serverStorage=new ServerStorageSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_PROCESSOR:
-				log.finest("Procesor SubTLV");
+				log.debug("Procesor SubTLV");
 				ProcessorSubTLV processor = new ProcessorSubTLV(this.getTlv_bytes(), offset);
 				if (processorList==null){
-					log.finest("Creating ProcessorSubTLVList");
+					log.debug("Creating ProcessorSubTLVList");
 					processorList=new LinkedList<ProcessorSubTLV>();
 				}
 				this.processorList.add(processor);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MEMORY:
-				log.finest("Memory SubTLV");
+				log.debug("Memory SubTLV");
 				this.memory = new MemorySubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_OS:
-				log.finest("OperativeSystem SubTLV");
+				log.debug("OperativeSystem SubTLV");
 				this.operativeSystem = new OperativeSystemSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_APPLICATION:
 				ApplicationSubTLV application = new ApplicationSubTLV(this.getTlv_bytes(), offset);
-				log.finest("Application SubTLV");
+				log.debug("Application SubTLV");
 				if (applicationList==null){
-					log.finest("Creating VolumeSubTLVList");
+					log.debug("Creating VolumeSubTLVList");
 					applicationList=new LinkedList<ApplicationSubTLV>();
 				}
 				this.applicationList.add(application);
@@ -264,7 +267,7 @@ public class ServerTLV extends PCEPTLV {
 		}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Server TLV");
+				log.debug("No more SubTLVs in Server TLV");
 				fin=true;
 			}
 

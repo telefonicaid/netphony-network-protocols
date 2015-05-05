@@ -41,7 +41,7 @@ TBD				Volume info		Contains information about the			0..1
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class VolumeSubTLV extends PCEPSubTLV {
@@ -112,27 +112,27 @@ public class VolumeSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME_SIZE:
-				log.finest("VolumeSize SubTLV found");
+				log.debug("VolumeSize SubTLV found");
 				this.volumeSize=new VolumeSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_BLOCK_SIZE:
-				log.finest("BlockSize SubTLV found");
+				log.debug("BlockSize SubTLV found");
 				this.blockSize=new BlockSizeSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_VOLUME_INFO:
-				log.finest("VolumeInfo SubTLV found");
+				log.debug("VolumeInfo SubTLV found");
 				this.volumeInfo=new VolumeInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;			
 			}
 			
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Volume Sub-TLV");
+				log.debug("No more SubTLVs in Volume Sub-TLV");
 				fin=true;
 			}
 

@@ -48,7 +48,7 @@ public class RequestInfoTLV extends PCEPTLV {
 	}
 
 	public void decode() throws MalformedPCEPObjectException {
-		log.fine("Decoding RequestInfo TLV");
+		log.debug("Decoding RequestInfo TLV");
 	
 		byte[] ip=new byte[4];
 		System.arraycopy(this.tlv_bytes, 4, ip, 0, 4);

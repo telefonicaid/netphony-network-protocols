@@ -37,7 +37,7 @@ public class MaxRequestTimeTLV extends PCEPTLV {
 	 * Encodes the maximum Request Time TLV.
 	 */
 	public void encode() {
-		log.finest("codificando Max Request Time TLV");
+		log.debug("codificando Max Request Time TLV");
 		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();

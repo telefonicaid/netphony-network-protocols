@@ -1,6 +1,8 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Base class for OSPF Sub TLVs
@@ -62,15 +64,13 @@ public abstract class OSPFSubTLV {
 		/**
 		 * Logger
 		 */
-		protected Logger log;
+		protected static final Logger log = LoggerFactory.getLogger("OSPFParser");
 		
 		public OSPFSubTLV(){
-			log=Logger.getLogger("OSPFParser");
 		}
 		
 		
 		public OSPFSubTLV(byte []bytes, int offset) {			
-			log=Logger.getLogger("OSPFParser");		
 			this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 			this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 			this.TotalTLVLength=TLVValueLength+4;			

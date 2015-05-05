@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /**
 
@@ -69,8 +70,8 @@ public class HelloACK extends Hello{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
@@ -89,9 +90,7 @@ public class HelloACK extends Hello{
 
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
 
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Hello ACK Object Created");
+		log.debug("Hello ACK Object Created");
 
 	}
 	
@@ -107,9 +106,7 @@ public class HelloACK extends Hello{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Hello ACK Object Created");
+		log.debug("Hello ACK Object Created");
 		
 	}
 	
@@ -128,7 +125,7 @@ public class HelloACK extends Hello{
 	
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Hello ACK encode");
+		log.debug("Starting Hello ACK encode");
 		
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -145,7 +142,7 @@ public class HelloACK extends Hello{
 		bytes[currentIndex+2] = (byte)((dstInstance>>8) & 0xFF);
 		bytes[currentIndex+3] = (byte)(dstInstance & 0xFF);
 		
-		log.finest("Encoding Hello ACK accomplished");
+		log.debug("Encoding Hello ACK accomplished");
 		
 		
 	}
@@ -165,7 +162,7 @@ public class HelloACK extends Hello{
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 
-		log.finest("Starting Hello ACK decode");
+		log.debug("Starting Hello ACK decode");
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -175,19 +172,11 @@ public class HelloACK extends Hello{
 		
 		dstInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
 		
-		log.finest("Decoding Hello ACK accomplished");
+		log.debug("Decoding Hello ACK accomplished");
 		
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 
 	public int getSrcInstance() {
 		return srcInstance;

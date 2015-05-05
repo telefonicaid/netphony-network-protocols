@@ -276,7 +276,7 @@ public class LinkNLRI extends LinkStateNLRI {
 					
 			
 				default:
-					log.warning("Unknown TLV found, type :"+subTLVType);
+					log.warn("Unknown TLV found, type :"+subTLVType);
 					
 
 				}

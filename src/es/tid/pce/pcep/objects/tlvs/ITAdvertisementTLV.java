@@ -7,6 +7,8 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
+ * GEYSERS IT Advertisement TLV, Experimental & Propietary, from GEYSERS.
+ * 
 All PCEP TLVs have the following format:
 
   Type:   2 bytes
@@ -42,7 +44,7 @@ GEYSERS IT Advertisement TLV
 
 * 
 * 
-* @author Alejandro Tovar de Dueñas
+* @author Alejandro Tovar de Dueï¿½as
 *
 */
 
@@ -73,7 +75,7 @@ public class ITAdvertisementTLV extends PCEPTLV {
 	}
 
 	public void decode() throws MalformedPCEPObjectException {
-		log.finest("Decoding IT Advertisement TLV");//FIXME: Cambiar a fine
+		log.debug("Decoding IT Advertisement TLV");//FIXME: Cambiar a fine
 		//Adv_ID=new byte[4];
 		byte[] ip=new byte[4];
 		System.arraycopy(this.tlv_bytes, 4, ip, 0, 4);

@@ -69,7 +69,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{		
-		log.fine("Encoding StatefulCapabilityTLV");
+		log.debug("Encoding StatefulCapabilityTLV");
 		int length=4;
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -89,7 +89,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 	
 	public void decode()
 	{
-		log.fine("Decoding StatefulCapabilityTLV");
+		log.debug("Decoding StatefulCapabilityTLV");
 		int offset = 4;
 		
 		dFlag = (ByteHandler.easyCopy(3,3,this.tlv_bytes[offset+3]) == 1);

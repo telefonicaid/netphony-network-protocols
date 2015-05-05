@@ -1,7 +1,8 @@
 package es.tid.bgp.bgp4.open;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -48,8 +49,9 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 
 	LinkedList<BGP4Capability> capabilityList;
 
+  private static Logger log = LoggerFactory.getLogger("BGP4Parser");
+
 	public BGP4CapabilitiesOptionalParameter(){
-		log=Logger.getLogger("BGP4Parser");	
 		this.type = BGP4OptionalParametersTypes.CAPABILITY_OPTIONAL_PARAMETER;
 		capabilityList = new LinkedList<BGP4Capability>();
 	}

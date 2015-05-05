@@ -480,7 +480,7 @@ public class LinkStateAttribute  extends PathAttribute{
 				break;
 
 			default:
-				log.warning("Unknown TLV found: "+TLVType);
+				log.warn("Unknown TLV found: "+TLVType);
 
 
 			}

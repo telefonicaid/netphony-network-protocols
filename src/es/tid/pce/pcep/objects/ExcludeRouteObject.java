@@ -241,7 +241,7 @@ public class ExcludeRouteObject extends PCEPObject {
 					break;					
 
 				default:
-					log.warning("XRO Subobject Unknown");
+					log.warn("XRO Subobject Unknown");
 					fin=true;
 					//FIXME What do we do??
 					break;

@@ -1,10 +1,10 @@
- package es.tid.pce.pcep.objects;
-
-import java.util.logging.Logger;
+package es.tid.pce.pcep.objects;
 
 import es.tid.pce.pcep.PCEPElement;
- 
-/**
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+ /**
  * Base class for PCEPObject.
  * Implements PCEP Object Header as defined in RFC 5440.
  * PCEP Object must extend this class.
@@ -65,23 +65,23 @@ import es.tid.pce.pcep.PCEPElement;
  * @serial 0.1
 */
 public abstract class PCEPObject implements PCEPElement {
-	
+
 	/**
 	 * Object-Class (8 bits):  identifies the PCEP object class.
 	 */
 	protected int ObjectClass;//Object Class
-	
+
 	/**
 	 * OT (Object-Type - 4 bits):  identifies the PCEP object type.
 	 */
 	protected int OT;//Object Type
-	
+
 	/**
 	 * Res flags (2 bits):  Reserved field.  This field MUST be set to zero
      * on transmission and MUST be ignored on receipt.
 	 */
 	protected int Res;
-	
+
 	/**
 	 * P flag (Processing-Rule - 1-bit):  the P flag allows a PCC to specify
       in a PCReq message sent to a PCE whether the object must be taken
@@ -91,7 +91,7 @@ public abstract class PCEPObject implements PCEPElement {
       object is optional and the PCE is free to ignore it.
 	 */
 	protected boolean Pbit;
-	
+
 	/**
 	 *  I flag (Ignore - 1 bit):  the I flag is used by a PCE in a PCRep
       message to indicate to a PCC whether or not an optional object was
@@ -105,7 +105,7 @@ public abstract class PCEPObject implements PCEPElement {
       PCReq message.
 	 */
 	protected boolean Ibit;
-	
+
 	/**
 	 * Object Length (16 bits):  Specifies the total object length including
       the header, in bytes.  The Object Length field MUST always be a
@@ -113,14 +113,14 @@ public abstract class PCEPObject implements PCEPElement {
       is 65528 bytes.
 	 */
 	protected int ObjectLength;
-	
+
 	/**
 	 * Bytes of the object
 	 */
 	protected byte object_bytes[];
-	
-	protected Logger log;
-	
+
+	protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
+
 	/**
 	 * Constructs a PCEPObject 
 	 */
@@ -129,10 +129,9 @@ public abstract class PCEPObject implements PCEPElement {
 		Res=0;
 		Pbit=false;
 		Ibit=false;
-		log=Logger.getLogger("PCEPParser");
-		
+
 	}
-	
+
 	/**
 	 * Construct a new PCEP Object from a sequence of bytes.
 	 * @param bytes
@@ -140,26 +139,25 @@ public abstract class PCEPObject implements PCEPElement {
 	 * @throws MalformedPCEPObjectException
 	 */
 	public PCEPObject(byte []bytes, int offset) throws MalformedPCEPObjectException{
-		log=Logger.getLogger("PCEPParser");
 		ObjectLength=((bytes[offset+2]<<8)& 0xFF00) |  (bytes[offset+3] & 0xFF);
 		this.object_bytes=new byte[ObjectLength];
 		System.arraycopy(bytes, offset, object_bytes, 0, ObjectLength);
 		decodeHeader();	
 	}
-		
-	
+
+
 	/**
 	 * Encode the object. It is specific to the PCEP Object. Must be implemented
 	 * in each object!!!!!
 	 */
 	public abstract void encode();
-	
+
 	/**
 	 * Decode the object. It is specific to the PCEP Object. Must be implemented
 	 * in each object!!!!
 	 */
 	public abstract void decode() throws MalformedPCEPObjectException;
-	
+
 	/**
 	 * Decodes an object from a sequence of bytes starting in offset. It is the same as calling
 	 * the constructor with the sequence of bytes. 
@@ -174,7 +172,7 @@ public abstract class PCEPObject implements PCEPElement {
 		decodeHeader();
 		decode();
 	}
-	
+
 	/**
 	 * Encodes the header of the PCEP object (4 bytes)
 	 */
@@ -243,9 +241,9 @@ public abstract class PCEPObject implements PCEPElement {
 	public void setRes(int res) {
 		Res = res;
 	}
-	
 
-	
+
+
 	public boolean isPbit() {
 		return Pbit;
 	}
@@ -269,8 +267,8 @@ public abstract class PCEPObject implements PCEPElement {
 	public int getLength() {
 		return ObjectLength;
 	}
-	
-	
+
+
 
 //	/**
 //	 * 
@@ -300,7 +298,7 @@ public abstract class PCEPObject implements PCEPElement {
 		return object_bytes;
 	}	
 
-	
+
 	/**
 	 * Static method to obtain the object class of an object encoded in a byte array
 	 * @param bytes Byte array where the object appears
@@ -315,9 +313,9 @@ public abstract class PCEPObject implements PCEPElement {
 		catch (ArrayIndexOutOfBoundsException e){
 			return 0;
 		}
-		 
+
 	}
-	
+
 	/**
 	 * Static method to get the Object type of an object encoded in a byte array
 	 * @param bytes Byte array where the object appears
@@ -333,7 +331,7 @@ public abstract class PCEPObject implements PCEPElement {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Static method to get the length of an object in a sequence of bytes
 	 * @param bytes Byte array where the object appears
@@ -343,8 +341,8 @@ public abstract class PCEPObject implements PCEPElement {
 	public static int getObjectLength(byte[] bytes, int offset){
 		return (((int)((bytes[offset+2]&0xFF)<<8)& 0xFF00)|  ((int)bytes[offset+3] & 0xFF));
 	}
-	
-	
+
+
 	public static boolean supportedObject(int oc){
 		if ((oc>ObjectParameters.PCEP_OBJECT_CLASS_CLOSE)|(oc==0)){
 			return false;
@@ -354,4 +352,3 @@ public abstract class PCEPObject implements PCEPElement {
 		}
 	}
 }
-

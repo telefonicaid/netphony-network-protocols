@@ -4,7 +4,10 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/**
+ * LSP-ERROR-CODE TLV draft-ietf-pce-stateful-pce-09.
+ * Encoding: follows draft-ietf-pce-stateful-pce-09
+ * TLV Type: 5559 (non-standard)
  * If an LSP Update Request failed, an LSP State Report MUST be sent to
    all connected stateful PCEs.  LSP State Report MUST contain the LSP
    Error Code TLV, indicating the cause of the failure.
@@ -49,7 +52,7 @@ public class LSPErrorCodeTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{
-		log.finest("Encoding LSPErrorCodeTLV TLV");
+		log.debug("Encoding LSPErrorCodeTLV TLV");
 		
 		int length=4;
 		this.setTLVValueLength(length);
@@ -63,7 +66,7 @@ public class LSPErrorCodeTLV extends PCEPTLV
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.finest("Decoding LSPErrorCodeTLV TLV");
+		log.debug("Decoding LSPErrorCodeTLV TLV");
 		int offset = 4;
 		errorCode = ByteHandler.easyCopy(0, 31, tlv_bytes[offset],tlv_bytes[offset+1],
 				tlv_bytes[offset+2],tlv_bytes[offset+3]);

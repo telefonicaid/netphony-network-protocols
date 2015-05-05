@@ -1,10 +1,11 @@
 package es.tid.rsvp.objects;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.subobjects.*;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -55,8 +56,8 @@ public class RRO extends RSVPObject{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new RRO Object wanted to be attached to a new message
@@ -69,9 +70,7 @@ public class RRO extends RSVPObject{
 		length = 4;
 		rroSubobjects = new LinkedList<RROSubobject>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RRO Object Created");
+		log.debug("RRO Object Created");
 
 	}
 	
@@ -88,9 +87,7 @@ public class RRO extends RSVPObject{
 		this.bytes = new byte[this.getLength()];
 		rroSubobjects = new LinkedList<RROSubobject>();
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("RRO Object Created");
+		log.debug("RRO Object Created");
 		
 	}
 	
@@ -175,7 +172,7 @@ public class RRO extends RSVPObject{
 					addRROubobject(lrroso);
 					break;
 				default:
-					log.warning("RRO Subobject Unknown");
+					log.warn("RRO Subobject Unknown");
 					//FIXME What do we do??
 					break;
 			}
@@ -185,14 +182,6 @@ public class RRO extends RSVPObject{
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 
 	public LinkedList<RROSubobject> getRroSubobjects() {
 		return rroSubobjects;

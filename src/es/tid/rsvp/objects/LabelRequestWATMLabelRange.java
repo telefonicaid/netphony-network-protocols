@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /*
 
@@ -155,8 +156,8 @@ public class LabelRequestWATMLabelRange extends LabelRequest{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Label Request With ATM Label Range Object 
@@ -198,9 +199,7 @@ public class LabelRequestWATMLabelRange extends LabelRequest{
 		
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 12;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Request With ATM Label Range Object Created");
+		log.debug("Label Request With ATM Label Range Object Created");
 		
 		
 	}
@@ -217,9 +216,7 @@ public class LabelRequestWATMLabelRange extends LabelRequest{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Label Request With ATM Label Range Object Created");
+		log.debug("Label Request With ATM Label Range Object Created");
 		
 	}
 	
@@ -254,14 +251,5 @@ public class LabelRequestWATMLabelRange extends LabelRequest{
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-
 
 }

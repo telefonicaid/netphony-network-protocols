@@ -2,7 +2,8 @@ package es.tid.rsvp.objects;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -55,8 +56,8 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	/**
 	 * <p>Log
 	 */
-	
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * <p>Parameters constructor to encode this kind of object. </p>
@@ -76,9 +77,7 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 
 		bytes = new byte[length];
 		
-		log=Logger.getLogger("ROADM");
-
-		log.finest("Sender Template LSP Tunnel IPv4 Object Created");
+		log.debug("Sender Template LSP Tunnel IPv4 Object Created");
 			
 	}
 	
@@ -94,9 +93,7 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[RSVPObject.getLength(bytes, offset)];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Sender Template LSP Tunnel IPv4 Object Created");
+		log.debug("Sender Template LSP Tunnel IPv4 Object Created");
 		
 	}
 
@@ -128,7 +125,7 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 		bytes[currentIndex+1] = (byte) 0;
 		bytes[currentIndex+2] = (byte)((LSPId>>8) & 0xFF);
 		bytes[currentIndex+3] = (byte)(LSPId & 0xFF);
-		log.finest("Sender Template LSP Tunnel IPv4 Object Encoded");
+		log.debug("Sender Template LSP Tunnel IPv4 Object Encoded");
 		
 	}
 
@@ -154,11 +151,11 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 		try{
 			senderNodeAddress = (Inet4Address) Inet4Address.getByAddress(receivedAddress);
 		}catch(UnknownHostException e){
-			log.severe("Unknown Host received on Sender Template LSP IPv4 Object");
+			log.error("Unknown Host received on Sender Template LSP IPv4 Object");
 		}
 		offset = offset + receivedAddress.length;
 		LSPId = (int)(bytes[offset+2] | bytes[offset+3]);
-		log.finest("Sender Template LSP Tunnel IPv4 Object Decoded");				
+		log.debug("Sender Template LSP Tunnel IPv4 Object Decoded");
 		
 	}
 	// Getters & Setters
@@ -179,14 +176,4 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 		LSPId = lSPId;
 	}
 
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-	
-	
-	
 }

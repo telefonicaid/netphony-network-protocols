@@ -6,6 +6,9 @@ import java.net.UnknownHostException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
+  *  IPV4-ADDRESS TLV from draft-ietf-pce-gmpls-pcep-extensions-10.
+  *  Encoding: standard
+  *  TLV Type: 7 (draft-ietf-pce-gmpls-pcep-extensions-9) not asigned by IANA
   *  
 2.5.2.1. IPV4-ADDRESS
 

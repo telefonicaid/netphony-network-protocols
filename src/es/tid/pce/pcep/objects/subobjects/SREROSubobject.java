@@ -1,8 +1,9 @@
 package es.tid.pce.pcep.objects.subobjects;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * 
@@ -124,7 +125,7 @@ public class SREROSubobject {
 	
 	protected boolean loosehop;
 	protected byte [] subobject_bytes;
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("PCEServer");
 	
 	public SREROSubobject(){
 		//TODO: this will be variable in future updates
@@ -136,13 +137,11 @@ public class SREROSubobject {
 		loosehop = false;
 		ST = 0;
 		type = ObjectParameters.PCEP_SUBOBJECT_TYPE_SR_ERO;
-		log=Logger.getLogger("PCEServer");
-		
+
 	}
 	
 	public SREROSubobject(byte[] bytes, int offset) {
 		//TODO: this will have variable size if the flag is variable
-		log=Logger.getLogger("PCEServer");
 		erosolength=(int)bytes[offset+1];
 		this.subobject_bytes=new byte[erosolength];
 		System.arraycopy(bytes, offset, subobject_bytes, 0, erosolength);

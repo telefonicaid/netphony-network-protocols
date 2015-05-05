@@ -105,7 +105,7 @@ public class LSPplusPath  extends PCEPConstruct
 			} 
 			catch (MalformedPCEPObjectException e) 
 			{
-				log.warning("Malformed LSP Object found");
+				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+rsp.getLength();
@@ -113,7 +113,7 @@ public class LSPplusPath  extends PCEPConstruct
 		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one RSP object. Exception will be throwed");
+			log.warn("Malformed Report Message. There must be at least one RSP object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -128,7 +128,7 @@ public class LSPplusPath  extends PCEPConstruct
 			} 
 			catch (MalformedPCEPObjectException e) 
 			{
-				log.warning("Malformed LSP Object found");
+				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lsp.getLength();
@@ -136,7 +136,7 @@ public class LSPplusPath  extends PCEPConstruct
 		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one LSP object. Exception will be throwed");
+			log.warn("Malformed Report Message. There must be at least one LSP object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -162,7 +162,7 @@ public class LSPplusPath  extends PCEPConstruct
 		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one ERO or SRERO message!");
+			log.warn("Malformed Report Message. There must be at least one ERO or SRERO message!");
 			throw new PCEPProtocolViolationException();
 		}
 	}

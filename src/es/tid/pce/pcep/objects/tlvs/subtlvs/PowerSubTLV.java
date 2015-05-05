@@ -45,7 +45,7 @@ TBD				State					Contains the current status of the device	0..1
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class PowerSubTLV extends PCEPSubTLV {
@@ -148,42 +148,42 @@ public class PowerSubTLV extends PCEPSubTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getSubTLV_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getSubTLV_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER_INFO:
-				log.finest("Power Info found");
+				log.debug("Power Info found");
 				this.powerInfo=new PowerInfoSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_MAXIMUM_CONSUMPTION:
-				log.finest("Maximum Consumption found");
+				log.debug("Maximum Consumption found");
 				this.maximumConsumption=new MaximumConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_IDLE_CONSUMPTION:
-				log.finest("Idle Consumption found");
+				log.debug("Idle Consumption found");
 				this.idleConsumption=new IdleConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_SLEEP_CONSUMPTION:
-				log.finest("Sleep Consumption found");
+				log.debug("Sleep Consumption found");
 				this.sleepConsumption=new SleepConsumptionSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_INTER_STATE_LATENCIES:
-				log.finest("Inter State Latencies found");
+				log.debug("Inter State Latencies found");
 				this.interStateLatencies=new InterStateLatenciesSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_POWER_STATE:
-				log.finest("Power State found");
+				log.debug("Power State found");
 				this.state=new PowerStateSubTLV(this.getSubTLV_bytes(), offset);
 				break;
 			
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getSubTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Power Sub-TLV");
+				log.debug("No more SubTLVs in Power Sub-TLV");
 				fin=true;
 			}
 

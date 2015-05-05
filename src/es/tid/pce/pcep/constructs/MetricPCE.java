@@ -1,7 +1,5 @@
 package es.tid.pce.pcep.constructs;
 
-import java.util.logging.Logger;
-
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
@@ -9,6 +7,8 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.PceIdIPv4;
 import es.tid.pce.pcep.objects.ProcTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  <metric-pce>::=<PCE-ID>
@@ -24,7 +24,7 @@ public class MetricPCE extends PCEPConstruct{
 	private PceId pceId; //Compulsory
 	private ProcTime procTime;//Optional
 
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 
 	public MetricPCE (){
 
@@ -44,7 +44,7 @@ public class MetricPCE extends PCEPConstruct{
 			len=len+pceId.getLength();
 		}
 		else {
-			log.warning("Metric PCE Rule must start with PCE ID object");			
+			log.warn("Metric PCE Rule must start with PCE ID object");
 			throw new PCEPProtocolViolationException();
 		}
 		if (procTime!=null){
@@ -77,7 +77,7 @@ public class MetricPCE extends PCEPConstruct{
 				try {
 					pceId=new PceIdIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed pceId Object found");
+					log.warn("Malformed pceId Object found");
 					throw new PCEPProtocolViolationException();
 				}
 				offset=offset+pceId.getLength();
@@ -92,7 +92,7 @@ public class MetricPCE extends PCEPConstruct{
 			try {
 				procTime=new ProcTime(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed ProcTime Object found");
+				log.warn("Malformed ProcTime Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+procTime.getLength();

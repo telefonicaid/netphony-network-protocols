@@ -3,7 +3,8 @@ package es.tid.rsvp.objects;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -59,8 +60,8 @@ public class SessionLSPTunnelIPv4 extends Session{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Session LSP Tunnel IPv4 Object wanted to be
@@ -79,9 +80,7 @@ public class SessionLSPTunnelIPv4 extends Session{
 		this.tunnelId = tunnelId;
 		this.extendedTunnelId = extendedTunnelId;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session LSP Tunnel IPv4 Object Created");
+		log.debug("Session LSP Tunnel IPv4 Object Created");
 		
 	}
 	
@@ -100,9 +99,7 @@ public class SessionLSPTunnelIPv4 extends Session{
 		this.bytes = new byte[this.length];
 		this.bytes = bytes;
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Session LSP Tunnel IPv4 Object Created");
+		log.debug("Session LSP Tunnel IPv4 Object Created");
 	}
 
 	/*
@@ -195,11 +192,4 @@ public class SessionLSPTunnelIPv4 extends Session{
 		this.extendedTunnelId = extendedTunnelId;
 	}
 
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 }

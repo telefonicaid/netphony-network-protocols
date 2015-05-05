@@ -1,8 +1,9 @@
 package es.tid.bgp.bgp4.open;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.bgp.bgp4.objects.BGP4Object;
+import org.slf4j.LoggerFactory;
 
 /**
  * BGP Open Message Format (RFC 4271). 
@@ -35,9 +36,10 @@ public abstract class BGP4OptionalParameter extends BGP4Object{
 	protected int type;
 	
 	protected int parameterLength;
-		
-	public BGP4OptionalParameter(){
-		log=Logger.getLogger("BGP4Parser");	
+
+  private static Logger log = LoggerFactory.getLogger("BGP4Parser");
+
+  public BGP4OptionalParameter(){
 	}
 	
 	

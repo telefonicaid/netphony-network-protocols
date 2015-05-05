@@ -28,13 +28,13 @@ In GEYSERS,
 Cost includes two fields, unitary price on 32 bits and usage unit on 16 bit. The 
 following values are defined for usage units:
 
-•	0x01: GB per day.
-•	0x02: GB per week.
-•	0x03: GB per month.
-•	0x04: usage time – per minute.
-•	0x05: usage time – per hour.
-•	0x06: usage time – per week.
-•	0x07: usage time – per month.
+ï¿½	0x01: GB per day.
+ï¿½	0x02: GB per week.
+ï¿½	0x03: GB per month.
+ï¿½	0x04: usage time ï¿½ per minute.
+ï¿½	0x05: usage time ï¿½ per hour.
+ï¿½	0x06: usage time ï¿½ per week.
+ï¿½	0x07: usage time ï¿½ per month.
 
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -48,7 +48,7 @@ following values are defined for usage units:
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class CostSubTLV extends PCEPSubTLV {
@@ -76,14 +76,14 @@ public class CostSubTLV extends PCEPSubTLV {
 		System.arraycopy(unitaryPrice, 0, this.subtlv_bytes, 4, 4);
 		System.arraycopy(usageUnit, 0, this.subtlv_bytes, 8, 2);
 		
-		log.finest("Encoding UnitaryPrice: "+(unitaryPrice).toString());
+		log.debug("Encoding UnitaryPrice: "+(unitaryPrice).toString());
 	}
 
 	
 	public void decode() {
 		this.unitaryPrice=new byte[4];
 		this.usageUnit=new byte[2];
-		log.finest("Tamaño del SubTLV:"+String.valueOf(this.getSubTLVValueLength()));
+		log.debug("Tamaï¿½o del SubTLV:"+String.valueOf(this.getSubTLVValueLength()));
 //		System.arraycopy(this.subtlv_bytes, 4, prueba, 0, 4);
 //		this.usageUnit= prueba;
 		System.arraycopy(this.subtlv_bytes, 4, this.unitaryPrice, 0, 4);
@@ -93,7 +93,7 @@ public class CostSubTLV extends PCEPSubTLV {
 //		this.unitaryPrice[3]=this.subtlv_bytes[7];
 		//this.usageUnit[0]=this.subtlv_bytes[8];
 		System.arraycopy(this.subtlv_bytes, 8, this.usageUnit, 0, 2);
-		log.finest("Decoding UnitaryPrice"+(this.unitaryPrice).toString());
+		log.debug("Decoding UnitaryPrice"+(this.unitaryPrice).toString());
 	}
 
 

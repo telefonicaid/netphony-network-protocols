@@ -66,7 +66,7 @@ public class PathSetupTLV extends PCEPTLV
 		encodeHeader();
 		int Zero = 0;
 		int offset = 4;
-		log.finest("Encoding SRCapabilityTLV: PST ="+PST+" bytes: "+this.getTotalTLVLength());
+		log.debug("Encoding SRCapabilityTLV: PST ="+PST+" bytes: "+this.getTotalTLVLength());
 
 		ByteHandler.IntToBuffer(0,offset * 8, 32,Zero,this.tlv_bytes);
 		
@@ -75,13 +75,13 @@ public class PathSetupTLV extends PCEPTLV
 		byte[] aux = new byte[1];
 		aux[0] = (byte)(PST & 0x000000ff);
 		System.arraycopy(aux, 0, tlv_bytes, 7, 1);
-		log.finest("finished Encoding PathSetupTLV: PST ="+PST);		
+		log.debug("finished Encoding PathSetupTLV: PST ="+PST);
 	}
 	
 	public void decode()
 	{
 
-		log.finest("Decoding PathSetupTLV");
+		log.debug("Decoding PathSetupTLV");
 		int offset = 7;
 		//TODO: No se si lo hace bien
 		byte[] aux = new byte[1];
@@ -89,7 +89,7 @@ public class PathSetupTLV extends PCEPTLV
 //		PST = tlv_bytes[offset]
 //		PST = ByteHandler.easyCopy(0,7,this.tlv_bytes[offset]);
 		PST = (aux[0]&0xff);
-		log.finest("PST decoded, value: "+PST);
+		log.debug("PST decoded, value: "+PST);
 	}
 
 	public int getPST() 

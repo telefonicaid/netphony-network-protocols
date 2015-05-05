@@ -87,14 +87,14 @@ public class StateReport extends PCEPConstruct
 			lsp.encode();
 			length=length+lsp.getLength();
 		}else {
-			log.warning("LSP Object compulsory");
+			log.warn("LSP Object compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (path!=null){
 			path.encode();
 			length=length+path.getLength();
 		}else {
-			log.warning("PATH Construct compulsory");
+			log.warn("PATH Construct compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -154,14 +154,14 @@ public class StateReport extends PCEPConstruct
 			} 
 			catch (MalformedPCEPObjectException e) 
 			{
-				log.warning("Malformed LSP Object found");
+				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			
 		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one LSP object. Exception will be throwed");
+			log.warn("Malformed Report Message. There must be at least one LSP object. Exception will be throwed");
 			throw new PCEPProtocolViolationException();
 		}
 		
@@ -188,7 +188,7 @@ public class StateReport extends PCEPConstruct
 		}
 		else
 		{
-			log.warning("Malformed Report Message. There must be at least one ERO or SRERO message!");
+			log.warn("Malformed Report Message. There must be at least one ERO or SRERO message!");
 			//throw new PCEPProtocolViolationException();
 		}
 	}

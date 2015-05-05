@@ -262,7 +262,7 @@ public class Notification extends PCEPObject{
 			}
 		}
 		
-		// Aquí hay q añadir las TLVs del GEYSERS
+		// Aquï¿½ hay q aï¿½adir las TLVs del GEYSERS
 		
 		if (ITadvTLV!=null){
 			ITadvTLV.encode();
@@ -315,7 +315,7 @@ public class Notification extends PCEPObject{
 			}
 		}
 		
-// Aquí hay q añadir las TLVs del GEYSERS
+// Aquï¿½ hay q aï¿½adir las TLVs del GEYSERS
 		
 		if (ITadvTLV!=null){
 			System.arraycopy(ITadvTLV.getTlv_bytes(), 0, this.object_bytes, offset, ITadvTLV.getTotalTLVLength());
@@ -414,7 +414,7 @@ public class Notification extends PCEPObject{
 				notificationTLV=new PathReservationTLV(this.getObject_bytes(), offset);				
 				break;
 			default:
-				log.warning("Unknown or unexpected TLV found");
+				log.warn("Unknown or unexpected TLV found");
 				//UnknownTLV unknownTLV = new UnknownTLV();
 				//tLVList.add(unknownTLV);
 				//FIXME: Que hacemos con los desconocidos????

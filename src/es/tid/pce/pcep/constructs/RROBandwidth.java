@@ -1,13 +1,13 @@
 package es.tid.pce.pcep.constructs;
 
-import java.util.logging.Logger;
-
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.ReportedRouteObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * [<RRO>[<BANDWIDTH>]]
@@ -19,7 +19,7 @@ public class RROBandwidth extends PCEPConstruct{
 	private ReportedRouteObject rRO; //Compulsory
 	private BandwidthRequested bandwidth;//Optional
 	
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 	
 	public RROBandwidth (byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		decode(bytes,offset);
@@ -36,7 +36,7 @@ public class RROBandwidth extends PCEPConstruct{
 			len=len+rRO.getLength();
 		}
 		else {
-			log.warning("RRO/BANDWIDTH Rule must start with RRO object");			
+			log.warn("RRO/BANDWIDTH Rule must start with RRO object");
 				throw new PCEPProtocolViolationException();
 		}
 		if (bandwidth!=null){
@@ -67,7 +67,7 @@ public class RROBandwidth extends PCEPConstruct{
 			try {
 				rRO=new ReportedRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed ReportedRouteObject Object found");
+				log.warn("Malformed ReportedRouteObject Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+rRO.getLength();
@@ -81,7 +81,7 @@ public class RROBandwidth extends PCEPConstruct{
 			try {
 				rRO=new ReportedRouteObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed BANDWIDTH Object found");
+				log.warn("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+rRO.getLength();

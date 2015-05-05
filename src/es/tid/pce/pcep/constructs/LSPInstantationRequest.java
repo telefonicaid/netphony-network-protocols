@@ -1,10 +1,11 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  <lsp-instantiation-request> ::= <END-POINTS>
@@ -24,7 +25,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	private BandwidthRequested bandwidth;
 	private LinkedList<Metric> metricList;
 	
-	private Logger log=Logger.getLogger("PCEPParser");
+	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 	
 	/**
 	 * Default constructor. 
@@ -54,7 +55,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			len=len+endPoints.getLength();
 		}
 		else {
-			log.warning("EndPoints not found! They are compulsory");
+			log.warn("EndPoints not found! They are compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (lSPA!=null){
@@ -62,7 +63,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			len=len+lSPA.getLength();
 		}
 		else{
-			log.warning("lSPA not found! It is compulsory");
+			log.warn("lSPA not found! It is compulsory");
 			throw new PCEPProtocolViolationException();
 		}
 		if (bandwidth!=null){
@@ -105,7 +106,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		int len=0;		
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty Request construct!!!");
+			log.warn("Empty Request construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		// END-POINTS
@@ -116,7 +117,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 				try {
 					endPoints=new EndPointsIPv4(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTS IPV4 Object found");
+					log.warn("Malformed ENDPOINTS IPV4 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -124,7 +125,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 				try {
 					endPoints=new EndPointsIPv6(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed ENDPOINTSIPV6 Object found");
+					log.warn("Malformed ENDPOINTSIPV6 Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -132,12 +133,12 @@ public class LSPInstantationRequest extends PCEPConstruct{
 				try {
 					endPoints=new GeneralizedEndPoints(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
-					log.warning("Malformed GENERALIZED END POINTS Object found");
+					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
 			else {
-				log.warning("ENDPOINTS TYPE NOT SUPPORTED");
+				log.warn("ENDPOINTS TYPE NOT SUPPORTED");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+endPoints.getLength();
@@ -148,7 +149,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			}
 		}
 		else {
-			log.warning("LSPInstantationRequest must start with ENDPOINTS");
+			log.warn("LSPInstantationRequest must start with ENDPOINTS");
 			throw new PCEPProtocolViolationException();
 		}
 		// LSPA
@@ -157,7 +158,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			try {
 				lSPA=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed LSPA Object found");
+				log.warn("Malformed LSPA Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+lSPA.getLength();
@@ -167,7 +168,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 				return;
 			}
 		}else{
-			log.warning("LSPInstantationRequest follow with an LSPA after the ENDPOINTS");
+			log.warn("LSPInstantationRequest follow with an LSPA after the ENDPOINTS");
 		}
 		// ERO
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -175,7 +176,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			try {
 				eRO=new ExplicitRouteObject(bytes, offset);
 			}catch (MalformedPCEPObjectException e){
-				log.warning("Malformed ERO Object found");
+				log.warn("Malformed ERO Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+eRO.getLength();
@@ -192,7 +193,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			try {
 				bandwidth=new BandwidthRequested(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed BANDWIDTH Object found");
+				log.warn("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset=offset+bandwidth.getLength();
@@ -209,7 +210,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			try {
 				metric = new Metric(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			metricList.add(metric);

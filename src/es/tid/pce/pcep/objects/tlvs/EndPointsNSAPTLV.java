@@ -4,6 +4,10 @@ package es.tid.pce.pcep.objects.tlvs;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
+ * EndPointsNSAP TLV, Experimental & Propietary from GEYSERS.
+ * Encoding: propietary from GEYSERS
+ * TLV Type: 999 (non-standard)
+ * 
  All PCEP TLVs have the following format:
 
    Type:   2 bytes
@@ -32,9 +36,9 @@ defined in D4.1 section 4.2.2 are supported extending the END-POINTS
 object (Object-Class=4). The following new Object-Types are defined 
 for this object:
 
-•	Object-Type: TBD – Assisted unicast IPv4
-•	Object-Type: TBD – Assisted unicast IPv6
-•	Object-Type: TBD – Assisted unicast NSAP
+ï¿½	Object-Type: TBD ï¿½ Assisted unicast IPv4
+ï¿½	Object-Type: TBD ï¿½ Assisted unicast IPv6
+ï¿½	Object-Type: TBD ï¿½ Assisted unicast NSAP
 
 The format of the END-POINTS-ASSISTEDUNICAST-IPv4 object body for assisted NSAP is the 
 following:
@@ -69,7 +73,7 @@ where a single End-point pair block has the following format:
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class EndPointsNSAPTLV extends PCEPTLV {
@@ -107,7 +111,7 @@ public class EndPointsNSAPTLV extends PCEPTLV {
 
 	
 	public void decode(){
-		log.finest("Decoding NSAP Addreess");
+		log.debug("Decoding NSAP Addreess");
 		System.arraycopy(this.tlv_bytes,4, sourceNSAP, 0, 20);
 		System.arraycopy(this.tlv_bytes,24, destNSAP, 0, 20); 	 
 	}

@@ -1,11 +1,12 @@
 package es.tid.rsvp.constructs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.FlowSpec;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -56,8 +57,8 @@ public class WFFlowDescriptor extends FlowDescriptor {
 	/**
 	 * Log
 	 */
-	
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Builder to be used when a received WF Flow Descriptor and it is wanted to decode it
@@ -65,9 +66,7 @@ public class WFFlowDescriptor extends FlowDescriptor {
 	
 	public WFFlowDescriptor() {
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("WF Flow Descriptor Created");
+		log.debug("WF Flow Descriptor Created");
 		
 	}
 	
@@ -79,23 +78,20 @@ public class WFFlowDescriptor extends FlowDescriptor {
 		
 	public WFFlowDescriptor(FlowSpec flowSpec) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-		
-		
 		if(flowSpec != null){
 		
 			this.length = this.length + flowSpec.getLength();
 			this.flowSpec = flowSpec;
-			log.finest("Flow Spec found");
+			log.debug("Flow Spec found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Flow Spec not found, It is mandatory");
+			log.error("Flow Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
-		log.finest("WF Flow Descriptor Created");
+		log.debug("WF Flow Descriptor Created");
 		
 	}
 		
@@ -109,7 +105,7 @@ public class WFFlowDescriptor extends FlowDescriptor {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting WF Flow Descriptor Encode");
+		log.debug("Starting WF Flow Descriptor Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -119,7 +115,7 @@ public class WFFlowDescriptor extends FlowDescriptor {
 		System.arraycopy(flowSpec.getBytes(), 0, bytes, offset, flowSpec.getLength());
 		offset = offset + flowSpec.getLength();
 			
-		log.finest("Encoding WF Flow Descriptor Accomplished");
+		log.debug("Encoding WF Flow Descriptor Accomplished");
 		
 	}
 
@@ -132,7 +128,7 @@ public class WFFlowDescriptor extends FlowDescriptor {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("Starting Sender Descriptor Decode");
+		log.debug("Starting Sender Descriptor Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -148,7 +144,7 @@ public class WFFlowDescriptor extends FlowDescriptor {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Flow Spec cType field");
+				log.error("Malformed Flow Spec cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -156,18 +152,18 @@ public class WFFlowDescriptor extends FlowDescriptor {
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();
-			log.finest("Sender Template decoded");
+			log.debug("Sender Template decoded");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Flow Spec not found, It is mandatory");
+			log.error("Flow Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
 				
 		this.setLength(length);
-		log.finest("Decoding WF Flow Descriptor Accomplished");
+		log.debug("Decoding WF Flow Descriptor Accomplished");
 		
 
 	}
@@ -182,15 +178,4 @@ public class WFFlowDescriptor extends FlowDescriptor {
 	public void setFlowSpec(FlowSpec flowSpec) {
 		this.flowSpec = flowSpec;
 	}
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-	
-
-	
 }

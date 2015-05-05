@@ -1,6 +1,7 @@
 package es.tid.pce.pcep.objects.tlvs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for PCEP TLVs
@@ -46,15 +47,13 @@ public abstract class PCEPTLV {
 	
 	protected byte[] tlv_bytes;
 	
-	protected Logger log;
+	protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	
 	public PCEPTLV(){
-		log=Logger.getLogger("PCEPParser");
 	}
 	
 	
 	public PCEPTLV(byte []bytes, int offset) {
-		log=Logger.getLogger("PCEPParser");		
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 		this.TotalTLVLength=TLVValueLength+4;

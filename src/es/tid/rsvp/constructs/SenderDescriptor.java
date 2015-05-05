@@ -1,6 +1,6 @@
 package es.tid.rsvp.constructs;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.FlowLabelSenderTemplateIPv6;
@@ -12,6 +12,7 @@ import es.tid.rsvp.objects.SenderTSpec;
 import es.tid.rsvp.objects.SenderTemplate;
 import es.tid.rsvp.objects.SenderTemplateIPv4;
 import es.tid.rsvp.objects.SenderTemplateIPv6;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -54,7 +55,7 @@ public class SenderDescriptor extends RSVPConstruct {
 	 * Log
 	 */
 		
-	private Logger log;
+	private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Builder to be used when a received Sender Descriptor and it is wanted to decode it
@@ -62,9 +63,7 @@ public class SenderDescriptor extends RSVPConstruct {
 	
 	public SenderDescriptor(){
 		
-		log = Logger.getLogger("ROADM");
-	
-		log.finest("Sender Descriptor Created");
+		log.debug("Sender Descriptor Created");
 		
 	}
 	
@@ -78,19 +77,16 @@ public class SenderDescriptor extends RSVPConstruct {
 		
 	public SenderDescriptor(SenderTemplate senderTemplate, IntservSenderTSpec senderTSPEC, IntservADSPEC adspec) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-
-
 		if(senderTemplate != null){
 			
 			this.length = this.length + senderTemplate.getLength();
 			this.senderTemplate = senderTemplate;
-			log.finest("Sender Template found");
+			log.debug("Sender Template found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender Template not found, It is mandatory");
+			log.error("Sender Template not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -98,12 +94,12 @@ public class SenderDescriptor extends RSVPConstruct {
 			
 			this.length = this.length + senderTSPEC.getLength();
 			this.senderTSPEC = senderTSPEC;
-			log.finest("Intserv Sender TSpec found");
+			log.debug("Intserv Sender TSpec found");
 			
 		}else{
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Intserv Sender TSpec not found, It is mandatory");
+			log.error("Intserv Sender TSpec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -111,11 +107,11 @@ public class SenderDescriptor extends RSVPConstruct {
 
 			this.adspec = adspec;
 			this.length = this.length + adspec.getLength();
-			log.finest("Intserv ADSPEC found");
+			log.debug("Intserv ADSPEC found");
 			
 		}
 
-		log.finest("Sender Descriptor Created");
+		log.debug("Sender Descriptor Created");
 		
 	}
 		
@@ -129,7 +125,7 @@ public class SenderDescriptor extends RSVPConstruct {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Sender Descriptor Encode");
+		log.debug("Starting Sender Descriptor Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -148,7 +144,7 @@ public class SenderDescriptor extends RSVPConstruct {
 			System.arraycopy(adspec.getBytes(), 0, bytes, offset, adspec.getLength());
 		}
 		
-		log.finest("Encoding Sender Descriptor Accomplished");
+		log.debug("Encoding Sender Descriptor Accomplished");
 		
 	}
 
@@ -161,7 +157,7 @@ public class SenderDescriptor extends RSVPConstruct {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("Starting Sender Descriptor Decode");
+		log.debug("Starting Sender Descriptor Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -185,7 +181,7 @@ public class SenderDescriptor extends RSVPConstruct {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Sender Template cType field");
+				log.error("Malformed Sender Template cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -193,19 +189,19 @@ public class SenderDescriptor extends RSVPConstruct {
 			offset = offset + senderTemplate.getLength();
 			length = length + senderTemplate.getLength();
 			bytesLeft = bytesLeft - senderTemplate.getLength();
-			log.finest("Sender Template decoded");
+			log.debug("Sender Template decoded");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender Template not found, It is mandatory");
+			log.error("Sender Template not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
 		
 		if(bytesLeft <= 0){
 			
-			log.severe("Incomplete Sender Descriptor");
+			log.error("Incomplete Sender Descriptor");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -222,7 +218,7 @@ public class SenderDescriptor extends RSVPConstruct {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Sender TSPEC cType field");
+				log.error("Malformed Sender TSPEC cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -230,12 +226,12 @@ public class SenderDescriptor extends RSVPConstruct {
 			offset = offset + senderTSPEC.getLength();
 			length = length + senderTSPEC.getLength();
 			bytesLeft = bytesLeft - senderTSPEC.getLength();
-			log.finest("Sender TSPEC decoded");
+			log.debug("Sender TSPEC decoded");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Sender Template not found, It is mandatory");
+			log.error("Sender Template not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -254,21 +250,21 @@ public class SenderDescriptor extends RSVPConstruct {
 				}else{
 					
 					// No se ha formado correctamente el objeto sender template
-					log.severe("Malformed ADSPEC cType field");
+					log.error("Malformed ADSPEC cType field");
 					throw new RSVPProtocolViolationException();
 					
 				}
 				adspec.decode(bytes,offset);
 				offset = offset + adspec.getLength();
 				length = length + adspec.getLength();
-				log.finest("ADSPEC decoded");
+				log.debug("ADSPEC decoded");
 				
 			}
 			
 		}
 		
 		this.setLength(length);
-		log.finest("Decoding Sender Descriptor Accomplished");
+		log.debug("Decoding Sender Descriptor Accomplished");
 		
 
 	}

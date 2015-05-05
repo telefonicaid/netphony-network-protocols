@@ -75,7 +75,7 @@ public class ErrorConstruct extends PCEPConstruct {
 		int len=0;	
 		int max_offset=bytes.length;
 		if (offset>=max_offset){
-			log.warning("Empty Notify construct!!!");
+			log.warn("Empty Notify construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
 		int oc=PCEPObject.getObjectClass(bytes, offset);
@@ -84,7 +84,7 @@ public class ErrorConstruct extends PCEPConstruct {
 			try {
 				rp = new RequestParameters(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			requestIdList.add(rp);
@@ -102,7 +102,7 @@ public class ErrorConstruct extends PCEPConstruct {
 			try {
 				perror = new PCEPErrorObject(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
-				log.warning("Malformed METRIC Object found");
+				log.warn("Malformed METRIC Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			errorObjList.add(perror);

@@ -100,16 +100,16 @@ public class SwitchIDEROSubobject extends EROSubobject
 		
 		if (associated_mac != null)
 		{		
-			//PCEServer.log.finest("associated_mac.length::"+associated_mac.length);
-			//PCEServer.log.finest("subobject_bytes.length::"+subobject_bytes.length);
+			//PCEServer.log.debug("associated_mac.length::"+associated_mac.length);
+			//PCEServer.log.debug("subobject_bytes.length::"+subobject_bytes.length);
 			System.arraycopy(associated_mac, 0, this.subobject_bytes, offset, 6);
 		}
 		offset += 6;
 		
 		if (second_associated_mac != null)
 		{		
-			//PCEServer.log.finest("associated_mac.length::"+associated_mac.length);
-			//PCEServer.log.finest("subobject_bytes.length::"+subobject_bytes.length);
+			//PCEServer.log.debug("associated_mac.length::"+associated_mac.length);
+			//PCEServer.log.debug("subobject_bytes.length::"+subobject_bytes.length);
 			System.arraycopy(second_associated_mac, 0, this.subobject_bytes, offset, 6);
 		}
 		offset += 6;
@@ -130,7 +130,7 @@ public class SwitchIDEROSubobject extends EROSubobject
 		
 //		if (erosolength != 38)
 //		{
-//			log.warning("Malformed SwitchIDEROSubobject");
+//			log.warn("Malformed SwitchIDEROSubobject");
 //		}
 //		
 		SwitchID=new byte[8]; 

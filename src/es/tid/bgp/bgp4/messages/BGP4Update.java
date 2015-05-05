@@ -103,7 +103,7 @@ public class BGP4Update extends BGP4Message {
 	public void encode() {
 		//Encode BGP4 Update
 		if ((withdrawnRoutes == null)&&(pathAttributes.size() == 0))
-			log.warning("There should be withdrawnRoutes or path Attributes");
+			log.warn("There should be withdrawnRoutes or path Attributes");
 		if (withdrawnRoutes == null)
 			withdrawnRoutesLength = 0;
 		int len = BGPHeaderLength;
@@ -199,11 +199,11 @@ public class BGP4Update extends BGP4Message {
 					pathAttributes.add(linkState_Attribute);
 				}	
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE){
-					log.severe("ASPATH_AS_SEQUENCE Not implemented yet");
+					log.error("ASPATH_AS_SEQUENCE Not implemented yet");
 				}
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_ORIGIN_EGP){
 					//ORIGIN_EGP
-					log.severe("ORIGIN_EGP Not implemented yet");
+					log.error("ORIGIN_EGP Not implemented yet");
 				}
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI){
 					//PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI
@@ -247,7 +247,7 @@ public class BGP4Update extends BGP4Message {
 				offset=offset+nlri.getLength();
 			}
 			if ((nlri == null)&&(withdrawnRoutesLength == 0)){
-				log.warning("BGP4 Update without NRLI and without Withdrawn Routes");
+				log.warn("BGP4 Update without NRLI and without Withdrawn Routes");
 				
 			}
 		}

@@ -73,7 +73,7 @@ public class RouterAddressTLV extends OSPFTLV {
 	
 	private void decode()throws MalformedOSPFTLVException{
 		if (this.getTLVValueLength()!=4){
-			log.warning("Incorrect VALUE LENGTH!!!");
+			log.warn("Incorrect VALUE LENGTH!!!");
 			throw new MalformedOSPFTLVException();
 		}
 		byte[] ip=new byte[4]; 

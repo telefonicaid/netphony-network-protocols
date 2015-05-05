@@ -1,8 +1,9 @@
 package es.tid.rsvp.objects;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
+import org.slf4j.LoggerFactory;
 
 /**
 
@@ -68,8 +69,8 @@ public class HelloRequest extends Hello{
 	/**
 	 * Log
 	 */
-		
-	private Logger log;
+
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
@@ -88,9 +89,7 @@ public class HelloRequest extends Hello{
 
 		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
 
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Hello Request Object Created");
+		log.debug("Hello Request Object Created");
 
 	}
 	
@@ -106,9 +105,7 @@ public class HelloRequest extends Hello{
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
 		
-		log = Logger.getLogger("ROADM");
-
-		log.finest("Hello Request Object Created");
+		log.debug("Hello Request Object Created");
 		
 	}
 	
@@ -127,7 +124,7 @@ public class HelloRequest extends Hello{
 	
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Hello Request encode");
+		log.debug("Starting Hello Request encode");
 		
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -144,7 +141,7 @@ public class HelloRequest extends Hello{
 		bytes[currentIndex+2] = (byte)((dstInstance>>8) & 0xFF);
 		bytes[currentIndex+3] = (byte)(dstInstance & 0xFF);
 		
-		log.finest("Encoding Hello Request accomplished");
+		log.debug("Encoding Hello Request accomplished");
 		
 		
 	}
@@ -164,7 +161,7 @@ public class HelloRequest extends Hello{
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 
-		log.finest("Starting Hello Request decode");
+		log.debug("Starting Hello Request decode");
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -174,19 +171,11 @@ public class HelloRequest extends Hello{
 		
 		dstInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
 		
-		log.finest("Decoding Hello Request accomplished");
+		log.debug("Decoding Hello Request accomplished");
 		
 	}
 	
 	// Getters & Setters
-
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
 
 	public int getSrcInstance() {
 		return srcInstance;

@@ -4,7 +4,11 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/**
+ * LSP-DB-VERSION TLV draft-ietf-pce-stateful-sync-optimizations-00.
+ * Encoding: follows draft-ietf-pce-stateful-sync-optimizations-00
+ * TLV Type: 5556 (non-standard) 
+ * 
  * LSP-DB-VERSION is an optional TLV that MAY be included in the OPEN
    Object when a PCEP Speaker wishes to determine if State
    Synchronization can be skipped when a PCEP session is restarted.  If
@@ -55,7 +59,7 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 
 	@Override
 	public void encode() {
-		log.fine("Encoding LSPDatabaseVersionTLV TLV");
+		log.debug("Encoding LSPDatabaseVersionTLV TLV");
 		int length = 8;
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -69,12 +73,12 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 	
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.fine("Decoding LSPDatabaseVersionTLV TLV");
+		log.debug("Decoding LSPDatabaseVersionTLV TLV");
 		int offset = 4;
 		LSPStateDBVersion = ByteHandler.easyCopyL(0,63,
 				this.tlv_bytes[offset + 0],this.tlv_bytes[offset + 1],this.tlv_bytes[offset + 2],this.tlv_bytes[offset + 3],
 				this.tlv_bytes[offset + 4],this.tlv_bytes[offset + 5],this.tlv_bytes[offset + 6],this.tlv_bytes[offset + 7]);
-		log.fine("Databse Version TLV ID: "+LSPStateDBVersion);
+		log.debug("Databse Version TLV ID: "+LSPStateDBVersion);
 	}
 	
 	//GETTERS SETTERS

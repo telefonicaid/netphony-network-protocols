@@ -42,7 +42,7 @@ public class ReservationIDTLV extends PCEPTLV{
 		if (this.TLVValueLength!=4){
 			throw new MalformedPCEPObjectException();
 		}
-		log.finest("Decoding Domain ID TLV");
+		log.debug("Decoding Domain ID TLV");
 		reservationID = 0;		
 		for (int k = 0; k < 4; k++) {
 			reservationID = (reservationID << 8) | (this.tlv_bytes[k+4] & 0xff);

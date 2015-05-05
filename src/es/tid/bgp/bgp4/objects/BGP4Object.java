@@ -1,12 +1,12 @@
 package es.tid.bgp.bgp4.objects;
 
-import java.util.logging.Logger;
-
 import es.tid.bgp.bgp4.BGP4Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class BGP4Object implements BGP4Element {
 	
-	protected Logger log=Logger.getLogger("BGP4Parser");
+	protected static final Logger log= LoggerFactory.getLogger("BGP4Parser");
 
 	protected byte[] bytes;
 	protected int length;

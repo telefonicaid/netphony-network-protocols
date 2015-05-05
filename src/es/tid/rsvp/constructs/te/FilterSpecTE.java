@@ -1,7 +1,7 @@
 package es.tid.rsvp.constructs.te;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.RSVPConstruct;
@@ -12,6 +12,7 @@ import es.tid.rsvp.objects.Label;
 import es.tid.rsvp.objects.RRO;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -25,7 +26,7 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 
   
 
- * @author Fernando Muñoz del Nuevo fmn@tid.es
+ * @author Fernando Muï¿½oz del Nuevo fmn@tid.es
  *
  */
 
@@ -52,8 +53,7 @@ public class FilterSpecTE extends RSVPConstruct {
 	/**
 	 * Log
 	 */
-	
-	private Logger log;
+  private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
 	/**
 	 * Constructor to be used when a FilterSpec TE is received and it is wanted to decode it
@@ -61,9 +61,7 @@ public class FilterSpecTE extends RSVPConstruct {
 	
 	public FilterSpecTE(){
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-		log.finest("SE Filter Spec Created");
+		log.debug("SE Filter Spec Created");
 		
 	}
 	
@@ -75,19 +73,16 @@ public class FilterSpecTE extends RSVPConstruct {
 		
 	public FilterSpecTE(FilterSpec filterSpec, Label label, RRO rro) throws RSVPProtocolViolationException{
 		
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-		
 		if(filterSpec != null){
 		
 			this.length = this.length + filterSpec.getLength();
 			this.filterSpec = filterSpec;
-			log.finest("Filter Spec found");
+			log.debug("Filter Spec found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Filter Spec not found, It is mandatory");
+			log.error("Filter Spec not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -95,12 +90,12 @@ public class FilterSpecTE extends RSVPConstruct {
 			
 			this.length = this.length + label.getLength();
 			this.label = label;
-			log.finest("Label found");
+			log.debug("Label found");
 			
 		}else{	
 			
 			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
-			log.severe("Label not found, It is mandatory");
+			log.error("Label not found, It is mandatory");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -108,11 +103,11 @@ public class FilterSpecTE extends RSVPConstruct {
 			
 			this.length = this.length + rro.getLength();
 			this.rro = rro;
-			log.finest("RRO found");
+			log.debug("RRO found");
 			
 		}
 
-		log.finest("FilterSpec Created");
+		log.debug("FilterSpec Created");
 		
 	}
 	
@@ -126,7 +121,7 @@ public class FilterSpecTE extends RSVPConstruct {
 			
 	public void encode() throws RSVPProtocolViolationException{
 		
-		log.finest("Starting Filter Spec Construct Encode");
+		log.debug("Starting Filter Spec Construct Encode");
 		
 		this.bytes = new byte[length];
 		
@@ -138,7 +133,7 @@ public class FilterSpecTE extends RSVPConstruct {
 			offset = offset + filterSpec.getLength();
 		}else{
 			
-			log.severe("Mandatory field Filter Spec not found");
+			log.error("Mandatory field Filter Spec not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -150,7 +145,7 @@ public class FilterSpecTE extends RSVPConstruct {
 			offset = offset + label.getLength();
 		}else{
 			
-			log.severe("Mandatory field Label not found");
+			log.error("Mandatory field Label not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -162,7 +157,7 @@ public class FilterSpecTE extends RSVPConstruct {
 			offset = offset + rro.getLength();
 		}
 		
-		log.finest("Encoding Filter Spec Construct Accomplished");
+		log.debug("Encoding Filter Spec Construct Accomplished");
 		
 	}
 
@@ -175,7 +170,7 @@ public class FilterSpecTE extends RSVPConstruct {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.finest("Filter Spec Construct Decode");
+		log.debug("Filter Spec Construct Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -196,7 +191,7 @@ public class FilterSpecTE extends RSVPConstruct {
 			}else{
 				
 				// No se ha formado correctamente el objeto sender template
-				log.severe("Malformed Filter Spec cType field");
+				log.error("Malformed Filter Spec cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
@@ -204,12 +199,12 @@ public class FilterSpecTE extends RSVPConstruct {
 			offset = offset + filterSpec.getLength();
 			length = length + filterSpec.getLength();
 			bytesLeft = bytesLeft - filterSpec.getLength();
-			log.finest("Filter Spec decoded");
+			log.debug("Filter Spec decoded");
 			
 		}else{
 			
 			// No se ha formado correctamente el objeto sender template
-			log.severe("Malformed Filter Spec, Filter Spec object not found");
+			log.error("Malformed Filter Spec, Filter Spec object not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -228,15 +223,15 @@ public class FilterSpecTE extends RSVPConstruct {
 			}else{
 				
 				// No se ha formado correctamente el objeto Filter Spec
-				log.severe("Malformed Label cType field");
+				log.error("Malformed Label cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
-			log.finest("Label decoded");
+			log.debug("Label decoded");
 		}else{
 			
 			// No se ha formado correctamente el objeto sender template
-			log.severe("Malformed Filter Spec, Label object not found");
+			log.error("Malformed Filter Spec, Label object not found");
 			throw new RSVPProtocolViolationException();
 			
 		}
@@ -253,29 +248,21 @@ public class FilterSpecTE extends RSVPConstruct {
 			}else{
 				
 				// No se ha formado correctamente el objeto Filter Spec
-				log.severe("Malformed RRO cType field");
+				log.error("Malformed RRO cType field");
 				throw new RSVPProtocolViolationException();
 				
 			}
-			log.finest("RRO decoded");
+			log.debug("RRO decoded");
 		}
 				
 		this.setLength(length);
-		log.finest("Decoding Filter Spec Accomplished");
+		log.debug("Decoding Filter Spec Accomplished");
 		
 
 	}
 
 	// Getters and Setters
 	
-	public Logger getLog() {
-		return log;
-	}
-
-	public void setLog(Logger log) {
-		this.log = log;
-	}
-
 	public FilterSpec getFilterSpec() {
 		return filterSpec;
 	}

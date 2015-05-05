@@ -10,9 +10,10 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.RequestedVolumeSizeSubTLV;
 
 
 /**
+ * EndPointStorage TLV, Experimental & Propietary from GEYSERS.
   * From GEYSERS
   *  
-	Storage description – in this case the End-point description field includes the
+	Storage description ï¿½ in this case the End-point description field includes the
 	description of the characteristics of the requested storage and is structured in
 	a set of TLVs.
 
@@ -30,7 +31,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.RequestedVolumeSizeSubTLV;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
  
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class EndPointStorageTLV extends PCEPTLV {
@@ -86,7 +87,7 @@ public class EndPointStorageTLV extends PCEPTLV {
 
 	
 	public void decode() throws MalformedPCEPObjectException{
-		log.finest("Decoding Storage EndPoint TLV");
+		log.debug("Decoding Storage EndPoint TLV");
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (this.getTLVValueLength()==0){
@@ -95,22 +96,22 @@ public class EndPointStorageTLV extends PCEPTLV {
 		while (!fin) {
 			int subTLVType=PCEPSubTLV.getType(this.getTlv_bytes(), offset);
 			int subTLVLength=PCEPSubTLV.getTotalSubTLVLength(this.getTlv_bytes(), offset);
-			log.finest("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
+			log.debug("subTLVType: "+subTLVType+" subTLVLength: "+subTLVLength);
 			switch (subTLVType){
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_STORAGE_SIZE:
-				log.finest("StorageSize is requested");
+				log.debug("StorageSize is requested");
 				this.requestedStorageSize=new RequestedStorageSizeSubTLV(this.getTlv_bytes(), offset);
 				break;
 				
 			case PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_REQUESTED_VOLUME_SIZE:
-				log.finest("VolumeSize is requested");
+				log.debug("VolumeSize is requested");
 				this.requestedVolumeSize=new RequestedVolumeSizeSubTLV(this.getTlv_bytes(), offset);
 				break;
 		
 			}
 			offset=offset+subTLVLength;
 			if (offset>=(this.getTLVValueLength()+4)){
-				log.finest("No more SubTLVs in Storage TLV");
+				log.debug("No more SubTLVs in Storage TLV");
 				fin=true;
 			}
 
