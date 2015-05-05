@@ -148,7 +148,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		//No LSP object. Malformed Update Request. PCERR mesage should be sent!
 		if (PCEPObject.getObjectClass(bytes, offset)!=ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
-			log.info("There should be at least one RSP Object");
+			log.info("There should be at least one SRP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
 			try 
