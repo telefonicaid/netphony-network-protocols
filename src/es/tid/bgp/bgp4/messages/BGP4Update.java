@@ -56,10 +56,10 @@ import es.tid.bgp.bgp4.update.fields.pathAttributes.PathAttributesTypeCode;
  *
  */
 public class BGP4Update extends BGP4Message {
-	
+
 	/** Used to check the origin of update message */
 	private String learntFrom;
-	
+
 	/**
 	 * Total length of the Withdrawn Routes field in octets.  
 	 */
@@ -99,7 +99,10 @@ public class BGP4Update extends BGP4Message {
 		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
 		decode();		
 	}
-	@Override
+	
+	/**
+	 * Encode BGP4 Update message
+	 */
 	public void encode() {
 		//Encode BGP4 Update
 		if ((withdrawnRoutes == null)&&(pathAttributes.size() == 0))
@@ -125,7 +128,7 @@ public class BGP4Update extends BGP4Message {
 			nlri.encode();
 			len=len+nlri.getLength();
 		}
-		
+
 		this.setMessageLength(len);		
 		messageBytes=new byte[len];
 		encodeHeader();
@@ -143,10 +146,10 @@ public class BGP4Update extends BGP4Message {
 		this.messageBytes[offset]=(byte)(totalPathAttibuteLength>>>8 & 0xFF);
 		this.messageBytes[offset+1]=(byte)(totalPathAttibuteLength & 0xFF);
 		offset = offset+2;
-		
+
 		//Add Path Attributes
 		for (int i=0;i<pathAttributes.size();++i){
-			
+
 			System.arraycopy(pathAttributes.get(i).getBytes(),0,messageBytes,offset,pathAttributes.get(i).getLength());	
 			offset=offset+pathAttributes.get(i).getLength();
 		}
@@ -155,10 +158,10 @@ public class BGP4Update extends BGP4Message {
 			System.arraycopy(nlri.getBytes(),0,messageBytes,offset,nlri.getBytes().length);
 			offset=offset+nlri.getLength();
 		}
-		
+
 	}
-	
-	
+
+
 	public void decode() {
 		int offset = BGPHeaderLength;
 		//Withdrawn Routes length
@@ -167,69 +170,59 @@ public class BGP4Update extends BGP4Message {
 		//Withdrawn Routes
 		if (withdrawnRoutesLength != 0){
 			//Decodificar withdrawnRoutes
-
+			log.warn("withdrawnRoutesLength not implemented");
+			offset = offset + withdrawnRoutesLength;
 		}
 		//Path Attributes Length
 		totalPathAttibuteLength = ((  ((int)messageBytes[offset]) <<8)& 0xFF00) |  ((int)messageBytes[offset+1] & 0xFF);
 		offset = offset +2;
+		//QUITAR log.info("OSCAR totalPathAttibuteLength "+totalPathAttibuteLength+" Y offset a "+offset);
 		if (totalPathAttibuteLength != 0){
 			pathAttributes = new ArrayList<PathAttribute>();
 			int len = 0;
-			int attribute_typeCode = PathAttribute.getAttibuteTypeCode(messageBytes, offset);
-			int attribute_length = PathAttribute.getAttributeLength(messageBytes, offset);
+			int attribute_typeCode;
+			int attribute_length;
+			int mandatory_length;
 			while (len < totalPathAttibuteLength){
 				//Path Attributes
 				attribute_typeCode = PathAttribute.getAttibuteTypeCode(messageBytes, offset);
-				attribute_length = PathAttribute.getAttributeLength(messageBytes, offset);				
+				attribute_length = PathAttribute.getAttributeLength(messageBytes, offset);	
+				mandatory_length = PathAttribute.getMandatoryLength(messageBytes, offset);
 				if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_ORIGIN){
 					OriginAttribute origin = new OriginAttribute(messageBytes,offset);
 					pathAttributes.add(origin);
-					
+
 				}
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_ASPATH){
 					AS_Path_Attribute as_Path_Attribute = new AS_Path_Attribute(messageBytes,offset);
 					pathAttributes.add(as_Path_Attribute);
 				}
-				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_LINKSTATE){
+				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE){
 					LinkStateAttribute linkState_Attribute = new LinkStateAttribute(messageBytes,offset);
-					if(linkState_Attribute.getMandatoryLength() == 4){
-						offset++;//extended length
-						len++;//length tiene 2 bytes con extended length
-					}
 					pathAttributes.add(linkState_Attribute);
 				}	
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE){
-					log.error("ASPATH_AS_SEQUENCE Not implemented yet");
+					log.warn("ASPATH_AS_SEQUENCE Not implemented yet");
 				}
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_ORIGIN_EGP){
 					//ORIGIN_EGP
-					log.error("ORIGIN_EGP Not implemented yet");
+					log.warn("ORIGIN_EGP Not implemented yet");
 				}
 				else if (attribute_typeCode == PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI){
 					//PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI
 					int afi = MP_Reach_Attribute.getAFI(messageBytes, offset);
 					if (afi == AFICodes.AFI_BGP_LS ){
 						BGP_LS_MP_Reach_Attribute blsra= new BGP_LS_MP_Reach_Attribute(messageBytes,offset);
-						if(blsra.getMandatoryLength()==4){
-							offset++;//extended length
-							len++;//length tiene 2 bytes
-						}
 						pathAttributes.add(blsra);
 					}else {
 						Generic_MP_Reach_Attribute gblsra= new Generic_MP_Reach_Attribute(messageBytes,offset);
-						if(gblsra.getMandatoryLength()==4){
-							offset++;
-							len++;
-						}
 						pathAttributes.add(gblsra);
 					}
-					//nlri con extended length tiene mandatory length 4 no tres
+				} else {
+					log.warn("attribute_typeCode NOT supported by this implementation "+attribute_typeCode);
 				}
-				
-				offset = offset + attribute_length + 3;
-				len = len + attribute_length +3;
-				/**attribute_typeCode = messageBytes[offset];
-				attribute_length = messageBytes[offset+1];*/
+				offset = offset + attribute_length + mandatory_length;
+				len = len + attribute_length +mandatory_length;
 			}
 			//NLRI
 			//if (nlri != null){
@@ -243,12 +236,12 @@ public class BGP4Update extends BGP4Message {
 				//Node_NLRI
 				nlri = new NodeNLRI(messageBytes,offset);
 				//UPDATE message Length - 23 - Total Path Attributes Length
-	            //   - Withdrawn Routes Length
+				//   - Withdrawn Routes Length
 				offset=offset+nlri.getLength();
 			}
 			if ((nlri == null)&&(withdrawnRoutesLength == 0)){
 				log.warn("BGP4 Update without NRLI and without Withdrawn Routes");
-				
+
 			}
 		}
 	}
@@ -292,7 +285,7 @@ public class BGP4Update extends BGP4Message {
 	public void setNlri(NLRI nlri) {
 		this.nlri = nlri;
 	}
-	
+
 	public String getLearntFrom() {
 		return learntFrom;
 	}
@@ -300,7 +293,7 @@ public class BGP4Update extends BGP4Message {
 	public void setLearntFrom(String learntFrom) {
 		this.learntFrom = learntFrom;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -318,7 +311,7 @@ public class BGP4Update extends BGP4Message {
 		}
 		if (nlri != null)
 			sb.append(nlri.toString());
-		
+
 		return sb.toString();
 	}
 
