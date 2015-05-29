@@ -27,7 +27,10 @@ public class PathAttributesTypeCode {
 	public final static int PATH_ATTRIBUTE_TYPECODE_MP_UN_REACH_NLRI=15;
 	
 	//LINKSTATE (Inventado!!!!!! no lo encuentro)
-	public final static int PATH_ATTRIBUTE_TYPECODE_LINKSTATE = 99;
+	//public final static int PATH_ATTRIBUTE_TYPECODE_LINKSTATE = 99;
+	//29 	BGP-LS Attribute (TEMPORARY - registered 2014-03-11, expires 2016-03-11)
+	//draft-ietf-idr-ls-distribution
+	public final static int PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE = 29;
 	
 	//Para origin (rfc 4271)
 	public final static int PATH_ATTRIBUTE_ORIGIN_IGP = 0;

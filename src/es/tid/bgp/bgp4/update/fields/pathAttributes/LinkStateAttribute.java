@@ -182,7 +182,7 @@ public class LinkStateAttribute  extends PathAttribute{
 		//los flags estaban mal puestos
 		this.optionalBit = true;
 		this.transitiveBit = false;
-		this.typeCode = PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_LINKSTATE;
+		this.typeCode = PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE;
 
 
 	}
