@@ -74,21 +74,21 @@ import es.tid.pce.pcep.constructs.P2PEndpoints;
  *
  */
 public class GeneralizedEndPoints extends EndPoints{
-	
+
 	private int generalizedendpointType;
 	/**
 	  * Posible Constructs
 	  */
-	
+
 	private P2PEndpoints p2pEndpoints;
-	
+
 	private P2MPEndpoints p2mpEndpoints;
-	
+
 	private AssistedUnicastEndpoints assistedUnicastEndpoints;
-	
+
 	private FullAnycastEndpoints fullAnycastEndpoints;
-	
-	
+
+
 	public GeneralizedEndPoints(){
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS);
@@ -103,7 +103,7 @@ public class GeneralizedEndPoints extends EndPoints{
 	 */
 	public void encode() {
 		int len=4+4;//The four bytes of the header plus the reserved and Endpoint type
-		
+
 		switch (generalizedendpointType){
 		case ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P:
 			try {
@@ -142,9 +142,9 @@ public class GeneralizedEndPoints extends EndPoints{
 			len=len+fullAnycastEndpoints.getLength();
 			break;
 		}
-		
-		
-		
+
+
+
 		ObjectLength=len;
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();
@@ -152,32 +152,32 @@ public class GeneralizedEndPoints extends EndPoints{
 		this.object_bytes[5]=0x00;
 		this.object_bytes[6]=(byte)((generalizedendpointType>>8)&0xFF);
 		this.object_bytes[7]=(byte)((generalizedendpointType)&0xFF);
-		log.warn("Generalized End Points TYPE:"+generalizedendpointType);
-		log.warn("Generalized End Points LENGTH:"+len);
+		//log.warn("Generalized End Points TYPE:"+generalizedendpointType);
+		//log.warn("Generalized End Points LENGTH:"+len);
 		//System.arraycopy((byte)generalizedendpointType,0, this.object_bytes, 6, 2);
 		int pos=8;
-		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P){
+		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P ){
 			System.arraycopy(p2pEndpoints.getBytes(),0, this.object_bytes, pos, p2pEndpoints.getLength());
 			pos=pos+p2pEndpoints.getLength();
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES){
 			System.arraycopy(p2mpEndpoints.getBytes(),0, this.object_bytes, pos, p2mpEndpoints.getLength());
 			pos=pos+p2mpEndpoints.getLength();
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST){
 			System.arraycopy(assistedUnicastEndpoints.getBytes(),0, this.object_bytes, pos, assistedUnicastEndpoints.getLength());
 			pos=pos+assistedUnicastEndpoints.getLength();
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST){
 			System.arraycopy(fullAnycastEndpoints.getBytes(),0, this.object_bytes, pos, fullAnycastEndpoints.getLength());
 			pos=pos+fullAnycastEndpoints.getLength();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Decode Generalized EndPoint object
 	 */
@@ -189,7 +189,7 @@ public class GeneralizedEndPoints extends EndPoints{
 		int offset=4;
 		generalizedendpointType=this.object_bytes[offset+3]&0xFF;
 		offset=8;
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P){		
 			try {
 				p2pEndpoints= new P2PEndpoints(this.object_bytes,offset); // no deber�a adem�s rellenar la tLVList??
@@ -198,37 +198,37 @@ public class GeneralizedEndPoints extends EndPoints{
 				throw new MalformedPCEPObjectException();
 			}
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES){		
 			try {
 				p2mpEndpoints= new P2MPEndpoints(this.object_bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} // no deber�a adem�s rellenar la tLVList??
+			} // no debería además rellenar la tLVList??
 			offset= offset + p2mpEndpoints.getLength();
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST){		
 			try {
 				assistedUnicastEndpoints= new AssistedUnicastEndpoints(this.object_bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} // no deber�a adem�s rellenar la tLVList?? 
+			} // no debería además rellenar la tLVList?? 
 			offset= offset + assistedUnicastEndpoints.getLength();
 		}
-		
+
 		if (generalizedendpointType==ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST){		
 			try {
 				fullAnycastEndpoints= new FullAnycastEndpoints(this.object_bytes,offset);
 			} catch (PCEPProtocolViolationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} // no deber�a adem�s rellenar la tLVList?? 
+			} // no debería además rellenar la tLVList?? 
 			offset= offset + fullAnycastEndpoints.getLength();
 		}
-		
+
 	}
 
 	//Getters and Setters
@@ -249,7 +249,7 @@ public class GeneralizedEndPoints extends EndPoints{
 		this.p2pEndpoints = P2PEndpoints;
 		this.generalizedendpointType = ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2P ;
 	}
-	
+
 	public P2MPEndpoints getP2MPEndpoints() {
 		return p2mpEndpoints;
 	}
@@ -259,7 +259,7 @@ public class GeneralizedEndPoints extends EndPoints{
 		this.p2mpEndpoints = P2PMEndpoints;
 		this.generalizedendpointType = ObjectParameters.PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES;
 	}
-	
+
 	public AssistedUnicastEndpoints getAssistedUnicastEndpoints() {
 		return assistedUnicastEndpoints;
 	}
@@ -268,7 +268,7 @@ public class GeneralizedEndPoints extends EndPoints{
 		this.assistedUnicastEndpoints = AssistedUnicastEndpoints;
 		this.generalizedendpointType = 3;
 	}
-	
+
 	public String toString(){
 		if (p2pEndpoints!=null){
 			return p2pEndpoints.toString();
@@ -277,5 +277,5 @@ public class GeneralizedEndPoints extends EndPoints{
 			return "<GEP unknown>";
 		}
 	}
-	
+
 }

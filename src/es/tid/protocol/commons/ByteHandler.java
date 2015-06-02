@@ -246,6 +246,17 @@ public class ByteHandler {
 	    return sb.toString();
 	}
     
+    public static String ByteDataPathToString(byte[] mac)
+    {
+	    StringBuilder sb = new StringBuilder(16);
+	    for (byte b : mac) {
+	        if (sb.length() > 0)
+	            sb.append(':');
+	        sb.append(String.format("%02x", b));
+	    }
+	    return sb.toString();
+	}
+    
     /**
 	 * macAddress = "AA:BB:CC:DD:EE:FF";
 	 * @return byte array
@@ -275,5 +286,36 @@ public class ByteHandler {
 		    macAddressBytes[i] = hex.byteValue();
 		}
 		return macAddressBytes;
+	}
+	
+    /**
+	 * DataPath = "AA:BB:CC:DD:EE:FF:GG:HH";
+	 * @return byte array
+	 */
+	public static byte[] DataPathFormatStringtoByteArray(String DataPath)
+	{
+		String[] DataPathParts = DataPath.split(":");
+	
+		// convert hex string to byte values
+		byte[] macAddressBytes = new byte[DataPathParts.length];
+		for(int i=0; i<DataPathParts.length; i++)
+		{
+		    Integer hex = Integer.parseInt(DataPathParts[i], 16);
+		    macAddressBytes[i] = hex.byteValue();
+		}
+		return macAddressBytes;
+	}
+
+	public static byte[] DataPathStringtoByteArray(String DataPath)
+	{
+		String[] DataPathParts = DataPath.split(":");
+	
+		// convert hex string to byte values
+		byte[] DataPathBytes = new byte[6];
+		for(int i=0; i<8; i++){
+		    Integer hex = Integer.parseInt(DataPathParts[i], 16);
+		    DataPathBytes[i] = hex.byteValue();
+		}
+		return DataPathBytes;
 	}
 }

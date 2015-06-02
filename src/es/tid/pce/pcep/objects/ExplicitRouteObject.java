@@ -95,7 +95,7 @@ public class ExplicitRouteObject extends PCEPObject{
 			int subojectclass=EROSubobject.getType(this.getObject_bytes(), offset);
 			int subojectlength=EROSubobject.getLength(this.getObject_bytes(), offset);
 			switch(subojectclass) {
-			/*				case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+			/*		case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
 					SREROSubobject sreroso = new SREROSubobject(this.getObject_bytes(), offset);
 					this.addEROSubobject(sreroso);
 					break;*/
@@ -117,6 +117,11 @@ public class ExplicitRouteObject extends PCEPObject{
 				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID:
 					UnnumberIfIDEROSubobject subun=new UnnumberIfIDEROSubobject(this.getObject_bytes(), offset);
 					addEROSubobject(subun);
+					break;
+					
+				case SubObjectValues.ERO_SUBOBJECT_DATAPATH_ID:
+					DataPathIDEROSubobject subdp=new DataPathIDEROSubobject(this.getObject_bytes(), offset);
+					addEROSubobject(subdp);
 					break;
 					
 				case SubObjectValues.ERO_SUBOBJECT_LAYER_INFO:
@@ -204,6 +209,7 @@ public class ExplicitRouteObject extends PCEPObject{
 		sb.append("<ERO: ");
 		for (int i=0;i<EROSubobjectList.size();++i){
 			sb.append(EROSubobjectList.get(i).toString());
+			sb.append(" ");
 		}
 		sb.append(">");
 		return sb.toString();
