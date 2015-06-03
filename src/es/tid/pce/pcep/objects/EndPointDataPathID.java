@@ -40,7 +40,7 @@ public class EndPointDataPathID extends EndPoints
 	{
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS);
-		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID);	
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID);		
 	}
 	public EndPointDataPathID(byte[] bytes, int offset) throws MalformedPCEPObjectException, PCEPProtocolViolationException{
 		super(bytes, offset);
@@ -68,9 +68,11 @@ public class EndPointDataPathID extends EndPoints
 		byte[] mac=new byte[8]; 
 		System.arraycopy(this.object_bytes,4, mac, 0, 8);
 		sourceSwitchID=ByteHandler.ByteMACToString(mac);
+		log.info("EndPointDataPathID decode sourceSwitchID:: "+sourceSwitchID);
 		
 		System.arraycopy(this.object_bytes,12, mac, 0, 8);
 		destSwitchID=ByteHandler.ByteMACToString(mac);
+		log.info("EndPointDataPathID decode destSwitchID:: "+destSwitchID);
 	}
 
 	public String getSourceSwitchID() 
@@ -94,8 +96,4 @@ public class EndPointDataPathID extends EndPoints
 	}
 	
 	
-	//GETTERS & SETTERS
-	
-	
-
 }

@@ -245,7 +245,16 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			ot=PCEPObject.getObjectType(bytes, offset);
-			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
+			log.info("Request: ot = "+ot);
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
+				try {
+					log.info("PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS");
+					endPoints=new GeneralizedEndPoints(bytes,offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed ENDPOINTS DataPathID Object found");
+					throw new PCEPProtocolViolationException();
+				}
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
 				try {
 					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {

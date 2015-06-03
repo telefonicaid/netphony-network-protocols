@@ -179,7 +179,7 @@ public class ObjectParameters {
 	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_NSAP = 5;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST = 245;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST = 247;
-	
+
 	
 	//PCEP Object types from draft-ietf-pce-gmpls-pcep-extensions-02
 	public static final int PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS = 5;
@@ -340,6 +340,8 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_BANDWIDTH=502;
 	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=14;
 	
+	public static final int PCEP_TLV_TYPE_DATAPATHID = 49; 
+		
 	public static final int PCEP_TLV_TYPE_XIFI=500;
 	
 	public static final int PCEP_TLV_PATH_SETUP=666;	
@@ -496,6 +498,5 @@ public class ObjectParameters {
     public static final int PCEP_GMPLS_GEN_BANDWIDTH_ETHERNET = 6;
     // From draft-ietf-ccamp-flexible-grid-rsvp-te-ext-00
     public static final int PCEP_GMPLS_GEN_BANDWIDTH_SSON = 10;
-
     
 }
