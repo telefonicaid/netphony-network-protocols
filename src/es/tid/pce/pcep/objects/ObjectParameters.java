@@ -441,10 +441,9 @@ public class ObjectParameters {
     
     
     /*******************************************************************/
-    //TO BE DONE!!!!!
     
-    //Stateful PCE Capability TLV type
-    public static final int PCEP_TLV_TYPE_STATEFUL_CAPABILITY=5555;
+    //Stateful PCE Capability TLV type from draft-ietf-pce-stateful-pce-11
+    public static final int PCEP_TLV_TYPE_STATEFUL_CAPABILITY=16;
     
     //LSP database version TLV type
     public static final int PCEP_TLV_TYPE_LSP_DATABASE_VERSION=5556;
@@ -452,14 +451,17 @@ public class ObjectParameters {
     //Redundancy group identifier TLV type
     public static final int PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER=5557;
     
-    //LSP Identifiers TLV
-    public static final int PCEP_TLV_TYPE_LSP_IDENTIFIERS=5558;
+    //IPv4 LSP Identifiers TLV
+    public static final int PCEP_TLV_TYPE_IPV4_LSP_IDENTIFIERS=18;
+    
+    //IPv6 LSP Identifiers TLV
+    public static final int PCEP_TLV_TYPE_IPV6_LSP_IDENTIFIERS=19;
     
     //LSP Error Code TLV
-    public static final int PCEP_TLV_TYPE_LSP_ERROR_CODE=5559;
+    public static final int PCEP_TLV_TYPE_LSP_ERROR_CODE=20;
     
     //RSVP Error Spec TLV
-    public static final int PCEP_TLV_TYPE_RSVP_ERROR_SPEC=5560;
+    public static final int PCEP_TLV_TYPE_RSVP_ERROR_SPEC=21;
     
     //Tunnel ID TLV
     public static final int PCEP_TLV_TYPE_TUNNEL_ID=5561;
@@ -470,9 +472,6 @@ public class ObjectParameters {
     //Segment Routing PCE Capability TLV type. Value 26 according to draft-sivabalan-pce-segment-routing-02
     public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       
     
-    //ESTO NO VA A AQUI. CAMBIARLO!!!
-    //FIXME
-    public static final boolean amIstateFull=true;  
     public static final byte[] redundancyID= new byte[]{1,2,3,4}; 
     
     

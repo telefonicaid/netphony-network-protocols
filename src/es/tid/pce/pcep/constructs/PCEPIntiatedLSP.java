@@ -48,7 +48,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		return bandwidth;
 	}
 
-	public void setBandwidth(BandwidthRequested bandwidth) {
+	public void setBandwidth(Bandwidth bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 

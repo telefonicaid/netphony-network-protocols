@@ -56,10 +56,17 @@ public class GMPLSCapabilityTLV extends PCEPTLV {
 	}
 	
 	public void decode(){
-		
+		//No flags defined so far
 	}
 
 	public void encode() {
+		this.setTLVValueLength(4);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		this.encodeHeader();
+		this.tlv_bytes[4]=0x00;
+		this.tlv_bytes[5]=0x00;
+		this.tlv_bytes[6]=0x00;
+		this.tlv_bytes[7]=0x00;
 	
 	}
 
