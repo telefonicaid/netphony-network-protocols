@@ -7,9 +7,9 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/** IPV4-LSP-IDENTIFIERS TLV draft-ietf-pce-stateful-pce-09.
+/** IPV4-LSP-IDENTIFIERS TLV draft-ietf-pce-stateful-pce-11.
  * Encoding: 
- * TLV Type: 5558 (non standard)
+ * TLV Type: 18 (non standard)
  * Whenever the value of an LSP identifier changes, a PCC MUST send out
    an LSP State Report, where the LSP Object carries the LSP Identifiers
    TLV that contains the new value.  The LSP Identifiers TLV MUST also
@@ -18,9 +18,6 @@ import es.tid.protocol.commons.ByteHandler;
 
    The format of the IPV4-LSP-IDENTIFIERS TLV is shown in the following
    figure:
-
-Crabbe, et al.          Expires November 9, 2013               [Page 38]
-Internet-Draft      PCEP Extensions for Stateful PCE            May 2013
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -62,7 +59,7 @@ Internet-Draft      PCEP Extensions for Stateful PCE            May 2013
       @author jaume
  */
 
-public class LSPIdentifiersTLV extends PCEPTLV 
+public class IPv4LSPIdentifiersTLV extends PCEPTLV 
 {
 	private Inet4Address tunnelSenderIPAddress;
 	
@@ -72,12 +69,12 @@ public class LSPIdentifiersTLV extends PCEPTLV
 	
 	private int extendedTunnelID;
 
-	public LSPIdentifiersTLV()
+	public IPv4LSPIdentifiersTLV()
 	{
-		this.TLVType=ObjectParameters.PCEP_TLV_TYPE_LSP_IDENTIFIERS;
+		this.TLVType=ObjectParameters.PCEP_TLV_TYPE_IPV4_LSP_IDENTIFIERS;
 	}
 
-	public LSPIdentifiersTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException
+	public IPv4LSPIdentifiersTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException
 	{		
 		super(bytes,offset);		
 		decode();
