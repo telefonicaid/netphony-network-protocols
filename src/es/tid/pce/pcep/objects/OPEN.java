@@ -327,35 +327,27 @@ public class OPEN extends PCEPObject{
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
-				log.info("PCEP_TLV_OF_LIST_TLV");
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
-				log.info("PCEP_TLV_DOMAIN_ID_TLV");
 				domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
-				log.info("PCEP_TLV_PCE_ID_TLV");
 				pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_GMPLS_CAPABILITY:
-				log.info("PCEP_TLV_TYPE_GMPLS_CAPABILITY");
 				gmplsCapabilityTLV=new GMPLSCapabilityTLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_STATEFUL_CAPABILITY:
-				log.info("PCEP_TLV_TYPE_STATEFUL_CAPABILITY");
 				stateful_capability_tlv=new StatefulCapabilityTLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_SR_CAPABILITY:
-				log.info("PCEP_TLV_TYPE_SR_CAPABILITY");
 				SR_capability_tlv=new SRCapabilityTLV(this.getObject_bytes(), offset);
 				break;					
 			case ObjectParameters.PCEP_TLV_TYPE_LSP_DATABASE_VERSION:
-				log.info("PCEP_TLV_TYPE_LSP_DATABASE_VERSION");
 				lsp_database_version_tlv=new LSPDatabaseVersionTLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER:
-				log.info("PCEP_TLV_TYPE_LSP_DATABASE_VERSION");
 				redundancy_indetifier_tlv=new PCE_Redundancy_Group_Identifier_TLV(this.getObject_bytes(), offset);
 				break;
 		
