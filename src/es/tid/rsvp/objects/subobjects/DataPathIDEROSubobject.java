@@ -1,7 +1,5 @@
 package es.tid.rsvp.objects.subobjects;
 
-import java.util.logging.Logger;
-
 import tid.pce.tedb.DataPathID;
 
 /** 

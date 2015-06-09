@@ -44,7 +44,7 @@ public class EndPointDataPathTLV extends PCEPTLV {
 	 * Decode
 	 */
 	public void decode(){
-		log.info("Decoding DataPathID EndPoint TLV");
+		//log.info("Decoding DataPathID EndPoint TLV");
 
 		int offset = 4;
 
