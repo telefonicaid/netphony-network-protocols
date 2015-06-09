@@ -22,5 +22,7 @@ public class XROSubObjectValues {
 	public static final int XRO_SUBOBJECT_UNNUMBERED_IF_ID=0x04;//From RFC 5521
 	public static final int XRO_SUBOBJECT_ASNUMBER=32;//From RFC 5521
 	public static final int XRO_SUBOBJECT_SRLG=34;//From RFC 5521
+	
+	public static final int XRO_SUBOBJECT_DATAPATH_ID=0x05;
 		
 }
