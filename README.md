@@ -1,4 +1,4 @@
-netphony-network-protocols v1.0.1
+netphony-network-protocols v1.1.1
 =================================
 
 Java Library of Networking Protocols: PCEP, RSVP, OSPF, BGP-LS
