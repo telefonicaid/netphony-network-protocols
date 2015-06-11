@@ -28,7 +28,8 @@ Provides encoding and decoding of the mentioned protocols.
      //EndPoints
      EndPointsIPv4 ep=new EndPointsIPv4();				
      req.setEndPoints(ep);
-     ep..setEndPointIPv4TLV((Inet4Address)Inet4Address.getByName ("192.168.1.3");
+     Inet4Address ipp = (Inet4Address)Inet4Address.getByName("172.16.101.101");
+     ep.setSourceIP(ipp);
 	.....
     message.addRequest(req); 	
  ```
@@ -51,7 +52,7 @@ Detailed PCEP Support [click here](doc/PCEP_Support.md)
 * RFC 6006: Only P2MP END-POINTS Object for IPv4
 * draft-ietf-pce-gmpls-pcep-extensions-10 (partial)
 * draft-ietf-pce-inter-layer-ext-05 (partial)
-* draft-ietf-pce-hierarchy-extensions-01
+* draft-ietf-pce-hierarchy-extensions-02
 * draft-ietf-pce-stateful-pce-05
 * draft-ietf-pce-pcep-stateful-pce-gmpls-00
 * draft-ietf-pce-pce-initiated-lsp-00:
