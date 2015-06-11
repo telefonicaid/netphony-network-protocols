@@ -2,7 +2,7 @@ package es.tid.pce.pcep.objects;
 
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPErrorCodeTLV;
-import es.tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
+import es.tid.pce.pcep.objects.tlvs.IPv4LSPIdentifiersTLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.pce.pcep.objects.tlvs.RSVPErrorSpecTLV;
 import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
@@ -138,7 +138,7 @@ public class LSP extends PCEPObject{
 	
 	private SymbolicPathNameTLV symbolicPathNameTLV_tlv = null;
 	
-	private LSPIdentifiersTLV lspIdentifiers_tlv = null;
+	private IPv4LSPIdentifiersTLV lspIdentifiers_tlv = null;
 	
 	private LSPErrorCodeTLV lspErrorCodes_tlv = null;
 	
@@ -162,7 +162,7 @@ public class LSP extends PCEPObject{
 	public void encode() 
 	{
 		
-		ObjectLength = 4 + 4 + 4;
+		ObjectLength = 8;
 		if (symbolicPathNameTLV_tlv!=null){
 			symbolicPathNameTLV_tlv.encode();
 			ObjectLength=ObjectLength+symbolicPathNameTLV_tlv.getTotalTLVLength();
@@ -238,7 +238,7 @@ public class LSP extends PCEPObject{
 		rsvpErrorSpec_tlv = null;
 		lspDBVersion_tlv = null;
 		
-		if (ObjectLength<12){
+		if (ObjectLength<8){
 			throw new MalformedPCEPObjectException();
 		}
 		
@@ -253,10 +253,10 @@ public class LSP extends PCEPObject{
 		boolean fin;
 		int offset = 8;
 		
-		LSP_sig_type = ByteHandler.easyCopy(0,7,object_bytes[offset+3]);
-		offset += 4;
+//		LSP_sig_type = ByteHandler.easyCopy(0,7,object_bytes[offset+3]);
+//		offset += 4;
 		
-		if (ObjectLength==12){
+		if (ObjectLength==8){
 			fin=true;
 		}else {
 			fin = false;
@@ -270,8 +270,8 @@ public class LSP extends PCEPObject{
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
 					symbolicPathNameTLV_tlv=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
 					break;
-				case ObjectParameters.PCEP_TLV_TYPE_LSP_IDENTIFIERS:
-					lspIdentifiers_tlv =new LSPIdentifiersTLV(this.getObject_bytes(), offset);
+				case ObjectParameters.PCEP_TLV_TYPE_IPV4_LSP_IDENTIFIERS:
+					lspIdentifiers_tlv =new IPv4LSPIdentifiersTLV(this.getObject_bytes(), offset);
 					break;
 				case ObjectParameters.PCEP_TLV_TYPE_LSP_ERROR_CODE:
 					lspErrorCodes_tlv =new LSPErrorCodeTLV(this.getObject_bytes(), offset);
@@ -321,12 +321,12 @@ public class LSP extends PCEPObject{
 		this.symbolicPathNameTLV_tlv = symbolicPathNameTLV_tlv;
 	}
 
-	public LSPIdentifiersTLV getLspIdentifiers_tlv() 
+	public IPv4LSPIdentifiersTLV getLspIdentifiers_tlv() 
 	{
 		return lspIdentifiers_tlv;
 	}
 
-	public void setLspIdentifiers_tlv(LSPIdentifiersTLV lspIdentifiers_tlv) 
+	public void setLspIdentifiers_tlv(IPv4LSPIdentifiersTLV lspIdentifiers_tlv) 
 	{
 		this.lspIdentifiers_tlv = lspIdentifiers_tlv;
 	}

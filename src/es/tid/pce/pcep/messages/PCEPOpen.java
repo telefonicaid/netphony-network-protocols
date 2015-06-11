@@ -175,6 +175,7 @@ public class PCEPOpen extends PCEPMessage {
 			try {
 				open=new OPEN(this.messageBytes,offset);
 			} catch (MalformedPCEPObjectException e) {
+				log.warn("Problem decoding OPEN Meassage: "+ e.toString());
 				throw new PCEPProtocolViolationException();
 			}			
 		}

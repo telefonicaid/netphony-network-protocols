@@ -1,3 +1,6 @@
+v1.1.0 
+- Add support of DataPathID
+- Updated codes for draft-ietf-pce-stateful-pce-11
 - Removed Delegation Parameters TLVs (removed in stateful pce draft since version -03)
 - Removed unused propiertary TLVs
 - Updated documentation on protocol support

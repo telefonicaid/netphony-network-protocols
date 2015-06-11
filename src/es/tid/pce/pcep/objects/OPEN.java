@@ -304,6 +304,7 @@ public class OPEN extends PCEPObject{
 	 * Decodes the OPEN object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
+		log.info("Decoding OPEN");
 		//Beginning decoding of OPEN object
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
