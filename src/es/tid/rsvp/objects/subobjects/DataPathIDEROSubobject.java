@@ -1,6 +1,6 @@
 package es.tid.rsvp.objects.subobjects;
 
-import tid.pce.tedb.DataPathID;
+import es.tid.of.DataPathID;
 
 /** 
  * 
