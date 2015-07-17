@@ -23,6 +23,11 @@ import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.PrefixMetricPrefixAtt
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.RouteTagPrefixAttribTLV;
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SidLabelNodeAttribTLV;
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV;
+//********** RUBEN *************
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SharedRiskLinkGroupAttribTLV;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.TransceiverClassAndAppAttribTLV;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MF_OTPAttribTLV;
+//******************************
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
 
@@ -162,6 +167,12 @@ public class LinkStateAttribute  extends PathAttribute{
 	IPv4RouterIDLocalNodeLinkAttribTLV IPv4RouterIDLocalNodeLATLV;
 	IPv4RouterIDRemoteNodeLinkAttribTLV IPv4RouterIDRemoteNodeLATLV;
 	DefaultTEMetricLinkAttribTLV TEMetricTLV;
+	//********** RUBEN *************
+	SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV;
+	TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV;
+	MF_OTPAttribTLV MF_OTP_ATLV;
+	//******************************
+	
 
 	/** NODE ATTRIBUTE TLVs */
 	NodeFlagBitsNodeAttribTLV nodeFlagBitsTLV;
@@ -236,7 +247,21 @@ public class LinkStateAttribute  extends PathAttribute{
 			TEMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+TEMetricTLV.getTotalTLVLength();
 		}
-
+		//********** RUBEN *************
+		if(SharedRiskLinkGroupATLV!=null){
+			SharedRiskLinkGroupATLV.encode();
+			pathAttributeLength=pathAttributeLength+SharedRiskLinkGroupATLV.getTotalTLVLength();
+		}	
+		if(TransceiverClassAndAppATLV!=null){
+			TransceiverClassAndAppATLV.encode();
+			pathAttributeLength=pathAttributeLength+TransceiverClassAndAppATLV.getTotalTLVLength();
+		}
+		if(MF_OTP_ATLV!=null){
+			MF_OTP_ATLV.encode();
+			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
+		}
+		//******************************
+		
 		//NODE Attributes
 
 		if(nodeFlagBitsTLV!=null){
@@ -344,6 +369,23 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+TEMetricTLV.getTotalTLVLength();
 		}
 
+		//********** RUBEN *************
+		if(SharedRiskLinkGroupATLV!=null){
+			System.arraycopy(SharedRiskLinkGroupATLV.getTlv_bytes(),0, this.bytes,offset, SharedRiskLinkGroupATLV.getTotalTLVLength());
+			offset=offset+SharedRiskLinkGroupATLV.getTotalTLVLength();
+		}
+		
+		if(TransceiverClassAndAppATLV!=null){
+			System.arraycopy(TransceiverClassAndAppATLV.getTlv_bytes(),0, this.bytes,offset, TransceiverClassAndAppATLV.getTotalTLVLength());
+			offset=offset+TransceiverClassAndAppATLV.getTotalTLVLength();
+		}
+		
+		if(MF_OTP_ATLV!=null){
+			System.arraycopy(MF_OTP_ATLV.getTlv_bytes(),0, this.bytes,offset, MF_OTP_ATLV.getTotalTLVLength());
+			offset=offset+MF_OTP_ATLV.getTotalTLVLength();
+		}
+		//******************************
+		
 		if(areaIDTLV!=null){
 			System.arraycopy(areaIDTLV.getTlv_bytes(),0, this.bytes,offset, areaIDTLV.getTotalTLVLength());
 			offset=offset+areaIDTLV.getTotalTLVLength();
@@ -431,6 +473,17 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TE_DEFAULT_METRIC:
 				this.TEMetricTLV=new DefaultTEMetricLinkAttribTLV(this.bytes, offset);
 				break;
+		    //********** RUBEN *************	
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_SHARED_RISK_LINK_GROUP:
+				this.SharedRiskLinkGroupATLV=new SharedRiskLinkGroupAttribTLV(this.bytes, offset);
+				break;	
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TRANSCEIVER_CLASS_AND_APPLICATION:
+				this.TransceiverClassAndAppATLV=new TransceiverClassAndAppAttribTLV(this.bytes, offset);
+				break;	
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP:
+				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
+				break;
+		    //******************************	
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
 				try {
 					this.availableLabels=new AvailableLabels(this.bytes, offset);
@@ -547,7 +600,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void setMetricTLV(MetricLinkAttribTLV metricTLV) {
 		this.metricTLV = metricTLV;
 	}
-
+	
 	public AdministrativeGroupLinkAttribTLV getAdministrativeGroupTLV() {
 		return administrativeGroupTLV;
 	}
@@ -579,6 +632,29 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void setTEMetricTLV(DefaultTEMetricLinkAttribTLV tEMetricTLV) {
 		TEMetricTLV = tEMetricTLV;
 	}
+	
+	//********** RUBEN *************
+	public SharedRiskLinkGroupAttribTLV getSharedRiskLinkGroup() {
+		return SharedRiskLinkGroupATLV;
+	}
+	public void setSharedRiskLinkGroupTLV(SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV) {
+		this.SharedRiskLinkGroupATLV = SharedRiskLinkGroupATLV;
+	}
+	public TransceiverClassAndAppAttribTLV getTransceiverClassAndApp() {
+		return TransceiverClassAndAppATLV;
+	}
+	public void setTransceiverClassAndAppTLV(TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV) {
+		this.TransceiverClassAndAppATLV = TransceiverClassAndAppATLV;
+	}
+	public MF_OTPAttribTLV getMF_OTP() {
+		return MF_OTP_ATLV;
+	}
+	public void setMF_OTPAttribTLV(MF_OTPAttribTLV MF_OTP_ATLV) {
+		this.MF_OTP_ATLV = MF_OTP_ATLV;
+	}
+	
+	//******************************
+	
 	public NodeFlagBitsNodeAttribTLV getNodeFlagBitsTLV() {
 		return nodeFlagBitsTLV;
 	}
@@ -665,7 +741,24 @@ public class LinkStateAttribute  extends PathAttribute{
 			sb.append("\r\n");
 
 		}
+		
+		//********** RUBEN *************
+		if(SharedRiskLinkGroupATLV!=null){
+			sb.append(SharedRiskLinkGroupATLV.toString());
+			sb.append("\r\n");
 
+		}		
+		if(TransceiverClassAndAppATLV!=null){
+			sb.append(TransceiverClassAndAppATLV.toString());
+			sb.append("\r\n");
+
+		}
+		if(MF_OTP_ATLV!=null){
+			sb.append(MF_OTP_ATLV.toString());
+			sb.append("\r\n");
+
+		}
+	    //******************************
 		if(IPv4RouterIDLocalNodeNATLV!=null){
 			sb.append(IPv4RouterIDLocalNodeNATLV.toString());
 			sb.append("\r\n");

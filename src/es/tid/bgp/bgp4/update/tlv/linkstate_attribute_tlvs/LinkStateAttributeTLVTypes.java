@@ -52,6 +52,12 @@ public class LinkStateAttributeTLVTypes {
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS = 1200;
 	
 	
+	//********** RUBEN *************  
+	public static final int  LINK_ATTRIBUTE_TLV_TYPE_SHARED_RISK_LINK_GROUP = 1096;
+	public static final int  LINK_ATTRIBUTE_TLV_TYPE_TRANSCEIVER_CLASS_AND_APPLICATION = 2498;
+	public static final int  LINK_ATTRIBUTE_TLV_TYPE_MF_OTP = 2499;
+	// *****************************
+	
 	/**          
 	 *     
    +--------------+-----------------------+----------+-----------------+
