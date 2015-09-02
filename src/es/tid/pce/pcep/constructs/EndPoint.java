@@ -5,6 +5,7 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.tlvs.EndPointApplicationTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointDataPathTLV;
+import es.tid.pce.pcep.objects.tlvs.EndPointUnnumberedDataPathTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointIPv4TLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointServerTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointStorageTLV;
@@ -17,7 +18,9 @@ public class EndPoint extends PCEPConstruct {
 	private EndPointIPv4TLV endPointIPv4;
 
 	private EndPointDataPathTLV endPointDataPathID;
-
+	
+	private EndPointUnnumberedDataPathTLV endPointUnnumberedDataPathID;
+	
 	private UnnumberedEndpointTLV unnumberedEndpoint;
 
 	private EndPointStorageTLV endPointStorage;
@@ -78,6 +81,13 @@ public class EndPoint extends PCEPConstruct {
 			//log.info("EndPoint endPointDataPathID tras encode:: "+endPointDataPathID.toString());
 			length = length + endPointDataPathID.getTotalTLVLength();
 		}
+		else if (endPointUnnumberedDataPathID != null)
+		{
+			//log.info("EndPoint endPointDataPathID !=null ");
+			endPointUnnumberedDataPathID.encode();
+			//log.info("EndPoint endPointDataPathID tras encode:: "+endPointDataPathID.toString());
+			length = length + endPointUnnumberedDataPathID.getTotalTLVLength();
+		}
 
 
 		this.setLength(length);
@@ -119,6 +129,11 @@ public class EndPoint extends PCEPConstruct {
 			System.arraycopy(endPointDataPathID.getTlv_bytes(),0,this.bytes,offset,endPointDataPathID.getTotalTLVLength());
 			offset = offset + endPointDataPathID.getTotalTLVLength();
 		}
+		else if (endPointUnnumberedDataPathID != null)
+		{
+			System.arraycopy(endPointUnnumberedDataPathID.getTlv_bytes(),0,this.bytes,offset,endPointUnnumberedDataPathID.getTotalTLVLength());
+			offset = offset + endPointUnnumberedDataPathID.getTotalTLVLength();
+		}
 
 	}
 	public void decode(byte[] bytes, int offset) throws MalformedPCEPObjectException {		
@@ -151,6 +166,9 @@ public class EndPoint extends PCEPConstruct {
 
 		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_DATAPATHID){
 			endPointDataPathID = new EndPointDataPathTLV(bytes, offset);
+		}
+		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT_DATAPATHID){
+			endPointUnnumberedDataPathID = new EndPointUnnumberedDataPathTLV(bytes, offset);
 		}
 
 	}
@@ -218,6 +236,16 @@ public class EndPoint extends PCEPConstruct {
 	public void setEndPointDataPathTLV(EndPointDataPathTLV endPointDataPathID) {
 		this.endPointDataPathID = endPointDataPathID;
 	}
+	
+	//Get and set of EndPointUnnumberedDataPathTLV
+	public EndPointUnnumberedDataPathTLV getEndPointUnnumberedDataPathTLV() {
+		return endPointUnnumberedDataPathID;
+	}
+
+
+	public void setEndPointUnnumberedDataPathTLV(EndPointUnnumberedDataPathTLV endPointUnnumberedDataPathID) {
+		this.endPointUnnumberedDataPathID = endPointUnnumberedDataPathID;
+	}
 
 
 	public String toString(){
@@ -225,6 +253,9 @@ public class EndPoint extends PCEPConstruct {
 			return endPointIPv4.getIPv4address().getHostAddress();
 		}else if (endPointDataPathID != null ){
 			return endPointDataPathID.getSwitchID();//.getDataPathID();
+
+		}else if (endPointUnnumberedDataPathID != null ){
+			return endPointUnnumberedDataPathID.getSwitchID()+"."+endPointUnnumberedDataPathID.getPort();//.getUnnumberedDataPathID();
 
 		}else if (unnumberedEndpoint != null ){
 			return unnumberedEndpoint.getIPv4address().getHostAddress()+":"+unnumberedEndpoint.getIfID();
