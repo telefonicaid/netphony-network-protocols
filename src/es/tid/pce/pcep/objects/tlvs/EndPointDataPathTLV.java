@@ -1,5 +1,6 @@
 package es.tid.pce.pcep.objects.tlvs;
 
+import es.tid.of.DataPathID;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
@@ -11,7 +12,7 @@ import es.tid.protocol.commons.ByteHandler;
 
 public class EndPointDataPathTLV extends PCEPTLV {
 
-	public String switchID;
+	public DataPathID switchID;
 
 	public EndPointDataPathTLV(){
 		this.setTLVType(ObjectParameters.PCEP_TLV_TYPE_DATAPATHID); //PCEP_GENERALIZED_END_POINTS_TYPE_P2P);
@@ -28,7 +29,7 @@ public class EndPointDataPathTLV extends PCEPTLV {
 	public void encode() 
 	{
 		//log.info("Encoding DataPathID EndPoint TLV");
-		int length = 4+8; //4 bytes from TLV header + 8 bytes from swithID
+		int length = 8; // 8 bytes from swithID
 
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -36,7 +37,7 @@ public class EndPointDataPathTLV extends PCEPTLV {
 		int offset = 4;
 
 		//System.arraycopy(switchID, 0, this.tlv_bytes, offset, 8);
-		System.arraycopy(ByteHandler.DataPathFormatStringtoByteArray(switchID), 0, this.tlv_bytes, offset, 8);
+		System.arraycopy(ByteHandler.DataPathFormatStringtoByteArray(switchID.getDataPathID()), 0, this.tlv_bytes, offset, 8);
 		//log.info("Tras Encode EndPointDataPathTLV:: "+switchID.toString());
 	}
 
@@ -56,7 +57,7 @@ public class EndPointDataPathTLV extends PCEPTLV {
 
 		try {
 			//switchID=id.toString();
-			switchID=ByteHandler.ByteDataPathToString(id);
+			switchID.setDataPathID(ByteHandler.ByteDataPathToString(id));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,11 +73,11 @@ public class EndPointDataPathTLV extends PCEPTLV {
 
 
 	public String getSwitchID() {
-		return switchID;
+		return switchID.getDataPathID();
 	}
 
 	public void setSwitchID(String switchID) {
-		this.switchID = switchID;
+		this.switchID.setDataPathID(switchID);
 	}
 	
 	public String toString(){

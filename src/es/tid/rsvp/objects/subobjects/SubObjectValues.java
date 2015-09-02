@@ -17,6 +17,7 @@ public class SubObjectValues {
 	public static final int ERO_SUBOBJECT_SWITCH_ID_EDGE=56;
 	public static final int ERO_SUBOBJECT_SWITCH_ID_END=57;
 	public static final int ERO_SUBOBJECT_DATAPATH_ID=58;
+	public static final int ERO_SUBOBJECT_UNNUMBERED_DATAPATH_ID=59;
 	
 	public static final int ERO_SUBOBJECT_LABEL_CTYPE_GENERALIZED_LABEL=0x02;//From RFC 3473 (section 2.3 and )
 	public static final int ERO_SUBOBJECT_LABEL_CTYPE_WAVEBAND_LABEL=0x03;//From RFC 3473 (section 2.4 and )

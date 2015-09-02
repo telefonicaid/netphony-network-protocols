@@ -183,6 +183,7 @@ public class GeneralizedEndPoints extends EndPoints{
 	 */
 	public void decode() throws MalformedPCEPObjectException {
 		if (ObjectLength<=8){
+			log.info("jm ver longitud del ObjectLength: " + ObjectLength);
 			log.warn("Generalized End Points does not have TLVs");
 			throw new MalformedPCEPObjectException();
 		}
