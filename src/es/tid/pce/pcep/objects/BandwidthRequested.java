@@ -139,8 +139,9 @@ public class BandwidthRequested extends Bandwidth{
 	}
 
 	public Bandwidth duplicate(){
-		Bandwidth bw= new BandwidthRequested();
-		return bw;
+		BandwidthRequested bww= new BandwidthRequested();
+		bww.bw=bw;
+		return bww;
 	}
 
 }

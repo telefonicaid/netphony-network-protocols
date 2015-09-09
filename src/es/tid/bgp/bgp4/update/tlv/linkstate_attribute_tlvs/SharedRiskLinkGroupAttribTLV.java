@@ -63,8 +63,12 @@ public class SharedRiskLinkGroupAttribTLV extends BGP4TLVFormat{
 	   	//No funciona el for
 		for (i=0 ; i<srlg_length ; i++){
 			
-			srlg_value[i] = ( (((long)tlv_bytes[offset]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+1]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+2]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+3]&(long)0xFF) );
-			srlg_value[i] = srlg_value[i]&(long)0xFFFFFFFF;
+			srlg_value[i] =0;
+			
+			for (int k = 0; k < 4; k++) {
+				srlg_value[i]  = (srlg_value[i]  << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
+			}	
+			offset=offset+4;
 			log.info("Valor del SRLG: "+srlg_value[i]+".");
 		
 		offset = offset + 4;
