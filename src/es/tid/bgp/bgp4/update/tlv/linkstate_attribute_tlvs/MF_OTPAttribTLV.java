@@ -9,8 +9,6 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 public class MF_OTPAttribTLV extends BGP4TLVFormat{
 
-	private int Type;				//16
-	private int Length;				//16
 	private int MatrixID;			//8
 	private int RstType;			//8
 	private int Swcap;				//8
@@ -25,27 +23,7 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	private int MinWidth;			//16
 	private int MaxWidth;			//16
 	
-	// Aggregated Optical Spectrum for subTx
-  /*private int subTxLabelTypeTLV;	//16
-    private int subTxLength1;		//16
-	private int subTxPriority;		//8
-	private int subTxReserved;		//24
-	private int subTxAct;			//4
-	private int subTxNumLabels;		//12
-	private int subTxLength2;		//16
-	private int subTxGrid;			//3
-	private int subTxCS;			//4
-	private int subTxIdentifier;	//9
-	private int subTxn;				//16
-	private int subTxBitMap; 		//32
-  */
-	
-	
-	
-	// Aggregated Optical Spectrum for subTx
-	
-	
-	
+		
 	
 	public MF_OTPAttribTLV(){
 		super();
@@ -59,33 +37,66 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 
 	@Override
 	public void encode() {
-		/*int offset = 1;
 		
-	    tlv_bytes[offset]=(byte)((trans_app_code>>24) & 0xFF);
-	    tlv_bytes[offset+1]=(byte)((trans_app_code>>16) & 0xFF);
-		tlv_bytes[offset+2]=(byte)((trans_app_code>>8) & 0xFF);
-		tlv_bytes[offset+3]=(byte)(trans_app_code & 0xFF);	
+		int offset = 4;
 		
-		tlv_bytes[offset+4]=(byte)((trans_class>>24) & 0xFF);
-	    tlv_bytes[offset+5]=(byte)((trans_class>>16) & 0xFF);
-		tlv_bytes[offset+6]=(byte)((trans_class>>8) & 0xFF);
-		tlv_bytes[offset+7]=(byte)(trans_class & 0xFF);	
-		 */ 
+		log.info("******************* Codificando MF OTP *****************");
+		
+		tlv_bytes[offset]=(byte)((MatrixID) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((RstType) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((Swcap) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((Encoding) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((TxSubTrnsp) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((RxSubTrnsp) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((AvailTxSTrnsp) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((AvailRxTrnsp) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((CFG) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((SWG) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((MinWidth) & 0xFF);
+		
+		offset = offset + 1;
+		
+		tlv_bytes[offset]=(byte)((MaxWidth) & 0xFF);
+		
+		log.info("***************** FIN Codificando MF OTP ***************");
+		
 	}
 	
 	protected void decode(){
-		/*int offset = 1;
-		
-		trans_app_code = ( (((int)tlv_bytes[offset]&(int)0xFF)<<24) | (((int)tlv_bytes[offset+1]&(int)0xFF)<<16) | (((int)tlv_bytes[offset+2]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+3]&(int)0xFF) );
-		trans_class = ( (((int)tlv_bytes[offset+4]&(int)0xFF)<<24) | (((int)tlv_bytes[offset+5]&(int)0xFF)<<16) | (((int)tlv_bytes[offset+6]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+7]&(int)0xFF) );
-		*/
 		
 		int offset = 4;
 				
 		log.info("******************* Decodificando MF OTP *****************");
-		
-		Length = (this.getTLVValueLength()/4);
-		log.info("Longitud MF OTP: "+Length+".");
 	   	
 	   	MatrixID = (((int)tlv_bytes[offset]&(int)0xFF));
 		log.info("Valor de MatrixID del MF_OTP: "+MatrixID+".");
@@ -153,51 +164,13 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 		log.info("***************** FIN Decodificando MF OTP ***************");
 	}
 
-/*
-	public float getTransAppCode() {
-		return trans_app_code;
-	}
 
-	public void getTransAppCode(int trans_app_code) {
-		this.trans_app_code = trans_app_code;
-	}
-
-	public float getTransClass() {
-		return trans_class;
-	}
-
-	public void getTransClass(int trans_class) {
-		this.trans_class = trans_class;
-	}	
-	
 	public String toString(){
-		String str =  "<RP" + " Transceiver Application Code: " + trans_app_code + " Transceiver Class: " + trans_class;
+		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth;
 		str+=">";
 		return str;
 	}
-	
-	*/
-	
-	public String toString(){
-		String str =  "<MFOTP>";
-		return str;
-	}
 
-	public int getType() {
-		return Type;
-	}
-
-	public void setType(int type) {
-		Type = type;
-	}
-
-	public int getLength() {
-		return Length;
-	}
-
-	public void setLength(int length) {
-		Length = length;
-	}
 
 	public int getMatrixID() {
 		return MatrixID;
