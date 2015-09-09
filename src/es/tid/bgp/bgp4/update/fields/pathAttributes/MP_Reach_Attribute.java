@@ -1,5 +1,10 @@
 package es.tid.bgp.bgp4.update.fields.pathAttributes;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import es.tid.bgp.bgp4.update.fields.PathAttribute;
 
 /**
@@ -124,9 +129,9 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     
     private int subsequentAddressFamilyIdentifier;
     
-    private int lengthofNextHopNetworkAddress;
+    private InetAddress nextHop;
     
-    //private byte[]  networkAddressofNextHop;
+    private int nextHopLength;
 	
 	/*
 	
@@ -146,6 +151,15 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     	this.setTypeCode(PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI);
     	this.optionalBit = true;
 		this.transitiveBit = false;
+		//By default nextHop Length=4;
+		this.nextHopLength=4;
+		//By default nextHop=0.0.0.0
+		try {
+			this.nextHop=Inet4Address.getByName("0.0.0.0");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public MP_Reach_Attribute(byte [] bytes, int offset){
@@ -153,7 +167,7 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     	int offset2=this.mandatoryLength;
 		this.addressFamilyIdentifier=((this.bytes[offset2]&0xFF)<<8) | (this.bytes[offset2+1]&0xFF);
 		this.subsequentAddressFamilyIdentifier = (this.bytes[offset2+2]&0xFF);
-		this.lengthofNextHopNetworkAddress= (this.bytes[offset2+3]&0xFF);
+		this.nextHopLength= (this.bytes[offset2+3]&0xFF);
 		//FIXME: RELLENAR NEXT HOP NETWORK ADDRESS
 		//		System.arraycopy(bytes, offset+4, this.networkAddressofNextHop, 0, lengthofNextHopNetworkAddress);*/		
 		
@@ -168,14 +182,24 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     	this.bytes[offset+1]=(byte)(this.addressFamilyIdentifier&0xFF);
     	//SAFI
     	this.bytes[offset+2]=(byte)(this.subsequentAddressFamilyIdentifier&0xFF);
-    	this.bytes[offset+3]=0;
-    	this.bytes[offset+4]=0;
+    	this.bytes[offset+3]=(byte)this.getNextHopLength();
+    	offset=offset+4;
+    	//FIXME: 0.0.0.0 Por defecto
+    	if (this.nextHopLength==4){
+    		this.bytes[offset]=0;
+        	this.bytes[offset+1]=0;
+        	this.bytes[offset+2]=0;
+        	this.bytes[offset+3]=0;
+        	
+    	}
+    	offset=offset+this.getNextHopLength();
+    	this.bytes[offset]=0;
     }
 	
 
 
 	public int getLengthofNextHopNetworkAddress() {
-		return lengthofNextHopNetworkAddress;
+		return nextHopLength;
 	}
 
 	public int getAddressFamilyIdentifier() {
@@ -210,6 +234,33 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
 
 	}
 	
+	
+	
+	public InetAddress getNextHop() {
+		return nextHop;
+	}
+
+	public void setNextHop(InetAddress nextHop) {
+		this.nextHop = nextHop;
+		if (nextHop instanceof Inet4Address){
+    		nextHopLength=4;
+    	}else if (nextHop instanceof Inet6Address){
+    		nextHopLength=8;
+    	}else {
+    		nextHopLength=4;
+    	}
+	}
+	
+	
+
+	public int getNextHopLength() {
+		return nextHopLength;
+	}
+
+	public void setNextHopLength(int nextHopLength) {
+		this.nextHopLength = nextHopLength;
+	}
+
 	public String toString(){
 		return "mp";
 	}

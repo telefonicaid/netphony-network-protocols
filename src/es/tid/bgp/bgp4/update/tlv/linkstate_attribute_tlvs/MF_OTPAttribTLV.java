@@ -177,5 +177,140 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	}
 	
 	*/
+	
+	public String toString(){
+		String str =  "<MFOTP>";
+		return str;
+	}
+
+	public int getType() {
+		return Type;
+	}
+
+	public void setType(int type) {
+		Type = type;
+	}
+
+	public int getLength() {
+		return Length;
+	}
+
+	public void setLength(int length) {
+		Length = length;
+	}
+
+	public int getMatrixID() {
+		return MatrixID;
+	}
+
+	public void setMatrixID(int matrixID) {
+		MatrixID = matrixID;
+	}
+
+	public int getRstType() {
+		return RstType;
+	}
+
+	public void setRstType(int rstType) {
+		RstType = rstType;
+	}
+
+	public int getSwcap() {
+		return Swcap;
+	}
+
+	public void setSwcap(int swcap) {
+		Swcap = swcap;
+	}
+
+	public int getEncoding() {
+		return Encoding;
+	}
+
+	public void setEncoding(int encoding) {
+		Encoding = encoding;
+	}
+
+	public int getTxSubTrnsp() {
+		return TxSubTrnsp;
+	}
+
+	public void setTxSubTrnsp(int txSubTrnsp) {
+		TxSubTrnsp = txSubTrnsp;
+	}
+
+	public int getRxSubTrnsp() {
+		return RxSubTrnsp;
+	}
+
+	public void setRxSubTrnsp(int rxSubTrnsp) {
+		RxSubTrnsp = rxSubTrnsp;
+	}
+
+	public int getAvailTxSTrnsp() {
+		return AvailTxSTrnsp;
+	}
+
+	public void setAvailTxSTrnsp(int availTxSTrnsp) {
+		AvailTxSTrnsp = availTxSTrnsp;
+	}
+
+	public int getAvailRxTrnsp() {
+		return AvailRxTrnsp;
+	}
+
+	public void setAvailRxTrnsp(int availRxTrnsp) {
+		AvailRxTrnsp = availRxTrnsp;
+	}
+
+	public int getCFG() {
+		return CFG;
+	}
+
+	public void setCFG(int cFG) {
+		CFG = cFG;
+	}
+
+	public int getSWG() {
+		return SWG;
+	}
+
+	public void setSWG(int sWG) {
+		SWG = sWG;
+	}
+
+	public int getReserved() {
+		return Reserved;
+	}
+
+	public void setReserved(int reserved) {
+		Reserved = reserved;
+	}
+
+	public int getMinWidth() {
+		return MinWidth;
+	}
+
+	public void setMinWidth(int minWidth) {
+		MinWidth = minWidth;
+	}
+
+	public int getMaxWidth() {
+		return MaxWidth;
+	}
+
+	public void setMaxWidth(int maxWidth) {
+		MaxWidth = maxWidth;
+	}
+	
+	public MF_OTPAttribTLV duplicate(){
+		MF_OTPAttribTLV mm=new MF_OTPAttribTLV();
+		mm.AvailRxTrnsp=this.AvailRxTrnsp;
+		mm.AvailTxSTrnsp=this.AvailTxSTrnsp;
+		mm.CFG=this.CFG;
+		mm.Encoding=this.Encoding;
+		return mm;
+		
+	}
 
 }
