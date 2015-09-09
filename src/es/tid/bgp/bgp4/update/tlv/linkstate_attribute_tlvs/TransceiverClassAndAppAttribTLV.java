@@ -9,8 +9,8 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 
-	private int trans_app_code;
-	private int trans_class;
+	private long trans_app_code;
+	private long trans_class;
 	
 	public TransceiverClassAndAppAttribTLV(){
 		super();
@@ -24,7 +24,7 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 
 	@Override
 	public void encode() {
-		int offset = 1;
+		int offset =4;
 		
 	    tlv_bytes[offset]=(byte)((trans_app_code>>24) & 0xFF);
 	    tlv_bytes[offset+1]=(byte)((trans_app_code>>16) & 0xFF);
@@ -39,12 +39,12 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 	}
 	
 	protected void decode(){
-		int offset = 0;
+		int offset = 4;
 		
 		log.info("******************* Decodificando TCAA *****************");
 				
-		trans_app_code = ( (((int)tlv_bytes[offset]&(int)0xFF)<<24) | (((int)tlv_bytes[offset+1]&(int)0xFF)<<16) | (((int)tlv_bytes[offset+2]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+3]&(int)0xFF) );
-		trans_class = ( (((int)tlv_bytes[offset+4]&(int)0xFF)<<24) | (((int)tlv_bytes[offset+5]&(int)0xFF)<<16) | (((int)tlv_bytes[offset+6]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+7]&(int)0xFF) );
+		trans_app_code = ( (((long)tlv_bytes[offset]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+1]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+2]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+3]&(long)0xFF) );
+		trans_class = ( (((long)tlv_bytes[offset+4]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+5]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+6]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+7]&(long)0xFF) );
 		
 		log.info("Transceiver Application Code : "+trans_app_code+ ".");
 		log.info("Transceiver Class : "+trans_class+ ".");
@@ -55,19 +55,19 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 	
 
 	
-	public int getTrans_app_code() {
+	public long getTrans_app_code() {
 		return trans_app_code;
 	}
 
-	public void setTrans_app_code(int trans_app_code) {
+	public void setTrans_app_code(long trans_app_code) {
 		this.trans_app_code = trans_app_code;
 	}
 
-	public int getTrans_class() {
+	public long getTrans_class() {
 		return trans_class;
 	}
 
-	public void setTrans_class(int trans_class) {
+	public void setTrans_class(long trans_class) {
 		this.trans_class = trans_class;
 	}
 
