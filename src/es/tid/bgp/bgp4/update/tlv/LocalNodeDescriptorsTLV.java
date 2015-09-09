@@ -37,8 +37,14 @@ import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescri
  */
 public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	
-	private ArrayList<NodeDescriptorsSubTLV> nodeDescriptorsSubTLVList;
+	
 	public static final int Local_Node_Descriptors_TLV = 256;
+	
+	private AutonomousSystemNodeDescriptorSubTLV autonomousSystemSubTLV; //512
+	private BGPLSIdentifierNodeDescriptorSubTLV BGPLSIDSubTLV; //513
+	private AreaIDNodeDescriptorSubTLV AreaID; //514
+	private IGPRouterIDNodeDescriptorSubTLV IGPRouterID; //515
+	
 	
 	public LocalNodeDescriptorsTLV(){
 		super();
@@ -49,33 +55,56 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	
 	public LocalNodeDescriptorsTLV(byte []bytes, int offset) {		
 		super(bytes, offset);
-		nodeDescriptorsSubTLVList=new ArrayList<NodeDescriptorsSubTLV>();
 		decode();
 	}
 	
-	public void encode(){		
-		//Encode LocalNodeDescriptorsTLV
-		if ((nodeDescriptorsSubTLVList.size() == 0))
-			log.warn("LocalNodeDescriptorsTLV sub TLV with 0 elements");
+	public void encode(){	
 		
 		int len = 0;//Header TLV
-
-		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
-			nodeDescriptorsSubTLVList.get(i).encode();
-			len=len+nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength();			
+		
+		if (autonomousSystemSubTLV != null){
+			autonomousSystemSubTLV.encode();
+			len = len + autonomousSystemSubTLV.getTotalSubTLVLength();
 		}
+		if (BGPLSIDSubTLV != null){
+			BGPLSIDSubTLV.encode();
+			len = len + BGPLSIDSubTLV.getTotalSubTLVLength();
+		}
+		if (AreaID != null){
+			AreaID.encode();
+			len = len + AreaID.getTotalSubTLVLength();
+		}
+		if (IGPRouterID != null){
+			IGPRouterID.encode();
+			len = len + IGPRouterID.getTotalSubTLVLength();
+		}
+		
+		
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		encodeHeader();
 		int offset=4;//Header TLV
 	
-		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){
-			System.arraycopy(nodeDescriptorsSubTLVList.get(i).getSubTLV_bytes(),0,this.tlv_bytes,offset,nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength());			
-			offset=offset+nodeDescriptorsSubTLVList.get(i).getTotalSubTLVLength();
-			
+		if (autonomousSystemSubTLV != null){
+			System.arraycopy(autonomousSystemSubTLV.getSubTLV_bytes(),0,this.tlv_bytes,offset,autonomousSystemSubTLV.getTotalSubTLVLength());			
+			offset=offset+autonomousSystemSubTLV.getTotalSubTLVLength();
+		}
+		if (BGPLSIDSubTLV != null){
+			System.arraycopy(BGPLSIDSubTLV.getSubTLV_bytes(),0,this.tlv_bytes,offset,BGPLSIDSubTLV.getTotalSubTLVLength());			
+			offset=offset+BGPLSIDSubTLV.getTotalSubTLVLength();
+		}
+		if (AreaID != null){
+			System.arraycopy(AreaID.getSubTLV_bytes(),0,this.tlv_bytes,offset,AreaID.getTotalSubTLVLength());			
+			offset=offset+AreaID.getTotalSubTLVLength();
+		}		
+		if (IGPRouterID != null){
+			System.arraycopy(IGPRouterID.getSubTLV_bytes(),0,this.tlv_bytes,offset,IGPRouterID.getTotalSubTLVLength());			
+			offset=offset+IGPRouterID.getTotalSubTLVLength();
 		}
 	
 	}
+	
+	
 	public void decode(){
 		//Decoding LocalNodeDescriptorsTLV
 		boolean fin=false;
@@ -90,22 +119,18 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 			switch(subtlvType) {
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AUTONOMOUS_SYSTEM:
 					AutonomousSystemNodeDescriptorSubTLV autonomousSystemSubTLV=new AutonomousSystemNodeDescriptorSubTLV(this.tlv_bytes, offset);
-					this.addNodeDescriptorsSubTLV(autonomousSystemSubTLV);
 					break;		
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_BGP_LS_IDENTIFIER:
 					BGPLSIdentifierNodeDescriptorSubTLV bgplsidentifierSubTLV = new  BGPLSIdentifierNodeDescriptorSubTLV(this.tlv_bytes, offset);
-					addNodeDescriptorsSubTLV(bgplsidentifierSubTLV);
 					break;
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID:
 					AreaIDNodeDescriptorSubTLV AreaID = new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
-					addNodeDescriptorsSubTLV(AreaID);
 					break;
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_IGP_ROUTER_ID:
 					IGPRouterIDNodeDescriptorSubTLV IGPRouterID = new IGPRouterIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
-					addNodeDescriptorsSubTLV(IGPRouterID);
 					break;
 					
 				default:
@@ -122,25 +147,71 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 		}
 	}
 
-	public ArrayList<NodeDescriptorsSubTLV> getNodeDescriptorsSubTLVList() {
-		return nodeDescriptorsSubTLVList;
+
+	
+	public AutonomousSystemNodeDescriptorSubTLV getAutonomousSystemSubTLV() {
+		return autonomousSystemSubTLV;
 	}
 
-	public void setNodeDescriptorsSubTLVList(
-			ArrayList<NodeDescriptorsSubTLV> nodeDescriptorsSubTLVList) {
-		this.nodeDescriptorsSubTLVList = nodeDescriptorsSubTLVList;
+
+	public void setAutonomousSystemSubTLV(
+			AutonomousSystemNodeDescriptorSubTLV autonomousSystemSubTLV) {
+		this.autonomousSystemSubTLV = autonomousSystemSubTLV;
 	}
-	public void addNodeDescriptorsSubTLV(NodeDescriptorsSubTLV nodeDescriptorsSubTLV){
-		nodeDescriptorsSubTLVList.add(nodeDescriptorsSubTLV);
+
+
+	public BGPLSIdentifierNodeDescriptorSubTLV getBGPLSIDSubTLV() {
+		return BGPLSIDSubTLV;
 	}
-	
+
+
+	public void setBGPLSIDSubTLV(BGPLSIdentifierNodeDescriptorSubTLV bGPLSIDSubTLV) {
+		BGPLSIDSubTLV = bGPLSIDSubTLV;
+	}
+
+
+	public AreaIDNodeDescriptorSubTLV getAreaID() {
+		return AreaID;
+	}
+
+
+	public void setAreaID(AreaIDNodeDescriptorSubTLV areaID) {
+		AreaID = areaID;
+	}
+
+
+	public IGPRouterIDNodeDescriptorSubTLV getIGPRouterID() {
+		return IGPRouterID;
+	}
+
+
+	public void setIGPRouterID(IGPRouterIDNodeDescriptorSubTLV iGPRouterID) {
+		IGPRouterID = iGPRouterID;
+	}
+
+
+	public static int getLocalNodeDescriptorsTlv() {
+		return Local_Node_Descriptors_TLV;
+	}
+
+
 	@Override
 	public String toString() {
+		
 		StringBuffer sb=new StringBuffer(1000);
 		
-		for (int i=0;i<nodeDescriptorsSubTLVList.size();++i){			
-			sb.append("\n\t> "+nodeDescriptorsSubTLVList.get(i).toString() + "\n");
-		}
+		if (autonomousSystemSubTLV != null)
+			sb.append("\n\t> "+autonomousSystemSubTLV.toString()+"\n");
+			
+		if (BGPLSIDSubTLV != null)
+			sb.append("\n\t> "+BGPLSIDSubTLV.toString()+"\n");
+			
+		if (AreaID != null)
+			sb.append("\n\t> "+AreaID.toString()+"\n");
+		
+		if (IGPRouterID != null)
+			sb.append("\n\t> "+IGPRouterID.toString()+"\n");
+		
 		return sb.toString();
 	}
 	
