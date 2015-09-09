@@ -96,7 +96,7 @@ Internet-Draft   Link-State Info Distribution using BGP    November 2013
  */
 public class LinkNLRI extends LinkStateNLRI {
 	private int protocolID;
-	private int instanceIdentifier;
+	private long identifier;
 	private LocalNodeDescriptorsTLV localNodeDescriptors;
 	private RemoteNodeDescriptorsTLV remoteNodeDescriptorsTLV;
 	//private LinkDescriptors linkDescriptors;
@@ -108,12 +108,13 @@ public class LinkNLRI extends LinkStateNLRI {
 	private IPv6InterfaceAddressLinkDescriptorSubTLV ipv6InterfaceAddressTLV;
 	private IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV;
 	private MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV;
-	private long routingUniverseIdentifier;
+	
 	
 	
 
 	public LinkNLRI(){
-		this.setRoutingUniverseIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
+		//FIXME: BY DEFAULT L3?
+		this.setIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
 		this.setNLRIType(NLRITypes.Link_NLRI);
 		
 	}
@@ -165,14 +166,14 @@ public class LinkNLRI extends LinkStateNLRI {
 		this.encodeHeader();
 		
 		this.bytes[4]=(byte)protocolID;
-		this.bytes[5]=(byte)(routingUniverseIdentifier>>>56 & 0xFF);
-		this.bytes[6]=(byte)(routingUniverseIdentifier>>>48 & 0xFF);
-		this.bytes[7]=(byte)(routingUniverseIdentifier >>> 40 & 0xFF);
-		this.bytes[8]=(byte)(routingUniverseIdentifier>>>32 & 0xFF);
-		this.bytes[9]=(byte)(routingUniverseIdentifier>>>24 & 0xFF);
-		this.bytes[10]=(byte)(routingUniverseIdentifier >>> 16 & 0xFF);
-		this.bytes[11]=(byte)(routingUniverseIdentifier >>>8 & 0xFF);
-		this.bytes[12]=(byte)(routingUniverseIdentifier & 0xFF);
+		this.bytes[5]=(byte)(identifier>>>56 & 0xFF);
+		this.bytes[6]=(byte)(identifier>>>48 & 0xFF);
+		this.bytes[7]=(byte)(identifier >>> 40 & 0xFF);
+		this.bytes[8]=(byte)(identifier>>>32 & 0xFF);
+		this.bytes[9]=(byte)(identifier>>>24 & 0xFF);
+		this.bytes[10]=(byte)(identifier >>> 16 & 0xFF);
+		this.bytes[11]=(byte)(identifier >>>8 & 0xFF);
+		this.bytes[12]=(byte)(identifier & 0xFF);
 		
 		int offset=13;
 				
@@ -237,7 +238,7 @@ public class LinkNLRI extends LinkStateNLRI {
 		long routingUniverseIdentifieraux1 = ((  ((long)bytes[offset]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+1]<<16) & 0xFF0000) | (((long)bytes[offset+2]<<8) & 0xFF00) |(((long)bytes[offset+3]) & 0xFF);
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
-		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
+		this.setIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
 		offset = offset +8;
 	
 		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
@@ -289,13 +290,6 @@ public class LinkNLRI extends LinkStateNLRI {
 		}
 	}
 	
-	public long getRoutingUniverseIdentifier() {
-		return routingUniverseIdentifier;
-	}
-
-	public void setRoutingUniverseIdentifier(long routingUniverseIdentifier) {
-		this.routingUniverseIdentifier = routingUniverseIdentifier;
-	}
 	
 	public int getProtocolID() {
 		return protocolID;
@@ -305,12 +299,13 @@ public class LinkNLRI extends LinkStateNLRI {
 		this.protocolID = protocolID;
 	}
 
-	public int getInstanceIdentifier() {
-		return instanceIdentifier;
+
+	public long getIdentifier() {
+		return identifier;
 	}
 
-	public void setInstanceIdentifier(int instanceIdentifier) {
-		this.instanceIdentifier = instanceIdentifier;
+	public void setIdentifier(long identifier) {
+		this.identifier = identifier;
 	}
 
 	public LocalNodeDescriptorsTLV getLocalNodeDescriptors() {

@@ -17,6 +17,7 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 	private LinkStateNLRI lsNLRI;
 	
 	public BGP_LS_MP_Reach_Attribute(){
+		super();
 		this.setAddressFamilyIdentifier(AFICodes.AFI_BGP_LS);
 		this.setSubsequentAddressFamilyIdentifier(SAFICodes.SAFI_BGP_LS);
 	}
@@ -46,14 +47,13 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 		if (lsNLRI!=null){
 			lsNLRI.encode();
 		}
-		//FIXME: SUPONEMOS lengthofNextHopNetworkAddress cero
-		pathAttributeLength = 5+lsNLRI.getLength();
+		this.
+		pathAttributeLength = 5+lsNLRI.getLength()+this.getLengthofNextHopNetworkAddress();
 		this.setPathAttributeLength(pathAttributeLength);
 		this.bytes=new byte[this.getLength()];
 		encodeHeader();	
 		encodeMP_Reach_Header();
-		//FIXME: SUPONEMOS lengthofNextHopNetworkAddress cero
-		int offset = this.getMandatoryLength()+5;
+		int offset = this.getMandatoryLength()+5+this.getLengthofNextHopNetworkAddress();
 		System.arraycopy(lsNLRI.getBytes(), 0, this.getBytes(), offset, lsNLRI.getLength());
 	}
 

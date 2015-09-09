@@ -54,22 +54,23 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 	
 	
 
-	public float getTransAppCode() {
+	
+	public int getTrans_app_code() {
 		return trans_app_code;
 	}
 
-	public void getTransAppCode(int trans_app_code) {
+	public void setTrans_app_code(int trans_app_code) {
 		this.trans_app_code = trans_app_code;
 	}
 
-	public float getTransClass() {
+	public int getTrans_class() {
 		return trans_class;
 	}
 
-	public void getTransClass(int trans_class) {
+	public void setTrans_class(int trans_class) {
 		this.trans_class = trans_class;
-	}	
-	
+	}
+
 	public String toString(){
 		String str =  "<RP" + " Transceiver Application Code: " + trans_app_code + " Transceiver Class: " + trans_class;
 		str+=">";
