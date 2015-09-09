@@ -42,10 +42,25 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 		int offset = 4;
 		
 		log.info("******************* Decodificando TCAA *****************");
-				
-		trans_app_code = ( (((long)tlv_bytes[offset]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+1]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+2]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+3]&(long)0xFF) );
-		trans_class = ( (((long)tlv_bytes[offset+4]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+5]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+6]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+7]&(long)0xFF) );
+			
+	
+		trans_app_code = 0;
 		
+		for (int k = 0; k < 3; k++) {
+			trans_app_code = (trans_app_code << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
+		}	
+		
+		offset = offset + 4;
+		
+		trans_class=0;
+		
+		for (int k = 0; k < 3; k++) {
+			trans_class = (trans_class << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
+		}
+		
+		/*trans_app_code = ( (((long)tlv_bytes[offset]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+1]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+2]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+3]&(long)0xFF) );
+		trans_class = ( (((long)tlv_bytes[offset+4]&(long)0xFF)<<24) | (((long)tlv_bytes[offset+5]&(long)0xFF)<<16) | (((long)tlv_bytes[offset+6]&(long)0xFF)<<8) | ((long)tlv_bytes[offset+7]&(long)0xFF) );
+		*/
 		log.info("Transceiver Application Code : "+trans_app_code+ ".");
 		log.info("Transceiver Class : "+trans_class+ ".");
 		
