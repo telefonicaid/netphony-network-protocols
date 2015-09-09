@@ -46,7 +46,7 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 	
 		trans_app_code = 0;
 		
-		for (int k = 0; k < 3; k++) {
+		for (int k = 0; k < 4; k++) {
 			trans_app_code = (trans_app_code << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
 		}	
 		
@@ -54,7 +54,7 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 		
 		trans_class=0;
 		
-		for (int k = 0; k < 3; k++) {
+		for (int k = 0; k < 4; k++) {
 			trans_class = (trans_class << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
 		}
 		

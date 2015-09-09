@@ -30,4 +30,7 @@ public class SubObjectValues {
 	public static final int RRO_SUBOBJECT_LABEL=0x03;//From RFC 3473
 	public static final int ERO_SUBOBJECT_UNNUMBERED_IF_ID_OPEN_FLOW = 92;
 	public static final int ERO_SUBOBJECT_ID_OPEN_FLOW = 90;
+	
+	
+	public static final int ERO_SUBOBJECT_ETC=10; 
 }
