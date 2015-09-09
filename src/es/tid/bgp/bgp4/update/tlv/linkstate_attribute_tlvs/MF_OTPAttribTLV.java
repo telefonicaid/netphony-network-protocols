@@ -278,11 +278,20 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	
 	public MF_OTPAttribTLV duplicate(){
 		MF_OTPAttribTLV mm=new MF_OTPAttribTLV();
-		mm.AvailRxTrnsp=this.AvailRxTrnsp;
-		mm.AvailTxSTrnsp=this.AvailTxSTrnsp;
-		mm.CFG=this.CFG;
-		mm.Encoding=this.Encoding;
-		return mm;
+		  mm.AvailRxTrnsp=this.AvailRxTrnsp;
+		  mm.AvailTxSTrnsp=this.AvailTxSTrnsp;
+		  mm.CFG=this.CFG;
+		  mm.Encoding=this.Encoding;
+		  mm.MatrixID=this.MatrixID;
+		  mm.MaxWidth=this.MaxWidth;
+		  mm.MinWidth=this.MinWidth;
+		  mm.Reserved=this.Reserved;
+		  mm.RstType=this.RstType;
+		  mm.SWG=this.SWG;
+		  mm.Swcap=this.Swcap;
+		  mm.TxSubTrnsp=this.TxSubTrnsp;
+		  mm.RxSubTrnsp=this.RxSubTrnsp;
+		  return mm;
 		
 	}
 
