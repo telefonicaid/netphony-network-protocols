@@ -3,8 +3,13 @@ package es.tid.rsvp.objects.subobjects;
 import java.util.LinkedList;
 
 import es.tid.rsvp.objects.subobjects.subtlvs.SubTLV;
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTLVTypes;
 import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLV;
-
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLVFEC;
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLVFS;
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLVID;
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLVModFormat;
+import es.tid.rsvp.objects.subobjects.subtlvs.SubTransponderTLVTC;
 
 public class ETCEROSubobject extends EROSubobject {
 
@@ -13,10 +18,12 @@ public class ETCEROSubobject extends EROSubobject {
 	public ETCEROSubobject(){
 		super();
 		this.setType(SubObjectValues.ERO_SUBOBJECT_ETC);
+		subTransponderList=new LinkedList<SubTransponderTLV>();
 	}
 	
 	public ETCEROSubobject (byte [] bytes, int offset){
 		super(bytes, offset);
+		subTransponderList=new LinkedList<SubTransponderTLV>();
 		decode();
 	}
 	
