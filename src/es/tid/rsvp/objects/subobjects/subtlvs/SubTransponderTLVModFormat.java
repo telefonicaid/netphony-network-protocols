@@ -1,7 +1,5 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-
 public class SubTransponderTLVModFormat extends SubTLV {
 
 	
@@ -31,9 +29,9 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		
 		offset = offset + 1;
 		
-		//tlv_bytes[offset]=(byte)(modulationID&0xFF);
+		tlv_bytes[offset]=(byte)(modulationID&0xFF);
 		
-		offset = offset + 1;
+		offset = offset + 3;
 		
 		tlv_bytes[offset]=(byte)((symbolRate>>24) & 0xFF);
 		
@@ -73,15 +71,24 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		
 		int offset = 4;
 		
-		log.info("******************* Decodificando TCAA *****************");
+		log.info("******************* Decodificando SubTransponderTLVModFormat *****************");
 		
 		//Comprobar y revisar 
 		standardizedFormat=(tlv_bytes[offset]&0xE0)>>>7;
 		input=(tlv_bytes[offset]&0x1E)>>>6;
 		modulationID=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);
-		symbolRate=((tlv_bytes[offset+2]&0xFF)<<8)|(tlv_bytes[offset+3]&0xFF);
-		numCarriers=(((tlv_bytes[offset+4]&0xFF)<<8)|(tlv_bytes[offset+5]&0xFF));
-		bitSymbol=(((tlv_bytes[offset+4]&0xFF)<<8)|(tlv_bytes[offset+5]&0xFF));
+		
+		offset = offset + 2; 
+		//symbolRate=((tlv_bytes[offset]&0xFF)<<8)|(tlv_bytes[offset+1]&0xFF);
+		symbolRate=0;
+		for (int k = 0; k < 4; k++) {
+			symbolRate = (symbolRate << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
+		}
+		
+		offset = offset + 4;
+		
+		numCarriers=(((tlv_bytes[offset]&0xFF)<<8)|(tlv_bytes[offset+1]&0xFF));
+		bitSymbol=(((tlv_bytes[offset+2]&0xFF)<<8)|(tlv_bytes[offset+3]&0xFF));
 		
 		
 		log.info("Standardized Format : " + standardizedFormat + ".");

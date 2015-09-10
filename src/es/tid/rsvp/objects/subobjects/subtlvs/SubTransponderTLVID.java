@@ -1,7 +1,5 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-
 public class SubTransponderTLVID extends SubTLV {
 
 	private long id;
@@ -41,7 +39,8 @@ public class SubTransponderTLVID extends SubTLV {
 		
 		log.info("Valor del id del SubTransponderTLV_ID: "+id+".");
 		
-		log.info("***************** FIN Decodificando SubTransponderTLVFS ***************");
+		log.info("***************** FIN Decodificando SubTransponderTLVID ***************");
+	
 	}
 	
 	public String toString(){

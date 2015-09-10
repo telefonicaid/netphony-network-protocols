@@ -28,7 +28,7 @@ public abstract class SubTLV {
 	/**
 	 * Length of the VALUE ONLY!!!
 	 */
-	private int TLVValueLength;
+	protected int TLVValueLength;
 
 	/**
 	 * Total length of the TLV (including type, length and padding)

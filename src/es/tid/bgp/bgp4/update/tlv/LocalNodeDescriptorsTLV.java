@@ -118,19 +118,19 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 			int subtlvLength=BGP4SubTLV.getTotalSubTLVLength(tlv_bytes, offset);
 			switch(subtlvType) {
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AUTONOMOUS_SYSTEM:
-					AutonomousSystemNodeDescriptorSubTLV autonomousSystemSubTLV=new AutonomousSystemNodeDescriptorSubTLV(this.tlv_bytes, offset);
+					autonomousSystemSubTLV = new AutonomousSystemNodeDescriptorSubTLV(this.tlv_bytes, offset);
 					break;		
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_BGP_LS_IDENTIFIER:
-					BGPLSIdentifierNodeDescriptorSubTLV bgplsidentifierSubTLV = new  BGPLSIdentifierNodeDescriptorSubTLV(this.tlv_bytes, offset);
+					BGPLSIDSubTLV = new  BGPLSIdentifierNodeDescriptorSubTLV(this.tlv_bytes, offset);
 					break;
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID:
-					AreaIDNodeDescriptorSubTLV AreaID = new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
+					AreaID = new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
 					break;
 				
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_IGP_ROUTER_ID:
-					IGPRouterIDNodeDescriptorSubTLV IGPRouterID = new IGPRouterIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
+					IGPRouterID = new IGPRouterIDNodeDescriptorSubTLV(this.tlv_bytes, offset);
 					break;
 					
 				default:

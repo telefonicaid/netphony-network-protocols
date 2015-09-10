@@ -1,8 +1,5 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkStateAttributeTLVTypes;
-
 public class SubTransponderTLVFEC extends SubTLV {
 
 	private int standardizedFormat;
@@ -24,13 +21,13 @@ public class SubTransponderTLVFEC extends SubTLV {
 	@Override
 	public void encode() {
 
-int offset =4;
+		int offset =4;
 		
 		tlv_bytes[offset]=(byte)((standardizedFormat<<7)|(input<<6)|(FEC_id>>>8));
 		
 		offset = offset + 1;
 		
-		//tlv_bytes[offset]=(byte)(modulationID&0xFF);
+		tlv_bytes[offset]=(byte)(FEC_id&0xFF);
 		
 			  
 	}
@@ -46,7 +43,6 @@ int offset =4;
 		input=(tlv_bytes[offset]&0x1E)>>>6;
 		FEC_id=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);
 				
-		
 		log.info("Standardized Format : " + standardizedFormat + ".");
 		log.info("Input : " + input + ".");
 		log.info("FEC ID : " + FEC_id + ".");
