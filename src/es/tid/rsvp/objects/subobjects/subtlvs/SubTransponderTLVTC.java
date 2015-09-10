@@ -1,7 +1,5 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-
 public class SubTransponderTLVTC extends SubTLV {
 
 	private long trans_class;
@@ -39,7 +37,7 @@ public class SubTransponderTLVTC extends SubTLV {
 			trans_class = (trans_class << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
 		}
 		
-		log.info("Valor del id del SubTransponderTLV_ID: "+trans_class+".");
+		log.info("Valor del id del SubTransponderTLV_TC: "+trans_class+".");
 		
 		log.info("***************** FIN Decodificando SubTransponderTLVTC ***************");
 		

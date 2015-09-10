@@ -1,8 +1,5 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabelValues;
-
 public class SubTransponderTLVFS extends SubTLV {
 
 	private int grid;
