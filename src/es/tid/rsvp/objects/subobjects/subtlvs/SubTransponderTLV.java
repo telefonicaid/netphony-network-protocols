@@ -115,7 +115,7 @@ public class SubTransponderTLV extends SubTLV{
 						break;
 							
 				default:
-						log.debug("Local Node Descriptor subtlv Unknown, "+subtlvType);
+						log.info("Local Node Descriptor subtlv Unknown, "+subtlvType);
 						break;
 			}
 			
@@ -125,7 +125,7 @@ public class SubTransponderTLV extends SubTLV{
 				fin=true;
 			}
 			else{
-				log.debug("sigo leyendo SubTransponderTLV ");
+				log.info("sigo leyendo SubTransponderTLV ");
 			}
 		}
 	}

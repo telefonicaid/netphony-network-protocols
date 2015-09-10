@@ -73,7 +73,7 @@ public class ETCEROSubobject extends EROSubobject {
 					
 					switch(subtlvType) {
 					
-						case SubObjectValues.ERO_SUBOBJECT_ETC:
+						case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER:
 							SubTransponderTLV a = new SubTransponderTLV(this.subobject_bytes, offset);
 						break;		
 									
