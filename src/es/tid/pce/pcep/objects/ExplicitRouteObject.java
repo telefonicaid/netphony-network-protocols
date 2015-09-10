@@ -149,6 +149,11 @@ public class ExplicitRouteObject extends PCEPObject{
 					addEROSubobject(idOF);
 					break;
 					
+				case SubObjectValues.ERO_SUBOBJECT_ETC:
+					ETCEROSubobject etcSERO =new ETCEROSubobject(this.getObject_bytes(), offset);
+					addEROSubobject(etcSERO);
+					break;
+					
 				case SubObjectValues.ERO_SUBOBJECT_LABEL:
 					int ctype=LabelEROSubobject.getCType(this.getObject_bytes(), offset);
 					switch (ctype){
