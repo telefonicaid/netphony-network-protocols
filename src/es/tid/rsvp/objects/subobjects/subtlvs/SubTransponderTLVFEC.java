@@ -36,8 +36,6 @@ public class SubTransponderTLVFEC extends SubTLV {
 		
 		int offset = 4;
 		
-		
-		//Comprobar y revisar 
 		standardizedFormat=(tlv_bytes[offset]&0xE0)>>>7;
 		input=(tlv_bytes[offset]&0x1E)>>>6;
 		FEC_id=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);

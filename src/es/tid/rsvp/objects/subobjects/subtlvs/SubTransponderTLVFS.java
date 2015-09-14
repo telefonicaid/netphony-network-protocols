@@ -66,23 +66,13 @@ public class SubTransponderTLVFS extends SubTLV {
 	protected void decode(){
 		
 		int offset = 4;
-		
-		//log.info("******************* Decodificando SubTransponderTLVFS *****************");
-					
+							
 		grid=(tlv_bytes[offset]&0xE0)>>>5;
 		channelSpacing=(tlv_bytes[offset]&0x1E)>>>1;
 		identifier=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);
 		n=((tlv_bytes[offset+2]&0xFF)<<8)|(tlv_bytes[offset+3]&0xFF);
 		m=(((tlv_bytes[offset+4]&0xFF)<<8)|(tlv_bytes[offset+5]&0xFF));	
-		
-//		log.info("Grid : " + grid + ".");
-//		log.info("Channel Spacing : " + channelSpacing + ".");
-//		log.info("Identifier : " + identifier + ".");
-//		log.info("n : " + n + ".");
-//		log.info("m : " + m + ".");
-//		
-//		log.info("***************** FIN Decodificando SubTransponderTLVFS ***************");
-				
+						
 	}
 	
 	public String toString(){
