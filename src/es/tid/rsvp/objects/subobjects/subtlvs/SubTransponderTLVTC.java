@@ -1,5 +1,17 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
+/**
+ * 
+ *  0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|        Type = 5020            |           Length = 8          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Transceiver Class                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+ *
+ */
 public class SubTransponderTLVTC extends SubTLV {
 
 	private long trans_class;
@@ -16,7 +28,7 @@ public class SubTransponderTLVTC extends SubTLV {
 	
 	@Override
 	public void encode() {
-		
+		this.setTotalTLVLength(8);	
 		int offset = 4;
 		
 		tlv_bytes[offset]=(byte)((trans_class>>24) & 0xFF);
@@ -44,7 +56,7 @@ public class SubTransponderTLVTC extends SubTLV {
 	}
 	
 	public String toString(){
-		String str =  "<SubTransponderTLVTC" + " Transceiver Class: " + trans_class ;
+		String str =  "<TC: " + trans_class ;
 		str+=">";
 		return str;
 	}

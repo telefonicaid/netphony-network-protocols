@@ -1,5 +1,17 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
+/**
+ * 
+ *  0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|        Type = 5005            |           Length = 8          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       SubTransponder ID                       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+ *
+ */
 public class SubTransponderTLVID extends SubTLV {
 
 	private long id;
@@ -16,7 +28,7 @@ public class SubTransponderTLVID extends SubTLV {
 	
 	@Override
 	public void encode() {
-					
+		this.setTotalTLVLength(8);					
 		int offset = 4;
 		
 		tlv_bytes[offset]=(byte)((id>>24) & 0xFF);
@@ -44,8 +56,7 @@ public class SubTransponderTLVID extends SubTLV {
 	}
 	
 	public String toString(){
-		String str =  "<SubTransponderTLVID" + " ID: " + id ;
-		str+=">";
+		String str =  "[STID: " + id +"]";
 		return str;
 	}
 

@@ -1,5 +1,20 @@
 package es.tid.rsvp.objects.subobjects.subtlvs;
 
+/**
+ * 
+ *  0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|        Type = 5006            |           Length = 12          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Grid | C.S.  |    Identifier   |              n                |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|             m                 |          Reserved             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+ *
+ */
 public class SubTransponderTLVFS extends SubTLV {
 
 	private int grid;
@@ -20,7 +35,7 @@ public class SubTransponderTLVFS extends SubTLV {
 	
 	@Override
 	public void encode() {
-		
+		this.setTotalTLVLength(12);	
 		int offset =4;
 				
 		tlv_bytes[offset]=(byte)((grid<<5)|(channelSpacing<<1)|(identifier>>>8));
@@ -52,7 +67,7 @@ public class SubTransponderTLVFS extends SubTLV {
 		
 		int offset = 4;
 		
-		log.info("******************* Decodificando SubTransponderTLVFS *****************");
+		//log.info("******************* Decodificando SubTransponderTLVFS *****************");
 					
 		grid=(tlv_bytes[offset]&0xE0)>>>5;
 		channelSpacing=(tlv_bytes[offset]&0x1E)>>>1;
@@ -60,18 +75,18 @@ public class SubTransponderTLVFS extends SubTLV {
 		n=((tlv_bytes[offset+2]&0xFF)<<8)|(tlv_bytes[offset+3]&0xFF);
 		m=(((tlv_bytes[offset+4]&0xFF)<<8)|(tlv_bytes[offset+5]&0xFF));	
 		
-		log.info("Grid : " + grid + ".");
-		log.info("Channel Spacing : " + channelSpacing + ".");
-		log.info("Identifier : " + identifier + ".");
-		log.info("n : " + n + ".");
-		log.info("m : " + m + ".");
-		
-		log.info("***************** FIN Decodificando SubTransponderTLVFS ***************");
+//		log.info("Grid : " + grid + ".");
+//		log.info("Channel Spacing : " + channelSpacing + ".");
+//		log.info("Identifier : " + identifier + ".");
+//		log.info("n : " + n + ".");
+//		log.info("m : " + m + ".");
+//		
+//		log.info("***************** FIN Decodificando SubTransponderTLVFS ***************");
 				
 	}
 	
 	public String toString(){
-		String str =  "<SubTransponderTLVID" + " Grid: " + grid + "\n Channel Spacing: " + channelSpacing + "\n Identifier: " + identifier + "\n n: " + n + "\n m: " + m;
+		String str =  "FS" + " G: " + grid + "CS: " + channelSpacing + "Id: " + identifier + "n: " + n + "m: " + m;
 		str+=">";
 		return str;
 	}

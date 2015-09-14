@@ -2,6 +2,20 @@ package es.tid.rsvp.objects.subobjects.subtlvs;
 
 public class SubTransponderTLVModFormat extends SubTLV {
 
+	/**
+	 *  0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|        Type = 5001            |           Length = 16         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|S|I|       Modulation ID       |           (reserved)          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         Symbol rate                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Num carriers        |          Bit/Symbol           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+	 */
 	
 	private int standardizedFormat;
 	private int input; 
@@ -22,6 +36,7 @@ public class SubTransponderTLVModFormat extends SubTLV {
 	
 	@Override
 	public void encode() {
+		this.setTotalTLVLength(16);	
 		
 		int offset =4;
 		
@@ -74,7 +89,7 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		log.info("******************* Decodificando SubTransponderTLVModFormat *****************");
 		
 		//Comprobar y revisar 
-		standardizedFormat=(tlv_bytes[offset]&0xE0)>>>7;
+		standardizedFormat=((int)tlv_bytes[offset]&0x80)>>>7;
 		input=(tlv_bytes[offset]&0x1E)>>>6;
 		modulationID=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);
 		
@@ -98,11 +113,10 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		log.info("Number Carriers : " + numCarriers + ".");
 		log.info("Bits/Symbol : " + bitSymbol + ".");
 		
-		log.info("***************** FIN Decodificando SubTransponderTLVModFormat ***************");
 	}
 	
 	public String toString(){
-		String str =  "<SubTransponderTLVModFormat" + " Standardized Format: " + standardizedFormat + "\n Input: " + input + "\n ModulationID: " + modulationID + "\n Symbol Rate: " + symbolRate + "\n Number Carriers: " + numCarriers + "\n Bits/Symbol: " + bitSymbol;
+		String str =  "[MF" + " SF: " + standardizedFormat + " I: " + input + "ModID: " + modulationID + "SR: " + symbolRate + "NC: " + numCarriers + "b/S: " + bitSymbol;
 		str+=">";
 		return str;
 	}	
