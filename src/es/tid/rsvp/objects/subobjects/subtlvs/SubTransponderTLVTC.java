@@ -43,15 +43,9 @@ public class SubTransponderTLVTC extends SubTLV {
 		int offset = 4;
 		trans_class = 0;
 		
-		log.info("******************* Decodificando SubTransponderTLVTC *****************");
-		
 		for (int k = 0; k < 4; k++) {
 			trans_class = (trans_class << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
 		}
-		
-		log.info("Valor del id del SubTransponderTLV_TC: "+trans_class+".");
-		
-		log.info("***************** FIN Decodificando SubTransponderTLVTC ***************");
 		
 	}
 	

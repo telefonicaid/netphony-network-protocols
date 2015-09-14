@@ -43,16 +43,10 @@ public class SubTransponderTLVID extends SubTLV {
 		int offset = 4;
 		id = 0;
 		
-		log.info("******************* Decodificando SubTransponderTLVID *****************");
-		
 		for (int k = 0; k < 4; k++) {
 			id = (id << 8) | ((long)tlv_bytes[k+offset] & (long)0xff);
 		}
 		
-		log.info("Valor del id del SubTransponderTLV_ID: "+id+".");
-		
-		log.info("***************** FIN Decodificando SubTransponderTLVID ***************");
-	
 	}
 	
 	public String toString(){

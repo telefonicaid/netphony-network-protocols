@@ -86,9 +86,6 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		
 		int offset = 4;
 		
-		log.info("******************* Decodificando SubTransponderTLVModFormat *****************");
-		
-		//Comprobar y revisar 
 		standardizedFormat=((int)tlv_bytes[offset]&0x80)>>>7;
 		input=(tlv_bytes[offset]&0x1E)>>>6;
 		modulationID=((tlv_bytes[offset]&0x01)<<8)|(tlv_bytes[offset+1]&0xFF);
@@ -104,14 +101,6 @@ public class SubTransponderTLVModFormat extends SubTLV {
 		
 		numCarriers=(((tlv_bytes[offset]&0xFF)<<8)|(tlv_bytes[offset+1]&0xFF));
 		bitSymbol=(((tlv_bytes[offset+2]&0xFF)<<8)|(tlv_bytes[offset+3]&0xFF));
-		
-		
-		log.info("Standardized Format : " + standardizedFormat + ".");
-		log.info("Input : " + input + ".");
-		log.info("ModulationID : " + modulationID + ".");
-		log.info("Symbol Rate : " + symbolRate + ".");
-		log.info("Number Carriers : " + numCarriers + ".");
-		log.info("Bits/Symbol : " + bitSymbol + ".");
 		
 	}
 	
