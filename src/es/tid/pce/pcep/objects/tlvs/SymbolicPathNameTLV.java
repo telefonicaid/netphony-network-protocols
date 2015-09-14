@@ -137,7 +137,8 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	}
 	
 	public String toString(){
-		return SymbolicPathNameID.toString();
+		String pathName = new String (SymbolicPathNameID);
+		return pathName;
 	}
 	
 }

@@ -23,7 +23,7 @@ public class SubTransponderTLV extends SubTLV{
 	
 	public void encode(){	
 		
-		int len = 0;//Header TLV
+		int len = 4;//Header TLV
 		
 		if (ST_TLV_ModFormat != null){
 			ST_TLV_ModFormat.encode();
@@ -46,7 +46,7 @@ public class SubTransponderTLV extends SubTLV{
 			len = len + ST_TLV_TC.getTotalTLVLength();
 		}
 		
-		this.setTLVValueLength(len);		
+		this.setTotalTLVLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		encodeHeader();
 		int offset=4;//Header TLV
@@ -95,33 +95,38 @@ public class SubTransponderTLV extends SubTLV{
 			switch(subtlvType) {
 			
 				case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER_MOD_FORMAT:
+					    log.info("ERO_SUBTLV_SUBTRANSPONDER_MOD_FORMAT found");
 						ST_TLV_ModFormat = new SubTransponderTLVModFormat(this.tlv_bytes, offset);
 						break;		
 						
 				case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER_FEC:
+					 log.info("ERO_SUBTLV_SUBTRANSPONDER_FEC found");
 						ST_TLV_FEC = new  SubTransponderTLVFEC(this.tlv_bytes, offset);
 						break;
 						
 				case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER_ID:
+					 log.info("ERO_SUBTLV_SUBTRANSPONDER_ID con length "+subtlvLength);
 						ST_TLV_ID = new SubTransponderTLVID(this.tlv_bytes, offset);
 						break;
 						
 				case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER_FS:
+					 log.info("ERO_SUBTLV_SUBTRANSPONDER_FS");
 						ST_TLV_FS = new SubTransponderTLVFS(this.tlv_bytes, offset);
 						break;
 							
 				case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER_TC:
+					 log.info("ERO_SUBTLV_SUBTRANSPONDER_TC");
 						ST_TLV_TC = new SubTransponderTLVTC(this.tlv_bytes, offset);
 						break;
 							
 				default:
-						log.info("Local Node Descriptor subtlv Unknown, "+subtlvType);
+						log.info("TLVVVVV Unknown, "+subtlvType);
 						break;
 			}
 			
 			offset=offset+subtlvLength;
 			
-			if (offset>=this.TLVValueLength){
+			if (offset>=this.getTotalTLVLength() ){
 				fin=true;
 			}
 			else{
@@ -176,19 +181,20 @@ public class SubTransponderTLV extends SubTLV{
 		StringBuffer sb=new StringBuffer(1000);
 		
 		if (ST_TLV_ModFormat != null)
-			sb.append("\n\t> "+ST_TLV_ModFormat.toString()+"\n");
+			sb.append(" > "+ST_TLV_ModFormat.toString());
 			
 		if (ST_TLV_FEC != null)
-			sb.append("\n\t> "+ST_TLV_FEC.toString()+"\n");
+			sb.append(" > "+ST_TLV_FEC.toString());
 			
 		if (ST_TLV_ID != null)
-			sb.append("\n\t> "+ST_TLV_ID.toString()+"\n");
+			sb.append(""+ST_TLV_ID.toString());
 		
 		if (ST_TLV_FS != null)
-			sb.append("\n\t> "+ST_TLV_FS.toString()+"\n");
+			sb.append(""
+					+ ""+ST_TLV_FS.toString());
 		
 		if (ST_TLV_TC != null)
-			sb.append("\n\t> "+ST_TLV_TC.toString()+"\n");
+			sb.append(""+ST_TLV_TC.toString());
 						
 		return sb.toString();
 	}

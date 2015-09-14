@@ -20,7 +20,7 @@ public class SubTransponderTLVFEC extends SubTLV {
 	
 	@Override
 	public void encode() {
-
+		this.setTotalTLVLength(8);			
 		int offset =4;
 		
 		tlv_bytes[offset]=(byte)((standardizedFormat<<7)|(input<<6)|(FEC_id>>>8));
@@ -36,7 +36,6 @@ public class SubTransponderTLVFEC extends SubTLV {
 		
 		int offset = 4;
 		
-		log.info("******************* Decodificando SubTransponderTLVFEC *****************");
 		
 		//Comprobar y revisar 
 		standardizedFormat=(tlv_bytes[offset]&0xE0)>>>7;
@@ -47,12 +46,11 @@ public class SubTransponderTLVFEC extends SubTLV {
 		log.info("Input : " + input + ".");
 		log.info("FEC ID : " + FEC_id + ".");
 				
-		log.info("***************** FIN Decodificando SubTransponderTLVFEC ***************");
 	}
 	
 	public String toString(){
-		String str =  "<SubTransponderTLVFEC" + " Standardized Format: " + standardizedFormat + "\n Input: " + input + "\n FEC ID: " + FEC_id; 
-		str+=">";
+		String str =  "[STFEC " + " SF: " + standardizedFormat + "I: " + input + "FEC ID: " + FEC_id; 
+		str+="]";
 		return str;
 	}
 

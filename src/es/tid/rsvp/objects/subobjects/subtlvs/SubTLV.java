@@ -26,11 +26,6 @@ public abstract class SubTLV {
 	protected int TLVType;
 
 	/**
-	 * Length of the VALUE ONLY!!!
-	 */
-	protected int TLVValueLength;
-
-	/**
 	 * Total length of the TLV (including type, length and padding)
 	 */
 	protected int TotalTLVLength;
@@ -51,12 +46,7 @@ public abstract class SubTLV {
 
 	public SubTLV(byte []bytes, int offset) {			
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
-		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
-		this.TotalTLVLength=TLVValueLength+4;			
-		if ((this.TotalTLVLength%4)!=0){
-			//Padding must be done!!
-			this.TotalTLVLength=this.TotalTLVLength+4-(this.TotalTLVLength%4);
-		}	
+		this.TotalTLVLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 		this.tlv_bytes=new byte[TotalTLVLength];
 		System.arraycopy(bytes, offset, tlv_bytes, 0, TotalTLVLength);
 	}
@@ -64,24 +54,13 @@ public abstract class SubTLV {
 	protected void encodeHeader(){
 		this.tlv_bytes[0]=(byte)((TLVType>>>8) & 0xFF);
 		this.tlv_bytes[1]=(byte)(TLVType & 0xFF);
-		this.tlv_bytes[2]=(byte)(TLVValueLength>>>8 & 0xFF);
-		this.tlv_bytes[3]=(byte)(TLVValueLength & 0xFF);
+		this.tlv_bytes[2]=(byte)(TotalTLVLength>>>8 & 0xFF);
+		this.tlv_bytes[3]=(byte)(TotalTLVLength & 0xFF);
 	}
 
-	public int getTLVValueLength(){
-		return TLVValueLength;
-	}
-	public int getTotalTLVLength(){
-		return TotalTLVLength;
-	}
 
 	public static int getTotalTLVLength(byte []bytes, int offset) {
-		int len=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
-		len+=4;
-		if ((len%4)!=0){
-			//Padding must be done!!
-			len=len+4-(len%4);
-		}		
+		int len=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);	
 		return len;
 	}
 
@@ -118,26 +97,20 @@ public abstract class SubTLV {
 	}
 
 
-	/**
-	 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-	 * @param TLVValueLength
-	 */
-	protected void setTLVValueLength(int TLVValueLength) {
-		this.TLVValueLength = TLVValueLength;
-		this.TotalTLVLength=TLVValueLength+4;
-		if ((this.TotalTLVLength%4)!=0){
-			//Padding must be done!!
-			this.TotalTLVLength=this.TotalTLVLength+(this.TotalTLVLength%4);
-		}	
-
-	}
-
-
-
 	public abstract void encode();
 	protected abstract void decode();
 
 
+	public int getTotalTLVLength() {
+		return TotalTLVLength;
+	}
+
+
+	public void setTotalTLVLength(int totalTLVLength) {
+		TotalTLVLength = totalTLVLength;
+	}
+
+	
 
 
 }

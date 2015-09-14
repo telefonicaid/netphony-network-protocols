@@ -62,9 +62,6 @@ public class ETCEROSubobject extends EROSubobject {
 		//Decoding SubTransponderTLV
 				boolean fin=false;
 				int offset=4;//Position of the next subobject
-				//if (ObjectLength==4){
-				//fin=true;
-				//}
 
 				while (!fin) {
 				
@@ -74,11 +71,13 @@ public class ETCEROSubobject extends EROSubobject {
 					switch(subtlvType) {
 					
 						case SubTLVTypes.ERO_SUBTLV_SUBTRANSPONDER:
+							System.out.println("ERO_SUBTLV_SUBTRANSPONDER FOUND");
 							SubTransponderTLV a = new SubTransponderTLV(this.subobject_bytes, offset);
+							subTransponderList.add(a);
 						break;		
 									
 						default:
-							System.out.println( " SubTransponderTLV Unknown ");
+							System.out.println( "xx SubTransponderTLV Unknown ");
 							break;
 					}
 					
@@ -106,7 +105,7 @@ public class ETCEROSubobject extends EROSubobject {
 	
 	public String toString(){
 		StringBuffer sb=new StringBuffer(subTransponderList.size()*100);
-		sb.append("<SubTransponderList: ");
+		sb.append("<ETC: ");
 		for (int i=0;i<subTransponderList.size();++i){
 			sb.append(subTransponderList.get(i).toString());
 			sb.append(" ");
