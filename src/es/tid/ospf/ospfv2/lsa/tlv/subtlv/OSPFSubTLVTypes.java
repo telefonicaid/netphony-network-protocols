@@ -30,6 +30,8 @@ public class OSPFSubTLVTypes {
 	public static final int PortLabelRestriction = 100;
 	public static final int AvailableLabels = 1200;
 	
+	public static final int LabelTypeTLV = 1;
+	
 
 
 }

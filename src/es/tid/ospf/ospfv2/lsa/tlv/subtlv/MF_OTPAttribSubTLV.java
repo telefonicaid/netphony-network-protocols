@@ -2,12 +2,13 @@
 //************************* RUBEN ***********************************
 
 
-package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
+package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkStateAttributeTLVTypes;
 
 
-public class MF_OTPAttribTLV extends BGP4TLVFormat{
+public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
 
 	private int MatrixID;			//8
 	private int RstType;			//8
@@ -23,14 +24,17 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	private int MinWidth;			//16
 	private int MaxWidth;			//16
 	
+	private LabelTypeTLV txAggregatedOpticalSpec;
+	
+	private LabelTypeTLV rxAggregatedOpticalSpec;
 		
 	
-	public MF_OTPAttribTLV(){
+	public MF_OTPAttribSubTLV(){
 		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP);
 	}
 	
-	public MF_OTPAttribTLV(byte[] bytes, int offset){
+	public MF_OTPAttribSubTLV(byte[] bytes, int offset){
 		super(bytes,offset);
 		decode();
 	}
@@ -39,8 +43,26 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	public void encode() {
 		
 		int offset = 4;
+		int valueLength = 16;
 		
 		log.info("******************* Codificando MF OTP *****************");
+		
+		
+		if (txAggregatedOpticalSpec != null){
+			
+			txAggregatedOpticalSpec.encode();
+			valueLength += txAggregatedOpticalSpec.getTotalTLVLength();
+		}
+		
+		if (rxAggregatedOpticalSpec != null){
+			
+			rxAggregatedOpticalSpec.encode();
+			valueLength += rxAggregatedOpticalSpec.getTotalTLVLength();
+		}
+		
+		this.setTLVValueLength(valueLength);
+		
+		this.tlv_bytes = new byte[this.getTotalTLVLength()];
 		
 		tlv_bytes[offset]=(byte)((MatrixID) & 0xFF);
 		
@@ -104,7 +126,17 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 		
 		tlv_bytes[offset]=(byte)(MaxWidth&0xFF);
 		
+		offset = offset + 1;
 		
+		if (txAggregatedOpticalSpec != null){
+			
+			System.arraycopy(this.txAggregatedOpticalSpec.getTlv_bytes(),0 , this.tlv_bytes,offset,txAggregatedOpticalSpec.getTotalTLVLength() );	
+		}
+		
+		if (rxAggregatedOpticalSpec != null){
+			
+			System.arraycopy(this.rxAggregatedOpticalSpec.getTlv_bytes(),0 , this.tlv_bytes,offset,rxAggregatedOpticalSpec.getTotalTLVLength() );
+		}
 		
 		log.info("***************** FIN Codificando MF OTP ***************");
 		
@@ -179,12 +211,34 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 		MaxWidth = (((int)tlv_bytes[offset]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+1]&(int)0xFF);
 		log.info("Valor de MaxWidth del MF_OTP: "+MaxWidth+".");
 		
+		offset = offset + 1;
+		
+		txAggregatedOpticalSpec.decode();
+		
+		rxAggregatedOpticalSpec.decode();
+		
 		log.info("***************** FIN Decodificando MF OTP ***************");
 	}
 
 
+	public LabelTypeTLV getTxAggregatedOpticalSpec() {
+		return txAggregatedOpticalSpec;
+	}
+
+	public void setTxAggregatedOpticalSpec(LabelTypeTLV txAggregatedOpticalSpec) {
+		this.txAggregatedOpticalSpec = txAggregatedOpticalSpec;
+	}
+
+	public LabelTypeTLV getRxAggregatedOpticalSpec() {
+		return rxAggregatedOpticalSpec;
+	}
+
+	public void setRxAggregatedOpticalSpec(LabelTypeTLV rxAggregatedOpticalSpec) {
+		this.rxAggregatedOpticalSpec = rxAggregatedOpticalSpec;
+	}
+
 	public String toString(){
-		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth;
+		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth + "\n TxAggregatedOpticalSpec: " + txAggregatedOpticalSpec + "\n RxAggregatedOpticalSpec: " + rxAggregatedOpticalSpec;
 		str+=">";
 		return str;
 	}
@@ -295,8 +349,8 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	}
 	
 		
-	public MF_OTPAttribTLV duplicate(){
-		MF_OTPAttribTLV mm=new MF_OTPAttribTLV();
+	public MF_OTPAttribSubTLV duplicate(){
+		MF_OTPAttribSubTLV mm=new MF_OTPAttribSubTLV();
 		  mm.AvailRxTrnsp=this.AvailRxTrnsp;
 		  mm.AvailTxSTrnsp=this.AvailTxSTrnsp;
 		  mm.CFG=this.CFG;

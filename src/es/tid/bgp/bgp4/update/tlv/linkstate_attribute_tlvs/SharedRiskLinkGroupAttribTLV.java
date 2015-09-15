@@ -29,12 +29,12 @@ public class SharedRiskLinkGroupAttribTLV extends BGP4TLVFormat{
 		int offset = 4;
 		int i = 0 ;
 		
-		log.info("******************* Codificando SRLG *****************");
-		log.info("Offset1 SRLG: "+offset+".");
+		//log.info("******************* Codificando SRLG *****************");
+		//log.info("Offset1 SRLG: "+offset+".");
 		
 		srlg_length = this.getTLVValueLength()/4;
 		
-		log.info("Entrando en el for");
+		//log.info("Entrando en el for");
 		
 		
 		for (i=0 ; i<srlg_length ; i++){
@@ -45,8 +45,8 @@ public class SharedRiskLinkGroupAttribTLV extends BGP4TLVFormat{
 		}
 		
 		offset = offset + srlg_length;
-		log.info("Offset2 SRLG: "+offset+ ".");
-		log.info("***************** FIN Codificando SRLG ***************");
+		//log.info("Offset2 SRLG: "+offset+ ".");
+		//log.info("***************** FIN Codificando SRLG ***************");
 	}
 	
 	protected void decode(){
