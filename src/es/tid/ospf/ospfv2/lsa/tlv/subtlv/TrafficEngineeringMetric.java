@@ -52,7 +52,7 @@ public class TrafficEngineeringMetric extends OSPFSubTLV {
 			}		
 	}
 
-	public float getLinkMetric() {
+	public long getLinkMetric() {
 		return linkMetric;
 	}
 
