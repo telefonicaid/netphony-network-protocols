@@ -199,6 +199,17 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 		ret = ret + "Grid "+this.grid +" n:"+Integer.toString(n) +" m:"+Integer.toString(m);
 		return ret;
 	}
+	
+	public DWDMWavelengthLabel duplicate() {
+		DWDMWavelengthLabel dl = new DWDMWavelengthLabel();
+		dl.setGrid(this.grid);
+		dl.setChannelSpacing(this.channelSpacing);
+		dl.setIdentifier(this.identifier);
+		dl.setN(this.n);
+		
+		return dl;
+		
+	}
 
 	
 }

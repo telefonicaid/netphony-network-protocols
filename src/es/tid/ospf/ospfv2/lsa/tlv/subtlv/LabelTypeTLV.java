@@ -75,7 +75,13 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 	}
 	
 
-	
+	public LabelTypeTLV duplicate() {
+		LabelTypeTLV lt = new LabelTypeTLV();
+		lt.setPriority(this.priority);
+		lt.setBitMapLS(this.getBitMapLS().duplicate());
+		
+		return lt;
+	}
 
 
 	public String toString(){
@@ -85,6 +91,28 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 		return str;
 	
 	}
+
+
+	public int getPriority() {
+		return priority;
+	}
+
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+
+	public BitmapLabelSet getBitMapLS() {
+		return BitMapLS;
+	}
+
+
+	public void setBitMapLS(BitmapLabelSet bitMapLS) {
+		BitMapLS = bitMapLS;
+	}
+	
+	
 		
 	
 	
