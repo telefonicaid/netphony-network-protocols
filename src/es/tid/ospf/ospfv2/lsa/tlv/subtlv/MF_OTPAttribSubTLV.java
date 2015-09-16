@@ -8,7 +8,7 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkStateAttributeTLVTypes;
 
 
-public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
+public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 
 	private int MatrixID;			//8
 	private int RstType;			//8
@@ -46,6 +46,7 @@ public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
 		int valueLength = 16;
 		
 		log.info("******************* Codificando MF OTP *****************");
+		
 		
 		
 		if (txAggregatedOpticalSpec != null){
@@ -201,21 +202,26 @@ public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
 		Reserved = (((int)tlv_bytes[offset]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+1]&(int)0xFF);
 		log.info("Valor de Reserved del MF_OTP: "+Reserved+".");
 		
-		offset = offset + 1;
+		offset = offset +1 + 1;
 		
 		MinWidth = (((int)tlv_bytes[offset]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+1]&(int)0xFF);
 		log.info("Valor de MinWidth del MF_OTP: "+MinWidth+".");
 		
-		offset = offset + 1;
+		offset = offset + 1 + 1;
 		
 		MaxWidth = (((int)tlv_bytes[offset]&(int)0xFF)<<8) | ((int)tlv_bytes[offset+1]&(int)0xFF);
 		log.info("Valor de MaxWidth del MF_OTP: "+MaxWidth+".");
 		
-		offset = offset + 1;
+		offset = offset + 1 + 1;
 		
-		txAggregatedOpticalSpec.decode();
+		log.info("Lenght: "+this.getTotalTLVLength());
+		log.info("offset: "+offset);
 		
-		rxAggregatedOpticalSpec.decode();
+		txAggregatedOpticalSpec = new LabelTypeTLV(tlv_bytes,offset);
+		
+		offset += txAggregatedOpticalSpec.getTotalTLVLength();
+		
+		rxAggregatedOpticalSpec = new LabelTypeTLV(tlv_bytes,offset);
 		
 		log.info("***************** FIN Decodificando MF OTP ***************");
 	}
@@ -238,7 +244,7 @@ public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
 	}
 
 	public String toString(){
-		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth + "\n TxAggregatedOpticalSpec: " + txAggregatedOpticalSpec + "\n RxAggregatedOpticalSpec: " + rxAggregatedOpticalSpec;
+		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth + "\n TxAggregatedOpticalSpec: " + txAggregatedOpticalSpec.toString() + "\n RxAggregatedOpticalSpec: " + rxAggregatedOpticalSpec.toString();
 		str+=">";
 		return str;
 	}
@@ -364,6 +370,9 @@ public class MF_OTPAttribSubTLV extends BGP4TLVFormat{
 		  mm.Swcap=this.Swcap;
 		  mm.TxSubTrnsp=this.TxSubTrnsp;
 		  mm.RxSubTrnsp=this.RxSubTrnsp;
+		  mm.txAggregatedOpticalSpec = this.txAggregatedOpticalSpec.duplicate();
+		  mm.rxAggregatedOpticalSpec = this.rxAggregatedOpticalSpec.duplicate();
+		  
 		  return mm;
 		
 	}

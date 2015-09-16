@@ -115,6 +115,7 @@ public class BitmapLabelSet  extends LabelSetField {
 		bytesBitmap =  new byte[numberBytes];
 		
 		System.arraycopy(this.bytes,offset, bytesBitmap , 0, numberBytes);
+		createBytesBitMapRes(bytesBitmap);
 	}
 	
 
@@ -230,6 +231,16 @@ public class BitmapLabelSet  extends LabelSetField {
 		}
 		
 		return sumBytesBitmap;
+	}
+	
+	
+	public BitmapLabelSet duplicate() {
+		BitmapLabelSet bls= new BitmapLabelSet();
+		bls.setBytesBitmap(this.bytesBitmapReserved.clone());
+		bls.createBytesBitMapRes(bls.getBytesBitMap());
+		bls.setDwdmWavelengthLabel(this.getDwdmWavelengthLabel().duplicate());
+		return bls;
+		
 	}
 
 }
