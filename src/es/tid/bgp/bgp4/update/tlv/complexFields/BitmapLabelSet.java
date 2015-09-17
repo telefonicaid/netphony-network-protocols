@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 
 
+
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 
@@ -221,6 +222,8 @@ public class BitmapLabelSet  extends LabelSetField {
 		ret=ret+"\r\n";
 		return ret;
 	}
+	
+	
 	
 	public int getSumaBits(){
 		sumBytesBitmap=0;

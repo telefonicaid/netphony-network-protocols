@@ -65,6 +65,8 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 		
 		this.tlv_bytes = new byte[this.getTotalTLVLength()];
 		
+		this.encodeHeader();
+		
 		tlv_bytes[offset]=(byte)((MatrixID) & 0xFF);
 		
 		offset = offset + 1;
