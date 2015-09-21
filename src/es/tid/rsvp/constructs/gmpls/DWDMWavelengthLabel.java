@@ -1,5 +1,9 @@
 package es.tid.rsvp.constructs.gmpls;
 
+import java.util.logging.Logger;
+
+import org.eclipse.jetty.util.log.Log;
+
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.RSVPConstruct;
 
@@ -114,9 +118,11 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 
 	private int m;
 	
+	
 	/**
 	 * Encode a DWDM Wavelength Label
 	 */
+	
 	public void encode() throws RSVPProtocolViolationException {
 		//The length is always 4 bytes
 		if(grid==DWDMWavelengthLabelValues.ITU_T_FLEX){

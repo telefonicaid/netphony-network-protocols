@@ -299,6 +299,7 @@ public class BitmapLabelSet  extends LabelSetField {
 		}
 		
 		bls.numLabels=this.numLabels;
+		bls.dwdmWavelengthLabel=this.getDwdmWavelengthLabel().duplicate();
 		return bls;
 	}
 }
