@@ -56,6 +56,9 @@ public class LabelRangeField  extends LabelSetField {
 		
 	}
 
-
+	public LabelRangeField duplicate(){
+		LabelRangeField lsf=new LabelRangeField();
+		return lsf;
+	}
 
 }

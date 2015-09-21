@@ -26,7 +26,7 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 	@Override
 	public void encode() {
 		
-		int offset = 4;
+		
 		int valueLength = 0;
 		
 		if (MF_OTP != null){
@@ -40,7 +40,7 @@ public class MF_OTPAttribTLV extends BGP4TLVFormat{
 		this.tlv_bytes = new byte[this.getTotalTLVLength()];
 		
 		this.encodeHeader();
-		
+		int offset = 4;
 		if (MF_OTP != null){
 			
 			System.arraycopy(this.MF_OTP.getTlv_bytes(),0 , this.tlv_bytes,offset,MF_OTP.getTotalTLVLength() );	
