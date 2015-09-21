@@ -31,7 +31,7 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 	
 	public MF_OTPAttribSubTLV(){
 		super();
-		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP);
+		this.setTLVType(26);
 	}
 	
 	public MF_OTPAttribSubTLV(byte[] bytes, int offset){
@@ -42,7 +42,7 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 	@Override
 	public void encode() {
 		
-		int offset = 4;
+		
 		int valueLength = 16;
 		
 		log.info("******************* Codificando MF OTP *****************");
@@ -66,7 +66,7 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 		this.tlv_bytes = new byte[this.getTotalTLVLength()];
 		
 		this.encodeHeader();
-		
+		int offset = 4;
 		tlv_bytes[offset]=(byte)((MatrixID) & 0xFF);
 		
 		offset = offset + 1;
@@ -135,7 +135,7 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 			
 			System.arraycopy(this.txAggregatedOpticalSpec.getTlv_bytes(),0 , this.tlv_bytes,offset,txAggregatedOpticalSpec.getTotalTLVLength() );	
 		}
-		
+		offset= offset+txAggregatedOpticalSpec.getTotalTLVLength() ;
 		if (rxAggregatedOpticalSpec != null){
 			
 			System.arraycopy(this.rxAggregatedOpticalSpec.getTlv_bytes(),0 , this.tlv_bytes,offset,rxAggregatedOpticalSpec.getTotalTLVLength() );

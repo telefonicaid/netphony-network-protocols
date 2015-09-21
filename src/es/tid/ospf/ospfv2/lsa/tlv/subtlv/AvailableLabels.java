@@ -106,6 +106,14 @@ public class AvailableLabels extends OSPFSubTLV {
 	public String toString() {
 		return labelSet.toString();
 	}
+	
+	public AvailableLabels dublicate(){
+		AvailableLabels al = new AvailableLabels();
+		if (this.getLabelSet()!=null) {
+			al.setLabelSet(this.getLabelSet().duplicate());
+		}	
+		return al;
+	}
 
 	
 }

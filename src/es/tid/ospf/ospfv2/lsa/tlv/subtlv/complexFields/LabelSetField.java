@@ -162,6 +162,9 @@ public abstract class LabelSetField{
 		return ret;
 	}
 
+	public abstract LabelSetField duplicate();
+		
+	
 	
 	
 	

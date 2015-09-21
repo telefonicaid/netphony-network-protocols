@@ -61,6 +61,11 @@ public class LabelListField extends LabelSetField {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public LabelSetField duplicate(){
+		LabelListField lsf=new LabelListField();
+		return lsf;
+	}
 
 
 }

@@ -287,4 +287,18 @@ public class BitmapLabelSet  extends LabelSetField {
 			bytesBitmap[i]=(byte) ((int)(~bytesBitmap[i])&0xFF);
 		}
 	}
+	
+	
+	public LabelSetField duplicate(){
+		BitmapLabelSet bls= new BitmapLabelSet();
+		if (this.bytesBitmap!=null){
+			bls.bytesBitmap=this.bytesBitmap.clone();
+		}
+		if (this.bytesBitmapReserved!=null){
+			bls.bytesBitmapReserved=this.bytesBitmapReserved.clone();
+		}
+		
+		bls.numLabels=this.numLabels;
+		return bls;
+	}
 }

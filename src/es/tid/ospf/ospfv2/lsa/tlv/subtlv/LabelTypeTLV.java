@@ -43,12 +43,14 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 	
 	public LabelTypeTLV(){
 		super();
-		this.setTLVType(OSPFSubTLVTypes.LabelTypeTLV);		
+		this.setTLVType(OSPFSubTLVTypes.LabelTypeTLV);	
+		numLabels=0;
 	}
 	
 	
 	public LabelTypeTLV(byte[] bytes, int offset) {
 		super(bytes,offset);
+		numLabels=0;
 		decode();
 	}
 	
@@ -56,7 +58,7 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 	
 	public void encode(){	
 		
-		int valueLength = 4;
+		int valueLength = 12+getNumberBytes( numLabels);;
 		
 		/*
 		if (BitMapLS != null){
@@ -124,16 +126,6 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 		
 		System.arraycopy(this.bytesBitmap,0, tlv_bytes, offset,numberBytes);
 		offset = offset+numberBytes;
-	
-		
-		/*
-		if (BitMapLS != null)
-			System.arraycopy(this.BitMapLS.getBytes(),0 , this.tlv_bytes,offset,BitMapLS.getLength() );	*/
-		
-		
-		
-		
-		
 		
 	}
 	
