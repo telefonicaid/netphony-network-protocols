@@ -228,15 +228,15 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 	public String toString(){
 		
 		String str =  "[LabelTypeTLV " + 
-		"\n Priority: "   + priority + 
-		"\n Reserved: "   + reserved + /*"\n BitMapLS: " + BitMapLS.toString()*/
-		"\n Action: "     + action   +
-		"\n NumLabels: "  + numLabels +
-		"\n Length: "     + length +
-		"\n Grid: "       + grid +
-		"\n CS: "         + channelSpacing +
-		"\n Identifier: " + identifier +
-		"\n n: "          + n +
+		"\n Priority: "  + priority + 
+		"| Reserved: "   + reserved + 
+		"| Action: "     + action   +
+		"\n NumLabel: "  + numLabels +
+		"| Length:  "    + length +
+		"| Grid:   "     + grid +
+		"\n CS:         " + channelSpacing +
+		"| Id:       "   + identifier +
+		"| n:      "     + n +
 		"\n BitMap: "  ;
 				
 		for (int i=0;i<bytesBitmap.length;i++){

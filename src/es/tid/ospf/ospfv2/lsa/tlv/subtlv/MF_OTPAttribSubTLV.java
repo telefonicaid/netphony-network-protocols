@@ -246,8 +246,24 @@ public class MF_OTPAttribSubTLV extends OSPFSubTLV{
 	}
 
 	public String toString(){
-		String str =  "<MFOTP" + " MatrixID: " + MatrixID + "\n RstType: " + RstType + "\n Swcap " + Swcap + "\n Encoding: " + Encoding + "\n TxSubTrnsp: " + TxSubTrnsp + "\n RxSubTrnsp: " + RxSubTrnsp + "\n AvailTxSTrnsp: " + AvailTxSTrnsp + "\n AvailRxTrnsp: " + AvailRxTrnsp + "\n CFG: " + CFG + "\n SWG: " + SWG + "\n Reserved: " + Reserved + "\n MinWidth: " + MinWidth + "\n MaxWidth: " + MaxWidth + "\n TxAggregatedOpticalSpec: " + txAggregatedOpticalSpec.toString() + "\n RxAggregatedOpticalSpec: " + rxAggregatedOpticalSpec.toString();
-		str+=">";
+		String str =  "<MFOTP" + "\n MatrixID: " + MatrixID +
+								  "| RstType:  " + RstType + 
+								  "| Swcap: " + Swcap + 
+								  "\n Encoding:   " + Encoding +
+								  "| TxST:    " + TxSubTrnsp +
+								  "| RxST:  " + RxSubTrnsp + 
+								  "\n AvTxST:    " + AvailTxSTrnsp +
+								  "| AvRxST:  " + AvailRxTrnsp + 
+								  "| CFG:   " + CFG + 
+								  "\n SWG:        " + SWG +
+								  "| Reserved: " + Reserved +
+								  "| MinW:  " + MinWidth +
+								  "\n MaxW:       " + MaxWidth +"|" +
+								  "\n -------------------"+
+								  "\n TxAggOptSpec: " + txAggregatedOpticalSpec.toString() +
+								    "\n -------------------"+
+								  "\n RxAggOptSpec: " + rxAggregatedOpticalSpec.toString();
+		str+="\n>";
 		return str;
 	}
 
