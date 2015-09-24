@@ -60,12 +60,7 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 		
 		int valueLength = 12+getNumberBytes( numLabels);;
 		
-		/*
-		if (BitMapLS != null){
 		
-			BitMapLS.encode();
-			valueLength += BitMapLS.getLength();
-		}*/
 		this.setTLVValueLength(valueLength);
 		
 		this.tlv_bytes = new byte[this.getTotalTLVLength()];
@@ -227,6 +222,9 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 
 	public String toString(){
 		
+		
+		
+	
 		String str =  "[LabelTypeTLV " + 
 		"\n Priority: "  + priority + 
 		"| Reserved: "   + reserved + 
@@ -236,7 +234,7 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 		"| Grid:   "     + grid +
 		"\n CS:         " + channelSpacing +
 		"| Id:       "   + identifier +
-		"| n:      "     + n +
+		"| n:      "     + (short)n +
 		"\n BitMap: "  ;
 				
 		for (int i=0;i<bytesBitmap.length;i++){
