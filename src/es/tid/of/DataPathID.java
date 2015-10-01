@@ -1,8 +1,10 @@
 package es.tid.of;
 
+import org.eclipse.jetty.util.log.Log;
+
 /**
  *
- * @author b.mvas
+ * @author b.mvas , b.jmgj
  *
  */
 
@@ -27,10 +29,20 @@ public class DataPathID {
 
 	public static DataPathID getByNameBytes(byte[] id) {
 		DataPathID datapath = new DataPathID();
-	    String idString = new String(id);
+		String idString = "";
+		for (int i = 0; i<id.length ;i++ ){
+			if (((int)id[i] & 0xff) <= 15){
+				idString = idString +"0";
+			}
+			idString = idString + Integer.toHexString(id[i] & 0xff);
+			if (i != (id.length - 1)){
+				idString = idString + ":";
+			}
+		}
 		datapath.setDataPathID(idString);
 		return datapath;
 	}
+	
 
 	public String getDataPathID() {
 		return dataPathID;

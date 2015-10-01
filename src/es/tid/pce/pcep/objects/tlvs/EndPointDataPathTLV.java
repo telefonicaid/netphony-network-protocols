@@ -70,7 +70,9 @@ public class EndPointDataPathTLV extends PCEPTLV {
 	/*
 	 * GETTERS AND SETTERS
 	 */
-
+	public DataPathID getDataPathID() {
+		return switchID;
+	}
 
 	public String getSwitchID() {
 		return switchID.getDataPathID();

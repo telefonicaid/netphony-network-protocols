@@ -11,7 +11,7 @@ import es.tid.protocol.commons.ByteHandler;
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                        DPID (continued)                       |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |         DPID (continued)      | Prefix Length |      Resvd    |
+   |         DPID (continued)      |            Resvd              |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    
  * @author b.mvas, b.jmgj
