@@ -124,6 +124,12 @@ public class ExplicitRouteObject extends PCEPObject{
 					addEROSubobject(subdp);
 					break;
 					
+				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_DATAPATH_ID:
+					UnnumberedDataPathIDEROSubobject subudp=new UnnumberedDataPathIDEROSubobject(this.getObject_bytes(), offset);
+					addEROSubobject(subudp);
+					break;
+					
+					
 				case SubObjectValues.ERO_SUBOBJECT_LAYER_INFO:
 					ServerLayerInfo sli =new ServerLayerInfo(this.getObject_bytes(), offset);
 					addEROSubobject(sli);

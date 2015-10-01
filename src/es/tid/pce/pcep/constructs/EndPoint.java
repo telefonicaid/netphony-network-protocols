@@ -255,7 +255,7 @@ public class EndPoint extends PCEPConstruct {
 			return endPointDataPathID.getSwitchID();//.getDataPathID();
 
 		}else if (endPointUnnumberedDataPathID != null ){
-			return endPointUnnumberedDataPathID.getSwitchID()+"."+endPointUnnumberedDataPathID.getPort();//.getUnnumberedDataPathID();
+			return endPointUnnumberedDataPathID.getSwitchID()+"::"+endPointUnnumberedDataPathID.getIfID();//.getUnnumberedDataPathID();
 
 		}else if (unnumberedEndpoint != null ){
 			return unnumberedEndpoint.getIPv4address().getHostAddress()+":"+unnumberedEndpoint.getIfID();

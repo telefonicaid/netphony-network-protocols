@@ -30,7 +30,7 @@ import es.tid.protocol.commons.ByteHandler;
  */
 public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 	public DataPathID switchID;
-	public int port;
+	public long IfID;
 
 	public EndPointUnnumberedDataPathTLV()
 	{
@@ -48,7 +48,7 @@ public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 	@Override
 	public void encode() 
 	{
-		log.debug("Encoding UnnemberedInterfaceDataPathID EndPoint TLV");
+		log.info("Encoding UnnemberedInterfaceDataPathID EndPoint TLV");
 		int length = 8 + 4;
 
 		this.setTLVValueLength(length);
@@ -59,17 +59,21 @@ public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(switchID.getDataPathID()),0, this.tlv_bytes, offset, 8);
 
 		offset += 8;
-		ByteHandler.IntToBuffer(0,offset*8, 32, port,this.tlv_bytes);
+		
+		this.tlv_bytes[offset]=(byte)(IfID >>> 24);
+		this.tlv_bytes[offset+1]=(byte)(IfID >>> 16 & 0xff);
+		this.tlv_bytes[offset+2]=(byte)(IfID >>> 8 & 0xff);
+		this.tlv_bytes[offset+3]=(byte)(IfID & 0xff);
+		
 
-		log.debug("switchID after encoding :::: "+switchID.getDataPathID());
 		log.info("switchID after encoding :::: "+switchID.getDataPathID());
-		log.debug("port after encoding :::: "+port);
+		log.info("port after encoding :::: "+IfID);
 
 	}
 
 	public void decode() throws MalformedPCEPObjectException
 	{
-		log.debug("Decoding UnnemberedInterfaceDataPathID EndPoint TLV");
+		log.info("Decoding UnnemberedInterfaceDataPathID EndPoint TLV"); 
 
 		int offset = 4;
 		if (this.getTLVValueLength()==0){
@@ -84,10 +88,14 @@ public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 		log.info("jm ver decode switchID: "+switchID.getDataPathID());
 
 		offset += 8;
-		port = ByteHandler.easyCopy(0,31,tlv_bytes[offset],tlv_bytes[offset + 1],tlv_bytes[offset + 2],tlv_bytes[offset + 3]);
-
-		log.debug("switchID after decoding :::: "+switchID.getDataPathID());
-		log.debug("port after decoding :::: "+port);
+		
+		IfID=0;
+		for (int k = 0; k < 4; k++) {
+			IfID = (IfID << 8) | (this.tlv_bytes[k+offset] & 0xff);
+		}
+		
+		log.info("switchID after decoding :::: "+switchID.getDataPathID());
+		log.info("port after decoding :::: "+IfID);
 
 	}
 
@@ -95,6 +103,10 @@ public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 	/*
 	 * GETTERS AND SETTERS
 	 */
+	public DataPathID getDataPathID() {
+		return switchID;
+	}
+	
 	public String getSwitchID() {
 		return switchID.getDataPathID();
 	}
@@ -103,12 +115,12 @@ public class EndPointUnnumberedDataPathTLV extends PCEPTLV{
 		this.switchID.setDataPathID(switchID);
 	}
 
-	public int getPort() {
-		return port;
+	public long getIfID() {
+		return IfID;
 	}
 
-	public void setPort(int port) {
-		this.port = port;
+	public void setIfID(long IfID) {
+		this.IfID = IfID;
 	}
 
 

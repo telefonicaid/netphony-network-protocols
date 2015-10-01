@@ -95,7 +95,4 @@ public abstract class XROSubobject {
 	public void setAttribute(int attribute) {
 		this.attribute = attribute;
 	}
-	
-	
-	
 }

@@ -2,17 +2,22 @@ package es.tid.pce.pcep.objects.subobjects;
 
 import java.io.UnsupportedEncodingException;
 
+import org.eclipse.jetty.util.log.Log;
+
+import es.tid.of.DataPathID;
+import es.tid.protocol.commons.ByteHandler;
+
 /** 
- * @author b.mvas
+ * @author b.mvas , b.jmgj
  *
  */
 public class DataPathIDXROSubobject extends XROSubobject{
 
-	public String routerID;
-	public int routerLength;
+	public DataPathID dataPath;
 	
 	public DataPathIDXROSubobject(){
 		super();
+		this.erosolength=2+8+2;//header+dpid+padding
 		this.setType(XROSubObjectValues.XRO_SUBOBJECT_DATAPATH_ID);
 	}
 	
@@ -22,44 +27,35 @@ public class DataPathIDXROSubobject extends XROSubobject{
 	}
 	
 	/**
-	 * Encode Unnumbered interface ERO Subobject
+	 * Encode  DataPathID XRO Subobject
 	 */
 	public void encode(){
-		this.erosolength=30;
-		this.subobject_bytes=new byte[this.erosolength];
+		this.subobject_bytes=new byte[erosolength];
 		encodeSoHeader();
-		this.subobject_bytes[2]=0x00;
-		this.subobject_bytes[3]=(byte) attribute;
-		System.arraycopy(routerID.getBytes(), 0, this.subobject_bytes,4, 23);
-
+		int offset=2; //subobject header =L+Type+Length
+		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(dataPath.getDataPathID()), 0, this.subobject_bytes, offset, 8);
+		
 	}
-	
+
 	/**
-	 * Decode Unnumbered interface ERO Subobject
+	 * Decode DataPathID XRO Subobject
 	 */
 	public void decode(){
 		decodeSoHeader();
-		byte[] dpid=new byte[23]; 
-		System.arraycopy(this.subobject_bytes,4, dpid, 0, 23);
-		try {
-			routerID=new String(dpid, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		attribute=this.subobject_bytes[3]&0xFF;
-	
+		int offset = 2;
+		byte[] bytearray=new byte[8]; 
+		System.arraycopy(this.subobject_bytes, offset, bytearray, 0, 8);
+		dataPath=(DataPathID)DataPathID.getByNameBytes(bytearray);
 	}
 	
-	public String getRouterID() {
-		return routerID;
+	public DataPathID getDataPath() {
+		return dataPath;
 	}
-	public void setRouterID(String dpidXRO) {
-		this.routerID = dpidXRO;
+	public void setDataPath(DataPathID dataPath) {
+		this.dataPath = dataPath;
 	}
-	
 	public String toString(){
-		return routerID.toString();
+		return dataPath.toString();
 	}
 
 
