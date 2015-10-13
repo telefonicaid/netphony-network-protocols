@@ -188,7 +188,11 @@ public class RSVPPathMessage extends RSVPMessage{
 	protected TimeValues timeValues;
 	protected LinkedList<PolicyData> policyData;
 	protected LinkedList<SenderDescriptor> senderDescriptors;
-
+    //***************RUBEN**************	
+	protected LinkedList<IntservSenderTSpec> intservSenderTSpec;
+	//**********************************
+	
+	
 	/**
 	 * Log
 	 */
@@ -207,6 +211,9 @@ public class RSVPPathMessage extends RSVPMessage{
 		
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
+		//***************RUBEN**************	
+		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
+		//**********************************
 		
 		log.debug("RSVP Path Message Created");
 				
@@ -225,6 +232,9 @@ public class RSVPPathMessage extends RSVPMessage{
 		
 		policyData = new LinkedList<PolicyData>();
 		senderDescriptors = new LinkedList<SenderDescriptor>();
+		//***************RUBEN**************
+		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
+		//**********************************
 		
 		log.debug("RSVP Path Message Created");
 	}
@@ -315,6 +325,19 @@ public class RSVPPathMessage extends RSVPMessage{
 			
 		}
 		
+		//*************** RUBEN *****************
+		int iSenderTSpecSize = intservSenderTSpec.size();
+
+		for(int i = 0; i < iSenderTSpecSize; i++){
+			
+			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
+			length = length + isTSpec.getLength();
+			log.debug("IntServSenderTSpec Descriptor RSVP Construct found");
+			System.out.println("rub IntServSenderTSpec Descriptor RSVP Construct found (RSVPPathMessage.java line 336)");
+		}
+		//****************************************
+		
+		
 		bytes = new byte[length];
 		encodeHeader();
 		int currentIndex = commonHeaderSize;
@@ -366,7 +389,29 @@ public class RSVPPathMessage extends RSVPMessage{
 			}
 						
 		}
+		
+		
+		//*************** RUBEN *****************
+		//
+		for(int i = 0; i < iSenderTSpecSize; i++){
+					
+			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
+			//try{
+				isTSpec.encode();
+				System.arraycopy(isTSpec.getBytes(), 0, bytes, currentIndex, isTSpec.getLength());
+				currentIndex = currentIndex + isTSpec.getLength();
+
+		/*	}catch(RSVPProtocolViolationException a){
+						
+				log.error("Errors during Sender Descriptor number " + i + " encoding");
+						
+			}*/
+								
+		}
 	
+		//***************************************
+				
+				
 		log.debug("RSVP Path Message encoding accomplished");
 		
 	}
@@ -482,7 +527,7 @@ public class RSVPPathMessage extends RSVPMessage{
 					
 				}				
 			}else if(classNum == 11){
-				
+				log.info("XXXXX entramos en 11" );
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);
 				if((cType == 1)||(cType == 2)||(cType == 3)){
@@ -493,17 +538,20 @@ public class RSVPPathMessage extends RSVPMessage{
 					this.addSenderDescriptor(sd);
 					
 				}else{
-					
+					log.info("XXXXX fallo en cType" );
 					// Fallo en cType
 					throw new RSVPProtocolViolationException();
 					
 				}				
 			}
-			else{
-				
-				// Fallo en classNum
-				throw new RSVPProtocolViolationException();
-			}
+//			else{
+//				
+//				//************  RUBEN ***************
+//				if (classNum == 12)
+//				System.out.println("rub Entra en el decode de RSVPPathMessaje.java line 551. ClassNum: "+ classNum);
+//				// Fallo en classNum
+//				else throw new RSVPProtocolViolationException();
+//			}
 		}
 	}
 	
@@ -567,8 +615,8 @@ public class RSVPPathMessage extends RSVPMessage{
 		return senderDescriptors;
 	}
 
-	public void setSenderDescriptors(LinkedList<SenderDescriptor> senderDescriptors) {
-		this.senderDescriptors = senderDescriptors;
+	public LinkedList<IntservSenderTSpec> getIntservSenderTSpec() {
+		return intservSenderTSpec;
 	}
 
 }

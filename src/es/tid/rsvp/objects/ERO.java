@@ -78,6 +78,7 @@ public class ERO extends RSVPObject{
 	
 	public ERO(byte[] bytes, int offset){
 		this.decodeHeader(bytes,offset);
+		log.info("rub Longitud ERO: this.getLength(): " + this.getLength());
 		this.bytes = new byte[this.getLength()];
 		System.arraycopy(bytes, offset, this.bytes, 0, this.getLength());
 		eroSubobjects = new LinkedList<EROSubobject>();
@@ -99,7 +100,7 @@ public class ERO extends RSVPObject{
 	
 	public void addEROSubobject(EROSubobject eroSO){
 		eroSubobjects.add(eroSO);
-		this.length = this.length + eroSO.getErosolength();
+	//	this.length = this.length + eroSO.getErosolength();
 	}
 		
 	/*
