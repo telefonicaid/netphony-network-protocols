@@ -343,7 +343,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 	@Override
 	public void decode() throws RSVPProtocolViolationException {
 		decodeHeader();
-		
+		//log.info("Entra en el decode de RSVPTEResvMessage");
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			

@@ -166,7 +166,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
-		log.debug("Starting Sender Descriptor TE Decode");
+		log.info("Starting Sender Descriptor TE Decode");
 		
 		int classNum = RSVPObject.getClassNum(bytes,offset);
 		int cType = RSVPObject.getcType(bytes, offset);
@@ -177,11 +177,15 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			
 			if(cType == 7){		// Tipo IPv4
 				
+				log.info("Creando LSPTunnelIPv4 Sender Template: cType 7");
 				senderTemplate = new SenderTemplateLSPTunnelIPv4(bytes,offset);
+				log.info("CREADO LSPTunnelIPv4 Sender Template: cType 7");
 				
 			}else if(cType == 8){
 				
+				log.info("Creando LSPTunnelIPv6 Sender Template: cType 8");
 				senderTemplate = new SenderTemplateLSPTunnelIPv6(bytes,offset);
+				log.info("CREADO LSPTunnelIPv6 Sender Template: cType 8");
 				
 			}else{
 				
@@ -194,7 +198,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			offset = offset + senderTemplate.getLength();
 			length = length + senderTemplate.getLength();
 			bytesLeft = bytesLeft - senderTemplate.getLength();
-			log.debug("Sender Template decoded");
+			log.info("Sender Template decoded");
 			
 		}else{	
 			
