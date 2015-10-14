@@ -519,7 +519,7 @@ public class RSVPPathMessage extends RSVPMessage{
 					
 				}				
 			}else if(classNum == 11){
-				//log.info("XXXXX entramos en 11" );
+				
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);
 				if((cType == 1)||(cType == 2)||(cType == 3)){
@@ -530,20 +530,12 @@ public class RSVPPathMessage extends RSVPMessage{
 					this.addSenderDescriptor(sd);
 					
 				}else{
-					//log.info("XXXXX fallo en cType" );
+					
 					// Fallo en cType
 					throw new RSVPProtocolViolationException();
 					
 				}				
 			}
-//			else{
-//				
-//				
-//				if (classNum == 12)
-//				System.out.println("rub Entra en el decode de RSVPPathMessaje.java line 551. ClassNum: "+ classNum);
-//				// Fallo en classNum
-//				else throw new RSVPProtocolViolationException();
-//			}
 		}
 	}
 	

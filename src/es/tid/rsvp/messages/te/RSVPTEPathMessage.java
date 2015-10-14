@@ -453,13 +453,13 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	public void decode() throws RSVPProtocolViolationException {
 		decodeHeader();
-		//log.info("rub RSVP-TE Path Message Decode started");
+		log.debug("RSVP-TE Path Message Decode started");
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		while(offset < length){		// Mientras quede mensaje
 			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
-			//log.info("rub classNum: "+classNum);
+			
 			if(classNum == 1){
 				
 				// Session Object
@@ -551,7 +551,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				if(cType == 1){
 					
 					ero = new ERO(bytes, offset);			
-					//log.info("Longitud es"+ ero.getLength());
 					offset = offset + ero.getLength();
 										
 				}else{
@@ -562,10 +561,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			}
 			else if(classNum == 19){
 				// Label Request Object
-				//log.info(" XXXX Label Request Object classNum 19. Decode");
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
-					//log.info(" XXXX classNum 19, cType 1");
 					// LabelRequestWOLabelRange
 					labelRequest = new LabelRequestWOLabelRange(bytes,offset);
 					labelRequest.decode(bytes, offset);
@@ -626,7 +623,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 				}				
 			}else if(classNum == 11){
-				//log.info("XXXXX Entrando en classNum 11 ");
+				
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);
 											
@@ -644,14 +641,11 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				}				
 			}			
 			else if(classNum == 12){
-				//************** RUBEN *************
+				
 				//Sender TSPEC 
 				int cType = RSVPObject.getcType(bytes,offset);
 				
 				if(cType == 2){
-				/*System.out.println("rub Error en el decode, classsnum: "+classNum);
-				System.out.println("rub Error en el decode, cType: "+cType);*/
-					//System.out.println("rub Entrando en el decode con ClassNum: "+ classNum + " cType: " + cType);
 					IntservSenderTSpec isTSpec = new IntservSenderTSpec();
 					isTSpec.decode(bytes, offset);
 					offset = offset + isTSpec.getLength();
@@ -659,8 +653,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				
 			}else{
 				// Fallo en cType
-				//System.out.println("rub Error en el decode, No ha entrado en niguno de los casos");
-				throw new RSVPProtocolViolationException();
+					throw new RSVPProtocolViolationException();
 				}
 			}
 			
