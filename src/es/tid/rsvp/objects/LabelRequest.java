@@ -1,7 +1,6 @@
 package es.tid.rsvp.objects;
 
 import es.tid.rsvp.RSVPProtocolViolationException;
-import java.util.logging.Logger;
 
 /*
 
@@ -212,7 +211,6 @@ RFC 3209     RSVP-TE
  */
 
 public class LabelRequest extends RSVPObject{
-	private Logger log;
 
 	/**
 	 * Common LabelRequest field;
@@ -233,7 +231,6 @@ public class LabelRequest extends RSVPObject{
 
 	@Override
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
-		log.info("jm Entrando en decode LabelRequest");
 		
 	}
 
