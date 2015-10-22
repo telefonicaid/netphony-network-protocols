@@ -521,6 +521,6 @@ public class OPEN extends PCEPObject{
 	}
 
 	public String toString() {
-		return "Ver: "+Ver+" Flags: "+"Parent PCE Indication Bit: "+parentPCEIndicationBit+"Parent PCE Request Bit: "+parentPCERequestBit+" Keepalive"+Keepalive+" Deadtimer: "+Deadtimer+" SID: "+SID;
+		return "\nVer: "+Ver+" Flags: "+"Parent PCE Indication Bit: "+parentPCEIndicationBit+"Parent PCE Request Bit: "+parentPCERequestBit+" Keepalive"+Keepalive+" Deadtimer: "+Deadtimer+" SID: "+SID;
 	}
 }
