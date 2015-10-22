@@ -74,10 +74,6 @@ public abstract class OSPFSubTLV {
 			this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 			this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 			this.TotalTLVLength=TLVValueLength+4;		
-			log.info("TLVValueLength es "+TLVValueLength);
-			log.info("TLVType es "+TLVType);
-			log.info("lenght of bytes es "+bytes.length);
-			log.info("offset es "+offset);
 			if ((this.TotalTLVLength%4)!=0){
 				//Padding must be done!!
 				this.TotalTLVLength=this.TotalTLVLength+4-(this.TotalTLVLength%4);

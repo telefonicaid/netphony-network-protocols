@@ -332,7 +332,6 @@ public class RSVPPathMessage extends RSVPMessage{
 			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
 			length = length + isTSpec.getLength();
 			log.debug("IntServSenderTSpec Descriptor RSVP Construct found");
-			//System.out.println("rub IntServSenderTSpec Descriptor RSVP Construct found (RSVPPathMessage.java line 336)");
 		}
 		
 		

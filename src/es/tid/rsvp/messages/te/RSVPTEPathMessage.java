@@ -628,7 +628,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 											
 				if((cType == 7)||(cType == 8)){
-					//log.info("XXXXX cType es 7 u 8 ");
 					SenderDescriptorTE sd = new SenderDescriptorTE();
 					sd.decode(bytes, offset);
 					offset = offset + sd.getLength();
