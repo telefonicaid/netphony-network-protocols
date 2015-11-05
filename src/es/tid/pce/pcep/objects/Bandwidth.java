@@ -22,6 +22,6 @@ public abstract class Bandwidth extends PCEPObject{
 	public Bandwidth(byte[] bytes, int offset) throws MalformedPCEPObjectException{
 		super(bytes, offset);
 	}
-	
+		
 	public abstract Bandwidth duplicate();
 }
