@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects.subobjects;
 
+import java.util.logging.Logger;
+
 /** 
  * Explicit Route Object Subobject. RFC 3209,  RFC 3473, RFC 3477
  * From RFC3209:
@@ -155,6 +157,9 @@ package es.tid.rsvp.objects.subobjects;
  *
  */
 public abstract class EROSubobject {
+	
+
+	private Logger log=Logger.getLogger("EROSubobject");
 
 	protected int type;
 	protected int erosolength;//ERO Subobject Length
@@ -238,5 +243,48 @@ public abstract class EROSubobject {
 
 	public void setSubobject_bytes(byte[] subobject_bytes) {
 		this.subobject_bytes = subobject_bytes;
+	}
+	
+	public String getstringNodeEROSubobject(EROSubobject eroSubobject){
+		String stringEROSubobject = null;
+		
+		
+		if (eroSubobject instanceof IPv4prefixEROSubobject){
+			
+			stringEROSubobject = ((IPv4prefixEROSubobject) eroSubobject).getIpv4address().getHostAddress();
+			
+		}else if (eroSubobject instanceof UnnumberIfIDEROSubobject){
+			
+			stringEROSubobject = ((UnnumberIfIDEROSubobject) eroSubobject).getRouterID().getHostAddress();
+			
+		}else if (eroSubobject instanceof DataPathIDEROSubobject){
+			
+			stringEROSubobject = ((DataPathIDEROSubobject) eroSubobject).getDataPath().getDataPathID();
+			
+		}else if (eroSubobject instanceof UnnumberedDataPathIDEROSubobject){
+			
+			stringEROSubobject = ((UnnumberedDataPathIDEROSubobject) eroSubobject).getDataPath().getDataPathID();
+			
+		}else log.info("EROSubobject not implemented in getstringEROSubobject");
+
+		return stringEROSubobject;
+	}
+	
+	public int getIntfEROSubobject(EROSubobject eroSubobject){
+		
+		int intfEROSubobject = -1;
+		
+		
+		if (eroSubobject instanceof UnnumberIfIDEROSubobject){
+			
+			intfEROSubobject = (int) ((UnnumberIfIDEROSubobject) eroSubobject).getInterfaceID();
+			
+		}else if (eroSubobject instanceof UnnumberedDataPathIDEROSubobject){
+			
+			intfEROSubobject = (int) ((UnnumberedDataPathIDEROSubobject) eroSubobject).getInterfaceID();
+			
+		}else log.info("EROSubobject not implemented in getIntfEROSubobject");
+
+		return intfEROSubobject;
 	}
 }
