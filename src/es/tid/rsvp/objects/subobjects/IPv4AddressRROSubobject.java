@@ -56,7 +56,7 @@ public class IPv4AddressRROSubobject extends RROSubobject {
 	}
 	
 	public String toString(){
-		return ipv4address.toString();
+		return ipv4address.getHostAddress();
 	}
 
 }
