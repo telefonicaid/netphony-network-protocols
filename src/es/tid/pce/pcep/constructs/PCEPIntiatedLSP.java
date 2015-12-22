@@ -190,7 +190,8 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				this.setLength(len);
 				log.warn("Just one SRP and one LSP object found, no more");
 				log.warn("TEMPORAL FIX");
-				throw new PCEPProtocolViolationException();
+				return;
+				//throw new PCEPProtocolViolationException();
 			}
 		}
 

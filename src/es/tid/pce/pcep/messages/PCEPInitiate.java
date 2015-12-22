@@ -95,7 +95,10 @@ public class PCEPInitiate extends PCEPMessage
 		{
 			try
 			{
+				log.info("this.getBytes(): "+this.getBytes());
+				log.info("offset: "+offset);
 				sr = new PCEPIntiatedLSP(this.getBytes(),offset);
+				
 			}
 			catch(PCEPProtocolViolationException e)
 			{

@@ -28,6 +28,9 @@ public class AutonomousSystemNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 		System.arraycopy(AS_ID.getAddress(), 0, this.subtlv_bytes, offset, 4);
 
 	}
+	
+	
+	
 	public void decode(){
 		//Decoding AutonomousSystemSubTLV		
 		byte[] ip=new byte[4]; 
