@@ -1,11 +1,35 @@
-netphony-network-protocols v1.1.1
+netphony-network-protocols v1.2
 =================================
+The netphony-network-protocols library is a set of implementations of the main networking protocols stacks that enable control and management functions: 
+* PCEP protocol
+* RVP-TE protocol
+* OSPF-TE protocol
+* BGP-LS protocol
 
-Java Library of Networking Protocols: PCEP, RSVP, OSPF, BGP-LS
+Any software requiring the connection with a device/software that supports such protocols can easily integrate the protocol library. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
-Provides encoding and decoding of the mentioned protocols.
+The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. Contributions are highly welcomed.
 
-## Usage:
+## Compilation and use
+
+The library can be built using the maven tool. There is a set of junit tests included that tests the enconding/decoding process. Contributions on expanding the test suite are welcomed.
+To build the .jar file and run the tests, simply clone the repository, go to the main directory and run
+ ```bash
+    cd netphony-network-protocols
+    mvn package
+ ```
+ 
+ To use the library in your application, simply add the dependency in your pom.xml file:
+  ```xml
+    <dependency>
+      <groupId>es.tid.netphony</groupId>
+      <artifactId>network-protocols</artifactId>
+      <version>1.2</version>
+    </dependency>
+ ```
+ Authors keep also a copy of the artifact in maven central to facilitate the deployment.
+
+## How to use the code:
 
 ### ENCODING
 
