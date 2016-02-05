@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
       <div class="inner">
         <h1>Cne-network-protocols</h1>
         <h2>Java Library of Networking Protocols: PCEP, RSVP, OSPF, BGP-LS</h2>
-        <a href="https://pdihub.hi.inet/cne/cne-network-protocols" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://pdihub.hi.inet/cne/cne-network-protocols" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -29,16 +29,123 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="cne-network-protocols" class="anchor" href="#cne-network-protocols"><span class="octicon octicon-link"></span></a>cne-network-protocols</h1>
+<a id="netphony-network-protocols-v12" class="anchor" href="#netphony-network-protocols-v12" aria-hidden="true"><span class="octicon octicon-link"></span></a>netphony-network-protocols v1.2</h1>
 
-<p>Java Library of Networking Protocols: PCEP, RSVP, OSPF, BGP-LS</p>
+<p>The netphony-network-protocols library is a set of implementations of the main networking protocols stacks that enable control and management functions: </p>
+
+<ul>
+<li>PCEP protocol</li>
+<li>RVP-TE protocol</li>
+<li>OSPF-TE protocol</li>
+<li>BGP-LS protocol</li>
+</ul>
+
+<p>Any software requiring the connection with a device/software that supports such protocols can easily integrate the protocol library. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. </p>
+
+<p>The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. Contributions are highly welcomed.</p>
+
+<h2>
+<a id="compilation-and-use" class="anchor" href="#compilation-and-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilation and use</h2>
+
+<p>The library can be built using the maven tool. There is a set of junit tests included that tests the enconding/decoding process. Contributions on expanding the test suite are welcomed.
+To build the .jar file and run the tests, simply clone the repository, go to the main directory and run</p>
+
+<div class="highlight highlight-source-shell"><pre>    <span class="pl-c1">cd</span> netphony-network-protocols
+    mvn package</pre></div>
+
+<p>To use the library in your application, simply add the dependency in your pom.xml file:</p>
+
+<div class="highlight highlight-text-xml"><pre>    &lt;<span class="pl-ent">dependency</span>&gt;
+      &lt;<span class="pl-ent">groupId</span>&gt;es.tid.netphony&lt;/<span class="pl-ent">groupId</span>&gt;
+      &lt;<span class="pl-ent">artifactId</span>&gt;network-protocols&lt;/<span class="pl-ent">artifactId</span>&gt;
+      &lt;<span class="pl-ent">version</span>&gt;1.2&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<p>Authors keep also a copy of the artifact in maven central to facilitate the deployment.</p>
+
+<h2>
+<a id="how-to-use-the-code" class="anchor" href="#how-to-use-the-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use the code:</h2>
+
+<h3>
+<a id="encoding" class="anchor" href="#encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>ENCODING</h3>
+
+<p>1-&gt; Create a new instance of the desired message</p>
+
+<div class="highlight highlight-source-java"><pre>     <span class="pl-smi">PCEPRequest</span> message <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">PCEPRequest</span>();</pre></div>
+
+<p>2-&gt; Create instances of the desired constructs or objects and add them to the message</p>
+
+<div class="highlight highlight-source-java"><pre>     <span class="pl-smi">Request</span> req <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Request</span>();
+     <span class="pl-c">//RequestParameters</span>
+     <span class="pl-smi">RequestParameters</span> rp<span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">RequestParameters</span>();
+     rp<span class="pl-k">.</span>setPbit(<span class="pl-c1">true</span>);              
+     rp<span class="pl-k">.</span>setRequestID(<span class="pl-c1">123</span>);      
+     rp<span class="pl-k">.</span>setPrio(<span class="pl-c1">1</span>);     
+     rp<span class="pl-k">.</span>setReopt(<span class="pl-c1">false</span>);    
+     rp<span class="pl-k">.</span>setBidirect(<span class="pl-c1">false</span>);
+     rp<span class="pl-k">.</span>setLoose(<span class="pl-c1">false</span>);
+     req<span class="pl-k">.</span>setRequestParameters(rp);
+     <span class="pl-c">//EndPoints</span>
+     <span class="pl-smi">EndPointsIPv4</span> ep<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">EndPointsIPv4</span>();              
+     req<span class="pl-k">.</span>setEndPoints(ep);
+     <span class="pl-smi">Inet4Address</span> ipp <span class="pl-k">=</span> (<span class="pl-smi">Inet4Address</span>)<span class="pl-smi">Inet4Address</span><span class="pl-k">.</span>getByName(<span class="pl-s"><span class="pl-pds">"</span>172.16.101.101<span class="pl-pds">"</span></span>);
+     ep<span class="pl-k">.</span>setSourceIP(ipp);
+    <span class="pl-c1">.....</span>
+    message<span class="pl-k">.</span>addRequest(req);    </pre></div>
+
+<p>3-&gt; Call encode()</p>
+
+<div class="highlight highlight-source-java"><pre>   message<span class="pl-k">.</span>encode();</pre></div>
+
+<p>4-&gt; Get bytes and send them!</p>
+
+<div class="highlight highlight-source-java"><pre>   out<span class="pl-k">.</span>write(message<span class="pl-k">.</span>getBytes());
+   out<span class="pl-k">.</span>flush();</pre></div>
+
+<h2>
+<a id="pcep-support" class="anchor" href="#pcep-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>PCEP Support</h2>
+
+<p>Detailed PCEP Support <a href="doc/PCEP_Support.md">click here</a></p>
+
+<ul>
+<li>RFC 5440: Full compliance</li>
+<li>RFC 5521: Path-key not supported</li>
+<li>RFC 5886: Full compliance</li>
+<li>RFC 6006: Only P2MP END-POINTS Object for IPv4</li>
+<li>draft-ietf-pce-gmpls-pcep-extensions-10 (partial)</li>
+<li>draft-ietf-pce-inter-layer-ext-05 (partial)</li>
+<li>draft-ietf-pce-hierarchy-extensions-02</li>
+<li>draft-ietf-pce-stateful-pce-05</li>
+<li>draft-ietf-pce-pcep-stateful-pce-gmpls-00</li>
+<li>draft-ietf-pce-pce-initiated-lsp-00:</li>
+</ul>
+
+<h2>
+<a id="rsvp-te-support" class="anchor" href="#rsvp-te-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>RSVP-TE Support</h2>
+
+<p>Detailed RSVP-TE Support <a href="doc/RSVP-TE_Support.md">click here</a></p>
+
+<h2>
+<a id="ospf-te-support" class="anchor" href="#ospf-te-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>OSPF-TE Support</h2>
+
+<p>Detailed OSPF-TE Support <a href="doc/OSPF-TE_Support.md">click here</a></p>
+
+<p>OSPF-TE v2 LSA from RFC3630
+Inter-AS-TE-v2 LSA from RFC5392 <a href="http://tools.ietf.org/html/rfc5392">http://tools.ietf.org/html/rfc5392</a></p>
+
+<h1>
+<a id="bgp-ls-support" class="anchor" href="#bgp-ls-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>BGP-LS Support</h1>
+
+<p>Detailed BGP4 &amp; BGP-LS Support <a href="doc/BGP-LS_Support.md">click here</a></p>
+
+<p><a href="http://tools.ietf.org/html/draft-ietf-idr-ls-distribution-03">http://tools.ietf.org/html/draft-ietf-idr-ls-distribution-03</a></p>
         </section>
 
         <aside id="sidebar">
 
           <p class="repo-owner"><a href="https://pdihub.hi.inet/cne/cne-network-protocols"></a> is maintained by <a href="https://pdihub.hi.inet/cne">cne</a>.</p>
 
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
