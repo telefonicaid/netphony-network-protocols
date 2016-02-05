@@ -1,3 +1,7 @@
+v1.2
+- Added JUnit tests for PCEP (still to be fully completed)
+- Bugfixes
+- New experimental objects
 v1.1.1
 - Added DataPathID Class
 v1.1.0 
