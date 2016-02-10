@@ -106,13 +106,14 @@ public class TestPCEPCommons {
 		} 			
 	}
 
-	public static void fillPrimitive(Object object, Method method,Type ty) {
+	public static void fillPrimitive(Object object, Method method,Type tyy) {
 		try {
-			if (ty.getTypeName().equals("int")){
+			Class ty=(Class)tyy;
+			if (ty.getName().equals("int")){
 
 				method.invoke(object, 0);
 
-			}else if (ty.getTypeName().equals("boolean")){
+			}else if (ty.getName().equals("boolean")){
 
 				method.invoke(object,true);
 			}
