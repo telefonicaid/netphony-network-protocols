@@ -12,7 +12,7 @@ The PCEP implemnentation has been tested against other PCEP implementations (Tel
 
 The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04 
 
-The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. Contributions are highly welcomed.
+The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
 ## Compilation and use
 
