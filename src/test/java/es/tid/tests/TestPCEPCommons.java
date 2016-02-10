@@ -43,6 +43,7 @@ public class TestPCEPCommons {
 						}
 						
 						else {
+						
 							//System.out.println("me "+method.getName());
 							 if (c.getName().equals("String")) {
 									System.out.println("FIXME:  String");
@@ -73,21 +74,27 @@ public class TestPCEPCommons {
 						//System.out.println("ot "+pt.getOwnerType().getTypeName() );
 						//System.out.println("at "+pt.getActualTypeArguments()[0].getTypeName());
 						//getActualTypeArguments()
-						if (rt.getTypeName().equals("java.util.LinkedList")){
-							String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
-							Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
-							Object res=method.invoke(object);
-							Method[] methods =res.getClass().getDeclaredMethods();	
-							if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
-								System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
-							}else {
-								Object o = ((Class)at).newInstance();
-								createAllFields(o);
-								methods[0].invoke(res, o);
-							}
+						if (rt instanceof Class){
+							Class ca=(Class)rt;
 							
-
+							if (ca.getName().equals("java.util.LinkedList")){
+								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
+								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								Object res=method.invoke(object);
+								Method[] methods =res.getClass().getDeclaredMethods();	
+								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
+									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
+								}else {
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									methods[0].invoke(res, o);
+								}
+								
+	
+							}
+			
 						}
+						
 
 					}
 
