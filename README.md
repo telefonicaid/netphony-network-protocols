@@ -8,6 +8,10 @@ The netphony-network-protocols library is an implementation of four networking p
 
 The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
+The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) . 
+
+The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04 
+
 The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. Contributions are highly welcomed.
 
 ## Compilation and use
@@ -68,7 +72,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
 ```
 ## PCEP Protocol and Support
 
-The Path Computation Element Protocol (PCEP) is used for communications between a PCC and a PCE, or between two PCEs, in compliance with RFC4657.  Such interactions include path computation requests, path computation replies as well as notifications of specific states related to the use of a PCE in the context of MPLS and GMPLS Traffic Engineering. Recent extensions.
+The Path Computation Element Protocol (PCEP) is used for communications between a PCC and a PCE, or between two PCEs, in compliance with RFC4657.  Such interactions include path computation requests, path computation replies as well as notifications of specific states related to the use of a PCE in the context of MPLS and GMPLS Traffic Engineering. Recent extensions. A good source of PCE material can be found in http://ict-one.eu/pace/public_wiki/mediawiki-1.19.7/index.php?title=Tools
 
 The detail of the messages, objects and TLVs can be found in [click here](doc/PCEP_Support.md)
 
