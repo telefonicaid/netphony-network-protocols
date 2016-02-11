@@ -2,6 +2,8 @@ package es.tid.pce.pcep.objects.subobjects;
 
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.objects.subobjects.EROSubobject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +98,7 @@ Internet-Draft     PCEP Extensions for Segment Routing      October 2013
  * 
  */
 
-public class SREROSubobject {
+public class SREROSubobject extends EROSubobject{
 
 	public static final int ST_IPv4NodeID = 1;
 	public static final int ST_IPv6NodeID = 2;
@@ -111,29 +113,22 @@ public class SREROSubobject {
 	public static final int length_UnnumberedAdjacencyIPv4NodeID = 24;	
 		
 		
-
-	protected int type;
-	protected int erosolength;//ERO Subobject Length
 	protected byte ST;
-	protected boolean fFlag;
-	protected boolean sFlag;
-	protected boolean cFlag;
-	protected boolean mFlag;
+	protected boolean fflag;
+	protected boolean sflag;
+	protected boolean cflag;
+	protected boolean mflag;
 	protected int SID;
-	
-	
-	
-	protected boolean loosehop;
-	protected byte [] subobject_bytes;
-	protected static final Logger log = LoggerFactory.getLogger("PCEServer");
+
+
 	
 	public SREROSubobject(){
 		//TODO: this will be variable in future updates
 		erosolength = 8;
-		fFlag = true;
-		sFlag = false;
-		cFlag = false;
-		mFlag = false;
+		fflag = true;
+		sflag = false;
+		cflag = false;
+		mflag = false;
 		loosehop = false;
 		ST = 0;
 		type = ObjectParameters.PCEP_SUBOBJECT_TYPE_SR_ERO;
@@ -161,10 +156,10 @@ public class SREROSubobject {
 		//TODO: ver si el length varia con los NAI
 		subobject_bytes[1]=(byte)erosolength;
 		subobject_bytes[2]=(byte)((ST & 0x0F) << 4);
-		ByteHandler.BoolToBuffer(4 + 3 * 8,fFlag,this.subobject_bytes);
-		ByteHandler.BoolToBuffer(5 + 3 * 8,sFlag,this.subobject_bytes);
-		ByteHandler.BoolToBuffer(6 + 3 * 8,cFlag,this.subobject_bytes);
-		ByteHandler.BoolToBuffer(7 + 3 * 8,mFlag,this.subobject_bytes);
+		ByteHandler.BoolToBuffer(4 + 3 * 8,fflag,this.subobject_bytes);
+		ByteHandler.BoolToBuffer(5 + 3 * 8,sflag,this.subobject_bytes);
+		ByteHandler.BoolToBuffer(6 + 3 * 8,cflag,this.subobject_bytes);
+		ByteHandler.BoolToBuffer(7 + 3 * 8,mflag,this.subobject_bytes);
 		//SID
 		
 		this.subobject_bytes[4]=(byte)(SID >>> 24 & 0xff);
@@ -182,10 +177,10 @@ public class SREROSubobject {
 		erosolength=(int)subobject_bytes[1];
 		ST = (byte)((subobject_bytes[2] >> 4) & 0x0f);
 		
-		fFlag = (ByteHandler.easyCopy(4,4,this.subobject_bytes[3]) == 1);	
-		sFlag = (ByteHandler.easyCopy(5,5,this.subobject_bytes[3]) == 1);	
-		cFlag = (ByteHandler.easyCopy(6,6,this.subobject_bytes[3]) == 1);	
-		mFlag = (ByteHandler.easyCopy(7,7,this.subobject_bytes[3]) == 1);			
+		fflag = (ByteHandler.easyCopy(4,4,this.subobject_bytes[3]) == 1);	
+		sflag = (ByteHandler.easyCopy(5,5,this.subobject_bytes[3]) == 1);	
+		cflag = (ByteHandler.easyCopy(6,6,this.subobject_bytes[3]) == 1);	
+		mflag = (ByteHandler.easyCopy(7,7,this.subobject_bytes[3]) == 1);			
 
 		SID=0;
 		for (int k = 0; k < 4; k++) {
@@ -204,7 +199,7 @@ public class SREROSubobject {
 		sb.append(" type: "+type);
 		sb.append(" length: "+erosolength);
 		sb.append(" ST: "+ST);
-		sb.append(" flags: |f|="+fFlag+" |s|="+sFlag+" |c|="+cFlag+" |m|="+mFlag);
+		sb.append(" flags: |f|="+fflag+" |s|="+sflag+" |c|="+cflag+" |m|="+mflag);
 		sb.append(">");
 		
 		
@@ -287,23 +282,23 @@ public class SREROSubobject {
 	
 	public boolean isfFlag() 
 	{
-		return fFlag;
+		return fflag;
 	}
 	
 	public boolean iscFlag() 
 	{
-		return cFlag;
+		return cflag;
 	}
 	
 	
 	public boolean issFlag() 
 	{
-		return sFlag;
+		return sflag;
 	}
 	
 	public boolean ismFlag() 
 	{
-		return mFlag;
+		return mflag;
 	}
 	
 
@@ -312,24 +307,6 @@ public class SREROSubobject {
 	}
 	
 
-
-	public int getErosolength() {
-		return erosolength;
-	}
-	
-	public byte[] getSubobject_bytes() {
-		return subobject_bytes;
-	}
-	
-	public static int getLength(byte []bytes, int offset) {
-		int len=(int)bytes[offset+1];
-		return len;
-	}
-	
-	public static int getType(byte []bytes, int offset) {
-		int typ=bytes[offset]& 0x7F;
-		return typ;
-	}
 
 	public int getType() {
 		return type;
@@ -340,45 +317,27 @@ public class SREROSubobject {
 	}
 	
 	//SETTERS
-	
-	public void setType(int type) {
-		this.type = type;
-	}
 
 
-	public void setErosolength(int erosolength) {
-		this.erosolength = erosolength;
-	}
-
-	public void setLoosehop(boolean loosehop) {
-		this.loosehop = loosehop;
-	}
-
-
-	public void setSubobject_bytes(byte[] subobject_bytes) {
-		this.subobject_bytes = subobject_bytes;
-	}
-	
-	
-	public void setfFlag(boolean fFlag) 
+	public void setFflag(boolean fFlag) 
 	{
-		this.fFlag = fFlag;
+		this.fflag = fFlag;
 	}
 
-	public void setcFlag(boolean cFlag) 
+	public void setCflag(boolean cFlag) 
 	{
-		this.cFlag = cFlag;
+		this.cflag = cFlag;
 	}
 
 
-	public void setsFlag(boolean sFlag) 
+	public void setSflag(boolean sFlag) 
 	{
-		this.sFlag = sFlag;
+		this.sflag = sFlag;
 	}
 
-	public void setmFlag(boolean mFlag) 
+	public void setMflag(boolean mFlag) 
 	{
-		this.mFlag = mFlag;
+		this.mflag = mFlag;
 	}
 	
 	public void setSID(int SID)

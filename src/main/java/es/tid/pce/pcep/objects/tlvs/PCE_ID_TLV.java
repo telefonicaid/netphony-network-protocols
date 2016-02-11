@@ -74,11 +74,51 @@ public class PCE_ID_TLV extends PCEPTLV {
 	public void setPceId(Inet4Address pceId) {
 		this.pceId = pceId;
 	}
+	
+	
+
+	public int getAddresType() {
+		return addresType;
+	}
+
+	public void setAddresType(int addresType) {
+		this.addresType = addresType;
+	}
 
 	public String toString(){
 		String res = "PCE ID: "+pceId;
 		return res;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + addresType;
+		result = prime * result + ((pceId == null) ? 0 : pceId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PCE_ID_TLV other = (PCE_ID_TLV) obj;
+		if (addresType != other.addresType)
+			return false;
+		if (pceId == null) {
+			if (other.pceId != null)
+				return false;
+		} else if (!pceId.equals(other.pceId))
+			return false;
+		return true;
+	}
+	
+	
 	
 
 }
