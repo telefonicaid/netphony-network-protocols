@@ -1,10 +1,12 @@
 package es.tid.pce.pcep.objects;
 
+import java.util.Arrays;
+
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 
 /**
- * ¥	Attaching a new LABEL object (class 129, type 1) as an attribute of the computed path. If there is only one label object it is the SUGGESTED_LABEL.
+ * ï¿½	Attaching a new LABEL object (class 129, type 1) as an attribute of the computed path. If there is only one label object it is the SUGGESTED_LABEL.
  
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -49,9 +51,9 @@ public class SuggestedLabel extends PCEPObject{
 			} catch (RSVPProtocolViolationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}			
 			label=new byte[dwdmWavelengthLabel.getLength()];
-			System.arraycopy(dwdmWavelengthLabel.getBytes(), 0, this.label, 4, this.label.length);
+			System.arraycopy(dwdmWavelengthLabel.getBytes(), 0, this.label, 0, this.label.length);
 		}
 		this.setObjectLength(4+label.length);
 		this.object_bytes=new byte[ObjectLength];
@@ -102,5 +104,36 @@ public class SuggestedLabel extends PCEPObject{
 			return "";
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((dwdmWavelengthLabel == null) ? 0 : dwdmWavelengthLabel
+						.hashCode());
+		result = prime * result + Arrays.hashCode(label);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		SuggestedLabel other = (SuggestedLabel) obj;
+		if (dwdmWavelengthLabel == null) {
+			if (other.dwdmWavelengthLabel != null)
+				return false;
+		} else if (!dwdmWavelengthLabel.equals(other.dwdmWavelengthLabel))
+			return false;
+		if (!Arrays.equals(label, other.label))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

@@ -84,10 +84,11 @@ public class SwitchEncodingType extends PCEPConstruct {
 	
 	private void decode(byte[] bytes, int offset)
 			throws PCEPProtocolViolationException {
+		
 		this.setLength(4);
-		LSPEncodingType = (this.bytes[0+offset]&0xFF);
-		SwitchingType = (this.bytes[1+offset]&0xFF);	
-		Iflag =(this.bytes[3+offset]&0x01)==0x01;
+		LSPEncodingType = (bytes[0+offset]&0xFF);
+		SwitchingType = (bytes[1+offset]&0xFF);	
+		Iflag =(bytes[3+offset]&0x01)==0x01;
 	}
 
 	@Override

@@ -27,8 +27,8 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSP"},
     			//{"es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth"},
     			{"es.tid.pce.pcep.objects.BandwidthRequested"},
-				//"es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth",
-				//"es.tid.pce.pcep.objects.BitmapLabelSet",
+    			//{"es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth"},
+    			{"es.tid.pce.pcep.objects.BitmapLabelSet"},
     			{"es.tid.pce.pcep.objects.Close"},
 				//"es.tid.pce.pcep.objects.EndPointDataPathID",
     			{"es.tid.pce.pcep.objects.EndPointsIPv4"},
@@ -39,9 +39,8 @@ public class TestPCEPObjects {
 				//"es.tid.pce.pcep.objects.GeneralizedEndPoints",
     			{"es.tid.pce.pcep.objects.IncludeRouteObject"},
     			{"es.tid.pce.pcep.objects.InterLayer"},
-    			//"es.tid.pce.pcep.objects.LSP",
+    			//{"es.tid.pce.pcep.objects.LSP"},
     			{"es.tid.pce.pcep.objects.LSPA"},
-				//"es.tid.pce.pcep.objects.LabelSet",
 				//"es.tid.pce.pcep.objects.LabelSetInclusiveList",
 				//"es.tid.pce.pcep.objects.LoadBalancing",
     			{"es.tid.pce.pcep.objects.Metric"},
@@ -51,7 +50,7 @@ public class TestPCEPObjects {
 				//"es.tid.pce.pcep.objects.NetQuotationNSAP",
 				//"es.tid.pce.pcep.objects.NoPath",
 				//"es.tid.pce.pcep.objects.Notification",
-				//"es.tid.pce.pcep.objects.OPEN",
+    			{"es.tid.pce.pcep.objects.OPEN"},
 				//"es.tid.pce.pcep.objects.ObjectiveFunction",
 				//"es.tid.pce.pcep.objects.P2MPEndPointsDataPathID",
 				//"es.tid.pce.pcep.objects.P2MPEndPointsIPv4",
@@ -69,18 +68,13 @@ public class TestPCEPObjects {
 				//"es.tid.pce.pcep.objects.SRERO",
     			{"es.tid.pce.pcep.objects.SRP"},
     			{"es.tid.pce.pcep.objects.ServerIndication"},
-				//"es.tid.pce.pcep.objects.SuggestedLabel",
+    			{"es.tid.pce.pcep.objects.SuggestedLabel"},
 				//"es.tid.pce.pcep.objects.Svec",
 				//"es.tid.pce.pcep.objects.SwitchLayer",
 				//"es.tid.pce.pcep.objects.WavelengthAssignementObject",
 				//"es.tid.pce.pcep.objects.XifiEndPoints",
 				//"es.tid.pce.pcep.objects.XifiUniCastEndPoints"
 				};
-		//Object[][] objects=  {
-    	//		{"hola"},{"bola"}};
-    	
-    	//return Arrays.asList(new Object[][] {
-    	//		{"hola"},{"bola"}});
 		return Arrays.asList(objects);
     }
 	
@@ -104,7 +98,7 @@ public class TestPCEPObjects {
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 
 		//Check if the fields are the same
-		assertTrue("testing object "+object,object.equals(object2));
+		assertTrue("testing object "+objectClass,object.equals(object2));
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in object "+object,false);

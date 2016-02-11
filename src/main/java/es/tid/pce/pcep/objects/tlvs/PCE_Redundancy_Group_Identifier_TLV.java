@@ -1,5 +1,7 @@
 package es.tid.pce.pcep.objects.tlvs;
 
+import java.util.Arrays;
+
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
@@ -79,14 +81,14 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 	{
 		log.debug("Decoding PCE_Redundancy_Group_Identifier_TLV TLV");
 		
-		redundancyId = new byte[this.getTotalTLVLength()-4];
+		redundancyId = new byte[this.getTLVValueLength()];
 		int offset = 4;
 		
 		try
 		{
 			System.arraycopy(this.tlv_bytes, offset, redundancyId, 0, redundancyId.length);
 			
-			log.debug("Redundancy ID is : ");
+			log.debug("Redundancy ID is : "+ByteHandler.ByteMACToString(redundancyId));
 		}
 		catch (Exception e)
 		{
@@ -131,5 +133,29 @@ public class PCE_Redundancy_Group_Identifier_TLV extends PCEPTLV
 	{
 		this.redundancyId = redundancyId;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(redundancyId);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PCE_Redundancy_Group_Identifier_TLV other = (PCE_Redundancy_Group_Identifier_TLV) obj;
+		if (!Arrays.equals(redundancyId, other.redundancyId))
+			return false;
+		return true;
+	}
+	
+	
 
 }

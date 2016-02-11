@@ -94,6 +94,16 @@ public class DomainIDTLV extends PCEPTLV {
 	public void setDomainId(Inet4Address domainId) {
 		this.domainId = domainId;
 	}
+	
+	
+
+	public int getDomainType() {
+		return domainType;
+	}
+
+	public void setDomainType(int domainType) {
+		this.domainType = domainType;
+	}
 
 	public String toString(){
 		String res; 
@@ -106,6 +116,36 @@ public class DomainIDTLV extends PCEPTLV {
 		}
 		return res;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((domainId == null) ? 0 : domainId.hashCode());
+		result = prime * result + domainType;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DomainIDTLV other = (DomainIDTLV) obj;
+		if (domainId == null) {
+			if (other.domainId != null)
+				return false;
+		} else if (!domainId.equals(other.domainId))
+			return false;
+		if (domainType != other.domainType)
+			return false;
+		return true;
+	}
+	
 	
 
 

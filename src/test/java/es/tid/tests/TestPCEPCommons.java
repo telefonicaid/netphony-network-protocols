@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.tid.pce.pcep.objects.BandwidthRequested;
+import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 
 public class TestPCEPCommons {
@@ -19,11 +20,13 @@ public class TestPCEPCommons {
 			//System.out.println("Looking at "+object.getClass().getName() );
 			List<Field> fieldListNS = new ArrayList<Field>();
 			List<Field> fieldList= Arrays.asList(object.getClass().getDeclaredFields());
+			//System.out.println("XXXX "+fieldList.size());
 			for (Field field : fieldList) {
+				
 				if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 					fieldListNS.add(field);
 					Type ty=field.getGenericType();
-					System.out.println("Type: "+ty);
+					//System.out.println("Type: "+ty);
 
 					if (ty instanceof Class){
 						Object o=null;
@@ -46,7 +49,7 @@ public class TestPCEPCommons {
 						
 							//System.out.println("me "+method.getName());
 							 if (c.getName().equals("String")) {
-									System.out.println("FIXME:  String");
+									//System.out.println("FIXME:  String");
 									o="TEST";
 							 } else if  (c.getName().equals("java.net.Inet4Address")) {
 									o=Inet4Address.getByName("1.1.1.1");
@@ -57,7 +60,14 @@ public class TestPCEPCommons {
 								 o= new BandwidthRequested();
 								 createAllFields(o);
 								}
+							 else if  (c.getName().equals("es.tid.pce.pcep.objects.LabelSet")) {
+								 o= new BitmapLabelSet();
+								 createAllFields(o);
+								}
+							 
+							 
 							 else {
+								 //System.out.println("yyyy "+c.getName());
 									o = ((Class)ty).newInstance();	
 									createAllFields(o);
 							 }
@@ -69,25 +79,30 @@ public class TestPCEPCommons {
 						ParameterizedType pt=(ParameterizedType)ty;
 						Type rt=pt.getRawType();
 						Type at=pt.getActualTypeArguments()[0];
-						//System.out.println("tn "+pt.getTypeName());
-						//System.out.println("rt "+pt.getRawType().getTypeName() );
-						//System.out.println("ot "+pt.getOwnerType().getTypeName() );
-						//System.out.println("at "+pt.getActualTypeArguments()[0].getTypeName());
-						//getActualTypeArguments()
+
 						if (rt instanceof Class){
 							Class ca=(Class)rt;
 							
 							if (ca.getName().equals("java.util.LinkedList")){
+								//System.out.println("wajjeeeea");
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
-								}else {
-									Object o = ((Class)at).newInstance();
-									createAllFields(o);
-									methods[0].invoke(res, o);
+								} else if (((Class) at).isPrimitive()){
+									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
+
+								}
+								else {
+									if  (((Class)at).getName().equals("java.lang.Integer")) {
+										Integer in=new Integer(3);
+										methods[0].invoke(res, in);
+									}else {
+										Object o = ((Class)at).newInstance();
+										createAllFields(o);
+										methods[0].invoke(res, o);}
 								}
 								
 	

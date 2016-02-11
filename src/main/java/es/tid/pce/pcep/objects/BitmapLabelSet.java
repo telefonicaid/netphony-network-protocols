@@ -29,8 +29,8 @@ import es.tid.pce.pcep.constructs.NCF;
 
 public class BitmapLabelSet extends LabelSet{
 	
-	private int numLabels;
 	private byte[] bytesBitmap;
+	private int numLabels;
 	private NCF ncf;
 
 	//Constructors
@@ -52,7 +52,7 @@ public class BitmapLabelSet extends LabelSet{
 	 * Only reason is encoded. The rest is set to 0
 	 */
 	public void encode(){
-		int offset = 4;//header
+		
 		int numberBytes =getNumberBytes(numLabels);	
 		if (ncf!=null){
 			try {
@@ -71,7 +71,7 @@ public class BitmapLabelSet extends LabelSet{
 			}
 		}
 		 		
-		int size_bytes = 4+ncf.getLength()+numberBytes;/*Cabecera+dwdmWavelengthLabel+bytesBitMap*/
+		int size_bytes = 8+ncf.getLength()+numberBytes;
 		
 		if ((size_bytes%4)!=0){
 			size_bytes=size_bytes+(4-(size_bytes%4));
@@ -82,6 +82,13 @@ public class BitmapLabelSet extends LabelSet{
 		
 		encode_header();
 		
+		int offset = 4;//header
+		int val=4;
+		this.object_bytes[offset+1]=(byte) ( ((numLabels>>4)&0x0F)|((val<<4)&0xF0));
+		this.object_bytes[offset+1]=(byte) (numLabels&0xFF);
+		System.out.println("Size bytes es "+size_bytes);
+		System.out.println("ncf es "+ncf.getLength());
+		offset= offset+4;
 		System.arraycopy(ncf.getBytes(), 0, this.getBytes(), offset, ncf.getLength());
 		offset = offset+4;
 		System.arraycopy(this.bytesBitmap,0, this.getBytes(), offset,numberBytes);
@@ -96,11 +103,9 @@ public class BitmapLabelSet extends LabelSet{
 	public void decode() throws MalformedPCEPObjectException{
 		int offset=4;
 		this.numLabels=((this.getBytes()[offset]&0x0F)<<8)|((this.getBytes()[offset+1]&0xFF));
-		ncf=new NCF(this.getBytes(),offset);
+		ncf=new NCF(this.getBytes(),offset+4);
 
-		offset=offset+ncf.getLength();	
-		offset=8;
-		offset=offset+ncf.getLength();	
+		offset=offset+4+ncf.getLength();	
 		
 		int numberBytes = getNumberBytes(this.numLabels);
 		bytesBitmap =  new byte[numberBytes];		
@@ -115,6 +120,8 @@ public class BitmapLabelSet extends LabelSet{
 	}
 
 	public void setNumLabels(int numLabels) {
+		int numberBytes =getNumberBytes(numLabels);
+		this.bytesBitmap=new byte[numberBytes];
 		this.numLabels = numLabels;
 	}
 
@@ -171,23 +178,22 @@ public class BitmapLabelSet extends LabelSet{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) {		
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (getClass() != obj.getClass()) {
+			return false;}
 		BitmapLabelSet other = (BitmapLabelSet) obj;
-		if (!Arrays.equals(bytesBitmap, other.bytesBitmap))
+		if (!Arrays.equals(bytesBitmap, other.bytesBitmap)) {
 			return false;
+		}
 		if (ncf == null) {
 			if (other.ncf != null)
 				return false;
 		} else if (!ncf.equals(other.ncf))
 			return false;
-		if (numLabels != other.numLabels)
-			return false;
+		if (numLabels != other.numLabels) {
+			return false; }
 		return true;
 	}
 	

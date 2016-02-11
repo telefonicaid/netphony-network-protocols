@@ -111,12 +111,12 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		return uFlag;
 	}
 
-	public void setsFlag(boolean sFlag) 
+	public void setSFlag(boolean sFlag) 
 	{
 		this.sFlag = sFlag;
 	}
 
-	public void setuFlag(boolean uFlag) 
+	public void setUFlag(boolean uFlag) 
 	{
 		this.uFlag = uFlag;
 	}
@@ -125,7 +125,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		return iFlag;
 	}
 
-	public void setiFlag(boolean iFlag) {
+	public void setIFlag(boolean iFlag) {
 		this.iFlag = iFlag;
 	}
 
@@ -133,7 +133,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		return tFlag;
 	}
 
-	public void settFlag(boolean tFlag) {
+	public void setTFlag(boolean tFlag) {
 		this.tFlag = tFlag;
 	}
 
@@ -141,8 +141,43 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		return dFlag;
 	}
 
-	public void setdFlag(boolean dFlag) {
+	public void setDFlag(boolean dFlag) {
 		this.dFlag = dFlag;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (dFlag ? 1231 : 1237);
+		result = prime * result + (iFlag ? 1231 : 1237);
+		result = prime * result + (sFlag ? 1231 : 1237);
+		result = prime * result + (tFlag ? 1231 : 1237);
+		result = prime * result + (uFlag ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StatefulCapabilityTLV other = (StatefulCapabilityTLV) obj;
+		if (dFlag != other.dFlag)
+			return false;
+		if (iFlag != other.iFlag)
+			return false;
+		if (sFlag != other.sFlag)
+			return false;
+		if (tFlag != other.tFlag)
+			return false;
+		if (uFlag != other.uFlag)
+			return false;
+		return true;
+	}
+
+	
 }
