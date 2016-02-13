@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
@@ -64,7 +65,10 @@ public class TestPCEPCommons {
 							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
 								 o= new BandwidthRequested();
 								 createAllFields(o);
-								}
+								}else if  (c.getName().equals("es.tid.pce.pcep.constructs.GeneralizedBandwidth")) {
+									 o= new GeneralizedBandwidthSSON();
+									 createAllFields(o);
+									}
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.LabelSet")) {
 								 o= new BitmapLabelSet();
 								 createAllFields(o);
@@ -96,7 +100,6 @@ public class TestPCEPCommons {
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
-								System.out.println("HOLA "+name+res );
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");

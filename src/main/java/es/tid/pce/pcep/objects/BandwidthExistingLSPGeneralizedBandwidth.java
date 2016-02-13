@@ -34,13 +34,37 @@ import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 	
 	protected int bwSpecLength = 0;
+	public int getBwSpecLength() {
+		return bwSpecLength;
+	}
+	public void setBwSpecLength(int bwSpecLength) {
+		this.bwSpecLength = bwSpecLength;
+	}
+	public int getRevBwSpecLength() {
+		return revBwSpecLength;
+	}
+	public void setRevBwSpecLength(int revBwSpecLength) {
+		this.revBwSpecLength = revBwSpecLength;
+	}
+	public int getBwSpecType() {
+		return bwSpecType;
+	}
+	public void setBwSpecType(int bwSpecType) {
+		this.bwSpecType = bwSpecType;
+	}
+//	public LinkedList<PCEPTLV> getOptionalTLVs() {
+//		return optionalTLVs;
+//	}
+//	public void setOptionalTLVs(LinkedList<PCEPTLV> optionalTLVs) {
+//		this.optionalTLVs = optionalTLVs;
+//	}
 	protected int revBwSpecLength =0;
 	protected int bwSpecType;
 	
 	protected GeneralizedBandwidth generalizedBandwidth;
 	protected GeneralizedBandwidth reverseGeneralizedBandwidth;
 		
-	private LinkedList<PCEPTLV> optionalTLVs;
+	//private LinkedList<PCEPTLV> optionalTLVs;
 	
 	public BandwidthExistingLSPGeneralizedBandwidth(){
 		super();
@@ -52,7 +76,7 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 	}
 	
 	public void encode() {
-		int length=4;
+		int length=12;
 		if (generalizedBandwidth!=null) {
 			try {
 				generalizedBandwidth.encode();
@@ -61,7 +85,9 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 				e.printStackTrace();
 			}
 			bwSpecLength=generalizedBandwidth.getLength();
+			System.out.println("BW SPC "+bwSpecLength);
 			length =length+generalizedBandwidth.getLength();
+			bwSpecType=generalizedBandwidth.getBwSpecType();
 			
 		}
 		if (reverseGeneralizedBandwidth!=null) {
@@ -73,12 +99,14 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 			}
 			revBwSpecLength=reverseGeneralizedBandwidth.getLength();
 			length =length+reverseGeneralizedBandwidth.getLength();
+			System.out.println("BW SPC "+revBwSpecLength);
+
 		}
 		
-		for (int k=0; k<optionalTLVs.size();k=k+1){
-			optionalTLVs.get(k).encode();			
-			length=length+optionalTLVs.get(k).getTotalTLVLength();
-		}
+//		for (int k=0; k<optionalTLVs.size();k=k+1){
+//			optionalTLVs.get(k).encode();			
+//			length=length+optionalTLVs.get(k).getTotalTLVLength();
+//		}
 			
 		this.setObjectLength(length);
 		object_bytes=new byte[ObjectLength];
@@ -89,6 +117,7 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 		this.getBytes()[offset+2]=(byte) ((revBwSpecLength>>8)&0xFF);
 		this.getBytes()[offset+3]=(byte) (revBwSpecLength&0xFF);
 		this.getBytes()[offset+4]=(byte)bwSpecType;
+		offset=12;
 		if (generalizedBandwidth!=null) {
 			System.arraycopy(generalizedBandwidth.getBytes(), 0, this.getBytes(), offset, generalizedBandwidth.getLength());
 			offset=offset+generalizedBandwidth.getLength();
@@ -99,12 +128,12 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 			offset=offset+reverseGeneralizedBandwidth.getLength();
 			
 		}
-		if (optionalTLVs!=null){
-			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
-				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, offset, optionalTLVs.get(k).getTotalTLVLength());
-				offset=offset+optionalTLVs.get(k).getTotalTLVLength();
-			}
-		}
+//		if (optionalTLVs!=null){
+//			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
+//				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, offset, optionalTLVs.get(k).getTotalTLVLength());
+//				offset=offset+optionalTLVs.get(k).getTotalTLVLength();
+//			}
+//		}
 	}
 	@Override
 	public void decode() throws MalformedPCEPObjectException {
@@ -132,7 +161,10 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 		}
 		offset = 12+bwSpecLength;
 		if (revBwSpecLength!=0){
+			if (this.bwSpecType == ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON){
+				reverseGeneralizedBandwidth = new GeneralizedBandwidthSSON (this.getBytes(),offset);
 
+			}
 		}
 		
 	}
@@ -165,8 +197,8 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 				* result
 				+ ((generalizedBandwidth == null) ? 0 : generalizedBandwidth
 						.hashCode());
-		result = prime * result
-				+ ((optionalTLVs == null) ? 0 : optionalTLVs.hashCode());
+//		result = prime * result
+//				+ ((optionalTLVs == null) ? 0 : optionalTLVs.hashCode());
 		result = prime * result + revBwSpecLength;
 		result = prime
 				* result
@@ -192,11 +224,11 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 				return false;
 		} else if (!generalizedBandwidth.equals(other.generalizedBandwidth))
 			return false;
-		if (optionalTLVs == null) {
-			if (other.optionalTLVs != null)
-				return false;
-		} else if (!optionalTLVs.equals(other.optionalTLVs))
-			return false;
+//		if (optionalTLVs == null) {
+//			if (other.optionalTLVs != null)
+//				return false;
+//		} else if (!optionalTLVs.equals(other.optionalTLVs))
+//			return false;
 		if (revBwSpecLength != other.revBwSpecLength)
 			return false;
 		if (reverseGeneralizedBandwidth == null) {
