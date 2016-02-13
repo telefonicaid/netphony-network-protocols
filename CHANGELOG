@@ -1,6 +1,8 @@
 v1.2.1
 - Make JUnit tests compatible with java 1.7
 - JUnit tests for PCEP Constructs
+- Added coding of REQ_ADAP_CAP from draft-ietf-pce-gmpls-pcep-extensions-11
+- Deleted old SRERO objects (no longer used)
 - Bugfixes 
 v1.2
 - Added JUnit tests for PCEP (still to be fully completed)

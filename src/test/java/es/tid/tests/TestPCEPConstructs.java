@@ -71,11 +71,7 @@ public class TestPCEPConstructs {
 			object.encode();
 			Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
-			System.out.println("KKKKooola222 " +object.getBytes().length);
-
 			PCEPConstruct object2 = (PCEPConstruct) ctor.newInstance(object.getBytes(),0);
-			System.out.println("KKKKooola2223333 " +object.getBytes().length);
-
 			object2.encode();
 			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 			System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));

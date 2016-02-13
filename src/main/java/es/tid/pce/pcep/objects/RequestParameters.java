@@ -258,9 +258,6 @@ public class RequestParameters extends PCEPObject{
 		object_bytes[9]=(byte)((requestID>>16) & 0xFF);
 		object_bytes[10]=(byte)((requestID>>8) & 0xFF);
 		object_bytes[11]=(byte)(requestID & 0xFF);
-//		ByteHandler.BoolToBuffer(16 + 17, Fbit,object_bytes);
-//		ByteHandler.BoolToBuffer(16 + 18, Nbit,object_bytes);
-//		ByteHandler.BoolToBuffer(16 + 19, Ebit,object_bytes);
 		int offset = 12;
 
 		if (maxRequestTimeTLV!=null){
@@ -285,9 +282,9 @@ public class RequestParameters extends PCEPObject{
 		supplyOF=(object_bytes[7]&0x40)==0x40;
 		requestID=( (((long)object_bytes[8]&(long)0xFF)<<24) | (((long)object_bytes[9]&(long)0xFF)<<16) |( ((long)object_bytes[10]&(long)0xFF)<<8) |  ((long)object_bytes[11]& (long)0xFF) );
 		
-		Fbit = (ByteHandler.easyCopy(1,1,object_bytes[4]) == 1) ? true : false ;
-		Nbit = (ByteHandler.easyCopy(2,2,object_bytes[4]) == 1) ? true : false ;
-		Ebit = (ByteHandler.easyCopy(3,3,object_bytes[4]) == 1) ? true : false ;
+		Fbit = (object_bytes[6]&0x20)==0x20;
+		Nbit =(object_bytes[6]&0x10)==0x10;
+		Ebit = (object_bytes[6]&0x08)==0x08;
 		
 		boolean endObject=false;
 		if (this.ObjectLength<12){
@@ -475,6 +472,7 @@ public class RequestParameters extends PCEPObject{
 			return false;
 		if (loose != other.loose)
 			return false;
+		System.out.println("xtrtrtr");
 		if (maxRequestTimeTLV == null) {
 			if (other.maxRequestTimeTLV != null)
 				return false;

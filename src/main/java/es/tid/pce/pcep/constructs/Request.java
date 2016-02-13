@@ -781,13 +781,16 @@ public class Request extends PCEPConstruct{
 
 	@Override
 	public boolean equals(Object obj) {
+		System.out.println("pip");
+
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
+//		if (!super.equals(obj))
+//			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
+		System.out.println("pipu");
 		if (bandwidth == null) {
 			if (other.bandwidth != null)
 				return false;
@@ -827,26 +830,32 @@ public class Request extends PCEPConstruct{
 				return false;
 		} else if (!loadBalancing.equals(other.loadBalancing))
 			return false;
+		System.out.println("x");
+
 		if (metricList == null) {
 			if (other.metricList != null)
 				return false;
 		} else if (!metricList.equals(other.metricList))
 			return false;
+		System.out.println("y");
 		if (objectiveFunction == null) {
 			if (other.objectiveFunction != null)
 				return false;
 		} else if (!objectiveFunction.equals(other.objectiveFunction))
 			return false;
+		System.out.println("z");
 		if (rROBandwidth == null) {
 			if (other.rROBandwidth != null)
 				return false;
 		} else if (!rROBandwidth.equals(other.rROBandwidth))
 			return false;
+		System.out.println("eeee");
 		if (reqAdapCap == null) {
 			if (other.reqAdapCap != null)
 				return false;
 		} else if (!reqAdapCap.equals(other.reqAdapCap))
 			return false;
+		System.out.println("xxxx");
 		if (requestParameters == null) {
 			if (other.requestParameters != null)
 				return false;
@@ -858,11 +867,15 @@ public class Request extends PCEPConstruct{
 				return false;
 		} else if (!reservation.equals(other.reservation))
 			return false;
+		System.out.println("moooooo");
+
 		if (switchLayer == null) {
 			if (other.switchLayer != null)
 				return false;
 		} else if (!switchLayer.equals(other.switchLayer))
 			return false;
+		System.out.println("poooooo");
+
 		if (xro == null) {
 			if (other.xro != null)
 				return false;
