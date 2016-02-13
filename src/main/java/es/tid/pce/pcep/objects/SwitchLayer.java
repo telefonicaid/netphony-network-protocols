@@ -140,6 +140,33 @@ public class SwitchLayer extends PCEPObject {
 	public void setSwitchLayers(LinkedList<SwitchEncodingType> switchLayers) {
 		this.switchLayers = switchLayers;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((switchLayers == null) ? 0 : switchLayers.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SwitchLayer other = (SwitchLayer) obj;
+		if (switchLayers == null) {
+			if (other.switchLayers != null)
+				return false;
+		} else if (!switchLayers.equals(other.switchLayers))
+			return false;
+		return true;
+	}
+	
 	
 	
 

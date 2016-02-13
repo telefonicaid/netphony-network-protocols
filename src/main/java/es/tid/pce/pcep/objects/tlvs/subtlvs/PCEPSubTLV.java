@@ -1,5 +1,7 @@
 package es.tid.pce.pcep.objects.tlvs.subtlvs;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,6 +153,41 @@ public abstract class PCEPSubTLV {
 
 
 		public abstract void encode();
+
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + SubTLVType;
+			result = prime * result + SubTLVValueLength;
+			result = prime * result + TotalSubTLVLength;
+			result = prime * result + Arrays.hashCode(subtlv_bytes);
+			return result;
+		}
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			PCEPSubTLV other = (PCEPSubTLV) obj;
+			if (SubTLVType != other.SubTLVType)
+				return false;
+			if (SubTLVValueLength != other.SubTLVValueLength)
+				return false;
+			if (TotalSubTLVLength != other.TotalSubTLVLength)
+				return false;
+			if (!Arrays.equals(subtlv_bytes, other.subtlv_bytes))
+				return false;
+			return true;
+		}
+		
+		
 		
 
 	}

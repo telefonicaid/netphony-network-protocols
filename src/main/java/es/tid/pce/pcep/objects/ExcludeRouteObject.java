@@ -269,11 +269,11 @@ public class ExcludeRouteObject extends PCEPObject {
 		XROSubobjectList.addAll(erosovec);
 	}
 
-	public LinkedList<XROSubobject> getEROSubobjectList() {
+	public LinkedList<XROSubobject> getXROSubobjectList() {
 		return XROSubobjectList;
 	}
 
-	public void setEROSubobjectList(LinkedList<XROSubobject> eROSubobjectList) {
+	public void setXROSubobjectList(LinkedList<XROSubobject> eROSubobjectList) {
 		XROSubobjectList = eROSubobjectList;
 	}
 	

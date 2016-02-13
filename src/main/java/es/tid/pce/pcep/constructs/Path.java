@@ -1,9 +1,6 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-
-import org.slf4j.Logger;
-
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthExistingLSP;
@@ -21,7 +18,6 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.ReqAdapCap;
-import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.ServerIndication;
 import es.tid.pce.pcep.objects.SuggestedLabel;
 import es.tid.pce.pcep.objects.SwitchLayer;
@@ -51,7 +47,6 @@ import es.tid.pce.pcep.objects.SwitchLayer;
 public class Path extends PCEPConstruct {
 
 	private ExplicitRouteObject ero;
-	private SRERO srero;
 	private ObjectiveFunction of;
 	private LSPA lspa;
 	private Bandwidth bandwidth;
@@ -84,12 +79,9 @@ public class Path extends PCEPConstruct {
 			ero.encode();
 			len=len+ero.getLength();
 		}
-		else if (srero!=null){
-			srero.encode();
-			len+=srero.getLength();
-		}
+	
 		else {
-			log.warn("Path must start with ERO or SRERO object");
+			log.warn("Path must start with ERO object");
 			throw new PCEPProtocolViolationException();
 		}
 		if (of!=null){
@@ -146,11 +138,6 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(ero.getBytes(), 0, bytes, offset, ero.getLength());
 			offset=offset+ero.getLength();
 		}
-		else if(srero!=null)
-		{
-			System.arraycopy(srero.getBytes(), 0, bytes, offset, srero.getLength());
-			offset=offset+srero.getLength();			
-		}	
 		if (of!=null){
 			System.arraycopy(of.getBytes(), 0, bytes, offset, of.getLength());
 			offset=offset+of.getLength();
@@ -181,7 +168,7 @@ public class Path extends PCEPConstruct {
 			offset=offset+switchLayer.getLength();
 		}
 		if (reqAdapCap!=null){
-			System.arraycopy(iro.getBytes(), 0, bytes, offset, reqAdapCap.getLength());
+			System.arraycopy(reqAdapCap.getBytes(), 0, bytes, offset, reqAdapCap.getLength());
 			offset=offset+reqAdapCap.getLength();
 		}
 		if (serverIndication!=null){
@@ -196,6 +183,7 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, offset, suggestedLabel.getLength());
 			offset=offset+suggestedLabel.getLength();
 		}
+		System.out.println("hooola");
 			
 	}
 
@@ -213,16 +201,6 @@ public class Path extends PCEPConstruct {
 			offset=offset+ero.getLength();
 			len=len+ero.getLength();
 		}
-		oc=PCEPObject.getObjectClass(bytes, offset);
-		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO){
-			try {
-				srero=new SRERO(bytes,offset);
-			} catch (MalformedPCEPObjectException e) {
-				throw new PCEPProtocolViolationException();
-			}
-			offset=offset+srero.getLength();
-			len=len+srero.getLength();
-		}		
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
 			try {
@@ -397,11 +375,6 @@ public class Path extends PCEPConstruct {
 	}
 	
 	
-	public void setSrero(SRERO srero)
-	{
-		this.srero = srero;
-	}
-	
 	public void setEro(ExplicitRouteObject eRO) {
 		this.ero = eRO;
 	}
@@ -441,10 +414,6 @@ public class Path extends PCEPConstruct {
 
 	public ExplicitRouteObject geteRO() {
 		return ero;
-	}
-	
-	public SRERO getSRERO() {
-		return this.srero;
 	}
 	
 	public InterLayer getInterLayer() {
@@ -508,9 +477,6 @@ public class Path extends PCEPConstruct {
 
 	public String toString(){
 		String ret="PATH={ ";
-		if (srero!=null){
-			ret+=srero.toString();
-		}
 		if (ero!=null){
 			ret=ret+ero.toString();
 		}
@@ -548,7 +514,6 @@ public class Path extends PCEPConstruct {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((srero == null) ? 0 : srero.hashCode());
 		result = prime * result
 				+ ((bandwidth == null) ? 0 : bandwidth.hashCode());
 		result = prime * result + ((ero == null) ? 0 : ero.hashCode());
@@ -582,11 +547,6 @@ public class Path extends PCEPConstruct {
 		if (getClass() != obj.getClass())
 			return false;
 		Path other = (Path) obj;
-		if (srero == null) {
-			if (other.srero != null)
-				return false;
-		} else if (!srero.equals(other.srero))
-			return false;
 		if (bandwidth == null) {
 			if (other.bandwidth != null)
 				return false;

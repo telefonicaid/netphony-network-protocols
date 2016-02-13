@@ -111,4 +111,35 @@ public class TNAIPv4SubTLV extends PCEPSubTLV {
 	public String toString(){
 		return "IPv4 address: "+IPv4address;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Addr_length;
+		result = prime * result
+				+ ((IPv4address == null) ? 0 : IPv4address.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TNAIPv4SubTLV other = (TNAIPv4SubTLV) obj;
+		if (Addr_length != other.Addr_length)
+			return false;
+		if (IPv4address == null) {
+			if (other.IPv4address != null)
+				return false;
+		} else if (!IPv4address.equals(other.IPv4address))
+			return false;
+		return true;
+	}
+	
+	
 }

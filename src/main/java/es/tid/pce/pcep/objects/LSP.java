@@ -264,11 +264,10 @@ public class LSP extends PCEPObject{
 		}else {
 			fin = false;
 		}
-				
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			
+
 			switch (tlvtype){
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
 					symbolicPathNameTLV_tlv=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
@@ -466,7 +465,7 @@ public class LSP extends PCEPObject{
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
-			return false;
+		return false;
 		if (getClass() != obj.getClass())
 			return false;
 		LSP other = (LSP) obj;
@@ -510,6 +509,7 @@ public class LSP extends PCEPObject{
 		} else if (!symbolicPathNameTLV_tlv
 				.equals(other.symbolicPathNameTLV_tlv))
 			return false;
+
 		return true;
 	}
 	

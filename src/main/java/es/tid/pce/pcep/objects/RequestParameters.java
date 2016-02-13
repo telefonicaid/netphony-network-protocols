@@ -433,5 +433,71 @@ public class RequestParameters extends PCEPObject{
 		return str;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (Ebit ? 1231 : 1237);
+		result = prime * result + (Fbit ? 1231 : 1237);
+		result = prime * result + (Nbit ? 1231 : 1237);
+		result = prime * result + (bidirect ? 1231 : 1237);
+		result = prime * result + (loose ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((maxRequestTimeTLV == null) ? 0 : maxRequestTimeTLV
+						.hashCode());
+		result = prime * result
+				+ ((pathSetupTLV == null) ? 0 : pathSetupTLV.hashCode());
+		result = prime * result + prio;
+		result = prime * result + (reopt ? 1231 : 1237);
+		result = prime * result + (int) (requestID ^ (requestID >>> 32));
+		result = prime * result + (retry ? 1231 : 1237);
+		result = prime * result + (supplyOF ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RequestParameters other = (RequestParameters) obj;
+		if (Ebit != other.Ebit)
+			return false;
+		if (Fbit != other.Fbit)
+			return false;
+		if (Nbit != other.Nbit)
+			return false;
+		if (bidirect != other.bidirect)
+			return false;
+		if (loose != other.loose)
+			return false;
+		if (maxRequestTimeTLV == null) {
+			if (other.maxRequestTimeTLV != null)
+				return false;
+		} else if (!maxRequestTimeTLV.equals(other.maxRequestTimeTLV))
+			return false;
+		if (pathSetupTLV == null) {
+			if (other.pathSetupTLV != null)
+				return false;
+		} else if (!pathSetupTLV.equals(other.pathSetupTLV))
+			return false;
+		if (prio != other.prio)
+			return false;
+		if (reopt != other.reopt)
+			return false;
+		if (requestID != other.requestID)
+			return false;
+		if (retry != other.retry)
+			return false;
+		if (supplyOF != other.supplyOF)
+			return false;
+		return true;
+	}
+
+	
 	
 }

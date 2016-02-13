@@ -111,4 +111,35 @@ public class TNAIPv6SubTLV extends PCEPSubTLV {
 	public String toString(){
 		return "IPv6 address: "+IPv6address;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Addr_length;
+		result = prime * result
+				+ ((IPv6address == null) ? 0 : IPv6address.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TNAIPv6SubTLV other = (TNAIPv6SubTLV) obj;
+		if (Addr_length != other.Addr_length)
+			return false;
+		if (IPv6address == null) {
+			if (other.IPv6address != null)
+				return false;
+		} else if (!IPv6address.equals(other.IPv6address))
+			return false;
+		return true;
+	}
+	
+	
 }

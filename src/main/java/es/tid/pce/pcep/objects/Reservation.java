@@ -106,4 +106,28 @@ public class Reservation extends PCEPObject {
 		
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (timer ^ (timer >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reservation other = (Reservation) obj;
+		if (timer != other.timer)
+			return false;
+		return true;
+	}
+	
+	
+
 }

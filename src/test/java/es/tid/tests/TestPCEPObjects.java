@@ -64,8 +64,6 @@ public class TestPCEPObjects {
 				//"es.tid.pce.pcep.objects.RequestParameters",
 				//"es.tid.pce.pcep.objects.Reservation",
 				//"es.tid.pce.pcep.objects.ReservationConf",
-    			{"es.tid.pce.pcep.objects.SERO"},
-				//"es.tid.pce.pcep.objects.SRERO",
     			{"es.tid.pce.pcep.objects.SRP"},
     			{"es.tid.pce.pcep.objects.ServerIndication"},
     			{"es.tid.pce.pcep.objects.SuggestedLabel"},

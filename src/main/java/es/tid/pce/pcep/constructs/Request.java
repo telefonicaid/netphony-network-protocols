@@ -148,6 +148,8 @@ public class Request extends PCEPConstruct{
 			len=len+reqAdapCap.getLength();
 		}
 		this.setLength(len);
+		System.out.println("len "+len);
+
 		bytes=new byte[len];
 		int offset=0;
 		System.arraycopy(requestParameters.getBytes(), 0, bytes, offset, requestParameters.getLength());
@@ -242,10 +244,11 @@ public class Request extends PCEPConstruct{
 			log.warn("Request must start with RP object");
 			throw new PCEPProtocolViolationException();
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			ot=PCEPObject.getObjectType(bytes, offset);
-			log.info("Request: ot = "+ot);
+			log.debug("Request: ot = "+ot);
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
 					log.info("PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS");
@@ -324,6 +327,8 @@ public class Request extends PCEPConstruct{
 			log.warn("ENDPOINTS COMPULSORY AFTER  RP object");
 			throw new PCEPProtocolViolationException();
 		}
+		System.out.println("troooon");
+
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			try {
@@ -339,6 +344,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
@@ -385,7 +391,6 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
-	
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
 			Metric metric;
@@ -434,6 +439,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
 			rROBandwidth=new RROBandwidth(bytes, offset);
@@ -444,6 +450,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_IRO){
 			try {
@@ -462,6 +469,7 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LOADBALANCING){
 			try {
+
 				loadBalancing=new LoadBalancing(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed LOADBALANCING Object found");
@@ -509,6 +517,8 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
 			try {
+				System.out.println("SL "+len);
+
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed SWITCH_LAYER Object found");
@@ -521,7 +531,24 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_REQ_ADAP_CAP){
+			try {
+				reqAdapCap=new ReqAdapCap(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed ReqAdapCap Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+reqAdapCap.getLength();
+			len=len+reqAdapCap.getLength();
+			if (offset>=max_offset){
+				this.setLength(len);
+				return;
+			}
+		}
 		this.setLength(len);
+		System.out.println("lenrec "+len);
+
 		
 	}
 
@@ -548,6 +575,10 @@ public class Request extends PCEPConstruct{
 	public void setlSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
+	
+	public void setLSPA(LSPA lSPA) {
+		this.lSPA = lSPA;
+	}
 
 	public Bandwidth getBandwidth() {
 		return bandwidth;
@@ -572,12 +603,20 @@ public class Request extends PCEPConstruct{
 	public void setrROBandwidth(RROBandwidth rROBandwidth) {
 		this.rROBandwidth = rROBandwidth;
 	}
+	
+	public void setRROBandwidth(RROBandwidth rROBandwidth) {
+		this.rROBandwidth = rROBandwidth;
+	}
 
 	public IncludeRouteObject getiRO() {
 		return iRO;
 	}
 
 	public void setiRO(IncludeRouteObject iRO) {
+		this.iRO = iRO;
+	}
+	
+	public void setIRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}
 
@@ -754,26 +793,35 @@ public class Request extends PCEPConstruct{
 				return false;
 		} else if (!bandwidth.equals(other.bandwidth))
 			return false;
+
 		if (endPoints == null) {
 			if (other.endPoints != null)
 				return false;
 		} else if (!endPoints.equals(other.endPoints))
 			return false;
+		System.out.println("coooooo33334443");
+
 		if (iRO == null) {
 			if (other.iRO != null)
 				return false;
 		} else if (!iRO.equals(other.iRO))
 			return false;
+		System.out.println("coooooo333344436666");
+
 		if (interLayer == null) {
 			if (other.interLayer != null)
 				return false;
 		} else if (!interLayer.equals(other.interLayer))
 			return false;
+		System.out.println("coooooo3333444366655555556");
+
 		if (lSPA == null) {
 			if (other.lSPA != null)
 				return false;
 		} else if (!lSPA.equals(other.lSPA))
 			return false;
+		System.out.println("coooooo333344436666333222222222");
+
 		if (loadBalancing == null) {
 			if (other.loadBalancing != null)
 				return false;
@@ -804,6 +852,7 @@ public class Request extends PCEPConstruct{
 				return false;
 		} else if (!requestParameters.equals(other.requestParameters))
 			return false;
+		System.out.println("coooooo");
 		if (reservation == null) {
 			if (other.reservation != null)
 				return false;

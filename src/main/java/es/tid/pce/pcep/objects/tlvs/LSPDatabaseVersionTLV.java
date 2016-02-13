@@ -102,10 +102,13 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 
 	@Override
 	public boolean equals(Object obj) {
+		//System.out.println("pOOOLA "+this.LSPStateDBVersion+" vs "+((LSPDatabaseVersionTLV) obj).LSPStateDBVersion);
+
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
+		if (obj == null) {
+			System.out.println("NUUUL");
+			return false;}
 		if (getClass() != obj.getClass())
 			return false;
 		LSPDatabaseVersionTLV other = (LSPDatabaseVersionTLV) obj;

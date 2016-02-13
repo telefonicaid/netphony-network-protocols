@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +54,10 @@ public class TestPCEPCommons {
 									o="TEST";
 							 } else if  (c.getName().equals("java.net.Inet4Address")) {
 									o=Inet4Address.getByName("1.1.1.1");
-							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
+							 }else if  (c.getName().equals("java.net.Inet6Address")) {
+									o=Inet6Address.getByName("1080:0:0:0:8:800:200C:417A");
+							 }
+							 else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
 									o = new EndPointsIPv4();
 									createAllFields(o);
 							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
@@ -84,14 +88,17 @@ public class TestPCEPCommons {
 							Class ca=(Class)rt;
 							
 							if (ca.getName().equals("java.util.LinkedList")){
-								//System.out.println("wajjeeeea");
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
-								} else if (((Class) at).isPrimitive()){
+								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
+									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
+								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
+									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
+								}else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 
 								}

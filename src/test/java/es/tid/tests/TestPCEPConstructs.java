@@ -43,13 +43,13 @@ public class TestPCEPConstructs {
 //    			{"es.tid.pce.pcep.constructs.PCEPIntiatedLSP"},
     			{"es.tid.pce.pcep.constructs.Path"},
 //    			{"es.tid.pce.pcep.constructs.RROBandwidth"},
-//    			{"es.tid.pce.pcep.constructs.Request"},
+    			{"es.tid.pce.pcep.constructs.Request"},
 //    			{"es.tid.pce.pcep.constructs.Response"},
 //    			{"es.tid.pce.pcep.constructs.SVECConstruct"},
 //    			{"es.tid.pce.pcep.constructs.StateReport"},
-//    			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
-//    			{"es.tid.pce.pcep.constructs.TNA"},
-//    			{"es.tid.pce.pcep.constructs.UpdateRequest"}
+    			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
+    			{"es.tid.pce.pcep.constructs.TNA"},
+    			{"es.tid.pce.pcep.constructs.UpdateRequest"}
     			
     	};
     	return Arrays.asList(objects);
@@ -70,7 +70,12 @@ public class TestPCEPConstructs {
 			TestPCEPCommons.createAllFields(object);
 			object.encode();
 			Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
+			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+			System.out.println("KKKKooola222 " +object.getBytes().length);
+
 			PCEPConstruct object2 = (PCEPConstruct) ctor.newInstance(object.getBytes(),0);
+			System.out.println("KKKKooola2223333 " +object.getBytes().length);
+
 			object2.encode();
 			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 			System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
