@@ -327,8 +327,6 @@ public class Request extends PCEPConstruct{
 			log.warn("ENDPOINTS COMPULSORY AFTER  RP object");
 			throw new PCEPProtocolViolationException();
 		}
-		System.out.println("troooon");
-
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			try {
@@ -547,8 +545,6 @@ public class Request extends PCEPConstruct{
 			}
 		}
 		this.setLength(len);
-		System.out.println("lenrec "+len);
-
 		
 	}
 
@@ -781,101 +777,78 @@ public class Request extends PCEPConstruct{
 
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println("pip");
-
 		if (this == obj)
 			return true;
-//		if (!super.equals(obj))
-//			return false;
+		if (!super.equals(obj))
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		System.out.println("pipu");
 		if (bandwidth == null) {
 			if (other.bandwidth != null)
 				return false;
 		} else if (!bandwidth.equals(other.bandwidth))
 			return false;
-
 		if (endPoints == null) {
 			if (other.endPoints != null)
 				return false;
 		} else if (!endPoints.equals(other.endPoints))
 			return false;
-		System.out.println("coooooo33334443");
-
 		if (iRO == null) {
 			if (other.iRO != null)
 				return false;
 		} else if (!iRO.equals(other.iRO))
 			return false;
-		System.out.println("coooooo333344436666");
-
 		if (interLayer == null) {
 			if (other.interLayer != null)
 				return false;
 		} else if (!interLayer.equals(other.interLayer))
 			return false;
-		System.out.println("coooooo3333444366655555556");
-
 		if (lSPA == null) {
 			if (other.lSPA != null)
 				return false;
 		} else if (!lSPA.equals(other.lSPA))
 			return false;
-		System.out.println("coooooo333344436666333222222222");
-
 		if (loadBalancing == null) {
 			if (other.loadBalancing != null)
 				return false;
 		} else if (!loadBalancing.equals(other.loadBalancing))
 			return false;
-		System.out.println("x");
-
 		if (metricList == null) {
 			if (other.metricList != null)
 				return false;
 		} else if (!metricList.equals(other.metricList))
 			return false;
-		System.out.println("y");
 		if (objectiveFunction == null) {
 			if (other.objectiveFunction != null)
 				return false;
 		} else if (!objectiveFunction.equals(other.objectiveFunction))
 			return false;
-		System.out.println("z");
 		if (rROBandwidth == null) {
 			if (other.rROBandwidth != null)
 				return false;
 		} else if (!rROBandwidth.equals(other.rROBandwidth))
 			return false;
-		System.out.println("eeee");
 		if (reqAdapCap == null) {
 			if (other.reqAdapCap != null)
 				return false;
 		} else if (!reqAdapCap.equals(other.reqAdapCap))
 			return false;
-		System.out.println("xxxx");
 		if (requestParameters == null) {
 			if (other.requestParameters != null)
 				return false;
 		} else if (!requestParameters.equals(other.requestParameters))
 			return false;
-		System.out.println("coooooo");
 		if (reservation == null) {
 			if (other.reservation != null)
 				return false;
 		} else if (!reservation.equals(other.reservation))
 			return false;
-		System.out.println("moooooo");
-
 		if (switchLayer == null) {
 			if (other.switchLayer != null)
 				return false;
 		} else if (!switchLayer.equals(other.switchLayer))
 			return false;
-		System.out.println("poooooo");
-
 		if (xro == null) {
 			if (other.xro != null)
 				return false;

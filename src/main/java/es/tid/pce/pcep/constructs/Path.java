@@ -183,7 +183,6 @@ public class Path extends PCEPConstruct {
 			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, offset, suggestedLabel.getLength());
 			offset=offset+suggestedLabel.getLength();
 		}
-		System.out.println("hooola");
 			
 	}
 
