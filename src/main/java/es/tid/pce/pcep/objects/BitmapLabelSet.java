@@ -86,8 +86,6 @@ public class BitmapLabelSet extends LabelSet{
 		int val=4;
 		this.object_bytes[offset+1]=(byte) ( ((numLabels>>4)&0x0F)|((val<<4)&0xF0));
 		this.object_bytes[offset+1]=(byte) (numLabels&0xFF);
-		System.out.println("Size bytes es "+size_bytes);
-		System.out.println("ncf es "+ncf.getLength());
 		offset= offset+4;
 		System.arraycopy(ncf.getBytes(), 0, this.getBytes(), offset, ncf.getLength());
 		offset = offset+4;

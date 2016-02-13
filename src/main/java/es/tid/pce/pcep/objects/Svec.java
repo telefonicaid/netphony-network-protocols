@@ -232,7 +232,7 @@ public class Svec extends PCEPObject{
 		object_bytes[4]=0x00;
 		object_bytes[5]=0x00;
 		object_bytes[6]=0x00;	
-		object_bytes[7]=(byte)( ( (lDiverseBit?1:0) & 0x01) | ( ((nDiverseBit?1:0) <<1) & 0x02) | (((sRLGDiverseBit?1:0)<<3) & 0x04) );
+		object_bytes[7]=(byte)( ( (lDiverseBit?1:0) & 0x01) | ( ((nDiverseBit?1:0) <<1) & 0x02) | (((sRLGDiverseBit?1:0)<<2) & 0x04) );
 		for (int k=0;k<requestIDlist.size();k++){
 			object_bytes[8+k*4]=(byte)((requestIDlist.get(k)>>24) & 0xFF);
 			object_bytes[9+k*4]=(byte)((requestIDlist.get(k)>>16) & 0xFF);
@@ -250,6 +250,9 @@ public class Svec extends PCEPObject{
 		sRLGDiverseBit =(object_bytes[7]&0x04)==0x04;
 		boolean fin=false;
 		int offset=8;
+		if (offset>=ObjectLength){				
+			fin=true;
+		}	
 		while (!fin){
 			long requestID=( (((long)object_bytes[offset]&(long)0xFF)<<24) | (((long)object_bytes[offset+1]&(long)0xFF)<<16) |( ((long)object_bytes[offset+2]&(long)0xFF)<<8) |  ((long)object_bytes[offset+3]& (long)0xFF) );			
 			requestIDlist.add(requestID);
@@ -263,19 +266,19 @@ public class Svec extends PCEPObject{
 	public boolean islDiverseBit() {
 		return lDiverseBit;
 	}
-	public void setlDiverseBit(boolean lDiverseBit) {
+	public void setLDiverseBit(boolean lDiverseBit) {
 		this.lDiverseBit = lDiverseBit;
 	}
 	public boolean isnDiverseBit() {
 		return nDiverseBit;
 	}
-	public void setnDiverseBit(boolean nDiverseBit) {
+	public void setNDiverseBit(boolean nDiverseBit) {
 		this.nDiverseBit = nDiverseBit;
 	}
 	public boolean issRLGDiverseBit() {
 		return sRLGDiverseBit;
 	}
-	public void setsRLGDiverseBit(boolean sRLGDiverseBit) {
+	public void setSRLGDiverseBit(boolean sRLGDiverseBit) {
 		this.sRLGDiverseBit = sRLGDiverseBit;
 	}
 	public ArrayList<Long> getRequestIDlist() {
@@ -291,6 +294,41 @@ public class Svec extends PCEPObject{
 	
 	public void addRequestID(long reqID){
 		this.requestIDlist.add(new Long(reqID));
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (lDiverseBit ? 1231 : 1237);
+		result = prime * result + (nDiverseBit ? 1231 : 1237);
+		result = prime * result
+				+ ((requestIDlist == null) ? 0 : requestIDlist.hashCode());
+		result = prime * result + (sRLGDiverseBit ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Svec other = (Svec) obj;
+		if (lDiverseBit != other.lDiverseBit)
+			return false;
+		if (nDiverseBit != other.nDiverseBit)
+			return false;
+		if (requestIDlist == null) {
+			if (other.requestIDlist != null)
+				return false;
+		} else if (!requestIDlist.equals(other.requestIDlist))
+			return false;
+		if (sRLGDiverseBit != other.sRLGDiverseBit)
+			return false;
+		return true;
 	}
 	
 	

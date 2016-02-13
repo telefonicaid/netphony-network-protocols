@@ -31,7 +31,6 @@ public class TestPCEPConstructs {
 //    			{"es.tid.pce.pcep.constructs.EndpointRestriction"},
 //    			{"es.tid.pce.pcep.constructs.ErrorConstruct"},
 //    			{"es.tid.pce.pcep.constructs.FullAnycastEndpoints"},
-//    			{"es.tid.pce.pcep.constructs.GeneralizedBandwidth"},
 //    			{"es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON"},
 //    			{"es.tid.pce.pcep.constructs.LSPInstantationRequest"},
 //    			{"es.tid.pce.pcep.constructs.LSPplusPath"},
@@ -41,12 +40,12 @@ public class TestPCEPConstructs {
 //    			{"es.tid.pce.pcep.constructs.P2MPEndpoints"},
 //    			{"es.tid.pce.pcep.constructs.P2PEndpoints"},
 //    			{"es.tid.pce.pcep.constructs.PCEPIntiatedLSP"},
-    			{"es.tid.pce.pcep.constructs.Path"},
-//    			{"es.tid.pce.pcep.constructs.RROBandwidth"},
+//    			{"es.tid.pce.pcep.constructs.Path"},
+    			{"es.tid.pce.pcep.constructs.RROBandwidth"},
     			{"es.tid.pce.pcep.constructs.Request"},
-//    			{"es.tid.pce.pcep.constructs.Response"},
-//    			{"es.tid.pce.pcep.constructs.SVECConstruct"},
-//    			{"es.tid.pce.pcep.constructs.StateReport"},
+    			{"es.tid.pce.pcep.constructs.Response"},
+   			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
+    			{"es.tid.pce.pcep.constructs.StateReport"},
     			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
     			{"es.tid.pce.pcep.constructs.TNA"},
     			{"es.tid.pce.pcep.constructs.UpdateRequest"}
@@ -77,7 +76,7 @@ public class TestPCEPConstructs {
 			System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 
 			//Check if the fields are the same
-			assertTrue("testing Construct "+object,object.equals(object2));
+			assertTrue("testing Construct "+object.getClass().getName() + "values "+object.toString(),object.equals(object2));
 	    	} catch(Exception e){
 	    		e.printStackTrace();
 	    		assertTrue("Exception in construct "+object,false);

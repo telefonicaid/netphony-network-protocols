@@ -1,9 +1,6 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
-
-import org.slf4j.Logger;
-
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.Metric;
@@ -11,8 +8,6 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.Svec;
-
-import org.slf4j.LoggerFactory;
 
 /**
  * From RFC 5440 y 5541
@@ -29,7 +24,6 @@ public class SVECConstruct extends PCEPConstruct{
 	private Svec svec;
 	private LinkedList<ObjectiveFunction> objectiveFunctionList;
 	private LinkedList<Metric> metricList;
-	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
 	
 	public SVECConstruct(){
 		metricList=new LinkedList<Metric>(); 
@@ -37,9 +31,9 @@ public class SVECConstruct extends PCEPConstruct{
 	}
 
 	public  SVECConstruct(byte[] bytes, int offset) throws PCEPProtocolViolationException{
-		decode(bytes, offset);
 		objectiveFunctionList=new LinkedList<ObjectiveFunction>();
 		metricList=new LinkedList<Metric>();
+		decode(bytes, offset);
 	}
 	
 	@Override

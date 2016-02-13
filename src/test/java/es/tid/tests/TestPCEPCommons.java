@@ -14,6 +14,7 @@ import java.util.List;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.PceIdIPv4;
 
 public class TestPCEPCommons {
 	public static void createAllFields(Object object){
@@ -68,6 +69,10 @@ public class TestPCEPCommons {
 								 o= new BitmapLabelSet();
 								 createAllFields(o);
 								}
+							 else if (c.getName().equals("es.tid.pce.pcep.objects.PceId")){
+								 o= new PceIdIPv4();
+								 createAllFields(o);
+							 }
 							 
 							 
 							 else {
@@ -98,6 +103,8 @@ public class TestPCEPCommons {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
 									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
+								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.tlvs.PCEPTLV")) {
+									System.out.println("FIXME: es.tid.pce.pcep.tlvs.PCEPTLV");
 								}else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 
@@ -106,7 +113,11 @@ public class TestPCEPCommons {
 									if  (((Class)at).getName().equals("java.lang.Integer")) {
 										Integer in=new Integer(3);
 										methods[0].invoke(res, in);
+									}else if  (((Class)at).getName().equals("java.lang.Long")) {
+										Long in=new Long(5);
+										methods[0].invoke(res, in);
 									}else {
+										System.out.println("Creating "+((Class)at).getName());
 										Object o = ((Class)at).newInstance();
 										createAllFields(o);
 										methods[0].invoke(res, o);}

@@ -472,7 +472,6 @@ public class RequestParameters extends PCEPObject{
 			return false;
 		if (loose != other.loose)
 			return false;
-		System.out.println("xtrtrtr");
 		if (maxRequestTimeTLV == null) {
 			if (other.maxRequestTimeTLV != null)
 				return false;

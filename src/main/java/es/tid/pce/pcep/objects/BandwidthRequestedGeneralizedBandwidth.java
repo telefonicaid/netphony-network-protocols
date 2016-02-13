@@ -154,6 +154,30 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 		this.reverseGeneralizedBandwidth = reverseGeneralizedBandwidth;
 	}
 	
+	public int getBwSpecLength() {
+		return bwSpecLength;
+	}
+	public void setBwSpecLength(int bwSpecLength) {
+		this.bwSpecLength = bwSpecLength;
+	}
+	public int getRevBwSpecLength() {
+		return revBwSpecLength;
+	}
+	public void setRevBwSpecLength(int revBwSpecLength) {
+		this.revBwSpecLength = revBwSpecLength;
+	}
+	public int getBwSpecType() {
+		return bwSpecType;
+	}
+	public void setBwSpecType(int bwSpecType) {
+		this.bwSpecType = bwSpecType;
+	}
+	public LinkedList<PCEPTLV> getOptionalTLVs() {
+		return optionalTLVs;
+	}
+	public void setOptionalTLVs(LinkedList<PCEPTLV> optionalTLVs) {
+		this.optionalTLVs = optionalTLVs;
+	}
 	public Bandwidth duplicate(){
 		Bandwidth bw= new BandwidthRequestedGeneralizedBandwidth();
 		((BandwidthRequestedGeneralizedBandwidth)bw).setGeneralizedBandwidth(this.getGeneralizedBandwidth());

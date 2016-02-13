@@ -94,7 +94,7 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result
 				+ (int) (LSPStateDBVersion ^ (LSPStateDBVersion >>> 32));
 		return result;
@@ -102,13 +102,10 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 
 	@Override
 	public boolean equals(Object obj) {
-		//System.out.println("pOOOLA "+this.LSPStateDBVersion+" vs "+((LSPDatabaseVersionTLV) obj).LSPStateDBVersion);
-
 		if (this == obj)
 			return true;
-		if (obj == null) {
-			System.out.println("NUUUL");
-			return false;}
+		if (!super.equals(obj))
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		LSPDatabaseVersionTLV other = (LSPDatabaseVersionTLV) obj;
@@ -116,7 +113,8 @@ public class LSPDatabaseVersionTLV extends PCEPTLV {
 			return false;
 		return true;
 	}
-	
+
+
 	
 
 }

@@ -148,8 +148,6 @@ public class Request extends PCEPConstruct{
 			len=len+reqAdapCap.getLength();
 		}
 		this.setLength(len);
-		System.out.println("len "+len);
-
 		bytes=new byte[len];
 		int offset=0;
 		System.arraycopy(requestParameters.getBytes(), 0, bytes, offset, requestParameters.getLength());
@@ -515,8 +513,6 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SWITCH_LAYER){
 			try {
-				System.out.println("SL "+len);
-
 				switchLayer=new SwitchLayer(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed SWITCH_LAYER Object found");
