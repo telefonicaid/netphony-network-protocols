@@ -112,7 +112,7 @@ public class PathReservationTLV extends PCEPTLV {
 		return eRO;
 	}
 
-	public void seteRO(ExplicitRouteObject eRO) {
+	public void setERO(ExplicitRouteObject eRO) {
 		this.eRO = eRO;
 	}
 

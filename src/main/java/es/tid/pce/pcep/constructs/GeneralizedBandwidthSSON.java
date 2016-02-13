@@ -38,7 +38,11 @@ public class GeneralizedBandwidthSSON extends GeneralizedBandwidth {
 		this.setBwSpecType(ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON);
 	}
 	
-	
+	public GeneralizedBandwidthSSON (byte[] bytes, int offset){
+		super(bytes, offset);
+		this.setBwSpecType(ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON);
+		decode(bytes, offset);
+	}
 	
 	public void encode() {
 		int length=4;

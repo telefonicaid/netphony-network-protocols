@@ -183,7 +183,7 @@ public class Notification extends PCEPObject{
 	 /**
 	  * Optional Overloaded Duration TLV;
 	  */
-	 private OverloadedDurationTLV odtlv;
+	 //private OverloadedDurationTLV odtlv;
 	 
 	 /**
 	  * Optional List of Reachability TLVs
@@ -221,6 +221,8 @@ public class Notification extends PCEPObject{
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_NOTIFICATION);
 		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_NOTIFICATION);
+		reachabilityTLVList=new LinkedList<ReachabilityTLV>();
+		LSATLVList=new LinkedList<OSPFTE_LSA_TLV>();
 	}
 	
 	
@@ -234,6 +236,8 @@ public class Notification extends PCEPObject{
 	public Notification(byte[] bytes, int offset) throws MalformedPCEPObjectException{
 		super(bytes,offset);
 		//tLVList=new LinkedList<PCEPTLV> ();
+		reachabilityTLVList=new LinkedList<ReachabilityTLV>();
+		LSATLVList=new LinkedList<OSPFTE_LSA_TLV>();
 		decode();
 	}
 
@@ -243,10 +247,10 @@ public class Notification extends PCEPObject{
 	public void encode() {
 		int len=4+4;//The four bytes of the header plus the 4 first bytes
 		
-		if (odtlv!=null){
-			odtlv.encode();
-			len=len+odtlv.getTotalTLVLength();
-		}
+//		if (odtlv!=null){
+//			odtlv.encode();
+//			len=len+odtlv.getTotalTLVLength();
+//		}
 		
 		if (reachabilityTLVList!=null){
 			for (int i=0;i<reachabilityTLVList.size();++i){
@@ -296,10 +300,10 @@ public class Notification extends PCEPObject{
 		this.object_bytes[7]=(byte)notificationValue;
 		int offset=8;
 		
-		if (odtlv!=null){
-			System.arraycopy(odtlv.getTlv_bytes(), 0, this.object_bytes, offset, odtlv.getTotalTLVLength());
-			offset=offset+odtlv.getTotalTLVLength();
-		}
+//		if (odtlv!=null){
+//			System.arraycopy(odtlv.getTlv_bytes(), 0, this.object_bytes, offset, odtlv.getTotalTLVLength());
+//			offset=offset+odtlv.getTotalTLVLength();
+//		}
 		
 		if (reachabilityTLVList!=null){
 			for (int i=0;i<reachabilityTLVList.size();++i){
@@ -375,9 +379,9 @@ public class Notification extends PCEPObject{
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
 			switch (tlvtype){
-			case ObjectParameters.PCEP_TLV_OVERLOADED_DURATION:
-				odtlv=new OverloadedDurationTLV(this.getObject_bytes(), offset);				
-				break;
+//			case ObjectParameters.PCEP_TLV_OVERLOADED_DURATION:
+//				odtlv=new OverloadedDurationTLV(this.getObject_bytes(), offset);				
+//				break;
 			case ObjectParameters.PCEP_TLV_REACHABILITY_TLV:
 				if (reachabilityTLVList==null){
 					reachabilityTLVList=new LinkedList<ReachabilityTLV>();
@@ -455,17 +459,17 @@ public class Notification extends PCEPObject{
 //	}
 
 
-
-	public OverloadedDurationTLV getOdtlv() {
-		return odtlv;
-	}
-
-
-
-	public void setOdtlv(OverloadedDurationTLV odtlv) {
-		this.odtlv = odtlv;
-	}
-
+//
+//	public OverloadedDurationTLV getOdtlv() {
+//		return odtlv;
+//	}
+//
+//
+//
+//	public void setOdtlv(OverloadedDurationTLV odtlv) {
+//		this.odtlv = odtlv;
+//	}
+//
 
 
 	public LinkedList<ReachabilityTLV> getReachabilityTLVList() {
@@ -551,6 +555,125 @@ public class Notification extends PCEPObject{
 	public void setNotificationTLV(PathReservationTLV notificationTLV) {
 		this.notificationTLV = notificationTLV;
 	}
+
+
+
+	public ITAdvertisementTLV getITadvTLV() {
+		return ITadvTLV;
+	}
+
+
+
+	public void setITadvTLV(ITAdvertisementTLV iTadvTLV) {
+		ITadvTLV = iTadvTLV;
+	}
+
+
+
+	public StorageTLV getStorageTLV() {
+		return StorageTLV;
+	}
+
+
+
+	public void setStorageTLV(StorageTLV storageTLV) {
+		StorageTLV = storageTLV;
+	}
+
+
+
+	public ServerTLV getServerTLV() {
+		return ServerTLV;
+	}
+
+
+
+	public void setServerTLV(ServerTLV serverTLV) {
+		ServerTLV = serverTLV;
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((ITadvTLV == null) ? 0 : ITadvTLV.hashCode());
+		result = prime * result
+				+ ((LSATLVList == null) ? 0 : LSATLVList.hashCode());
+		result = prime * result
+				+ ((ServerTLV == null) ? 0 : ServerTLV.hashCode());
+		result = prime * result
+				+ ((StorageTLV == null) ? 0 : StorageTLV.hashCode());
+		result = prime * result
+				+ ((notificationTLV == null) ? 0 : notificationTLV.hashCode());
+		result = prime * result + notificationType;
+		result = prime * result + notificationValue;
+		result = prime
+				* result
+				+ ((reachabilityTLVList == null) ? 0 : reachabilityTLVList
+						.hashCode());
+		result = prime
+				* result
+				+ ((reservationIDTLV == null) ? 0 : reservationIDTLV.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Notification other = (Notification) obj;
+		if (ITadvTLV == null) {
+			if (other.ITadvTLV != null)
+				return false;
+		} else if (!ITadvTLV.equals(other.ITadvTLV))
+			return false;
+		if (LSATLVList == null) {
+			if (other.LSATLVList != null)
+				return false;
+		} else if (!LSATLVList.equals(other.LSATLVList))
+			return false;
+		if (ServerTLV == null) {
+			if (other.ServerTLV != null)
+				return false;
+		} else if (!ServerTLV.equals(other.ServerTLV))
+			return false;
+		if (StorageTLV == null) {
+			if (other.StorageTLV != null)
+				return false;
+		} else if (!StorageTLV.equals(other.StorageTLV))
+			return false;
+		if (notificationTLV == null) {
+			if (other.notificationTLV != null)
+				return false;
+		} else if (!notificationTLV.equals(other.notificationTLV))
+			return false;
+		if (notificationType != other.notificationType)
+			return false;
+		if (notificationValue != other.notificationValue)
+			return false;
+		if (reachabilityTLVList == null) {
+			if (other.reachabilityTLVList != null)
+				return false;
+		} else if (!reachabilityTLVList.equals(other.reachabilityTLVList))
+			return false;
+		if (reservationIDTLV == null) {
+			if (other.reservationIDTLV != null)
+				return false;
+		} else if (!reservationIDTLV.equals(other.reservationIDTLV))
+			return false;
+		return true;
+	}
+	
+	
 
 
 }

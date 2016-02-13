@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  <lsp-instantiation-request> ::= <END-POINTS>
@@ -23,11 +21,9 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	private EndPoints endPoints;//COMPULSORY!!!
 	private LSPA lSPA;//COMPULSORY!!
 	private ExplicitRouteObject eRO;
-	private BandwidthRequested bandwidth;
+	private Bandwidth bandwidth;
 	private LinkedList<Metric> metricList;
-	
-	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
-	
+		
 	/**
 	 * Default constructor. 
 	 * Use this method to create a new Request from scratch
@@ -67,6 +63,13 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			log.warn("lSPA not found! It is compulsory");
 			throw new PCEPProtocolViolationException();
 		}
+
+		if (eRO!=null)
+		{	
+			eRO.encode();
+			len += eRO.getLength();
+
+		}
 		if (bandwidth!=null){
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
@@ -87,7 +90,11 @@ public class LSPInstantationRequest extends PCEPConstruct{
 
 		System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 		offset=offset+lSPA.getLength();
-
+		if (eRO!=null)
+		{
+			System.arraycopy(eRO.getBytes(), 0, this.getBytes(), offset, eRO.getLength());
+			offset=offset + eRO.getLength();
+		}
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
@@ -238,7 +245,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		return lSPA;
 	}
 
-	public void setlSPA(LSPA lSPA) {
+	public void setLSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
 	
@@ -246,15 +253,15 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		return eRO;
 	}
 
-	public void seteRO(ExplicitRouteObject eRO) {
+	public void setERO(ExplicitRouteObject eRO) {
 		this.eRO = eRO;
 	}
 
-	public BandwidthRequested getBandwidth() {
+	public Bandwidth getBandwidth() {
 		return bandwidth;
 	}
 
-	public void setBandwidth(BandwidthRequested bandwidth) {
+	public void setBandwidth(Bandwidth bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 
@@ -292,8 +299,8 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	public LSPInstantationRequest duplicate(){
 		LSPInstantationRequest req=new LSPInstantationRequest();
 		req.setEndPoints(this.endPoints);
-		req.setlSPA(this.lSPA);
-		req.seteRO(this.eRO);
+		req.setLSPA(this.lSPA);
+		req.setERO(this.eRO);
 		req.setBandwidth(this.bandwidth);
 		req.setMetricList(this.metricList);
 		return req;
@@ -348,6 +355,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 				return false;
 		} else if (!metricList.equals(other.metricList))
 			return false;
+
 		return true;
 	}
 	

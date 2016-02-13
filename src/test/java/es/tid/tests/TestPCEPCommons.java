@@ -96,6 +96,7 @@ public class TestPCEPCommons {
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
+								System.out.println("HOLA "+name+res );
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
@@ -115,6 +116,9 @@ public class TestPCEPCommons {
 										methods[0].invoke(res, in);
 									}else if  (((Class)at).getName().equals("java.lang.Long")) {
 										Long in=new Long(5);
+										methods[0].invoke(res, in);
+									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
+										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
 										methods[0].invoke(res, in);
 									}else {
 										System.out.println("Creating "+((Class)at).getName());
