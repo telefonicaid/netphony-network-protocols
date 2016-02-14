@@ -40,16 +40,16 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 	protected GeneralizedBandwidth generalizedBandwidth;
 	protected GeneralizedBandwidth reverseGeneralizedBandwidth;
 		
-	private LinkedList<PCEPTLV> optionalTLVs;
+	//private LinkedList<PCEPTLV> optionalTLVs;
 	
 	public BandwidthRequestedGeneralizedBandwidth(){
 		super();
 		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST);
-		optionalTLVs=new LinkedList<PCEPTLV> ();
+		//optionalTLVs=new LinkedList<PCEPTLV> ();
 	}
 	public BandwidthRequestedGeneralizedBandwidth (byte[] bytes, int offset) throws MalformedPCEPObjectException{
 		super(bytes, offset);
-		optionalTLVs=new LinkedList<PCEPTLV> ();
+		//optionalTLVs=new LinkedList<PCEPTLV> ();
 		decode();
 	}
 	
@@ -77,10 +77,10 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 			length =length+reverseGeneralizedBandwidth.getLength();
 		}
 		
-		for (int k=0; k<optionalTLVs.size();k=k+1){
-			optionalTLVs.get(k).encode();			
-			length=length+optionalTLVs.get(k).getTotalTLVLength();
-		}
+//		for (int k=0; k<optionalTLVs.size();k=k+1){
+//			optionalTLVs.get(k).encode();			
+//			length=length+optionalTLVs.get(k).getTotalTLVLength();
+//		}
 			
 		this.setObjectLength(length);
 		object_bytes=new byte[ObjectLength];
@@ -102,12 +102,12 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 			offset=offset+reverseGeneralizedBandwidth.getLength();
 			
 		}
-		if (optionalTLVs!=null){
-			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
-				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, offset, optionalTLVs.get(k).getTotalTLVLength());
-				offset=offset+optionalTLVs.get(k).getTotalTLVLength();
-			}
-		}
+//		if (optionalTLVs!=null){
+//			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
+//				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, offset, optionalTLVs.get(k).getTotalTLVLength());
+//				offset=offset+optionalTLVs.get(k).getTotalTLVLength();
+//			}
+//		}
 	}
 	@Override
 	public void decode() throws MalformedPCEPObjectException {
@@ -130,12 +130,17 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 			if (this.bwSpecType == ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON){
 				generalizedBandwidth = new GeneralizedBandwidthSSON ();
 				generalizedBandwidth.decode(this.getBytes(),offset);
+				
 			}
 			
 		}
 		offset = 12+bwSpecLength;
-		if (revBwSpecLength!=0){
 
+		if (revBwSpecLength!=0){
+			if (this.bwSpecType == ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON){
+				reverseGeneralizedBandwidth = new GeneralizedBandwidthSSON (this.getBytes(),offset);
+
+			}
 		}
 		
 	}
@@ -172,12 +177,12 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 	public void setBwSpecType(int bwSpecType) {
 		this.bwSpecType = bwSpecType;
 	}
-	public LinkedList<PCEPTLV> getOptionalTLVs() {
-		return optionalTLVs;
-	}
-	public void setOptionalTLVs(LinkedList<PCEPTLV> optionalTLVs) {
-		this.optionalTLVs = optionalTLVs;
-	}
+//	public LinkedList<PCEPTLV> getOptionalTLVs() {
+//		return optionalTLVs;
+//	}
+//	public void setOptionalTLVs(LinkedList<PCEPTLV> optionalTLVs) {
+//		this.optionalTLVs = optionalTLVs;
+//	}
 	public Bandwidth duplicate(){
 		Bandwidth bw= new BandwidthRequestedGeneralizedBandwidth();
 		((BandwidthRequestedGeneralizedBandwidth)bw).setGeneralizedBandwidth(this.getGeneralizedBandwidth());
@@ -199,8 +204,8 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 				* result
 				+ ((generalizedBandwidth == null) ? 0 : generalizedBandwidth
 						.hashCode());
-		result = prime * result
-				+ ((optionalTLVs == null) ? 0 : optionalTLVs.hashCode());
+//		result = prime * result
+//				+ ((optionalTLVs == null) ? 0 : optionalTLVs.hashCode());
 		result = prime * result + revBwSpecLength;
 		result = prime
 				* result
@@ -226,11 +231,11 @@ public class BandwidthRequestedGeneralizedBandwidth extends Bandwidth{
 				return false;
 		} else if (!generalizedBandwidth.equals(other.generalizedBandwidth))
 			return false;
-		if (optionalTLVs == null) {
-			if (other.optionalTLVs != null)
-				return false;
-		} else if (!optionalTLVs.equals(other.optionalTLVs))
-			return false;
+//		if (optionalTLVs == null) {
+//			if (other.optionalTLVs != null)
+//				return false;
+//		} else if (!optionalTLVs.equals(other.optionalTLVs))
+//			return false;
 		if (revBwSpecLength != other.revBwSpecLength)
 			return false;
 		if (reverseGeneralizedBandwidth == null) {

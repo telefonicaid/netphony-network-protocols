@@ -27,7 +27,7 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSP"},
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth"},
     			{"es.tid.pce.pcep.objects.BandwidthRequested"},
-    			//{"es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth"},
+    			{"es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth"},
     			{"es.tid.pce.pcep.objects.BitmapLabelSet"},
     			{"es.tid.pce.pcep.objects.Close"},
 				//"es.tid.pce.pcep.objects.EndPointDataPathID",

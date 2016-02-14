@@ -99,7 +99,6 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 			}
 			revBwSpecLength=reverseGeneralizedBandwidth.getLength();
 			length =length+reverseGeneralizedBandwidth.getLength();
-			System.out.println("BW SPC "+revBwSpecLength);
 
 		}
 		
@@ -155,9 +154,8 @@ public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
 		}else {
 			if (this.bwSpecType == ObjectParameters.PCEP_GMPLS_GEN_BANDWIDTH_SSON){
 				generalizedBandwidth = new GeneralizedBandwidthSSON ();
-				generalizedBandwidth.decode(this.getBytes(),offset);
-			}
-			
+				generalizedBandwidth.decode(this.getBytes(),offset);	
+			}		
 		}
 		offset = 12+bwSpecLength;
 		if (revBwSpecLength!=0){
