@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
@@ -76,6 +77,10 @@ public class TestPCEPCommons {
 							 else if (c.getName().equals("es.tid.pce.pcep.objects.PceId")){
 								 o= new PceIdIPv4();
 								 createAllFields(o);
+							 }else if (c.getName().equals("es.tid.of.DataPathID")){
+								 o= new DataPathID();
+								 System.out.println("hola");
+								 ((DataPathID)o).setDataPathID("11:22:00:AA:33:BB:11:11");
 							 }
 							 
 							 
