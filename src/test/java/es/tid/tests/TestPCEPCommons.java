@@ -79,7 +79,6 @@ public class TestPCEPCommons {
 								 createAllFields(o);
 							 }else if (c.getName().equals("es.tid.of.DataPathID")){
 								 o= new DataPathID();
-								 System.out.println("hola");
 								 ((DataPathID)o).setDataPathID("11:22:00:AA:33:BB:11:11");
 							 }
 							 

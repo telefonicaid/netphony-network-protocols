@@ -53,7 +53,7 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.OPEN"},
     			{"es.tid.pce.pcep.objects.ObjectiveFunction"},
 				//"es.tid.pce.pcep.objects.P2MPEndPointsDataPathID",
-				//"es.tid.pce.pcep.objects.P2MPEndPointsIPv4",
+    			{"es.tid.pce.pcep.objects.P2MPEndPointsIPv4"},
     			{"es.tid.pce.pcep.objects.PCEPErrorObject"},
     			{"es.tid.pce.pcep.objects.PccReqId"},
     			{"es.tid.pce.pcep.objects.PceIdIPv4"},

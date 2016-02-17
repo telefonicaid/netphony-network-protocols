@@ -74,7 +74,7 @@ public class EndPointDataPathID extends EndPoints
 		destSwitchID=new DataPathID();
 		System.arraycopy(this.object_bytes,12, mac, 0, 8);
 		destSwitchID.setDataPathID(ByteHandler.ByteMACToString(mac));
-		log.info("EndPointDataPathID decode destSwitchID:: "+destSwitchID);
+		log.debug("EndPointDataPathID decode destSwitchID:: "+destSwitchID);
 	}
 
 	public DataPathID getSourceSwitchID() 
