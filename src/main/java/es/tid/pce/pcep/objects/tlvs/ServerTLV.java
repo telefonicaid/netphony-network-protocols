@@ -354,5 +354,150 @@ public class ServerTLV extends PCEPTLV {
 	public void setApplicationList(LinkedList<ApplicationSubTLV> ApplicationList) {
 		this.applicationList = ApplicationList;
 	}
+
+	public ResourceIDSubTLV getResourceID() {
+		return resourceID;
+	}
+
+	public void setResourceID(ResourceIDSubTLV resourceID) {
+		this.resourceID = resourceID;
+	}
+
+	public LocationSubTLV getLocation() {
+		return location;
+	}
+
+	public void setLocation(LocationSubTLV location) {
+		this.location = location;
+	}
+
+	public NetworkSpecSubTLV getNetworkSpec() {
+		return networkSpec;
+	}
+
+	public void setNetworkSpec(NetworkSpecSubTLV networkSpec) {
+		this.networkSpec = networkSpec;
+	}
+
+	public PowerSubTLV getPower() {
+		return power;
+	}
+
+	public void setPower(PowerSubTLV power) {
+		this.power = power;
+	}
+
+	public ServerStorageSubTLV getServerStorage() {
+		return serverStorage;
+	}
+
+	public void setServerStorage(ServerStorageSubTLV serverStorage) {
+		this.serverStorage = serverStorage;
+	}
+
+	public MemorySubTLV getMemory() {
+		return memory;
+	}
+
+	public void setMemory(MemorySubTLV memory) {
+		this.memory = memory;
+	}
+
+	public OperativeSystemSubTLV getOperativeSystem() {
+		return operativeSystem;
+	}
+
+	public void setOperativeSystem(OperativeSystemSubTLV operativeSystem) {
+		this.operativeSystem = operativeSystem;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((applicationList == null) ? 0 : applicationList.hashCode());
+		result = prime * result
+				+ ((costList == null) ? 0 : costList.hashCode());
+		result = prime * result
+				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((memory == null) ? 0 : memory.hashCode());
+		result = prime * result
+				+ ((networkSpec == null) ? 0 : networkSpec.hashCode());
+		result = prime * result
+				+ ((operativeSystem == null) ? 0 : operativeSystem.hashCode());
+		result = prime * result + ((power == null) ? 0 : power.hashCode());
+		result = prime * result
+				+ ((processorList == null) ? 0 : processorList.hashCode());
+		result = prime * result
+				+ ((resourceID == null) ? 0 : resourceID.hashCode());
+		result = prime * result
+				+ ((serverStorage == null) ? 0 : serverStorage.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ServerTLV other = (ServerTLV) obj;
+		if (applicationList == null) {
+			if (other.applicationList != null)
+				return false;
+		} else if (!applicationList.equals(other.applicationList))
+			return false;
+		if (costList == null) {
+			if (other.costList != null)
+				return false;
+		} else if (!costList.equals(other.costList))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (memory == null) {
+			if (other.memory != null)
+				return false;
+		} else if (!memory.equals(other.memory))
+			return false;
+		if (networkSpec == null) {
+			if (other.networkSpec != null)
+				return false;
+		} else if (!networkSpec.equals(other.networkSpec))
+			return false;
+		if (operativeSystem == null) {
+			if (other.operativeSystem != null)
+				return false;
+		} else if (!operativeSystem.equals(other.operativeSystem))
+			return false;
+		if (power == null) {
+			if (other.power != null)
+				return false;
+		} else if (!power.equals(other.power))
+			return false;
+		if (processorList == null) {
+			if (other.processorList != null)
+				return false;
+		} else if (!processorList.equals(other.processorList))
+			return false;
+		if (resourceID == null) {
+			if (other.resourceID != null)
+				return false;
+		} else if (!resourceID.equals(other.resourceID))
+			return false;
+		if (serverStorage == null) {
+			if (other.serverStorage != null)
+				return false;
+		} else if (!serverStorage.equals(other.serverStorage))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

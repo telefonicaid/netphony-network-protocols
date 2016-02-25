@@ -45,12 +45,11 @@ public class TNA extends PCEPConstruct {
 			TNANSAPSubTLV.encode();
 			length=length+TNANSAPSubTLV.getTotalSubTLVLength();
 		}
-		
+		System.out.println("leeen "+length);
 		this.setLength(length);
-		//encodeHeader(); //FIXME!!!!!
 		this.bytes=new byte[this.getLength()];
 		int offset=0;
-		
+
 		if (TNAIPv4SubTLV!=null){
 			System.arraycopy(TNAIPv4SubTLV.getSubTLV_bytes(),0,this.bytes,offset,TNAIPv4SubTLV.getTotalSubTLVLength());
 			offset=offset+TNAIPv4SubTLV.getTotalSubTLVLength();
@@ -70,18 +69,35 @@ public class TNA extends PCEPConstruct {
 	public void decode(byte[] bytes, int offset) {
 		
 		int subtlvtype=PCEPSubTLV.getType(bytes, offset);
-		//int subtlvlength=PCEPSubTLV.getTotalSubTLVLength(bytes, offset);
-		
 		if (subtlvtype==PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv4){
 			TNAIPv4SubTLV=new TNAIPv4SubTLV(bytes, offset);
+			offset+=TNAIPv4SubTLV.getTotalSubTLVLength();
+			if (offset>=bytes.length){
+				return;
+			}else {
+				subtlvtype=PCEPSubTLV.getType(bytes, offset);
+
+			}
 		}
 		
 		if (subtlvtype==PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_IPv6){
 			TNAIPv6SubTLV=new TNAIPv6SubTLV(bytes, offset);
+			offset+=TNAIPv6SubTLV.getTotalSubTLVLength();
+
+			if (offset>=bytes.length){
+				return;
+			}else {
+				subtlvtype=PCEPSubTLV.getType(bytes, offset);
+
+			}
 		}
-		
+
 		if (subtlvtype==PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_NSAP){
 			TNANSAPSubTLV=new TNANSAPSubTLV(bytes, offset);
+			offset+=TNANSAPSubTLV.getTotalSubTLVLength();
+			if (offset>=bytes.length){
+				return;
+			}
 		}
 
 	}
@@ -130,7 +146,7 @@ public class TNA extends PCEPConstruct {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
-			return false;
+				return false;
 		if (getClass() != obj.getClass())
 			return false;
 		TNA other = (TNA) obj;
@@ -139,16 +155,19 @@ public class TNA extends PCEPConstruct {
 				return false;
 		} else if (!TNAIPv4SubTLV.equals(other.TNAIPv4SubTLV))
 			return false;
+
 		if (TNAIPv6SubTLV == null) {
 			if (other.TNAIPv6SubTLV != null)
 				return false;
 		} else if (!TNAIPv6SubTLV.equals(other.TNAIPv6SubTLV))
 			return false;
+
 		if (TNANSAPSubTLV == null) {
 			if (other.TNANSAPSubTLV != null)
 				return false;
 		} else if (!TNANSAPSubTLV.equals(other.TNANSAPSubTLV))
 			return false;
+
 		return true;
 	}
 	

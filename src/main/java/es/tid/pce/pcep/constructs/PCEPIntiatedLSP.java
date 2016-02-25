@@ -18,7 +18,6 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.P2MPEndPointsDataPathID;
 import es.tid.pce.pcep.objects.P2MPEndPointsIPv4;
 import es.tid.pce.pcep.objects.PCEPObject;
-import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.XifiEndPoints;
 import es.tid.pce.pcep.objects.XifiUniCastEndPoints;
@@ -38,7 +37,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	private SRP srp;
 	private LSP lsp;
 	private ExplicitRouteObject ero;
-	private SRERO srero;
 
 	private EndPoints endPoint;
 	private Bandwidth bandwidth;
@@ -84,14 +82,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			len += ero.getLength();
 
 		}
-		else if (srero!=null)
-		{
-			srero.encode();
-			len += srero.getLength();
-		}
+		
 		else
 		{
-			log.warn("NO ERO or SRERO...");
+			log.warn("NO ERO ...");
 			// This is not a mistake. A PCE can receive an empty PCEPInitiate and that means it has to find
 			// a path between the endpoints
 			//throw new PCEPProtocolViolationException();
@@ -124,12 +118,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			System.arraycopy(ero.getBytes(), 0, this.getBytes(), offset, ero.getLength());
 			offset=offset + ero.getLength();
 		}
-		else if (srero!=null)
-		{
-			System.arraycopy(srero.getBytes(), 0, this.getBytes(), offset, srero.getLength());
-			offset=offset + srero.getLength();			
-		}
-
+	
 		if (bandwidth!=null)
 		{
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
@@ -315,27 +304,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			
 		}
 		
-		else if(PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
-		{
-			try 
-			{
-				srero = new SRERO(bytes,offset);
-
-			} 
-			catch (MalformedPCEPObjectException e) 
-			{
-				log.warn("Malformed srero Object found");
-				throw new PCEPProtocolViolationException();
-			}
-			offset = offset + srero.getLength();
-			len += srero.getLength();						
-		}
-		else
-		{
-			//log.info("There should be at least one ERO or SRERO Object but we dont do it that way");
-			//There should be at least one ERO or SRERO Object, relaxed implementation
-			//throw new PCEPProtocolViolationException();						
-		}
+	
 
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
@@ -429,13 +398,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		this.endPoint = endPoint;
 	}
 
-	public SRERO getSrero() {
-		return srero;
-	}
-
-	public void setSrero(SRERO srero) {
-		this.srero = srero;
-	}
 	
 	public String toString(){
 		StringBuffer sb=new StringBuffer();
@@ -453,9 +415,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			sb.append(endPoint.toString());
 		}
 		
-		if (srero!=null){
-			sb.append(srero.toString());
-		}
+	
 		
 		if (bandwidth!=null){
 			sb.append(bandwidth.toString());
@@ -474,7 +434,6 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				+ ((endPoint == null) ? 0 : endPoint.hashCode());
 		result = prime * result + ((ero == null) ? 0 : ero.hashCode());
 		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
-		result = prime * result + ((srero == null) ? 0 : srero.hashCode());
 		result = prime * result + ((srp == null) ? 0 : srp.hashCode());
 		return result;
 	}
@@ -508,11 +467,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				return false;
 		} else if (!lsp.equals(other.lsp))
 			return false;
-		if (srero == null) {
-			if (other.srero != null)
-				return false;
-		} else if (!srero.equals(other.srero))
-			return false;
+	
 		if (srp == null) {
 			if (other.srp != null)
 				return false;

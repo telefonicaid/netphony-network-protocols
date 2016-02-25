@@ -1,5 +1,6 @@
 package es.tid.pce.pcep.objects;
 
+import es.tid.of.DataPathID;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.protocol.commons.ByteHandler;
 
@@ -29,11 +30,11 @@ public class EndPointDataPathID extends EndPoints
 	/**
 	 * Source switch ID
 	 */
-	private String sourceSwitchID;
+	private DataPathID sourceSwitchID;
 	/**
 	 * Destination switch ID
 	 */
-	private String destSwitchID;
+	private DataPathID destSwitchID;
 	
 	
 	public EndPointDataPathID()
@@ -54,8 +55,8 @@ public class EndPointDataPathID extends EndPoints
 		
 		encode_header();
 		
-		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(sourceSwitchID),0, this.object_bytes, 4, 8);
-		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(destSwitchID),0, this.object_bytes, 12, 8);
+		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(sourceSwitchID.getDataPathID()),0, this.object_bytes, 4, 8);
+		System.arraycopy(ByteHandler.MACFormatStringtoByteArray(destSwitchID.getDataPathID()),0, this.object_bytes, 12, 8);
 	}
 
 	@Override
@@ -67,30 +68,31 @@ public class EndPointDataPathID extends EndPoints
 		}
 		byte[] mac=new byte[8]; 
 		System.arraycopy(this.object_bytes,4, mac, 0, 8);
-		sourceSwitchID=ByteHandler.ByteMACToString(mac);
-		log.info("EndPointDataPathID decode sourceSwitchID:: "+sourceSwitchID);
-		
+		sourceSwitchID=new DataPathID();
+		sourceSwitchID.setDataPathID(ByteHandler.ByteMACToString(mac));
+		log.debug("EndPointDataPathID decode sourceSwitchID:: "+sourceSwitchID);
+		destSwitchID=new DataPathID();
 		System.arraycopy(this.object_bytes,12, mac, 0, 8);
-		destSwitchID=ByteHandler.ByteMACToString(mac);
-		log.info("EndPointDataPathID decode destSwitchID:: "+destSwitchID);
+		destSwitchID.setDataPathID(ByteHandler.ByteMACToString(mac));
+		log.debug("EndPointDataPathID decode destSwitchID:: "+destSwitchID);
 	}
 
-	public String getSourceSwitchID() 
+	public DataPathID getSourceSwitchID() 
 	{
 		return sourceSwitchID;
 	}
 
-	public void setSourceSwitchID(String sourceSwitchID) 
+	public void setSourceSwitchID(DataPathID sourceSwitchID) 
 	{
 		this.sourceSwitchID = sourceSwitchID;
 	}
 
-	public String getDestSwitchID() 
+	public DataPathID getDestSwitchID() 
 	{
 		return destSwitchID;
 	}
 
-	public void setDestSwitchID(String destSwitchID) 
+	public void setDestSwitchID(DataPathID destSwitchID) 
 	{
 		this.destSwitchID = destSwitchID;
 	}
@@ -117,7 +119,7 @@ public class EndPointDataPathID extends EndPoints
 			if (other.destSwitchID != null)
 				return false;
 		} else if (!destSwitchID.equals(other.destSwitchID))
-			return false;
+			return false;		
 		if (sourceSwitchID == null) {
 			if (other.sourceSwitchID != null)
 				return false;
@@ -125,7 +127,7 @@ public class EndPointDataPathID extends EndPoints
 			return false;
 		return true;
 	}
-	
+
 	
 	
 	

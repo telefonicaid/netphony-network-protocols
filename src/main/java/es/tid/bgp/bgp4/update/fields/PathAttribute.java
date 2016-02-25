@@ -1,6 +1,7 @@
 package es.tid.bgp.bgp4.update.fields;
 
 import es.tid.bgp.bgp4.objects.BGP4Object;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,7 +108,7 @@ public abstract class PathAttribute extends BGP4Object {
 		
 	}
 	
-	public void setPathAttributeLength(int pal){
+	protected void setPathAttributeLength(int pal){
 		this.pathAttributeLength= pal;
 		if (pathAttributeLength>255){
 			this.mandatoryLength=4;
@@ -165,8 +166,50 @@ public abstract class PathAttribute extends BGP4Object {
 	}
 
 
-	public void setTypeCode(int typeCode) {
+	protected void setTypeCode(int typeCode) {
 		this.typeCode = typeCode;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (extendedLengthBit ? 1231 : 1237);
+		result = prime * result + mandatoryLength;
+		result = prime * result + (optionalBit ? 1231 : 1237);
+		result = prime * result + (partialBit ? 1231 : 1237);
+		result = prime * result + pathAttributeLength;
+		result = prime * result + (transitiveBit ? 1231 : 1237);
+		result = prime * result + typeCode;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PathAttribute other = (PathAttribute) obj;
+		if (extendedLengthBit != other.extendedLengthBit)
+			return false;
+		if (mandatoryLength != other.mandatoryLength)
+			return false;
+		if (optionalBit != other.optionalBit)
+			return false;
+		if (partialBit != other.partialBit)
+			return false;
+		if (pathAttributeLength != other.pathAttributeLength)
+			return false;
+		if (transitiveBit != other.transitiveBit)
+			return false;
+		if (typeCode != other.typeCode)
+			return false;
+		return true;
 	}
 
 
@@ -179,6 +222,7 @@ public abstract class PathAttribute extends BGP4Object {
 //	}
 
 
+	
 
 	
 }

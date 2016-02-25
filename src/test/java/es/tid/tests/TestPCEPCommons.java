@@ -6,13 +6,18 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
+import es.tid.of.DataPathID;
+import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.PceIdIPv4;
 
 public class TestPCEPCommons {
 	public static void createAllFields(Object object){
@@ -53,17 +58,35 @@ public class TestPCEPCommons {
 									o="TEST";
 							 } else if  (c.getName().equals("java.net.Inet4Address")) {
 									o=Inet4Address.getByName("1.1.1.1");
-							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
+							 }else if  (c.getName().equals("java.net.Inet6Address")) {
+									o=Inet6Address.getByName("1080:0:0:0:8:800:200C:417A");
+							 }
+							 else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
 									o = new EndPointsIPv4();
 									createAllFields(o);
 							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
 								 o= new BandwidthRequested();
 								 createAllFields(o);
-								}
+								}else if  (c.getName().equals("es.tid.pce.pcep.constructs.GeneralizedBandwidth")) {
+									 o= new GeneralizedBandwidthSSON();
+									 createAllFields(o);
+									}
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.LabelSet")) {
 								 o= new BitmapLabelSet();
 								 createAllFields(o);
 								}
+							 else if (c.getName().equals("es.tid.pce.pcep.objects.PceId")){
+								 o= new PceIdIPv4();
+								 createAllFields(o);
+							 }else if (c.getName().equals("es.tid.of.DataPathID")){
+								 o= new DataPathID();
+								 ((DataPathID)o).setDataPathID("11:22:00:AA:33:BB:11:11");
+							 } else if (c.getName().equals("es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV")){
+								 o= new IGPRouterIDNodeDescriptorSubTLV();
+								 Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+								 ((IGPRouterIDNodeDescriptorSubTLV)o).setIgp_router_id_type(IGPRouterIDNodeDescriptorSubTLV.IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO);
+								((IGPRouterIDNodeDescriptorSubTLV)o).setIpv4Address_ospf(in);
+							 }
 							 
 							 
 							 else {
@@ -84,14 +107,19 @@ public class TestPCEPCommons {
 							Class ca=(Class)rt;
 							
 							if (ca.getName().equals("java.util.LinkedList")){
-								//System.out.println("wajjeeeea");
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
-								} else if (((Class) at).isPrimitive()){
+								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
+									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
+								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
+									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
+								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.tlvs.PCEPTLV")) {
+									System.out.println("FIXME: es.tid.pce.pcep.tlvs.PCEPTLV");
+								}else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 
 								}
@@ -99,7 +127,14 @@ public class TestPCEPCommons {
 									if  (((Class)at).getName().equals("java.lang.Integer")) {
 										Integer in=new Integer(3);
 										methods[0].invoke(res, in);
+									}else if  (((Class)at).getName().equals("java.lang.Long")) {
+										Long in=new Long(5);
+										methods[0].invoke(res, in);
+									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
+										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+										methods[0].invoke(res, in);
 									}else {
+										System.out.println("Creating "+((Class)at).getName());
 										Object o = ((Class)at).newInstance();
 										createAllFields(o);
 										methods[0].invoke(res, o);}

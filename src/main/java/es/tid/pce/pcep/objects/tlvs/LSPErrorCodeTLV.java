@@ -79,6 +79,30 @@ public class LSPErrorCodeTLV extends PCEPTLV
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + errorCode;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LSPErrorCodeTLV other = (LSPErrorCodeTLV) obj;
+		if (errorCode != other.errorCode)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 

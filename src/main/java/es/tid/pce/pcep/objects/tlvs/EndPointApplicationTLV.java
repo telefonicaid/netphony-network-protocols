@@ -130,5 +130,52 @@ public class EndPointApplicationTLV extends PCEPTLV {
 	public void setApplicationSubTLV(ApplicationSubTLV ApplicationSubTLV) {
 		this.application = ApplicationSubTLV;
 	}
+
+	public ApplicationSubTLV getApplication() {
+		return application;
+	}
+
+	public void setApplication(ApplicationSubTLV application) {
+		this.application = application;
+	}
+
+	public OperativeSystemSubTLV getOperativeSystem() {
+		return operativeSystem;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((application == null) ? 0 : application.hashCode());
+		result = prime * result
+				+ ((operativeSystem == null) ? 0 : operativeSystem.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EndPointApplicationTLV other = (EndPointApplicationTLV) obj;
+		if (application == null) {
+			if (other.application != null)
+				return false;
+		} else if (!application.equals(other.application))
+			return false;
+		if (operativeSystem == null) {
+			if (other.operativeSystem != null)
+				return false;
+		} else if (!operativeSystem.equals(other.operativeSystem))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

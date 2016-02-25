@@ -299,5 +299,128 @@ public class StorageTLV extends PCEPTLV {
 	public void setVolumeList(LinkedList<VolumeSubTLV> VolumeList) {
 		this.volumeList = VolumeList;
 	}
+
+	public ResourceIDSubTLV getResourceID() {
+		return resourceID;
+	}
+
+	public void setResourceID(ResourceIDSubTLV resourceID) {
+		this.resourceID = resourceID;
+	}
+
+	public LocationSubTLV getLocation() {
+		return location;
+	}
+
+	public void setLocation(LocationSubTLV location) {
+		this.location = location;
+	}
+
+	public NetworkSpecSubTLV getNetworkSpec() {
+		return networkSpec;
+	}
+
+	public void setNetworkSpec(NetworkSpecSubTLV networkSpec) {
+		this.networkSpec = networkSpec;
+	}
+
+	public PowerSubTLV getPower() {
+		return power;
+	}
+
+	public void setPower(PowerSubTLV power) {
+		this.power = power;
+	}
+
+	public StorageSizeSubTLV getStorageSize() {
+		return storageSize;
+	}
+
+	public void setStorageSize(StorageSizeSubTLV storageSize) {
+		this.storageSize = storageSize;
+	}
+
+	public StorageInfoSubTLV getStorageInfo() {
+		return storageInfo;
+	}
+
+	public void setStorageInfo(StorageInfoSubTLV storageInfo) {
+		this.storageInfo = storageInfo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((costList == null) ? 0 : costList.hashCode());
+		result = prime * result
+				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result
+				+ ((networkSpec == null) ? 0 : networkSpec.hashCode());
+		result = prime * result + ((power == null) ? 0 : power.hashCode());
+		result = prime * result
+				+ ((resourceID == null) ? 0 : resourceID.hashCode());
+		result = prime * result
+				+ ((storageInfo == null) ? 0 : storageInfo.hashCode());
+		result = prime * result
+				+ ((storageSize == null) ? 0 : storageSize.hashCode());
+		result = prime * result
+				+ ((volumeList == null) ? 0 : volumeList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StorageTLV other = (StorageTLV) obj;
+		if (costList == null) {
+			if (other.costList != null)
+				return false;
+		} else if (!costList.equals(other.costList))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (networkSpec == null) {
+			if (other.networkSpec != null)
+				return false;
+		} else if (!networkSpec.equals(other.networkSpec))
+			return false;
+		if (power == null) {
+			if (other.power != null)
+				return false;
+		} else if (!power.equals(other.power))
+			return false;
+		if (resourceID == null) {
+			if (other.resourceID != null)
+				return false;
+		} else if (!resourceID.equals(other.resourceID))
+			return false;
+		if (storageInfo == null) {
+			if (other.storageInfo != null)
+				return false;
+		} else if (!storageInfo.equals(other.storageInfo))
+			return false;
+		if (storageSize == null) {
+			if (other.storageSize != null)
+				return false;
+		} else if (!storageSize.equals(other.storageSize))
+			return false;
+		if (volumeList == null) {
+			if (other.volumeList != null)
+				return false;
+		} else if (!volumeList.equals(other.volumeList))
+			return false;
+		return true;
+	}
+	
 	
 }

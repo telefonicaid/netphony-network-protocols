@@ -162,6 +162,10 @@ public abstract class GeneralizedBandwidth extends PCEPConstruct {
 		super();
 	}
 
+	public GeneralizedBandwidth(byte[] bytes, int offset) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getBwSpecType() {
 		return bwSpecType;
 	}

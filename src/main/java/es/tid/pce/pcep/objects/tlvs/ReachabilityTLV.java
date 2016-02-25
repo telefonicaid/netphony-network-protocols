@@ -117,4 +117,32 @@ public class ReachabilityTLV extends PCEPTLV {
 		EROSubobjectList = eROSubobjectList;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((EROSubobjectList == null) ? 0 : EROSubobjectList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReachabilityTLV other = (ReachabilityTLV) obj;
+		if (EROSubobjectList == null) {
+			if (other.EROSubobjectList != null)
+				return false;
+		} else if (!EROSubobjectList.equals(other.EROSubobjectList))
+			return false;
+		return true;
+	}
+
+	
 }

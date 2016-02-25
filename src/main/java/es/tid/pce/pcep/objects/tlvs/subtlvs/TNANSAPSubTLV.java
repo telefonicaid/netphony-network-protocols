@@ -1,6 +1,8 @@
 package es.tid.pce.pcep.objects.tlvs.subtlvs;
 
 
+import java.util.Arrays;
+
 import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 
@@ -51,8 +53,9 @@ Figure 3.4: TNA TLV
  */
 public class TNANSAPSubTLV extends PCEPSubTLV {
 	
+	private byte[] NSAPaddress;
+
 	private int Addr_length;
-	public byte[] NSAPaddress;
 	
 	public TNANSAPSubTLV(){
 		this.setSubTLVType(PCEPSubTLVTypes.PCEP_SUBTLV_TYPE_TNA_NSAP);
@@ -68,18 +71,20 @@ public class TNANSAPSubTLV extends PCEPSubTLV {
 	 * Encode RequestedStorageSize TLV
 	 */
 	public void encode() {
-		this.setSubTLVValueLength(24);
+		this.setAddr_length(NSAPaddress.length);
+		this.setSubTLVValueLength(8+this.getAddr_length());
 		this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 		this.encodeHeader();
 		this.subtlv_bytes[4]=(byte) (Addr_length & 0xFF);
-		System.arraycopy(NSAPaddress, 0, this.subtlv_bytes, 8, 20);
+		System.arraycopy(NSAPaddress, 0, this.subtlv_bytes, 8, this.getAddr_length());
 	}
 
 	
 	public void decode() {
 		log.debug("Decoding TNA NSAP Addreess");
-		Addr_length=(int)this.subtlv_bytes[4]; 
-		System.arraycopy(this.subtlv_bytes,8, NSAPaddress, 0, 20);
+		this.setAddr_length((int)(this.subtlv_bytes[4]&0xFF));
+		NSAPaddress=new byte[Addr_length];
+		System.arraycopy(this.subtlv_bytes,8, NSAPaddress, 0, this.getAddr_length());
 	}
 
 
@@ -97,9 +102,39 @@ public class TNANSAPSubTLV extends PCEPSubTLV {
 
 	public void setNSAPaddress(byte[] NSAPaddress) {
 		this.NSAPaddress = NSAPaddress;
+		this.setAddr_length(NSAPaddress.length);
 	}
 		
 	public String toString(){
 		return "NSAP address: "+NSAPaddress;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Addr_length;
+		result = prime * result + Arrays.hashCode(NSAPaddress);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TNANSAPSubTLV other = (TNANSAPSubTLV) obj;
+		if (Addr_length != other.Addr_length)
+			return false;
+		if (!Arrays.equals(NSAPaddress, other.NSAPaddress))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
 }

@@ -58,5 +58,31 @@ public class PceIdIPv4 extends PceId {
 		}
 		return ret;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((pceIPAddress == null) ? 0 : pceIPAddress.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PceIdIPv4 other = (PceIdIPv4) obj;
+		if (pceIPAddress == null) {
+			if (other.pceIPAddress != null)
+				return false;
+		} else if (!pceIPAddress.equals(other.pceIPAddress))
+			return false;
+		return true;
+	}
+	
+	
 
 }

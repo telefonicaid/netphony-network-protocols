@@ -21,7 +21,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 	
 	private int igp_router_id_type;//initialized to 2--> rest not implemented yet
-	int length; 
 	
 	private Inet4Address ipv4Address_ospf = null;
 	private Inet4Address ipv4Address_ospf_dr_address = null;
@@ -42,7 +41,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	}
 
 	private void decode() {
-		length = this.getSubTLVValueLength();
+		int length = this.getSubTLVValueLength();
 		int offset = 4; //SubTLV header
 		switch(length){
 		case 4:
@@ -109,7 +108,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		switch(igp_router_id_type){
 		case IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO:
 			log.debug("Encoding IGP Node ID Type: OSPF NON PSEUDO");
-			this.length = 4;
+			int length = 4;
 			this.setSubTLVValueLength(length);		
 			this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 			encodeHeader();
@@ -175,6 +174,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	}
 	
 	public String toString() {
+		int length=this.getSubTLVValueLength();
 		switch(length){
 		case 4:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_NON_PSEUDO="
@@ -191,6 +191,22 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		default:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + "]";
 		}
+	}
+
+	public int getIgp_router_id_type() {
+		return igp_router_id_type;
+	}
+
+	public void setIgp_router_id_type(int igp_router_id_type) {
+		this.igp_router_id_type = igp_router_id_type;
+	}
+
+	public Inet4Address getIpv4Address_ospf() {
+		return ipv4Address_ospf;
+	}
+
+	public void setIpv4Address_ospf(Inet4Address ipv4Address_ospf) {
+		this.ipv4Address_ospf = ipv4Address_ospf;
 	}
 
 }

@@ -142,5 +142,33 @@ public class LoadBalancing extends PCEPObject{
 	public void setMinBandwidth(float minBandwidth) {
 		MinBandwidth = minBandwidth;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + MaxLSP;
+		result = prime * result + Float.floatToIntBits(MinBandwidth);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoadBalancing other = (LoadBalancing) obj;
+		if (MaxLSP != other.MaxLSP)
+			return false;
+		if (Float.floatToIntBits(MinBandwidth) != Float
+				.floatToIntBits(other.MinBandwidth))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

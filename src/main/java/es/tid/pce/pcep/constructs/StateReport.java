@@ -200,12 +200,20 @@ public class StateReport extends PCEPConstruct
 	public void setSRP(SRP srp) {
 		this.srp = srp;
 	}
+	
+	public void setSrp(SRP srp) {
+		this.srp = srp;
+	}
 
 	public LSP getLSP() {
 		return lsp;
 	}
 
 	public void setLSP(LSP lsp) {
+		this.lsp = lsp;
+	}
+	
+	public void setLsp(LSP lsp) {
 		this.lsp = lsp;
 	}
 

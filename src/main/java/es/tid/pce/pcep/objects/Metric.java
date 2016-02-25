@@ -283,6 +283,40 @@ public class Metric extends PCEPObject{
 		}
 		
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (boundBit ? 1231 : 1237);
+		result = prime * result + (computedMetricBit ? 1231 : 1237);
+		result = prime * result + metricType;
+		result = prime * result + Float.floatToIntBits(metricValue);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Metric other = (Metric) obj;
+		if (boundBit != other.boundBit)
+			return false;
+		if (computedMetricBit != other.computedMetricBit)
+			return false;
+		if (metricType != other.metricType)
+			return false;
+		if (Float.floatToIntBits(metricValue) != Float
+				.floatToIntBits(other.metricValue))
+			return false;
+		return true;
+	}
+	
+	
 	
 
 }

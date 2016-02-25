@@ -173,4 +173,44 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 		this.extendedTunnelID = extendedTunnelID;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + extendedTunnelID;
+		result = prime * result + lspID;
+		result = prime * result + tunnelID;
+		result = prime
+				* result
+				+ ((tunnelSenderIPAddress == null) ? 0 : tunnelSenderIPAddress
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IPv4LSPIdentifiersTLV other = (IPv4LSPIdentifiersTLV) obj;
+		if (extendedTunnelID != other.extendedTunnelID)
+			return false;
+		if (lspID != other.lspID)
+			return false;
+		if (tunnelID != other.tunnelID)
+			return false;
+		if (tunnelSenderIPAddress == null) {
+			if (other.tunnelSenderIPAddress != null)
+				return false;
+		} else if (!tunnelSenderIPAddress.equals(other.tunnelSenderIPAddress))
+			return false;
+		return true;
+	}
+	
+	
+	
+
 }

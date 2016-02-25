@@ -212,20 +212,24 @@ public class PCEPErrorObject extends PCEPObject{
 		 */
 		private int errorValue;
 		
-		private LinkedList<PCEPTLV> optionalTLVs;
+		//private LinkedList<PCEPTLV> optionalTLVs;
 		
+		/**
+		 * Optional REQ MISSING TLV
+		 */
+		private ReqMissingTLV reqMissing;
 		//Constructors
 		
 		public PCEPErrorObject(){
 			this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_PCEPERROR);
 			this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_PCEPERROR);
-			optionalTLVs=new LinkedList<PCEPTLV>();
+			//optionalTLVs=new LinkedList<PCEPTLV>();
 			
 		}
 		
 		public PCEPErrorObject(byte[] bytes,int offset) throws MalformedPCEPObjectException{
 			super(bytes, offset);
-			optionalTLVs=new LinkedList<PCEPTLV>();
+			//optionalTLVs=new LinkedList<PCEPTLV>();
 			decode();
 		}
 		
@@ -236,9 +240,13 @@ public class PCEPErrorObject extends PCEPObject{
 		 */
 		public void encode() {
 			int len=8;//The four bytes of the header and four bytes of the body
-			for (int k=0; k<optionalTLVs.size();k=k+1){
-				optionalTLVs.get(k).encode();			
-				len=len+optionalTLVs.get(k).getTotalTLVLength();
+//			for (int k=0; k<optionalTLVs.size();k=k+1){
+//				optionalTLVs.get(k).encode();			
+//				len=len+optionalTLVs.get(k).getTotalTLVLength();
+//			}
+			if (reqMissing!=null){
+				reqMissing.encode();
+				len+=reqMissing.getTotalTLVLength();
 			}
 			this.ObjectLength=len;			
 			this.object_bytes=new byte[ObjectLength];
@@ -248,10 +256,14 @@ public class PCEPErrorObject extends PCEPObject{
 			this.object_bytes[6]=(byte)errorType;
 			this.object_bytes[7]=(byte)errorValue;
 			int pos=8;
-			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
-				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, pos, optionalTLVs.get(k).getTotalTLVLength());
-				pos=pos+optionalTLVs.get(k).getTotalTLVLength();
-			}	
+//			for (int k=0 ; k<optionalTLVs.size(); k=k+1) {					
+//				System.arraycopy(optionalTLVs.get(k).getTlv_bytes(),0, this.object_bytes, pos, optionalTLVs.get(k).getTotalTLVLength());
+//				pos=pos+optionalTLVs.get(k).getTotalTLVLength();
+//			}	
+			if (reqMissing!=null){
+				System.arraycopy(reqMissing.getTlv_bytes(),0, this.object_bytes, pos, reqMissing.getTotalTLVLength());
+	
+			}
 		}
 
 		/**
@@ -271,8 +283,7 @@ public class PCEPErrorObject extends PCEPObject{
 					int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 					int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
 					if (tlvtype==ObjectParameters.PCEP_TLV_REQ_MISSING_TLV){
-						ReqMissingTLV rmTLV= new ReqMissingTLV(this.getObject_bytes(), offset);
-						optionalTLVs.add(rmTLV);			
+						reqMissing = new ReqMissingTLV(this.getObject_bytes(), offset);
 					}
 					offset=offset+tlvlength;
 					if (offset>=ObjectLength){
@@ -300,4 +311,46 @@ public class PCEPErrorObject extends PCEPObject{
 		public void setErrorValue(int errorValue) {
 			this.errorValue = errorValue;
 		}
+
+		public ReqMissingTLV getReqMissing() {
+			return reqMissing;
+		}
+
+		public void setReqMissing(ReqMissingTLV reqMissing) {
+			this.reqMissing = reqMissing;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + errorType;
+			result = prime * result + errorValue;
+			result = prime * result
+					+ ((reqMissing == null) ? 0 : reqMissing.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			PCEPErrorObject other = (PCEPErrorObject) obj;
+			if (errorType != other.errorType)
+				return false;
+			if (errorValue != other.errorValue)
+				return false;
+			if (reqMissing == null) {
+				if (other.reqMissing != null)
+					return false;
+			} else if (!reqMissing.equals(other.reqMissing))
+				return false;
+			return true;
+		}
+		
+		
 }

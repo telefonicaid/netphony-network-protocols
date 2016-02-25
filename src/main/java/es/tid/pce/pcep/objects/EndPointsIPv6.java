@@ -144,6 +144,22 @@ public class EndPointsIPv6 extends EndPoints{
 			return false;
 		return true;
 	}
+
+	public Inet6Address getSourceIP() {
+		return sourceIP;
+	}
+
+	public void setSourceIP(Inet6Address sourceIP) {
+		this.sourceIP = sourceIP;
+	}
+
+	public Inet6Address getDestIP() {
+		return destIP;
+	}
+
+	public void setDestIP(Inet6Address destIP) {
+		this.destIP = destIP;
+	}
 		
 	
 	

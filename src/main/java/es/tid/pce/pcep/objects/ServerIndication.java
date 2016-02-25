@@ -94,6 +94,32 @@ public class ServerIndication extends PCEPObject {
 		this.switchingCap = switchingCap;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + encoding;
+		result = prime * result + switchingCap;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ServerIndication other = (ServerIndication) obj;
+		if (encoding != other.encoding)
+			return false;
+		if (switchingCap != other.switchingCap)
+			return false;
+		return true;
+	}
+
+	
 
 	
 

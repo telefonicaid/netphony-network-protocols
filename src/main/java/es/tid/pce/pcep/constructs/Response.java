@@ -96,10 +96,6 @@ public class Response extends PCEPConstruct{
 	 */
 	private Bandwidth bandwidth;
 
-	/**
-	 * 
-	 */
-	private BandwidthRequestedGeneralizedBandwidth generalizedbandwidth;
 
 	/**
 	 * 
@@ -133,6 +129,7 @@ public class Response extends PCEPConstruct{
 		metricList=new LinkedList<Metric>();
 		pathList=new LinkedList<Path>();
 		metricPCEList=new LinkedList<MetricPCE>();
+		decode(bytes,offset);
 	}
 
 	public RequestParameters getRequestParameters() {
@@ -153,6 +150,9 @@ public class Response extends PCEPConstruct{
 	public void setlSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
+	public void setLSPA(LSPA lSPA) {
+		this.lSPA = lSPA;
+	}
 	public Bandwidth getBandwidth() {
 		return bandwidth;
 	}
@@ -171,7 +171,9 @@ public class Response extends PCEPConstruct{
 	public void setiRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}
-
+	public void setIRO(IncludeRouteObject iRO) {
+		this.iRO = iRO;
+	}
 	public LinkedList<Path> getPathList() {
 		return pathList;
 	}
@@ -221,14 +223,6 @@ public class Response extends PCEPConstruct{
 		this.resConf = resConf;
 	}
 
-
-	public BandwidthRequestedGeneralizedBandwidth getGeneralizedbandwidth() {
-		return generalizedbandwidth;
-	}
-
-	public void setGeneralizedbandwidth(BandwidthRequestedGeneralizedBandwidth generalizedbandwidth) {
-		this.generalizedbandwidth = generalizedbandwidth;
-	}
 	
 	/**
 	 * 
@@ -264,10 +258,7 @@ public class Response extends PCEPConstruct{
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
-		if (generalizedbandwidth!=null){
-			generalizedbandwidth.encode();
-			len=len+generalizedbandwidth.getLength();
-		}
+
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
 				(metricList.get(i)).encode();
@@ -319,10 +310,6 @@ public class Response extends PCEPConstruct{
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
-		}
-		if (generalizedbandwidth!=null){
-			System.arraycopy(generalizedbandwidth.getBytes(), 0, bytes, offset, generalizedbandwidth.getLength());
-			offset=offset+generalizedbandwidth.getLength();
 		}
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
@@ -583,9 +570,6 @@ public class Response extends PCEPConstruct{
 		if (bandwidth!=null){
 			ret=ret+"<BW>";
 		}
-		if (generalizedbandwidth!=null){
-			ret=ret+"<GBW>";
-		}
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
 				ret=ret+metricList.get(i).toString();
@@ -614,10 +598,6 @@ public class Response extends PCEPConstruct{
 		int result = super.hashCode();
 		result = prime * result
 				+ ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime
-				* result
-				+ ((generalizedbandwidth == null) ? 0 : generalizedbandwidth
-						.hashCode());
 		result = prime * result + ((iRO == null) ? 0 : iRO.hashCode());
 		result = prime * result + ((lSPA == null) ? 0 : lSPA.hashCode());
 		result = prime * result
@@ -653,11 +633,7 @@ public class Response extends PCEPConstruct{
 				return false;
 		} else if (!bandwidth.equals(other.bandwidth))
 			return false;
-		if (generalizedbandwidth == null) {
-			if (other.generalizedbandwidth != null)
-				return false;
-		} else if (!generalizedbandwidth.equals(other.generalizedbandwidth))
-			return false;
+
 		if (iRO == null) {
 			if (other.iRO != null)
 				return false;
