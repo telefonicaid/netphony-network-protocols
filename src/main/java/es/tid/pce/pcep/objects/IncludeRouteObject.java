@@ -176,6 +176,33 @@ public class IncludeRouteObject extends PCEPObject{
 	public void setIROList(LinkedList<EROSubobject> iROList) {		
 		IROList = iROList;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((IROList == null) ? 0 : IROList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IncludeRouteObject other = (IncludeRouteObject) obj;
+		if (IROList == null) {
+			if (other.IROList != null)
+				return false;
+		} else if (!IROList.equals(other.IROList))
+			return false;
+		return true;
+	}
+	
+	
 	
 		
 }

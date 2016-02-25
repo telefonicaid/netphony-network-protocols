@@ -132,6 +132,48 @@ public class ProcTime extends PCEPObject {
 		return sb.toString();
 		
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ (int) (averageProcessingTime ^ (averageProcessingTime >>> 32));
+		result = prime
+				* result
+				+ (int) (currentProcessingTime ^ (currentProcessingTime >>> 32));
+		result = prime * result
+				+ (int) (maxProcessingTime ^ (maxProcessingTime >>> 32));
+		result = prime * result
+				+ (int) (minProcessingTime ^ (minProcessingTime >>> 32));
+		result = prime
+				* result
+				+ (int) (varianceProcessingTime ^ (varianceProcessingTime >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProcTime other = (ProcTime) obj;
+		if (averageProcessingTime != other.averageProcessingTime)
+			return false;
+		if (currentProcessingTime != other.currentProcessingTime)
+			return false;
+		if (maxProcessingTime != other.maxProcessingTime)
+			return false;
+		if (minProcessingTime != other.minProcessingTime)
+			return false;
+		if (varianceProcessingTime != other.varianceProcessingTime)
+			return false;
+		return true;
+	}
+	
+	
 	
 
 }

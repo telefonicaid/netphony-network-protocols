@@ -87,11 +87,11 @@ public class RouterAddressTLV extends OSPFTLV {
 		
 	}
 
-	protected Inet4Address getRouterAddress() {
+	public Inet4Address getRouterAddress() {
 		return routerAddress;
 	}
 
-	protected void setRouterAddress(Inet4Address routerAddress) {
+	public void setRouterAddress(Inet4Address routerAddress) {
 		this.routerAddress = routerAddress;
 	}
 	

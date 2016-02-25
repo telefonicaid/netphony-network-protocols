@@ -1,7 +1,10 @@
 package es.tid.pce.pcep.constructs;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.objects.Bandwidth;
+import es.tid.pce.pcep.objects.BandwidthExistingLSP;
 import es.tid.pce.pcep.objects.BandwidthRequested;
+import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
@@ -18,14 +21,18 @@ import org.slf4j.LoggerFactory;
 public class RROBandwidth extends PCEPConstruct{
 
 	private ReportedRouteObject rRO; //Compulsory
-	private BandwidthRequested bandwidth;//Optional
-	
+	private Bandwidth bandwidth;//Optional
+
 	private static final Logger log= LoggerFactory.getLogger("PCEPParser");
-	
+
+	public RROBandwidth(){
+		super();
+	};
+
 	public RROBandwidth (byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		decode(bytes,offset);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -38,7 +45,7 @@ public class RROBandwidth extends PCEPConstruct{
 		}
 		else {
 			log.warn("RRO/BANDWIDTH Rule must start with RRO object");
-				throw new PCEPProtocolViolationException();
+			throw new PCEPProtocolViolationException();
 		}
 		if (bandwidth!=null){
 			bandwidth.encode();
@@ -54,7 +61,7 @@ public class RROBandwidth extends PCEPConstruct{
 			offset=offset+bandwidth.getLength();
 		}
 	}
-	
+
 
 
 	/**
@@ -63,6 +70,7 @@ public class RROBandwidth extends PCEPConstruct{
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		//Decoding RRO-Bandwidth Rule
 		int len=0;		
+
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
 			try {
@@ -77,19 +85,50 @@ public class RROBandwidth extends PCEPConstruct{
 		else {
 			throw new PCEPProtocolViolationException();
 		}		
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
+		int ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
-			try {
-				rRO=new ReportedRouteObject(bytes,offset);
-			} catch (MalformedPCEPObjectException e) {
+			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST){
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}			
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP){
+				try {
+					bandwidth=new BandwidthExistingLSP(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST){
+				try {
+					bandwidth=new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+
+			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP){
+				try {
+					bandwidth=new BandwidthRequested(bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed BANDWIDTH Object found");
+					throw new PCEPProtocolViolationException();
+				}		
+
+			} else {
 				log.warn("Malformed BANDWIDTH Object found");
 				throw new PCEPProtocolViolationException();
 			}
-			offset=offset+rRO.getLength();
-			len=len+rRO.getLength();
+			offset=offset+bandwidth.getLength();
+			len=len+bandwidth.getLength();
 		}
 		this.setLength(len);
-		
+
 	}
 
 
@@ -104,15 +143,19 @@ public class RROBandwidth extends PCEPConstruct{
 		this.rRO = rRO;
 	}
 
+	public void setRRO(ReportedRouteObject rRO) {
+		this.rRO = rRO;
+	}
 
 
-	public BandwidthRequested getBandwidth() {
+
+	public Bandwidth getBandwidth() {
 		return bandwidth;
 	}
 
 
 
-	public void setBandwidth(BandwidthRequested bandwidth) {
+	public void setBandwidth(Bandwidth bandwidth) {
 		this.bandwidth = bandwidth;
 	}
 
@@ -147,7 +190,7 @@ public class RROBandwidth extends PCEPConstruct{
 			return false;
 		return true;
 	}
-	
-	
+
+
 
 }

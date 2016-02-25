@@ -1,6 +1,7 @@
 package es.tid.pce.pcep.objects;
 
 import es.tid.pce.pcep.objects.tlvs.BandwidthTLV;
+import es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 
 
@@ -52,7 +53,7 @@ public class ObjectiveFunction extends PCEPObject {
 	
 	private int OFcode;
 	
-	private BandwidthTLV bwTLV;
+	private OF_LIST_TLV oflist;
 	
 	public ObjectiveFunction(){
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION);
@@ -66,11 +67,10 @@ public class ObjectiveFunction extends PCEPObject {
 
 	@Override
 	public void encode() {
-		//NO OPTIONAL TLVS NOW!
 		this.ObjectLength=8;
-		if (bwTLV!=null){
-			bwTLV.encode();
-			ObjectLength=ObjectLength+bwTLV.getTotalTLVLength();
+		if (oflist!=null){
+			oflist.encode();
+			ObjectLength=ObjectLength+oflist.getTotalTLVLength();
 		}
 		object_bytes=new byte[ObjectLength];
 		encode_header();
@@ -79,9 +79,9 @@ public class ObjectiveFunction extends PCEPObject {
 		object_bytes[6]=0X00;
 		object_bytes[7]=0X00;
 		int offset=8;
-		if (bwTLV!=null){
-			System.arraycopy(bwTLV.getTlv_bytes(),0,this.object_bytes,offset,bwTLV.getTotalTLVLength());
-			offset=offset+bwTLV.getTotalTLVLength();
+		if (oflist!=null){
+			System.arraycopy(oflist.getTlv_bytes(),0,this.object_bytes,offset,oflist.getTotalTLVLength());
+			offset=offset+oflist.getTotalTLVLength();
 		}
 	}
 
@@ -97,22 +97,17 @@ public class ObjectiveFunction extends PCEPObject {
 		}
 		int offset=8;
 		while (!fin) {
-			log.debug("Beginning TLV decoding");
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			log.debug("TLV type "+tlvtype+" TLV length "+tlvlength);//FIXME: Cambiar a log.debug cuando est� estable!!!
 			switch (tlvtype){
 			case ObjectParameters.PCEP_TLV_OF_LIST_TLV:
-				log.debug("OF_LIST_TLV found");
-				bwTLV=new BandwidthTLV(this.getObject_bytes(), offset);
-				log.debug(bwTLV.toString());
+				oflist=new OF_LIST_TLV(this.getObject_bytes(), offset);
+				log.debug(oflist.toString());
 				break;
 			
 		
 			default:
 				log.warn("UNKNOWN TLV found: "+tlvtype);
-				//UnknownTLV unknownTLV = new UnknownTLV();			
-				//FIXME: Que hacemos con los desconocidos????
 				break;
 			}
 			offset=offset+tlvlength;
@@ -129,20 +124,52 @@ public class ObjectiveFunction extends PCEPObject {
 	public int getOFcode() {
 		return OFcode;
 	}
-	
-	
-	
-	public BandwidthTLV getBwTLV() {
-		return bwTLV;
+
+	public OF_LIST_TLV getOflist() {
+		return oflist;
 	}
 
-	public void setBwTLV(BandwidthTLV bwTLV) {
-		this.bwTLV = bwTLV;
+	public void setOflist(OF_LIST_TLV oflist) {
+		this.oflist = oflist;
 	}
 
 	public String toString(){
-		String ret="<OF code= "+OFcode+">";
+		String ret="<OF code= "+OFcode;
+		if (this.getOflist()!=null){
+			ret+=ret.toString();
+		}
+		ret+=">";
 		return ret;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + OFcode;
+		result = prime * result + ((oflist == null) ? 0 : oflist.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ObjectiveFunction other = (ObjectiveFunction) obj;
+		if (OFcode != other.OFcode)
+			return false;
+		if (oflist == null) {
+			if (other.oflist != null)
+				return false;
+		} else if (!oflist.equals(other.oflist))
+			return false;
+		return true;
+	}
+	
+	
 
 }

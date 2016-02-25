@@ -3,7 +3,6 @@ package es.tid.pce.pcep.objects;
 import java.util.Arrays;
 
 import es.tid.pce.pcep.PCEPElement;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +189,7 @@ public abstract class PCEPObject implements PCEPElement {
 	 * Decodes the PCEP Object Header
 	 */
 	public void decodeHeader(){
-		ObjectClass=(int)object_bytes[0];
+		ObjectClass=(int)object_bytes[0]&0XFF;
 		OT=(object_bytes[1]>>4)& 0x0F;
 		ObjectLength=((object_bytes[2]<<8)& 0xFF00) |  (object_bytes[3] & 0xFF);
 		Res=(object_bytes[1]&0x0C)>>2;

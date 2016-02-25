@@ -232,6 +232,43 @@ public class ErrorSpecIPv4 extends ErrorSpec{
 		this.errorValue = errorValue;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + errorCode;
+		result = prime
+				* result
+				+ ((errorNodeAddress == null) ? 0 : errorNodeAddress.hashCode());
+		result = prime * result + errorValue;
+		result = prime * result + flags;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ErrorSpecIPv4 other = (ErrorSpecIPv4) obj;
+		if (errorCode != other.errorCode)
+			return false;
+		if (errorNodeAddress == null) {
+			if (other.errorNodeAddress != null)
+				return false;
+		} else if (!errorNodeAddress.equals(other.errorNodeAddress))
+			return false;
+		if (errorValue != other.errorValue)
+			return false;
+		if (flags != other.flags)
+			return false;
+		return true;
+	}
+
+	
 
 
 	

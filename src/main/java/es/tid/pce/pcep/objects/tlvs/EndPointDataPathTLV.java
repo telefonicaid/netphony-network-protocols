@@ -86,5 +86,36 @@ public class EndPointDataPathTLV extends PCEPTLV {
 		return switchID.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((switchID == null) ? 0 : switchID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EndPointDataPathTLV other = (EndPointDataPathTLV) obj;
+		if (switchID == null) {
+			if (other.switchID != null)
+				return false;
+		} else if (!switchID.equals(other.switchID))
+			return false;
+		return true;
+	}
+
+	public void setSwitchID(DataPathID switchID) {
+		this.switchID = switchID;
+	}
+
+	
 
 }

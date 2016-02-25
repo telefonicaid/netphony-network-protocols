@@ -34,8 +34,8 @@ RFC 4203                OSPF Extensions in MPLS             October 2005
 
    The SRLG sub-TLV may occur at most once within the Link TLV.
  * 
- *	@author Oscar González de Dios
- *	@author Fernando Muñoz del Nuevo
+ *	@author Oscar Gonzï¿½lez de Dios
+ *	@author Fernando Muï¿½oz del Nuevo
  *	
  * 
  */
@@ -85,5 +85,45 @@ public class SharedRiskLinkGroup extends OSPFSubTLV {
 			}	
 		}
 	}
+
+	public LinkedList<Inet4Address> getSharedRiskLinkGroupValues() {
+		return sharedRiskLinkGroupValues;
+	}
+
+	public void setSharedRiskLinkGroupValues(
+			LinkedList<Inet4Address> sharedRiskLinkGroupValues) {
+		this.sharedRiskLinkGroupValues = sharedRiskLinkGroupValues;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((sharedRiskLinkGroupValues == null) ? 0
+						: sharedRiskLinkGroupValues.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SharedRiskLinkGroup other = (SharedRiskLinkGroup) obj;
+		if (sharedRiskLinkGroupValues == null) {
+			if (other.sharedRiskLinkGroupValues != null)
+				return false;
+		} else if (!sharedRiskLinkGroupValues
+				.equals(other.sharedRiskLinkGroupValues))
+			return false;
+		return true;
+	}
+	
+	
 
 }

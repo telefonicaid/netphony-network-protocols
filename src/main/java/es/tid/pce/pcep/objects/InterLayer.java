@@ -243,4 +243,34 @@ public class InterLayer extends PCEPObject {
 
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (IFlag ? 1231 : 1237);
+		result = prime * result + (MFlag ? 1231 : 1237);
+		result = prime * result + (TFlag ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InterLayer other = (InterLayer) obj;
+		if (IFlag != other.IFlag)
+			return false;
+		if (MFlag != other.MFlag)
+			return false;
+		if (TFlag != other.TFlag)
+			return false;
+		return true;
+	}
+	
+	
+
 }

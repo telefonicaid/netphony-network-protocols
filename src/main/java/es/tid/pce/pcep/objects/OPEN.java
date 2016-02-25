@@ -260,7 +260,7 @@ public class OPEN extends PCEPObject{
 		object_bytes=new byte[ObjectLength];
 				
 		encode_header();
-		object_bytes[4]=(byte)( ((Ver<<5) & 0xE0) |( ((parentPCEIndicationBit?1:0)<<3 ) &0x08 ) | ((parentPCERequestBit?1:0<<4) &0x10 ) );
+		object_bytes[4]=(byte)( ((Ver<<5) & 0xE0) |( ((parentPCEIndicationBit?1:0)<<3 ) &0x08 ) | (((parentPCERequestBit?1:0)<<4) &0x10 ) );
 		object_bytes[5]=(byte)Keepalive;
 		object_bytes[6]=(byte)Deadtimer;
 		object_bytes[7]=(byte)(SID& 0xFF);
@@ -304,7 +304,6 @@ public class OPEN extends PCEPObject{
 	 * Decodes the OPEN object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
-		log.info("Decoding OPEN");
 		//Beginning decoding of OPEN object
 		redundancy_indetifier_tlv = null;
 		lsp_database_version_tlv = null;
@@ -528,4 +527,114 @@ public class OPEN extends PCEPObject{
 	public String toString() {
 		return "\nVer: "+Ver+" Flags: "+"Parent PCE Indication Bit: "+parentPCEIndicationBit+"Parent PCE Request Bit: "+parentPCERequestBit+" Keepalive"+Keepalive+" Deadtimer: "+Deadtimer+" SID: "+SID;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Deadtimer;
+		result = prime * result + Keepalive;
+		result = prime * result + SID;
+		result = prime
+				* result
+				+ ((SR_capability_tlv == null) ? 0 : SR_capability_tlv
+						.hashCode());
+		result = prime * result + Ver;
+		result = prime * result
+				+ ((domain_id_tlv == null) ? 0 : domain_id_tlv.hashCode());
+		result = prime
+				* result
+				+ ((gmplsCapabilityTLV == null) ? 0 : gmplsCapabilityTLV
+						.hashCode());
+		result = prime
+				* result
+				+ ((lsp_database_version_tlv == null) ? 0
+						: lsp_database_version_tlv.hashCode());
+		result = prime * result
+				+ ((of_list_tlv == null) ? 0 : of_list_tlv.hashCode());
+		result = prime * result + (parentPCEIndicationBit ? 1231 : 1237);
+		result = prime * result + (parentPCERequestBit ? 1231 : 1237);
+		result = prime * result
+				+ ((pce_id_tlv == null) ? 0 : pce_id_tlv.hashCode());
+		result = prime
+				* result
+				+ ((redundancy_indetifier_tlv == null) ? 0
+						: redundancy_indetifier_tlv.hashCode());
+		result = prime
+				* result
+				+ ((stateful_capability_tlv == null) ? 0
+						: stateful_capability_tlv.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		OPEN other = (OPEN) obj;
+		if (Deadtimer != other.Deadtimer)
+			return false;
+		if (Keepalive != other.Keepalive)
+			return false;
+		if (SID != other.SID)
+			return false;
+		if (SR_capability_tlv == null) {
+			if (other.SR_capability_tlv != null)
+				return false;
+		} else if (!SR_capability_tlv.equals(other.SR_capability_tlv))
+			return false;
+		if (Ver != other.Ver)
+			return false;
+		if (domain_id_tlv == null) {
+			if (other.domain_id_tlv != null)
+				return false;
+		} else if (!domain_id_tlv.equals(other.domain_id_tlv))
+			return false;
+		
+		if (gmplsCapabilityTLV == null) {
+			if (other.gmplsCapabilityTLV != null)
+				return false;
+		} else if (!gmplsCapabilityTLV.equals(other.gmplsCapabilityTLV))
+			return false;
+
+		if (lsp_database_version_tlv == null) {
+			if (other.lsp_database_version_tlv != null)
+				return false;
+		} else if (!lsp_database_version_tlv
+				.equals(other.lsp_database_version_tlv))
+			return false;
+		
+		if (of_list_tlv == null) {
+			if (other.of_list_tlv != null)
+				return false;
+		} else if (!of_list_tlv.equals(other.of_list_tlv))
+			return false;
+		if (parentPCEIndicationBit != other.parentPCEIndicationBit)
+			return false;
+		if (parentPCERequestBit != other.parentPCERequestBit)
+			return false;
+		if (pce_id_tlv == null) {
+			if (other.pce_id_tlv != null)
+				return false;
+		} else if (!pce_id_tlv.equals(other.pce_id_tlv))
+			return false;
+
+		if (redundancy_indetifier_tlv == null) {
+			if (other.redundancy_indetifier_tlv != null)
+				return false;
+		} else if (!redundancy_indetifier_tlv
+				.equals(other.redundancy_indetifier_tlv))
+			return false;
+		if (stateful_capability_tlv == null) {
+			if (other.stateful_capability_tlv != null)
+				return false;
+		} else if (!stateful_capability_tlv
+				.equals(other.stateful_capability_tlv))
+			return false;
+		return true;
+	}
+	
+	
 }

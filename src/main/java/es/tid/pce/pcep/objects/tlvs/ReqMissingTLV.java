@@ -1,5 +1,8 @@
 package es.tid.pce.pcep.objects.tlvs;
 
+import es.tid.pce.pcep.objects.ObjectParameters;
+import es.tid.protocol.commons.ByteHandler;
+
 /**
  * <p> Represents a REQ-MISSING TLV, as defined in RFC 5440</p>
  * <pre>
@@ -25,6 +28,7 @@ public class ReqMissingTLV extends PCEPTLV {
 	private long requestIdNumber;
 
 	public ReqMissingTLV(){
+		this.setTLVType(ObjectParameters.PCEP_TLV_REQ_MISSING_TLV);
 		
 	}
 	
@@ -35,13 +39,17 @@ public class ReqMissingTLV extends PCEPTLV {
 	
 	
 	public void encode() {
-		// TODO Auto-generated method stub
-
+		this.setTLVValueLength(4);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		this.encodeHeader();
+		int offset=4;
+		ByteHandler.encode4bytesLong(requestIdNumber, this.tlv_bytes,offset);
 	}
 
 	
 	public void decode() {
-		// TODO Auto-generated method stub
+		int offset=4;
+		requestIdNumber=ByteHandler.decode4bytesLong(this.tlv_bytes, offset);
 
 	}
 

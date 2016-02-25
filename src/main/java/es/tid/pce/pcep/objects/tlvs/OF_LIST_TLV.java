@@ -99,4 +99,31 @@ public class OF_LIST_TLV extends PCEPTLV {
 		return res;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ofCodes == null) ? 0 : ofCodes.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OF_LIST_TLV other = (OF_LIST_TLV) obj;
+		if (ofCodes == null) {
+			if (other.ofCodes != null)
+				return false;
+		} else if (!ofCodes.equals(other.ofCodes))
+			return false;
+		return true;
+	}
+	
+	
+
 }

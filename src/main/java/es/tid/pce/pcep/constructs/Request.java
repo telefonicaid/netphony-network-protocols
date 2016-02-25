@@ -242,10 +242,11 @@ public class Request extends PCEPConstruct{
 			log.warn("Request must start with RP object");
 			throw new PCEPProtocolViolationException();
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS){
 			ot=PCEPObject.getObjectType(bytes, offset);
-			log.info("Request: ot = "+ot);
+			log.debug("Request: ot = "+ot);
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
 					log.info("PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS");
@@ -339,6 +340,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		ot=PCEPObject.getObjectType(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH){
@@ -385,7 +387,6 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
-	
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
 			Metric metric;
@@ -434,6 +435,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
 			rROBandwidth=new RROBandwidth(bytes, offset);
@@ -444,6 +446,7 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_IRO){
 			try {
@@ -462,6 +465,7 @@ public class Request extends PCEPConstruct{
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LOADBALANCING){
 			try {
+
 				loadBalancing=new LoadBalancing(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed LOADBALANCING Object found");
@@ -521,6 +525,21 @@ public class Request extends PCEPConstruct{
 				return;
 			}
 		}
+		oc=PCEPObject.getObjectClass(bytes, offset);
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_REQ_ADAP_CAP){
+			try {
+				reqAdapCap=new ReqAdapCap(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed ReqAdapCap Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+reqAdapCap.getLength();
+			len=len+reqAdapCap.getLength();
+			if (offset>=max_offset){
+				this.setLength(len);
+				return;
+			}
+		}
 		this.setLength(len);
 		
 	}
@@ -548,6 +567,10 @@ public class Request extends PCEPConstruct{
 	public void setlSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
+	
+	public void setLSPA(LSPA lSPA) {
+		this.lSPA = lSPA;
+	}
 
 	public Bandwidth getBandwidth() {
 		return bandwidth;
@@ -572,12 +595,20 @@ public class Request extends PCEPConstruct{
 	public void setrROBandwidth(RROBandwidth rROBandwidth) {
 		this.rROBandwidth = rROBandwidth;
 	}
+	
+	public void setRROBandwidth(RROBandwidth rROBandwidth) {
+		this.rROBandwidth = rROBandwidth;
+	}
 
 	public IncludeRouteObject getiRO() {
 		return iRO;
 	}
 
 	public void setiRO(IncludeRouteObject iRO) {
+		this.iRO = iRO;
+	}
+	
+	public void setIRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}
 

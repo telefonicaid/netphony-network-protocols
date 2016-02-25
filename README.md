@@ -1,33 +1,37 @@
-netphony-network-protocols v1.2
+netphony-network-protocols v1.2.1
 =================================
-The netphony-network-protocols library is a set of implementations of the main networking protocols stacks that enable control and management functions: 
-* PCEP protocol
-* RVP-TE protocol
-* OSPF-TE protocol
-* BGP-LS protocol
+The netphony-network-protocols library is an implementation of four networking protocols: 
+* **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440).
+* **RSVP-TE protocol**: Resource reservation protocol (RSVP) with Traffic Engineering extensions.
+* **OSPF-TE protocol**: OSPF Version 2 protocol with Traffic Engineering extensions.
+* **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://datatracker.ietf.org/doc/draft-ietf-idr-ls-distribution.
 
-Any software requiring the connection with a device/software that supports such protocols can easily integrate the protocol library. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
+The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
-The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. Contributions are highly welcomed.
+The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) . 
+
+The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04 
+
+The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
 ## Compilation and use
 
-The library can be built using the maven tool. There is a set of junit tests included that tests the enconding/decoding process. Contributions on expanding the test suite are welcomed.
-To build the .jar file and run the tests, simply clone the repository, go to the main directory and run
+The library can be built using the maven tool. There is a set of Junit tests included that check the enconding/decoding process . Contributions on expanding the test suite are welcomed.
+To build the .jar file and run the tests, clone the repository, go to the main directory and run:
  ```bash
     cd netphony-network-protocols
     mvn package
  ```
  
- To use the library in your application, simply add the dependency in your pom.xml file:
+ To use the library in your application, add the dependency in your pom.xml file:
   ```xml
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.2</version>
+      <version>1.2.1</version>
     </dependency>
  ```
- Authors keep also a copy of the artifact in maven central to facilitate the deployment.
+ Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
 
 ## How to use the code:
 
@@ -66,9 +70,11 @@ To build the .jar file and run the tests, simply clone the repository, go to the
    out.write(message.getBytes());
    out.flush();
 ```
-## PCEP Support
+## PCEP Protocol and Support
 
-Detailed PCEP Support [click here](doc/PCEP_Support.md)
+The Path Computation Element Protocol (PCEP) is used for communications between a PCC and a PCE, or between two PCEs, in compliance with RFC4657.  Such interactions include path computation requests, path computation replies as well as notifications of specific states related to the use of a PCE in the context of MPLS and GMPLS Traffic Engineering. Recent extensions. A good source of PCE material can be found in http://ict-one.eu/pace/public_wiki/mediawiki-1.19.7/index.php?title=Tools
+
+The detail of the messages, objects and TLVs can be found in [click here](doc/PCEP_Support.md)
 
 * RFC 5440: Full compliance
 * RFC 5521: Path-key not supported
@@ -86,7 +92,7 @@ Detailed PCEP Support [click here](doc/PCEP_Support.md)
 Detailed RSVP-TE Support [click here](doc/RSVP-TE_Support.md)
 
 
-## OSPF-TE Support
+## OSPF-TE 
 
 Detailed OSPF-TE Support [click here](doc/OSPF-TE_Support.md)
 
@@ -95,8 +101,11 @@ Inter-AS-TE-v2 LSA from RFC5392 http://tools.ietf.org/html/rfc5392
 
 # BGP-LS Support
 
+ It is used to exchange TE information between BGP-LS speakers.
+
 Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 
-
 http://tools.ietf.org/html/draft-ietf-idr-ls-distribution-03
+
+(*) The BGLP-LS Speaker is available in https://github.com/telefonicaid/netphony-topology
 

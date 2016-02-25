@@ -56,20 +56,28 @@ public class DataPathID {
 	}
 
 	@Override
-	public boolean equals(Object object){
-		//System.out.println("* Me meto en el equals: "+this.getDataPathID()+" "+object.toString());
-		if(object instanceof DataPathID && (((DataPathID)object).getDataPathID()).equals(this.getDataPathID())){
-		//	System.out.println("* True"); 
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		} else {
-		//	System.out.println("* False"); 
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		DataPathID other = (DataPathID) obj;
+		if (dataPathID == null) {
+			if (other.dataPathID != null)
+				return false;
+		} else if (!dataPathID.equalsIgnoreCase(other.dataPathID))
+			return false;
+		return true;
 	}
 	@Override
-	public int hashCode(){
-		//System.out.println("* Me meto en el hashCode: "+this.getDataPathID());
-		return dataPathID.hashCode();
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataPathID == null) ? 0 : dataPathID.hashCode());
+		return result;
 	}
 
 }

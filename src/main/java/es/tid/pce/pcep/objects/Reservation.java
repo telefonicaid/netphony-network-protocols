@@ -1,5 +1,7 @@
 package es.tid.pce.pcep.objects;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /**
  * Reservation Object from draft-gonzalezdedios-pce-resv-res-context-state.
  * 
@@ -81,7 +83,10 @@ public class Reservation extends PCEPObject {
 		this.object_bytes[5]=(byte)(timer >>> 16);
 		this.object_bytes[6]=(byte)(timer >>> 8);
 		this.object_bytes[7]=(byte)timer ;
-
+		this.object_bytes[8]=0 ;
+		this.object_bytes[9]=0 ;
+		this.object_bytes[10]=0 ;
+		this.object_bytes[11]=0 ;
 	}
 
 	@Override
@@ -105,5 +110,30 @@ public class Reservation extends PCEPObject {
 		return ret;
 		
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (timer ^ (timer >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass())
+			return false;
+		Reservation other = (Reservation) obj;
+		if (timer != other.timer)
+			return false;
+		return true;
+	}
+	
+	
 
 }

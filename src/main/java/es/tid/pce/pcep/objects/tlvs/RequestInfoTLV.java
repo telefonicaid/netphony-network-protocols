@@ -27,7 +27,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 public class RequestInfoTLV extends PCEPTLV {
 
 	private Inet4Address IPv4Address;
-	private int requestId;
+	private long requestId;
 	
 	public RequestInfoTLV(){
 		this.TLVType=ObjectParameters.PCEP_TLV_REQUEST_INFO;		
@@ -43,7 +43,11 @@ public class RequestInfoTLV extends PCEPTLV {
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();
 		System.arraycopy(IPv4Address.getAddress(), 0, this.tlv_bytes, 4, 4);
-		System.arraycopy(requestId, 0, this.tlv_bytes, 4, 4);
+		//System.arraycopy(requestId, 0, this.tlv_bytes, 4, 4);
+		this.tlv_bytes[8]=(byte)((requestId>>24) & 0xFF);
+		this.tlv_bytes[9]=(byte)((requestId>>16) & 0xFF);
+		this.tlv_bytes[10]=(byte)((requestId>>8) & 0xFF);
+		this.tlv_bytes[11]=(byte)(requestId & 0xFF);
 
 	}
 
@@ -58,7 +62,7 @@ public class RequestInfoTLV extends PCEPTLV {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.arraycopy(this.tlv_bytes, 4, requestId, 0, 4);
+		requestId=( (((long)this.tlv_bytes[8]&(long)0xFF)<<24) | (((long)this.tlv_bytes[9]&(long)0xFF)<<16) |( ((long)this.tlv_bytes[10]&(long)0xFF)<<8) |  ((long)this.tlv_bytes[11]& (long)0xFF) );
 		
 	}
 
@@ -68,11 +72,42 @@ public class RequestInfoTLV extends PCEPTLV {
 	public void setIPv4Address(Inet4Address iPv4Address) {
 		IPv4Address = iPv4Address;
 	}
-	public int getRequestId() {
+	public long getRequestId() {
 		return requestId;
 	}
-	public void setRequestId(int requestId) {
+	public void setRequestId(long requestId) {
 		this.requestId = requestId;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((IPv4Address == null) ? 0 : IPv4Address.hashCode());
+		result = prime * result + (int) (requestId ^ (requestId >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RequestInfoTLV other = (RequestInfoTLV) obj;
+		if (IPv4Address == null) {
+			if (other.IPv4Address != null)
+				return false;
+		} else if (!IPv4Address.equals(other.IPv4Address))
+			return false;
+		if (requestId != other.requestId)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

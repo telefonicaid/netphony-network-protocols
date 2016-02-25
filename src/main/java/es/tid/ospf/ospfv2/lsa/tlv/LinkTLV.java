@@ -468,7 +468,7 @@ public class LinkTLV extends OSPFTLV {
 		return iPv4RemoteASBRID;
 	}
 
-	public void setiPv4RemoteASBRID(IPv4RemoteASBRID iPv4RemoteASBRID) {
+	public void setIPv4RemoteASBRID(IPv4RemoteASBRID iPv4RemoteASBRID) {
 		this.iPv4RemoteASBRID = iPv4RemoteASBRID;
 	}
 

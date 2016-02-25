@@ -264,11 +264,10 @@ public class LSP extends PCEPObject{
 		}else {
 			fin = false;
 		}
-				
 		while (!fin) {
 			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			
+
 			switch (tlvtype){
 				case ObjectParameters.PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME:
 					symbolicPathNameTLV_tlv=new SymbolicPathNameTLV(this.getObject_bytes(), offset);
@@ -427,6 +426,94 @@ public class LSP extends PCEPObject{
 		sb.append(">");
 		return sb.toString();	
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + LSP_sig_type;
+		result = prime * result + (aFlag ? 1231 : 1237);
+		result = prime * result + (dFlag ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((lspDBVersion_tlv == null) ? 0 : lspDBVersion_tlv.hashCode());
+		result = prime
+				* result
+				+ ((lspErrorCodes_tlv == null) ? 0 : lspErrorCodes_tlv
+						.hashCode());
+		result = prime * result + lspId;
+		result = prime
+				* result
+				+ ((lspIdentifiers_tlv == null) ? 0 : lspIdentifiers_tlv
+						.hashCode());
+		result = prime * result + opFlags;
+		result = prime * result + (rFlag ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((rsvpErrorSpec_tlv == null) ? 0 : rsvpErrorSpec_tlv
+						.hashCode());
+		result = prime * result + (sFlag ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((symbolicPathNameTLV_tlv == null) ? 0
+						: symbolicPathNameTLV_tlv.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+		return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LSP other = (LSP) obj;
+		if (LSP_sig_type != other.LSP_sig_type)
+			return false;
+		if (aFlag != other.aFlag)
+			return false;
+		if (dFlag != other.dFlag)
+			return false;
+		if (lspDBVersion_tlv == null) {
+			if (other.lspDBVersion_tlv != null)
+				return false;
+		} else if (!lspDBVersion_tlv.equals(other.lspDBVersion_tlv))
+			return false;
+		if (lspErrorCodes_tlv == null) {
+			if (other.lspErrorCodes_tlv != null)
+				return false;
+		} else if (!lspErrorCodes_tlv.equals(other.lspErrorCodes_tlv))
+			return false;
+		if (lspId != other.lspId)
+			return false;
+		if (lspIdentifiers_tlv == null) {
+			if (other.lspIdentifiers_tlv != null)
+				return false;
+		} else if (!lspIdentifiers_tlv.equals(other.lspIdentifiers_tlv))
+			return false;
+		if (opFlags != other.opFlags)
+			return false;
+		if (rFlag != other.rFlag)
+			return false;
+		if (rsvpErrorSpec_tlv == null) {
+			if (other.rsvpErrorSpec_tlv != null)
+				return false;
+		} else if (!rsvpErrorSpec_tlv.equals(other.rsvpErrorSpec_tlv))
+			return false;
+		if (sFlag != other.sFlag)
+			return false;
+		if (symbolicPathNameTLV_tlv == null) {
+			if (other.symbolicPathNameTLV_tlv != null)
+				return false;
+		} else if (!symbolicPathNameTLV_tlv
+				.equals(other.symbolicPathNameTLV_tlv))
+			return false;
+
+		return true;
+	}
+	
+	
 
 	
 	

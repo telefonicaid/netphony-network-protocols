@@ -60,7 +60,8 @@ public class RSVPErrorSpecTLV extends PCEPTLV
 		int length = errorSpecObject4.getLength();
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.TotalTLVLength];
-		
+		this.encodeHeader();
+
 		int offset=4;
 		
 		errorSpecObject4.encode();

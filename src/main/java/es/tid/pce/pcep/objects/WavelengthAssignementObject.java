@@ -121,4 +121,36 @@ public class WavelengthAssignementObject extends PCEPObject{
 		retry=(this.object_bytes[7]&0x10)==0x10;	
 	}
 
+	public boolean isRetry() {
+		return retry;
+	}
+
+	public void setRetry(boolean retry) {
+		this.retry = retry;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (retry ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WavelengthAssignementObject other = (WavelengthAssignementObject) obj;
+		if (retry != other.retry)
+			return false;
+		return true;
+	}
+	
+	
+
 }

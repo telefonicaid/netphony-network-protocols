@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class Bandwidth extends PCEPObject{
-	protected static final Logger log = LoggerFactory.getLogger("PCEPParser");
 	
 	public Bandwidth(){
 		super();

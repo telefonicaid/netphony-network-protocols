@@ -118,10 +118,14 @@ public class Monitoring extends PCEPObject {
 	
 	public void encode() {
 		ObjectLength=12;
+		if (requestInfoTLV!=null){
+			requestInfoTLV.encode();
+			ObjectLength+=requestInfoTLV.getTotalTLVLength();
+		}
 		object_bytes=new byte[ObjectLength];
 		encode_header();
 		int offset = 7;
-		object_bytes[offset]=(byte)( ( (livenessBit?1:0) & 0x01) | ( ((generalBit?1:0) <<1) & 0x02) | (((processingTimeBit?1:0)<<3) & 0x04) | (((overloadBit?1:0)<<4) & 0x08) | (((incompleteBit?1:0)<<5) & 0x10));
+		object_bytes[offset]=(byte)( ( (livenessBit?1:0) & 0x01) | ( ((generalBit?1:0) <<1) & 0x02) | (((processingTimeBit?1:0)<<2) & 0x04) | (((overloadBit?1:0)<<3) & 0x08) | (((incompleteBit?1:0)<<4) & 0x10));
 		object_bytes[offset+1]=(byte)((monitoringIdNumber>>24) & 0xFF);
 		object_bytes[offset+2]=(byte)((monitoringIdNumber>>16) & 0xFF);
 		object_bytes[offset+3]=(byte)((monitoringIdNumber>>8) & 0xFF);
@@ -222,6 +226,16 @@ public class Monitoring extends PCEPObject {
 	public void setMonitoringIdNumber(long monitoringIdNumber) {
 		this.monitoringIdNumber = monitoringIdNumber;
 	}
+	
+	
+
+	public RequestInfoTLV getRequestInfoTLV() {
+		return requestInfoTLV;
+	}
+
+	public void setRequestInfoTLV(RequestInfoTLV requestInfoTLV) {
+		this.requestInfoTLV = requestInfoTLV;
+	}
 
 	public String toString(){
 		StringBuffer sb=new StringBuffer();
@@ -233,5 +247,51 @@ public class Monitoring extends PCEPObject {
 
 		return sb.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (generalBit ? 1231 : 1237);
+		result = prime * result + (incompleteBit ? 1231 : 1237);
+		result = prime * result + (livenessBit ? 1231 : 1237);
+		result = prime * result
+				+ (int) (monitoringIdNumber ^ (monitoringIdNumber >>> 32));
+		result = prime * result + (overloadBit ? 1231 : 1237);
+		result = prime * result + (processingTimeBit ? 1231 : 1237);
+		result = prime * result
+				+ ((requestInfoTLV == null) ? 0 : requestInfoTLV.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Monitoring other = (Monitoring) obj;
+		if (generalBit != other.generalBit)
+			return false;
+		if (incompleteBit != other.incompleteBit)
+			return false;
+		if (livenessBit != other.livenessBit)
+			return false;
+		if (monitoringIdNumber != other.monitoringIdNumber)
+			return false;
+		if (overloadBit != other.overloadBit)
+			return false;
+		if (processingTimeBit != other.processingTimeBit)
+			return false;
+		if (requestInfoTLV == null) {
+			if (other.requestInfoTLV != null)
+				return false;
+		} else if (!requestInfoTLV.equals(other.requestInfoTLV))
+			return false;
+		return true;
+	}
+	
 	
 }

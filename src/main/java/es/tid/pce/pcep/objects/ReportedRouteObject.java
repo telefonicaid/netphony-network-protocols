@@ -166,4 +166,41 @@ public class ReportedRouteObject extends PCEPObject{
 		}		
 	}
 
+	public LinkedList<RROSubobject> getRroSubObjectList() {
+		return rroSubObjectList;
+	}
+
+	public void setRroSubObjectList(LinkedList<RROSubobject> rroSubObjectList) {
+		this.rroSubObjectList = rroSubObjectList;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((rroSubObjectList == null) ? 0 : rroSubObjectList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReportedRouteObject other = (ReportedRouteObject) obj;
+		if (rroSubObjectList == null) {
+			if (other.rroSubObjectList != null)
+				return false;
+		} else if (!rroSubObjectList.equals(other.rroSubObjectList))
+			return false;
+		return true;
+	}
+	
+	
+
 }

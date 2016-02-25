@@ -252,7 +252,10 @@ public class NoPath  extends PCEPObject{
 	public void setcFlag(boolean cFlag) {
 		this.cFlag = cFlag;
 	}
-
+	
+	public void setCFlag(boolean cFlag) {
+		this.cFlag = cFlag;
+	}
 	public NoPathTLV getNoPathTLV() {
 		return noPathTLV;
 	}
@@ -274,6 +277,38 @@ public class NoPath  extends PCEPObject{
 		}
 		
 		return returnString;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (cFlag ? 1231 : 1237);
+		result = prime * result + natureOfIssue;
+		result = prime * result
+				+ ((noPathTLV == null) ? 0 : noPathTLV.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NoPath other = (NoPath) obj;
+		if (cFlag != other.cFlag)
+			return false;
+		if (natureOfIssue != other.natureOfIssue)
+			return false;
+		if (noPathTLV == null) {
+			if (other.noPathTLV != null)
+				return false;
+		} else if (!noPathTLV.equals(other.noPathTLV))
+			return false;
+		return true;
 	}
 	
 }

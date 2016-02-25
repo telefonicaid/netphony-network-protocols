@@ -168,9 +168,19 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
 		this.addressFamilyIdentifier=((this.bytes[offset2]&0xFF)<<8) | (this.bytes[offset2+1]&0xFF);
 		this.subsequentAddressFamilyIdentifier = (this.bytes[offset2+2]&0xFF);
 		this.nextHopLength= (this.bytes[offset2+3]&0xFF);
-		//FIXME: RELLENAR NEXT HOP NETWORK ADDRESS
-		//		System.arraycopy(bytes, offset+4, this.networkAddressofNextHop, 0, lengthofNextHopNetworkAddress);*/		
+		byte[] bytos = new byte[nextHopLength];
 		
+		System.arraycopy(bytes, offset2+4, bytos, 0, this.nextHopLength);
+		if (this.nextHopLength==4){
+			try {
+				this.nextHop=Inet4Address.getByAddress(bytos);
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//FIXME: ADD IPv6
 		
     	
     }
@@ -184,13 +194,9 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
     	this.bytes[offset+2]=(byte)(this.subsequentAddressFamilyIdentifier&0xFF);
     	this.bytes[offset+3]=(byte)this.getNextHopLength();
     	offset=offset+4;
-    	//FIXME: 0.0.0.0 Por defecto
+    	//FIXME: Complete IPv6
     	if (this.nextHopLength==4){
-    		this.bytes[offset]=0;
-        	this.bytes[offset+1]=0;
-        	this.bytes[offset+2]=0;
-        	this.bytes[offset+3]=0;
-        	
+    		System.arraycopy(this.nextHop.getAddress(), 0, this.bytes, offset, 4);
     	}
     	offset=offset+this.getNextHopLength();
     	this.bytes[offset]=0;
@@ -206,7 +212,7 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
 		return addressFamilyIdentifier;
 	}
 
-	public void setAddressFamilyIdentifier(int addressFamilyIdentifier) {
+	protected void setAddressFamilyIdentifier(int addressFamilyIdentifier) {
 		this.addressFamilyIdentifier = addressFamilyIdentifier;
 	}
 
@@ -214,7 +220,7 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
 		return subsequentAddressFamilyIdentifier;
 	}
 
-	public void setSubsequentAddressFamilyIdentifier(
+	protected void setSubsequentAddressFamilyIdentifier(
 			int subsequentAddressFamilyIdentifier) {
 		this.subsequentAddressFamilyIdentifier = subsequentAddressFamilyIdentifier;
 	}
@@ -264,5 +270,41 @@ public abstract class MP_Reach_Attribute extends PathAttribute{
 	public String toString(){
 		return "mp";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + addressFamilyIdentifier;
+		result = prime * result + ((nextHop == null) ? 0 : nextHop.hashCode());
+		result = prime * result + nextHopLength;
+		result = prime * result + subsequentAddressFamilyIdentifier;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MP_Reach_Attribute other = (MP_Reach_Attribute) obj;
+		if (addressFamilyIdentifier != other.addressFamilyIdentifier)
+			return false;
+		if (nextHop == null) {
+			if (other.nextHop != null)
+				return false;
+		} else if (!nextHop.equals(other.nextHop))
+			return false;
+		if (nextHopLength != other.nextHopLength)
+			return false;
+		if (subsequentAddressFamilyIdentifier != other.subsequentAddressFamilyIdentifier)
+			return false;
+		return true;
+	}
+	
+	
 
 }

@@ -302,4 +302,43 @@ public class LSPA extends PCEPObject {
 	public void setIncludeAll(int includeAll) {
 		this.includeAll = includeAll;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + excludeAny;
+		result = prime * result + holdingPrio;
+		result = prime * result + includeAll;
+		result = prime * result + includeAny;
+		result = prime * result + (lbit ? 1231 : 1237);
+		result = prime * result + setupPrio;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LSPA other = (LSPA) obj;
+		if (excludeAny != other.excludeAny)
+			return false;
+		if (holdingPrio != other.holdingPrio)
+			return false;
+		if (includeAll != other.includeAll)
+			return false;
+		if (includeAny != other.includeAny)
+			return false;
+		if (lbit != other.lbit)
+			return false;
+		if (setupPrio != other.setupPrio)
+			return false;
+		return true;
+	}
+	
+	
 }
