@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.objects.BandwidthRequested;
@@ -80,6 +81,11 @@ public class TestPCEPCommons {
 							 }else if (c.getName().equals("es.tid.of.DataPathID")){
 								 o= new DataPathID();
 								 ((DataPathID)o).setDataPathID("11:22:00:AA:33:BB:11:11");
+							 } else if (c.getName().equals("es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV")){
+								 o= new IGPRouterIDNodeDescriptorSubTLV();
+								 Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+								 ((IGPRouterIDNodeDescriptorSubTLV)o).setIgp_router_id_type(IGPRouterIDNodeDescriptorSubTLV.IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO);
+								((IGPRouterIDNodeDescriptorSubTLV)o).setIpv4Address_ospf(in);
 							 }
 							 
 							 

@@ -76,6 +76,34 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 		
 		return text;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((lsNLRI == null) ? 0 : lsNLRI.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BGP_LS_MP_Reach_Attribute other = (BGP_LS_MP_Reach_Attribute) obj;
+		if (lsNLRI == null) {
+			if (other.lsNLRI != null)
+				return false;
+		} else if (!lsNLRI.equals(other.lsNLRI))
+			return false;
+		return true;
+	}
+	
+	
+	
 	
 
 }

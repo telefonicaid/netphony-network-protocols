@@ -81,7 +81,7 @@ public abstract class LinkStateNLRI extends NLRI {
 	}
 
 
-	public void setNLRIType(int nLRIType) {
+	protected void setNLRIType(int nLRIType) {
 		NLRIType = nLRIType;
 	}
 
@@ -91,7 +91,7 @@ public abstract class LinkStateNLRI extends NLRI {
 	}
 
 
-	public void setTotalNLRILength(int totalNLRILength) {
+	protected void setTotalNLRILength(int totalNLRILength) {
 		TotalNLRILength = totalNLRILength;
 	}
 
@@ -110,5 +110,34 @@ public abstract class LinkStateNLRI extends NLRI {
 
 
 	public abstract void encode();
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + NLRIType;
+		result = prime * result + TotalNLRILength;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LinkStateNLRI other = (LinkStateNLRI) obj;
+		if (NLRIType != other.NLRIType)
+			return false;
+		if (TotalNLRILength != other.TotalNLRILength)
+			return false;
+		return true;
+	}
+	
+	
 
 }
