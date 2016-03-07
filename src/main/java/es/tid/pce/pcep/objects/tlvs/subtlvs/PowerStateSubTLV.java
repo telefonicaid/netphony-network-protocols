@@ -29,10 +29,10 @@ In GEYSERS,
 State includes one field, on 8 bits, defining the current state of 
 the device. The following values are defined:
 
-•	0x01: idle.
-•	0x02: working.
-•	0x03: sleep.
-•	0x04: off.
+	0x01: idle.
+	0x02: working.
+	0x03: sleep.
+	0x04: off.
 
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -44,7 +44,7 @@ the device. The following values are defined:
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class PowerStateSubTLV extends PCEPSubTLV {

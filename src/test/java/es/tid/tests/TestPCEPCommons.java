@@ -112,7 +112,8 @@ public class TestPCEPCommons {
 								
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								System.out.println("name "+name);
-								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								//Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								Method method = object.getClass().getMethod(name);
 								Object res=method.invoke(object);
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {

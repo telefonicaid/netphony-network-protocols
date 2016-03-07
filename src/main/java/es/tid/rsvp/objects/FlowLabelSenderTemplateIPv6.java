@@ -61,7 +61,7 @@ public class FlowLabelSenderTemplateIPv6 extends SenderTemplate{
 
 	@Override
 	public void decode(byte[] bytes, int offset) {
-		// FIXME: decodificar cuando se sepa lo que irá dentro
+		// FIXME
 		
 	}
 

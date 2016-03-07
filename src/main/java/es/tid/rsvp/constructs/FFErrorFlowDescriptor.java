@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * object that appeared in  the list; the first FF flow descriptor
  * must contain a FLOWSPEC.
  * </UL>
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

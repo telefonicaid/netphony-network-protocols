@@ -31,7 +31,7 @@ In GEYSERS, when the End-point describes a Memory element, it includes
  minimum and maximum values for the range of memory requested.
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class RequestedMemorySubTLV extends PCEPSubTLV {

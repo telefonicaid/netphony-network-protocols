@@ -119,7 +119,7 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
    following sections.
 
  * 
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * @author Oscar Gonzalez de Dios
  */
 

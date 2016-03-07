@@ -26,7 +26,7 @@ Available Size, expressed in bytes.
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class MemorySubTLV extends PCEPSubTLV {

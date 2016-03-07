@@ -1,5 +1,6 @@
 package es.tid.rsvp.objects.subobjects;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /** 
@@ -287,4 +288,37 @@ public abstract class EROSubobject {
 
 		return intfEROSubobject;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + erosolength;
+		result = prime * result + (loosehop ? 1231 : 1237);
+		result = prime * result + Arrays.hashCode(subobject_bytes);
+		result = prime * result + type;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EROSubobject other = (EROSubobject) obj;
+		if (erosolength != other.erosolength)
+			return false;
+		if (loosehop != other.loosehop)
+			return false;
+		if (!Arrays.equals(subobject_bytes, other.subobject_bytes))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
+	}
+	
+	
 }

@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * objects recorded in the path state match a FILTER_SPEC object in the
  * reservation.  This match must follow the rules of Section 3.2.</p>
  * </UL>
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

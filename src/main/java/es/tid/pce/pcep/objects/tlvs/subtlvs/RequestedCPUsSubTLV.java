@@ -56,7 +56,7 @@ In GEYSERS, when the End-point describes a CPU, it includes
  
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class RequestedCPUsSubTLV extends PCEPSubTLV {

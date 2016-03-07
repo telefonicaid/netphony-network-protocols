@@ -18,16 +18,16 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
  The Type field (8 bit) indicates the CPU architecture. The following values 
  are defined:
  
-•	0x01: SPARC.
-•	0x02: POWERPC.
-•	0x03: X86.
-•	0x04: X86_32.
-•	0x05: X86_64.
-•	0x06: PARISC.
-•	0x07: MIPS.
-•	0x08: IA64.
-•	0x09: ARM.
-•	0xFF: other.
+	0x01: SPARC.
+	0x02: POWERPC.
+	0x03: X86.
+	0x04: X86_32.
+	0x05: X86_64.
+	0x06: PARISC.
+	0x07: MIPS.
+	0x08: IA64.
+	0x09: ARM.
+	0xFF: other.
 
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -43,7 +43,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Dueï¿½as
  *
  */
 public class ProcessorSubTLV extends PCEPSubTLV {

@@ -6,7 +6,7 @@ import es.tid.rsvp.*;
  * 
  * <p> A RSVP Construct is a rule that joins RSVP Objects and Constructions. 
  * Each specific construct will have its elements </p>
- * @author Fernando Muñoz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 
