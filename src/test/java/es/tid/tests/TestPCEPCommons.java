@@ -18,6 +18,8 @@ import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.PceIdIPv4;
+import es.tid.rsvp.objects.subobjects.EROSubobject;
+import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
 public class TestPCEPCommons {
 	public static void createAllFields(Object object){
@@ -107,11 +109,18 @@ public class TestPCEPCommons {
 							Class ca=(Class)rt;
 							
 							if (ca.getName().equals("java.util.LinkedList")){
+								
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
+								System.out.println("name "+name);
 								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Object res=method.invoke(object);
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
+									IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
+									Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+									eroso.setIpv4address(in);
+									eroso.setPrefix(16);
+									methods[0].invoke(res, eroso);									
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
 								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
