@@ -143,7 +143,6 @@ public class TestPCEPCommons {
 									System.out.println("FIXME: es.tid.pce.pcep.tlvs.PCEPTLV");
 								}
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.Metric")) {
-									System.out.println("FIXME: es.tid.pce.pcep.objects.Metric");
 									LinkedList<Metric> ll=new LinkedList<Metric>();
 									Object o = ((Class)at).newInstance();
 									createAllFields(o);
