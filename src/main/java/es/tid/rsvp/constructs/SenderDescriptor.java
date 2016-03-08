@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <LI>&lt;sender descriptor&gt; ::= &lt;SENDER_TEMPLATE&gt; &lt;SENDER_TSPEC&gt;
  * [ &lt;ADSPEC&gt; ]
  * </UL>
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

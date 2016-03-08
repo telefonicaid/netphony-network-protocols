@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
          resources with itself. </p>
 
 
-@author Fernando Mu�oz del Nuevo	fmn@tid.es
+@author Fernando Munoz del Nuevo	fmn@tid.es
 
  */
 

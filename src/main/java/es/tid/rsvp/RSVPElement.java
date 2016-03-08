@@ -3,7 +3,7 @@ package es.tid.rsvp;
 /**
  * <p>Interface class for all RSVP Elements, which are RSVP Messages, RSVP Constructs and RSVP Objects.</p>
  * 
- * @author Fernando Muñoz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

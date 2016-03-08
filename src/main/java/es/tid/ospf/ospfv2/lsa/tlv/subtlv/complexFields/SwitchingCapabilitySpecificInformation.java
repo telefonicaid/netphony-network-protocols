@@ -3,7 +3,7 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 /**
  * Generic base class for SwitchingCapabilitySpecificInformation.
  * 
- * @author Fernando Muñoz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * @author Oscar Gonzalez de Dios
  *
  */

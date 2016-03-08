@@ -28,13 +28,13 @@ In GEYSERS,
 Cost includes two fields, unitary price on 32 bits and usage unit on 16 bit. The 
 following values are defined for usage units:
 
-�	0x01: GB per day.
-�	0x02: GB per week.
-�	0x03: GB per month.
-�	0x04: usage time � per minute.
-�	0x05: usage time � per hour.
-�	0x06: usage time � per week.
-�	0x07: usage time � per month.
+	0x01: GB per day.
+	0x02: GB per week.
+	0x03: GB per month.
+	0x04: usage time  per minute.
+	0x05: usage time  per hour.
+	0x06: usage time  per week.
+	0x07: usage time  per month.
 
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -48,7 +48,7 @@ following values are defined for usage units:
 
  * 
  * 
- * @author Alejandro Tovar de Due�as
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class CostSubTLV extends PCEPSubTLV {

@@ -40,7 +40,7 @@ In GEYSERS, when the End-point describes a OperativeSystem, it includes
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class OperativeSystemSubTLV extends PCEPSubTLV {

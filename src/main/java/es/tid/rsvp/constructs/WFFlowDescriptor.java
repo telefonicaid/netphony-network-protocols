@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * &lt;WF flow descriptor&gt; ::= &lt;FLOWSPEC&gt;
  * </UL>
  * 
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

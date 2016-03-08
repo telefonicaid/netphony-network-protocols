@@ -25,8 +25,8 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    normal default metric of this link, which is advertised in the fixed
    part of the extended IS reachability TLV.
    
- * @author Oscar Gonz�lez de Dios
- * @author Fernando Mu�oz del Nuevo
+ * @author Oscar Gonzalez de Dios
+ * @author Fernando Munoz del Nuevo
  *
  */
 public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {

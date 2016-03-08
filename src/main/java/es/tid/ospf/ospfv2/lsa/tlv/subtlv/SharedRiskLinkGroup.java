@@ -34,8 +34,8 @@ RFC 4203                OSPF Extensions in MPLS             October 2005
 
    The SRLG sub-TLV may occur at most once within the Link TLV.
  * 
- *	@author Oscar Gonz�lez de Dios
- *	@author Fernando Mu�oz del Nuevo
+ *	@author Oscar Gonzalez de Dios
+ *	@author Fernando Munoz del Nuevo
  *	
  * 
  */

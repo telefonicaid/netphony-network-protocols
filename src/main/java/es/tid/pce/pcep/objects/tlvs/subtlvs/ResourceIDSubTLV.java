@@ -38,7 +38,7 @@ ResourceID: unique identifier on 32 bits
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class ResourceIDSubTLV extends PCEPSubTLV {

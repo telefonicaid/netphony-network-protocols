@@ -13,8 +13,8 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
    The Traffic Engineering Metric sub-TLV is TLV type 5, and is four
    octets in length.
    
- * @author Oscar Gonz�lez de Dios
- * @author Fernando Mu�oz del Nuevo
+ * @author Oscar Gonzalez de Dios
+ * @author Fernando Munoz del Nuevo
  *
  */
 public class TrafficEngineeringMetric extends OSPFSubTLV {

@@ -35,7 +35,7 @@ MTU, Max Speed, Maximum Consumption, Idle Consumption, Sleep Consumption, and Bl
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class MaxSpeedSubTLV extends PCEPSubTLV {

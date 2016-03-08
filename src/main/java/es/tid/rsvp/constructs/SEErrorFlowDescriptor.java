@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * 
  * <UL>
  * 
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 

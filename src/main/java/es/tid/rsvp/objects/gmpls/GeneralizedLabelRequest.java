@@ -8,7 +8,7 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * 
  * 	RFC 3473
  * 

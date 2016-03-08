@@ -40,7 +40,7 @@ In GEYSERS, EP Address (Figure 3.19) is a string in the format <protocol>:<addre
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class EPaddressSubTLV extends PCEPSubTLV {

@@ -38,7 +38,7 @@ In GEYSERS,
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class InterStateLatenciesSubTLV extends PCEPSubTLV {

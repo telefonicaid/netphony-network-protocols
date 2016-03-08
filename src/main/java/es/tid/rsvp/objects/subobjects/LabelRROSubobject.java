@@ -38,7 +38,7 @@ package es.tid.rsvp.objects.subobjects;
 
          The contents of the Label Object.  Copied from the Label Object
 </p>
- * @author Fernando Muñoz del Nuevo fmn@tid.es
+ * @author Fernando Munoz del Nuevo fmn@tid.es
  *
  */
 

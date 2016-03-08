@@ -38,7 +38,7 @@ version number on 6 bits and a build/fix version number on 6 bits.
 
 * 
 * 
-* @author Alejandro Tovar de Dueñas
+* @author Alejandro Tovar de Duenas
 *
 */
 public class ApplicationSubTLV extends PCEPSubTLV {

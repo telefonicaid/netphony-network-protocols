@@ -340,5 +340,15 @@ public class LSPA extends PCEPObject {
 		return true;
 	}
 	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(100);
+		sb.append("<LSAP sp = ");
+		sb.append(this.setupPrio);	
+		sb.append(" hp= " );	
+		sb.append(this.holdingPrio);
+		sb.append(">");
+		return sb.toString();	
+	}
+	
 	
 }

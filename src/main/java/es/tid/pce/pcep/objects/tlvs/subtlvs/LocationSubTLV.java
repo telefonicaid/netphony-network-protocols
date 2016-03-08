@@ -35,15 +35,15 @@ field is 40 bits, including 6 bits of resolution.
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         |   LaRes   |               Latitude                            |
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        | Lat. (cont’d) |   Reserved    |  LoRes    |  Longitude        |
+        | Lat. (cont d) |   Reserved    |  LoRes    |  Longitude        |
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        |           Longitude (cont’d)                  |   Reserved    |
+        |           Longitude (cont d)                  |   Reserved    |
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
 * 
 * 
-* @author Alejandro Tovar de Dueñas
+* @author Alejandro Tovar de Duenas
 *
 */
 public class LocationSubTLV extends PCEPSubTLV {

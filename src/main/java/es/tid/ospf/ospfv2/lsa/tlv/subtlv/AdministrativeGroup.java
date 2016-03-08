@@ -17,8 +17,8 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
    The Administrative Group sub-TLV is TLV type 9, and is four octets in
    length.
    
- * @author Oscar González de Dios
- * @author Fernando Muñoz del Nuevo
+ * @author Oscar Gonzalez de Dios
+ * @author Fernando Munoz del Nuevo
  */
 
 public class AdministrativeGroup extends OSPFSubTLV {
