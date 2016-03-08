@@ -165,12 +165,16 @@ public class TestPCEPCommons {
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
 										methods[0].invoke(res, in);
 									}else {
+										
+										//Object ll= pt.getRawType(). .newInstance();
 										Object ll= ca.newInstance();
 										System.out.println("Creating "+((Class)at).getName());
 										Object o = ((Class)at).newInstance();
 										createAllFields(o);
+										//Method method3 = ll.getClass().getMethod("add");
+										//method3.invoke(ll, o);
 										Method[] methodss =ll.getClass().getDeclaredMethods();
-										methodss[0].invoke(res, o);
+										methodss[0].invoke(ll, o);
 										method2.invoke(object,ll);	
 									}
 								}
