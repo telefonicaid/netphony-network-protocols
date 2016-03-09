@@ -149,7 +149,7 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
 
          
  * @author ogondio
- * @author Fernando Muñoz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 public class PortLabelRestriction extends OSPFSubTLV {

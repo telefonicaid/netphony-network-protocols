@@ -125,7 +125,7 @@ RFC 2210                   RSVP with INTSERV              September 1997
  */
 
 /**
- * @author Fernando Mu�oz del Nuevo, fernandomunoz1985@gmail.com
+ * @author Fernando Munoz del Nuevo, fernandomunoz1985@gmail.com
  */
 
 public class FlowSpec extends RSVPObject{

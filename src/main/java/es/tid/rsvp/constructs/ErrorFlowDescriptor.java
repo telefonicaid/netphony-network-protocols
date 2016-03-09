@@ -25,7 +25,7 @@ import es.tid.rsvp.RSVPProtocolViolationException;
  * Therefore, a Resv message that contains N &gt; 1 flow descriptors (FF style)
  * may create up to N separate ResvErr messages.</p>
  * 
- * @author Fernando Muñoz del Nuevo fmn@tid.es
+ * @author Fernando Munoz del Nuevo fmn@tid.es
  * @version 0.1
  */
 

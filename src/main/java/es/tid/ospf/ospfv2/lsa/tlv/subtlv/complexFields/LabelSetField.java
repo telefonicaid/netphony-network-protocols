@@ -54,7 +54,7 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
 
  * 
  * @author ogondio
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  */
 
 public abstract class LabelSetField{

@@ -12,14 +12,14 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
    Value:  variable
 
 Storage Info and Volume Info include two fields, Access Status and Volatile. The Access Status defines the current status of the storage. The following values are defined:
-•	0x01: queuing.
-•	0x02: production.
-•	0x03: closed.
-•	0x04: draining.
+	0x01: queuing.
+	0x02: production.
+	0x03: closed.
+	0x04: draining.
 The Volatile field indicate if the held data are lost when the power is removed. The following values are defined:
-•	0x01: volatile.
-•	0x02: not volatile.
-•	0x03: undefined.
+	0x01: volatile.
+	0x02: not volatile.
+	0x03: undefined.
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -31,7 +31,7 @@ The Volatile field indicate if the held data are lost when the power is removed.
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class StorageInfoSubTLV extends PCEPSubTLV {

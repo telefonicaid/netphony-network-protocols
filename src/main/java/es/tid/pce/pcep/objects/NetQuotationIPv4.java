@@ -50,7 +50,7 @@ That way, each End-point pair block is reduced to
 					Quotation block Format for IPv4
 
  * </pre>
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public abstract class NetQuotationIPv4 extends PCEPObject{

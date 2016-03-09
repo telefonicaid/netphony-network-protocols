@@ -14,25 +14,25 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
    Power Info includes three fields, Power Source, Power Class and Regeneration. 
    The following values are defined for the Power Source field (16 bit):
    
-•	0x01: Battery.
-•	0x02: Solar Cells.
-•	0x03: Electrical.
-•	0x04: Fuel.
+	0x01: Battery.
+	0x02: Solar Cells.
+	0x03: Electrical.
+	0x04: Fuel.
 
 The Power Class field (8 bit) indicates the level of energy efficiency. The following
  values are defined:
  
-•	0x01: A.
-•	0x02: B.
-•	0x03: C.
-•	0x04: D.
+	0x01: A.
+	0x02: B.
+	0x03: C.
+	0x04: D.
 
 The Regeneration field (8 bit) indicates if the it is possible to regenerate the
  power resource. The following values are defined:
  
-•	0x01: renewable.
-•	0x02: not renewable.
-•	0x03: undefined.
+	0x01: renewable.
+	0x02: not renewable.
+	0x03: undefined.
 
 
          0                   1                   2                   3
@@ -45,7 +45,7 @@ The Regeneration field (8 bit) indicates if the it is possible to regenerate the
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class PowerInfoSubTLV extends PCEPSubTLV {

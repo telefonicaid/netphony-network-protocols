@@ -9,7 +9,7 @@ import es.tid.pce.pcep.constructs.NCF;
 
 /**
 
-�	Attaching a new LABEL_SET object (class 130, type 1) as an attribute of the computed path, that encodes the free NCF as an inclusive list. Each ncf-number is of the form grid-ch.spacing-identier-n. We assume identifier is zero.
+	Attaching a new LABEL_SET object (class 130, type 1) as an attribute of the computed path, that encodes the free NCF as an inclusive list. Each ncf-number is of the form grid-ch.spacing-identier-n. We assume identifier is zero.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -104,7 +104,7 @@ public  class LabelSetInclusiveList extends LabelSet{
 		return ncfList;
 	}
 
-	public void setNCFList(LinkedList<NCF> nCFList) {
+	public void setNcfList(LinkedList<NCF> nCFList) {
 		ncfList = nCFList;
 	}
 

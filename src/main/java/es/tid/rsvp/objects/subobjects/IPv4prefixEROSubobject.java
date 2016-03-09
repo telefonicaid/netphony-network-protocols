@@ -106,5 +106,35 @@ public class IPv4prefixEROSubobject extends EROSubobject{
 		String resp=ipv4address+"/"+prefix;
 		return resp;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((ipv4address == null) ? 0 : ipv4address.hashCode());
+		result = prime * result + prefix;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IPv4prefixEROSubobject other = (IPv4prefixEROSubobject) obj;
+		if (ipv4address == null) {
+			if (other.ipv4address != null)
+				return false;
+		} else if (!ipv4address.equals(other.ipv4address))
+			return false;
+		if (prefix != other.prefix)
+			return false;
+		return true;
+	}
+	
+	
+	
 
 }

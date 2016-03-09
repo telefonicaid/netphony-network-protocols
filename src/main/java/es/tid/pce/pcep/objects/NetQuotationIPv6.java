@@ -64,7 +64,7 @@ where a single Quotation block has the following format:
 
 
 * </pre>
-* @author Alejandro Tovar de Dueñas
+* @author Alejandro Tovar de Duenas
 *
 */
 public class NetQuotationIPv6 extends EndPoints {

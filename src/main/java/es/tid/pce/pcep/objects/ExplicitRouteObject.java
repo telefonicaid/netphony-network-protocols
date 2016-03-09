@@ -251,6 +251,7 @@ public class ExplicitRouteObject extends PCEPObject{
 				return false;
 		} else if (!EROSubobjectList.equals(other.EROSubobjectList))
 			return false;
+
 		return true;
 	}
 	

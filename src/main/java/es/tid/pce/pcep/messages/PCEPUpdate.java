@@ -96,7 +96,7 @@ import org.slf4j.LoggerFactory;
    wait for an LSP State Report for a previous LSP before triggering the
    LSP setup of a next LSP.
    
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * 
  *
  */
