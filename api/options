@@ -1,0 +1,24 @@
+-classpath
+'/Users/ogondio/Desarrollos/workspace/ABNO_Completo_demo/cne-network-protocols/target/classes:/Users/ogondio/.m2/repository/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/ogondio/Desarrollos/workspace/ABNO_Completo_demo/cne-network-protocols/src/main/java:/Users/ogondio/Desarrollos/workspace/ABNO_Completo_demo/cne-network-protocols/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2016. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/ogondio/Desarrollos/workspace/ABNO_Completo_demo/cne-network-protocols/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Netphony Network Protocols 1.2.2 API'
+-linkoffline
+'http://docs.oracle.com/javase/6/docs/api' '/Users/ogondio/Desarrollos/workspace/ABNO_Completo_demo/cne-network-protocols/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'Netphony Network Protocols 1.2.2 API'
