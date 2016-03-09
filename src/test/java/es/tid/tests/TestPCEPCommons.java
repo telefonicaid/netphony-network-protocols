@@ -206,8 +206,10 @@ public class TestPCEPCommons {
 										Long in=new Long(5);
 										methods[0].invoke(res, in);
 									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
+										LinkedList<Inet4Address> ll=new LinkedList<Inet4Address>();
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
-										methods[0].invoke(res, in);
+										ll.add(in);
+										method2.invoke(object,ll);
 									}else {
 										
 										//Object ll= pt.getRawType(). .newInstance();
