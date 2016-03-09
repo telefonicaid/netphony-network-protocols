@@ -1,3 +1,4 @@
+- Fixed more JUNit tests errors in lists with jdk 7
 v1.2.2
 - Fixed maven errors with unmappable character for encoding UTF8
 - Fixed compilation erros of JUnnit tests in openjdk 7 
