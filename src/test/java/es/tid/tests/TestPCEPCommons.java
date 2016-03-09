@@ -15,6 +15,8 @@ import java.util.List;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
+import es.tid.pce.pcep.constructs.MetricPCE;
+import es.tid.pce.pcep.constructs.NCF;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.objects.BandwidthRequested;
@@ -171,6 +173,22 @@ public class TestPCEPCommons {
 									Object o = ((Class)at).newInstance();
 									createAllFields(o);
 									ll.add((Path)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.NCF")) {
+									LinkedList<NCF> ll=new LinkedList<NCF>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((NCF)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.MetricPCE")) {
+									LinkedList<MetricPCE> ll=new LinkedList<MetricPCE>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((MetricPCE)o);
 									method2.invoke(object,ll);
 									
 								}
