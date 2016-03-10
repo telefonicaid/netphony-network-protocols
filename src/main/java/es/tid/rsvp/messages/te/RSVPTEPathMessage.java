@@ -154,8 +154,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	/**
 	 * Constructor to be used when an RSVP-TE Path Message wanted to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes
+	 * @param length length 
 	 */
 	
 	public RSVPTEPathMessage(byte[] bytes, int length){
@@ -189,7 +189,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	}
 
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
 	 */
 	
 	public void encode() throws RSVPProtocolViolationException{
@@ -448,7 +448,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	}
 
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding
 	 */
 	
 	public void decode() throws RSVPProtocolViolationException {
@@ -663,7 +663,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	/**
 	 * 
-	 * @param senderDescriptor
+	 * @param senderDescriptor Sender Descriptor
 	 */
 	
 	public void addSenderDescriptor(SenderDescriptor senderDescriptor){
@@ -674,7 +674,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 
 	/**
 	 * 
-	 * @param senderTSpec
+	 * @param senderTSpec Sender TSPec
 	 */
 	
 	public void addIntservSenderTSpecDescriptor(IntservSenderTSpec senderTSpec){	

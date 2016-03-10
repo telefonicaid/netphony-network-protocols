@@ -90,8 +90,8 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new FF Error Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -132,7 +132,7 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * FF Error Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 *  @throws RSVPProtocolViolationException Exception is thrown when there is a problem encoding the RSVP Message 
 	 * 
 	 */
 			
@@ -176,7 +176,7 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * FF Error Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 *  @throws RSVPProtocolViolationException Exception is thrown when there is a problem decoding the RSVP Message
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

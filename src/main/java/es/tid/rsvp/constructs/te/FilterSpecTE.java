@@ -67,7 +67,9 @@ public class FilterSpecTE extends RSVPConstruct {
 	
 	/**
 	 * Constructor to be used when a new FilterSpec TE is wanted to be created and sent 
-	 * @param filterSpec
+	 * @param filterSpec Filter Spec
+	 * @param label Label 
+	 * @param rro RRO
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -115,7 +117,7 @@ public class FilterSpecTE extends RSVPConstruct {
 	 * 
 	 * Filter Spec Construct encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when a mandatory filed is not encoded.
 	 * 
 	 */
 			
@@ -165,7 +167,7 @@ public class FilterSpecTE extends RSVPConstruct {
 	 * 
 	 * Filter Spec Construct decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  Thrown when there is a problem in decoding.
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

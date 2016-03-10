@@ -117,8 +117,8 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 	
 	/**
 	 * Constructor to be used when an RSVP-TE Hello Message wanted to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPTEHelloMessage(byte[] bytes, int length){

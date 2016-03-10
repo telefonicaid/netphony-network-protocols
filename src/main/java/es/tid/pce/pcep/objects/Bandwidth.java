@@ -18,6 +18,7 @@ public abstract class Bandwidth extends PCEPObject{
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH);
 	}
+	
 	public Bandwidth(byte[] bytes, int offset) throws MalformedPCEPObjectException{
 		super(bytes, offset);
 	}

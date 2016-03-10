@@ -67,8 +67,8 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new SE Flow Descriptor TE it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -108,7 +108,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	/**
 	 * Method to add new Filter Spec TE object to the filter Spec list
-	 * @param filterSpec
+	 * @param filterSpec filter spec
 	 */
 	
 	public void addFilterSpec(FilterSpecTE filterSpec){
@@ -122,7 +122,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor TE encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown if a mandatory field is not present
 	 * 
 	 */
 			
@@ -172,7 +172,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException exception decoding bytes
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

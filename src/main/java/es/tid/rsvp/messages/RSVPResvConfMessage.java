@@ -169,8 +169,8 @@ public class RSVPResvConfMessage extends RSVPMessage {
 	
 	/**
 	 * Constructor to be used in case of creating a new Resv Confirmation message to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvConfMessage(byte[] bytes, int length){

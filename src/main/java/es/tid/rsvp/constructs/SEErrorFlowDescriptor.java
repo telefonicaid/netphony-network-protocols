@@ -101,8 +101,8 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new SE Error Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec 
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -142,7 +142,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Method to add new Filter Spec object to the filter Spec list
-	 * @param filterSpec
+	 * @param filterSpec Filter Spec
 	 */
 	
 	public void addFilterSpec(FilterSpec filterSpec){
@@ -156,7 +156,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when a mandatory field is not set. 
 	 * 
 	 */
 			
@@ -168,7 +168,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 		
 		int offset=0;
 		if(flowSpec != null){
-			// Campo s�lo obligatorio en el primer FFlowDescriptor
+			// Campo solo obligatorio en el primer FFlowDescriptor
 			flowSpec.encode();
 			System.arraycopy(flowSpec.getBytes(), 0, bytes, offset, flowSpec.getLength());
 			offset = offset + flowSpec.getLength();
@@ -206,7 +206,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * SE Error Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem decoding the field
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

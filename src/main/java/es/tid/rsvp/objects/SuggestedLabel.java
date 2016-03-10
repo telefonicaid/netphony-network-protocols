@@ -76,8 +76,8 @@ public class SuggestedLabel extends Label{
 	/**
 	 * Constructor to be used when a new ERO Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public SuggestedLabel(byte[] bytes, int offset){

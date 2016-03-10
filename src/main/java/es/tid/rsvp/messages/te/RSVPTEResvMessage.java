@@ -158,8 +158,8 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 	
 	/**
 	 * Constructor to be used when an RSVP-TE Resv Message wanted to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPTEResvMessage(byte[] bytes, int length){

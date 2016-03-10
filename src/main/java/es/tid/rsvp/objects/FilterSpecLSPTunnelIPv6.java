@@ -93,8 +93,8 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 	/**
 	 * <p>Constructor to be used when a new Filter Spec LSP Tunnel IPv6 Object wanted 
 	 * to be decoded from a received message.</p>
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public FilterSpecLSPTunnelIPv6(byte[] bytes, int offset){

@@ -113,8 +113,8 @@ public class SessionLSPTunnelIPv6 extends Session{
 	/**
 	 * Constructor to be used when a new Session LSP Tunnel IPv6 Object wanted to be
 	 * attached to a new message
-	 * @param egressNodeAddress
-	 * @param extendedTunnelId
+	 * @param egressNodeAddress egressNodeAddress
+	 * @param extendedTunnelId extendedTunnelId
 	 */	
 	
 	public SessionLSPTunnelIPv6(Inet6Address egressNodeAddress, int tunnelId, int extendedTunnelId){
@@ -135,8 +135,8 @@ public class SessionLSPTunnelIPv6 extends Session{
 	/**
 	 * Constructor to be used when a new Session LSP Tunnel IPv6 Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public SessionLSPTunnelIPv6(byte[] bytes, int offset){

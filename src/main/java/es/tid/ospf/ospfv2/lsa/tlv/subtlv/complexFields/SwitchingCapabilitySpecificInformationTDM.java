@@ -54,8 +54,8 @@ public class SwitchingCapabilitySpecificInformationTDM extends SwitchingCapabili
 
 	/**
 	 * 
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	public SwitchingCapabilitySpecificInformationTDM(byte[] bytes, int offset) {
 		this.length=8;

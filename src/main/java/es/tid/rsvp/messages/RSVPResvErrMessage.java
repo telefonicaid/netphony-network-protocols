@@ -228,8 +228,8 @@ public class RSVPResvErrMessage extends RSVPMessage {
 	
 	/**
 	 * Constructor to be used in case of creating a new Resv Error message to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvErrMessage(byte[] bytes, int length){

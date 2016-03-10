@@ -175,8 +175,8 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	
 	/**
 	 * Constructor to be used in case of creating a new Path TearDown message to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPPathTearMessage(byte[] bytes, int length){
@@ -372,7 +372,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 
 	/**
 	 * 
-	 * @param senderDescriptor
+	 * @param senderDescriptor Sender Descriptor
 	 */
 	
 	public void addSenderDescriptor(SenderDescriptor senderDescriptor){

@@ -1,7 +1,7 @@
 package es.tid.bgp.bgp4.open;
 
 /**
- * RFC 4760           Multiprotocol Extensions for BGP-4       January 2007
+ * From Multiprotocol Extensions for BGP-4 
  * <a href="http://tools.ietf.org/html/rfc4760">RFC 4760</a>.
  *    The fields in the Capabilities Optional Parameter are set as follows.
    The Capability Code field is set to 1 (which indicates Multiprotocol
@@ -30,13 +30,13 @@ package es.tid.bgp.bgp4.open;
       SAFI - Subsequent Address Family Identifier (8 bit), encoded the
           same way as in the Multiprotocol Extensions.
 
-   A speaker that supports multiple <AFI, SAFI> tuples includes them as
+   A speaker that supports multiple AFI, SAFI tuples includes them as
    multiple Capabilities in the Capabilities Optional Parameter.
 
    To have a bi-directional exchange of routing information for a
-   particular <AFI, SAFI> between a pair of BGP speakers, each such
+   particular AFI, SAFI between a pair of BGP speakers, each such
    speaker MUST advertise to the other (via the Capability Advertisement
-   mechanism) the capability to support that particular <AFI, SAFI>
+   mechanism) the capability to support that particular AFI, SAFI
    route.
    
  * @author mcs
@@ -84,6 +84,7 @@ public class MultiprotocolExtensionCapabilityAdvertisement extends BGP4Capabilit
 	public void setSAFI(int sAFI) {
 		SAFI = sAFI;
 	}
+	
 	@Override
 	public String toString() {
 		return "MultiprotocolExtensionCapabilityAdvertisement [AFI=" + AFI

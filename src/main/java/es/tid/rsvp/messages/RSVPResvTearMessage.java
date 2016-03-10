@@ -177,8 +177,8 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	
 	/**
 	 * 
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvTearMessage(byte[] bytes, int length){

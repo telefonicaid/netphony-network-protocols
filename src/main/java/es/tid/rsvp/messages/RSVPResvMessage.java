@@ -279,8 +279,8 @@ public class RSVPResvMessage extends RSVPMessage {
 	
 	/**
 	 * 
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvMessage(byte[] bytes, int length){

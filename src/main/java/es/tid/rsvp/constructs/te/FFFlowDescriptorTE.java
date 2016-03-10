@@ -103,7 +103,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a FF Flow Descriptor has been received and it is wanted to decode it
-	 * @param first
+	 * @param first true or false
 	 */
 	
 	public FFFlowDescriptorTE(boolean first) {
@@ -116,9 +116,11 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new FF Flow Descriptor TE is wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
-	 * @param first
+	 * @param flowSpec Flow Spec
+	 * @param filterSpec Filter Spec
+	 * @param label Label
+	 * @param rro RRO Object∫
+	 * @param first true or false
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -181,7 +183,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	 * 
 	 * FF Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  In failure case it throws an exception, e.g. a mandatory field is not present.
 	 * 
 	 */
 			
@@ -242,7 +244,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	 * 
 	 * FF Flow Descriptor TE decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Throwns when there is a problem encoding.
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

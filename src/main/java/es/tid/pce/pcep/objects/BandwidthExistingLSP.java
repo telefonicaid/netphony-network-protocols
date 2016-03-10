@@ -101,6 +101,7 @@ public class BandwidthExistingLSP extends Bandwidth{
 	
 	/**
 	 * Decodes the BANDWDITH object
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public void decode() throws MalformedPCEPObjectException{
 		if (ObjectLength!=8){
@@ -118,7 +119,7 @@ public class BandwidthExistingLSP extends Bandwidth{
 	
 	/**
 	 *  Gets the requested bandwidth
-	 * @return Bandwidth
+	 * @return Bandwidth 
 	 */
 	public float getBw() {
 		return bw;

@@ -152,8 +152,8 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	
 	/**
 	 * Constructor to be used in case of creating a new Path Error message to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes
+	 * @param length length 
 	 */
 	
 	public RSVPPathErrMessage(byte[] bytes, int length){
@@ -418,7 +418,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	
 	/**
 	 * 
-	 * @param senderDescriptor
+	 * @param senderDescriptor Sender Descriptor
 	 */
 	
 	public void addSenderDescriptor(SenderDescriptor senderDescriptor){

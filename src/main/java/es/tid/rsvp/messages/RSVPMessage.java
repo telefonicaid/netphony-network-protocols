@@ -142,7 +142,7 @@ public abstract class RSVPMessage implements RSVPElement{
 
 	/**
 	 * 
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
 	 */
 	
 	public abstract void encode() throws RSVPProtocolViolationException;
@@ -159,7 +159,7 @@ public abstract class RSVPMessage implements RSVPElement{
      *    +-------------+-------------+-------------+-------------+
      *    
 	 *
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding of the header
 	 */
 	
 	public void decodeHeader() throws RSVPProtocolViolationException{
@@ -176,7 +176,7 @@ public abstract class RSVPMessage implements RSVPElement{
 	
 	/**
 	 * 
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding
 	 */
 	
 	public abstract void decode() throws RSVPProtocolViolationException;
