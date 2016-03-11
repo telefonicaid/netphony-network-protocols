@@ -27,12 +27,8 @@ import es.tid.rsvp.objects.Style;
 import es.tid.rsvp.objects.TimeValues;
 import org.slf4j.LoggerFactory;
 
-/*
-
-RFC 2205                          RSVP                    September 1997
-
-      3.1.4 Resv Messages
-
+/** Resv Message.
+*
          Resv messages carry reservation requests hop-by-hop from
          receivers to senders, along the reverse paths of data flows for
          the session.  The IP destination address of a Resv message is
@@ -41,7 +37,7 @@ RFC 2205                          RSVP                    September 1997
          that sent the message.
 
          The Resv message format is as follows:
-
+{@code
            <Resv Message> ::= <Common Header> [ <INTEGRITY> ]
 
                                    <SESSION>  <RSVP_HOP>
@@ -57,7 +53,7 @@ RFC 2205                          RSVP                    September 1997
            <flow descriptor list> ::=  <empty> |
 
                             <flow descriptor list> <flow descriptor>
-
+}
 
          If the INTEGRITY object is present, it must immediately follow
          the common header.  The STYLE object followed by the flow
@@ -80,7 +76,7 @@ RFC 2205                          RSVP                    September 1997
          of flow descriptors.  The following style-dependent rules
          specify in more detail the composition of a valid flow
          descriptor list for each of the reservation styles.
-
+{@code
          o    WF Style:
 
                 <flow descriptor list> ::=  <WF flow descriptor>
@@ -122,7 +118,7 @@ RFC 2205                          RSVP                    September 1997
 
                                   |  <filter spec list> <FILTER_SPEC>
 
-
+}
          The reservation scope, i.e., the set of senders towards which a
          particular reservation is to be forwarded (after merging), is
          determined as follows:
@@ -160,12 +156,8 @@ RFC 2205                          RSVP                    September 1997
               the RESV_CONFIRM.  A RESV_CONFIRM object in a request that
               is blockaded will be neither forwarded nor returned; it
               will be dropped in the current node.
-
- */
-
-public class RSVPResvMessage extends RSVPMessage {
-
-	/*
+              
+              
 	 *   RSVP Common Header
 
                 0             1              2             3
@@ -219,27 +211,13 @@ public class RSVPResvMessage extends RSVPMessage {
 
               The total length of this RSVP message in bytes, including
               the common header and the variable-length objects that
-              follow.
-         
-         The Resv message format is as follows:
+              follow.      
+	 
+ */
 
-           <Resv Message> ::= <Common Header> [ <INTEGRITY> ]
+public class RSVPResvMessage extends RSVPMessage {
 
-                                   <SESSION>  <RSVP_HOP>
-
-                                   <TIME_VALUES>
-
-                                   [ <RESV_CONFIRM> ]  [ <SCOPE> ]
-
-                                   [ <POLICY_DATA> ... ]
-
-                                   <STYLE> <flow descriptor list>
-
-           <flow descriptor list> ::=  <empty> |
-
-                            <flow descriptor list> <flow descriptor>
-         
-	 */
+	
 	
 	protected Integrity integrity;
 	protected Session session;
@@ -254,12 +232,8 @@ public class RSVPResvMessage extends RSVPMessage {
 	/**
 	 * Log
 	 */
-
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
-	/**
-	 * 
-	 */
 	
 	public RSVPResvMessage(){
 		
@@ -279,8 +253,8 @@ public class RSVPResvMessage extends RSVPMessage {
 	
 	/**
 	 * 
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvMessage(byte[] bytes, int length){
@@ -312,10 +286,8 @@ public class RSVPResvMessage extends RSVPMessage {
 
 		log.debug("Starting RSVP Resv Message encode");
 		
-		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
-		// Obtencion del tama�o completo del mensaje
 		
 		if(integrity != null){
 			
@@ -330,7 +302,6 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}else{
 			
-			// Campo Obligatorio, si no existe hay fallo
 			log.error("Session RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
@@ -342,7 +313,6 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}else{
 			
-			// Campo Obligatorio, si no existe hay fallo
 			log.error("Hop RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();
 			
@@ -354,7 +324,6 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}else{
 			
-			// Campo Obligatorio, si no existe hay fallo
 			log.error("Time Values RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();			
 			
@@ -389,7 +358,6 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}else{
 			
-			// Campo Obligatorio, si no existe hay fallo
 			log.error("Style RSVP Object NOT found");
 			throw new RSVPProtocolViolationException();			
 			
@@ -410,29 +378,24 @@ public class RSVPResvMessage extends RSVPMessage {
 		int currentIndex = commonHeaderSize;
 		
 		if(integrity != null){
-			//Campo Opcional
 			integrity.encode();
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
-		// Campo Obligatorio
 		session.encode();
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
-		// Campo Obligatorio
 		rsvpHop.encode();
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
-		// Campo Obligatorio
 		timeValues.encode();
 		System.arraycopy(timeValues.getBytes(), 0, bytes, currentIndex, timeValues.getLength());
 		currentIndex = currentIndex + timeValues.getLength();
 		
 		if(resvConfirm != null){
 			
-			//Campo Opcional
 			resvConfirm.encode();
 			System.arraycopy(resvConfirm.getBytes(), 0, bytes, currentIndex, resvConfirm.getLength());
 			currentIndex = currentIndex + resvConfirm.getLength();
@@ -440,7 +403,6 @@ public class RSVPResvMessage extends RSVPMessage {
 		}
 		if(scope != null){
 			
-			//Campo Opcional
 			scope.encode();
 			System.arraycopy(scope.getBytes(), 0, bytes, currentIndex, scope.getLength());
 			currentIndex = currentIndex + scope.getLength();
@@ -456,7 +418,6 @@ public class RSVPResvMessage extends RSVPMessage {
 							
 		}
 	
-		// Campo Obligatorio
 		style.encode();
 		System.arraycopy(style.getBytes(), 0, bytes, currentIndex, style.getLength());
 		currentIndex = currentIndex + style.getLength();

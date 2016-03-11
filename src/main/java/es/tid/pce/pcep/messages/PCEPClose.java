@@ -7,10 +7,10 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.PCEPObject;
 
 /**
- * <h1> PCEP Close Message (RFC 5440). </h1> 
+ * PCEP Close Message (RFC 5440). 
  * <p> From RFC 5440 Section 6.8 </p>
  * 6.8. Close Message
- *
+ *{@code
  * The Close message is a PCEP message that is either sent by a PCC to a
  * PCE or by a PCE to a PCC in order to close an established PCEP
  * session.  The Message-Type field of the PCEP common header for the
@@ -26,7 +26,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
  * Upon the receipt of a valid Close message, the receiving PCEP peer
  * MUST cancel all pending requests, it MUST close the TCP connection
  * and MUST NOT send any further PCEP messages on the PCEP session.
- * 
+ * }
  * @author Oscar Gonzalez de Dios
  * @version 0.1
 **/
@@ -50,7 +50,7 @@ public class PCEPClose extends PCEPMessage {
 	/**
 	 * Contructs and decodes new PCEP CLOSE Message from a byte array
 	 * @param bytes Bytes of the message
-	 * @throws PCEPProtocolViolationException
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public PCEPClose(byte[] bytes) throws PCEPProtocolViolationException {
 		super(bytes);
@@ -59,6 +59,7 @@ public class PCEPClose extends PCEPMessage {
 
 	/**
 	 * Set the reason for closing the PCEP session
+	 * @param reason reason of the close
 	 */
 	public void setReason(int reason){
 		close.setReason(reason);
@@ -86,6 +87,7 @@ public class PCEPClose extends PCEPMessage {
 	/**
 	 * Decode a PCEP Message from a byte array. 
 	 * The byte array is copied in messageBytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	private void decode()  throws PCEPProtocolViolationException {
 		//Decoding PCEP Close Message"

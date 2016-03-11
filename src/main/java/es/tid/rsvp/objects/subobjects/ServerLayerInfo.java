@@ -4,7 +4,7 @@ package es.tid.rsvp.objects.subobjects;
 
 /**
  * Server Layer Infor. ERO sub-object. 
- *  from <a href="link http://tools.ietf.org/html/draft-ietf-pce-inter-layer-ext-05#section-3.5"> </a>. 
+ *  from  http://tools.ietf.org/html/draft-ietf-pce-inter-layer-ext-05. 
  * 
  *  This sub-object can be used for specifying the detail
    server layer information of a server layer path, e.g. the switching

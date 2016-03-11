@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
+ * {@code
             <flow descriptor list> ::=  <empty> |
 
-                            <flow descriptor list> <flow descriptor>
+                            <flow descriptor list> <flow descriptor>}
 
 
          If the INTEGRITY object is present, it must immediately follow
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
          descriptor list for each of the reservation styles.
 
          o    FF style:
-
+{@code
                 <flow descriptor list> ::=
 
                           <FLOWSPEC>  <FILTER_SPEC>  |
@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 
                 <FF flow descriptor> ::=
 
-                          [ <FLOWSPEC> ] <FILTER_SPEC>
+                          [ <FLOWSPEC> ] <FILTER_SPEC>}
 
               Each elementary FF style request is defined by a single
               (FLOWSPEC, FILTER_SPEC) pair, and multiple such requests
@@ -103,7 +103,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a FF Flow Descriptor has been received and it is wanted to decode it
-	 * @param first
+	 * @param first true or false
 	 */
 	
 	public FFFlowDescriptorTE(boolean first) {
@@ -116,9 +116,11 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new FF Flow Descriptor TE is wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
-	 * @param first
+	 * @param flowSpec Flow Spec
+	 * @param filterSpec Filter Spec
+	 * @param label Label
+	 * @param rro RRO Object∫
+	 * @param first true or false
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -181,7 +183,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	 * 
 	 * FF Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  In failure case it throws an exception, e.g. a mandatory field is not present.
 	 * 
 	 */
 			
@@ -242,7 +244,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 	 * 
 	 * FF Flow Descriptor TE decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Throwns when there is a problem encoding.
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

@@ -20,10 +20,11 @@ import es.tid.pce.pcep.objects.RequestParameters;
 import es.tid.pce.pcep.objects.ReservationConf;
 
 /**
- * <p> Represents a PCEP Response. </p>  
+ * Represents a PCEP Response.  
  * <p> It is a collection of PCEP Objects. </p>
  * <p> From <a href="http://tools.ietf.org/search/rfc5440#page-19">RFC 5440 Section 6.5 </a> :<p>
- * <p> 
+ 
+ * {@code 
  *  <response>::=<RP>
                   [<NO-PATH>]
                   [<attribute-list>]
@@ -50,7 +51,7 @@ The PCRep message MUST contain at least one RP object.  For each
    specified in the RP object carried in the corresponding PCReq message
    (see Section 7.4 for the definition of the RP object).
 
- * </p>
+ * 
  * 
  * With monitoring data:
  * <response>::=<RP>
@@ -59,8 +60,8 @@ The PCRep message MUST contain at least one RP object.  For each
                   [<NO-PATH>]
                   [<attribute-list>]
                   [<path-list>]
-                  [<metric-pce-list>]
- * 
+                  [<metric-pce-list>]}
+ *
  * @author Oscar Gonzalez de Dios
  *
  */
@@ -224,9 +225,6 @@ public class Response extends PCEPConstruct{
 	}
 
 	
-	/**
-	 * 
-	 */
 	public void encode() throws PCEPProtocolViolationException {		
 		int len=0;
 		if (requestParameters!=null){

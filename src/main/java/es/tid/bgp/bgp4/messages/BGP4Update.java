@@ -92,8 +92,9 @@ public class BGP4Update extends BGP4Message {
 
 	/**
 	 * Construct for decoding
+	 * @param bytes bytes of the message
 	 */
-	public BGP4Update (byte[] bytes) {//throws PCEPProtocolViolationException {
+	public BGP4Update (byte[] bytes) {
 		super(bytes);		
 		this.messageBytes=new byte[bytes.length];		
 		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);

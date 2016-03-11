@@ -7,7 +7,7 @@ import es.tid.ospf.ospfv2.lsa.tlv.OSPFTLVTypes;
 import es.tid.ospf.ospfv2.lsa.tlv.RouterAddressTLV;
 
 /**
- * Represents a Inter AS TE v2 LSA, see 
+ * Represents a Inter AS TE v2 LSA. 
  * <a href="http://tools.ietf.org/html/rfc5392"> RFC 5392</a>. 
  * 
  * <P> For the advertisement of OSPFv2 inter-AS TE links, a new Opaque LSA,
@@ -65,9 +65,9 @@ public class InterASTEv2LSA extends OpaqueLSA {
 	
 	/**
 	 * Construct from a byte array and a given offest
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFLSAException
+	 * @param bytes bytes
+	 * @param offset offset 
+	 * @throws MalformedOSPFLSAException Malformed OSPF LSA Exception
 	 */
 	public InterASTEv2LSA(byte[] bytes, int offset)throws MalformedOSPFLSAException{
 		super(bytes,offset);
@@ -104,7 +104,7 @@ public class InterASTEv2LSA extends OpaqueLSA {
 	
 	/**
 	 * Decode the Inter AS TE LSA 
-	 * @throws MalformedOSPFLSAException
+	 * @throws MalformedOSPFLSAException  Malformed OSPF LSA Exception
 	 */
 	private void decode() throws MalformedOSPFLSAException{
 		boolean fin=false;
@@ -150,7 +150,7 @@ public class InterASTEv2LSA extends OpaqueLSA {
 
 	/**
 	 * 
-	 * @param routerAddressTLV
+	 * @param routerAddressTLV routerAddressTLV
 	 */
 	public void setRouterAddressTLV(RouterAddressTLV routerAddressTLV) {
 		this.routerAddressTLV = routerAddressTLV;
@@ -166,7 +166,7 @@ public class InterASTEv2LSA extends OpaqueLSA {
 
 	/**
 	 * 
-	 * @param linkTLV
+	 * @param linkTLV linkTLV
 	 */
 	public void setLinkTLV(LinkTLV linkTLV) {
 		this.linkTLV = linkTLV;

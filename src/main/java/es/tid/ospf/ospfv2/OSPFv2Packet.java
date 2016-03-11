@@ -7,8 +7,9 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * Base class for OSPFv2 Packet
- * RFC 2328                     OSPF Version 2                   April 1998
+ * Base class for OSPFv2 Packet.
+ * 
+ * RFC 2328  
 
 
 A.3 OSPF Packet Formats
@@ -94,8 +95,8 @@ public abstract class OSPFv2Packet {
 	
 	/**
 	 * Decodes the header of a LSA
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	public OSPFv2Packet(byte[] bytes, int offset){
 		//Decoding OSPFv2 Packet
@@ -122,9 +123,6 @@ public abstract class OSPFv2Packet {
 		System.arraycopy(bytes, offset, this.bytes, 0, this.length);
 	}
 	
-	/**
-	 * 
-	 */
 	public void encodeOSPFV2PacketHeader(){
 		this.bytes[0]=(byte)version;
 		this.bytes[1]=(byte)type;
@@ -164,10 +162,7 @@ public abstract class OSPFv2Packet {
 		this.bytes[23]=0;	
 			
 	}
-	/**
-	 * Metodo statico: lenght y type.
-	 * 
-	 */
+
 	public static int getLStype(byte[] bytes, int offset){
 		return bytes[offset+1]&0xFF;
 	}

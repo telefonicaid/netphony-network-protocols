@@ -197,13 +197,14 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	/**
 	 * Constructor to be used when a new Session Attribute With Resource Affinities Object 
 	 * wanted to be attached to a new message.
-	 * @param excludeAny
-	 * @param includeAny
-	 * @param includeAll
-	 * @param setupPriority
-	 * @param holdingPriority
-	 * @param flags
-	 * @param sessionName
+	 * @param excludeAny excludeAny
+	 * @param includeAny includeAny
+	 * @param includeAll includeAll
+	 * @param excludeAny excludeAny
+	 * @param setupPriority setupPriority
+	 * @param holdingPriority holdingPriority
+	 * @param flags flags
+	 * @param sessionName sessionName
 	 */
 	
 	public SessionAttributeWResourceAffinities(int excludeAny, int includeAny, int includeAll, int setupPriority, int holdingPriority, int flags, String sessionName){
@@ -235,8 +236,8 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	/**
 	 * Constructor to be used when a new Session Attribute With Resource Affinities
 	 * Object wanted to be decoded from a received message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public SessionAttributeWResourceAffinities(byte[] bytes, int offset){

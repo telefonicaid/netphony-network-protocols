@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * [<RRO>[<BANDWIDTH>]]
+ * {@code
+ * [<RRO>[<BANDWIDTH>]]}
  * @author ogondio
  *
  */

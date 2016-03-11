@@ -48,8 +48,8 @@ import es.tid.pce.pcep.PCEPProtocolViolationException;
  *  and MUST NOT declare the session as inactive.
  *
  *  The format of a Keepalive message is as follows:
- *
- *  <Keepalive Message>::= <Common Header>
+ *{@code
+ *  <Keepalive Message>::= <Common Header>}
  *
  * @author Oscar Gonzalez de Dios
  * @version 0.1

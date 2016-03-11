@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Resv Error Messages
+ * Resv Error Message.
 
          ResvErr (reservation error) messages report errors in
          processing Resv messages, or they may report the spontaneous
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
          receivers, routed hop-by-hop using the reservation state.  At
          each hop, the IP destination address is the unicast address of
          a next-hop node.
-
+{@code
            <ResvErr Message> ::= <Common Header> [ <INTEGRITY> ]
 
                                       <SESSION>  <RSVP_HOP>
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
                                       [ <POLICY_DATA> ...]
 
                                     <STYLE> [ <error flow descriptor> ]
-
+}
 
          The ERROR_SPEC object specifies the error and includes the IP
          address of the node that detected the error (Error Node
@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
          The following style-dependent rules define the composition of a
          valid error flow descriptor; the object order requirements are
          as given earlier for flow descriptor.
-
+{@code
          o    WF Style:
 
                   <error flow descriptor> ::= <WF flow descriptor>
@@ -91,7 +91,7 @@ import org.slf4j.LoggerFactory;
          Note that a ResvErr message contains only one flow descriptor.
          Therefore, a Resv message that contains N > 1 flow descriptors
          (FF style) may create up to N separate ResvErr messages.
-
+}
          Generally speaking, a ResvErr message should be forwarded
          towards all receivers that may have caused the error being
          reported.  More specifically:
@@ -228,8 +228,8 @@ public class RSVPResvErrMessage extends RSVPMessage {
 	
 	/**
 	 * Constructor to be used in case of creating a new Resv Error message to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvErrMessage(byte[] bytes, int length){
@@ -260,11 +260,9 @@ public class RSVPResvErrMessage extends RSVPMessage {
 	public void encode() throws RSVPProtocolViolationException{
 		log.debug("Starting RSVP Resv Error Message encode");
 		
-		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
-		// Obtencion del tama�o completo del mensaje
-		
+	
 		if(integrity != null){
 			
 			length = length + integrity.getLength();

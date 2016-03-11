@@ -10,6 +10,7 @@ import es.tid.pce.pcep.objects.SRP;
 /**
  * State Report Construct.
  * 
+ * {@code
  *  <state-report-list> ::= <state-report>[<state-report-list>]
 
    <state-report> ::= [<SRP>]
@@ -20,7 +21,7 @@ import es.tid.pce.pcep.objects.SRP;
 
 Where:
    <attribute-list> is defined in [RFC5440] and extended by PCEP extensions.
-
+}
    The SRP object (see Section 7.2) is optional.  If the PCRpt message
    is not in response to a PCupd message, the SRP object MAY be omitted.
    When the PCC does not include the SRP object, the PCE treats this as
