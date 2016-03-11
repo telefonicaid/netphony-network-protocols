@@ -154,10 +154,6 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 		return routerAddressTLV;
 	}
 
-	/**
-	 * 
-	 * @param routerAddressTLV
-	 */
 	public void setRouterAddressTLV(RouterAddressTLV routerAddressTLV) {
 		this.routerAddressTLV = routerAddressTLV;
 	}
@@ -170,17 +166,11 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 		return linkTLV;
 	}
 
-	/**
-	 * 
-	 * @param linkTLV
-	 */
 	public void setLinkTLV(LinkTLV linkTLV) {
 		this.linkTLV = linkTLV;
 	}
 
-	/**
-	 * 
-	 */
+
 	public String toString(){
 		String ret;
 		if (routerAddressTLV!=null){

@@ -5,9 +5,6 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 /**
-
-Kompella & Rekhter          Standards Track                     [Page 2]
-
  
 RFC 4203                OSPF Extensions in MPLS             October 2005
 

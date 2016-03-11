@@ -3,8 +3,6 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 /**
  * Switching Capability SpecificInformation for TDM.
  * 
-Kompella & Rekhter          Standards Track                     [Page 4]
-
  
 	RFC 4203                OSPF Extensions in MPLS             October 2005
  

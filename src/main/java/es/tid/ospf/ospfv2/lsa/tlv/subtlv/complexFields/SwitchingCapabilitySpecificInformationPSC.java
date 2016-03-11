@@ -3,9 +3,6 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 /**
  * Switching Capability SpecificInformation for PSC.
  * 
-Kompella & Rekhter          Standards Track                     [Page 4]
-
- 
 	RFC 4203                OSPF Extensions in MPLS             October 2005
  
  	   When the Switching Capability field is PSC-1, PSC-2, PSC-3, or PSC-4,

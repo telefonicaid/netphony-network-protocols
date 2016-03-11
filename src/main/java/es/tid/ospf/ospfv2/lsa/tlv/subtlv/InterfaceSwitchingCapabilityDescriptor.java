@@ -63,7 +63,6 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.*;
    When the Switching Capability field is PSC-1, PSC-2, PSC-3, or PSC-4,
    the Switching Capability specific information field includes Minimum
    LSP Bandwidth, Interface MTU, and padding.
-<pre>
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -112,7 +111,7 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.*;
    Capability Descriptor (see Section "Interface Switching Capability
    Descriptor" of [GMPLS-ROUTING]) the Interface Switching Capability
    Descriptor sub-TLV may occur more than once within the Link TLV.
-</pre>
+
  */
 
 public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
@@ -144,12 +143,6 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 		this.setTLVType(OSPFSubTLVTypes.InterfaceSwitchingCapabilityDescriptor);
 	}
 		
-	/**
-	 * Contruct from a byte array and a given offset
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFSubTLVException
-	 */
 	public InterfaceSwitchingCapabilityDescriptor(byte[] bytes, int offset)throws MalformedOSPFSubTLVException{
 		super(bytes,offset);
 		decode();
@@ -187,7 +180,7 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 	
 	/**
 	 * Decode the Interface Switching Capability Descriptor
-	 * @throws MalformedOSPFSubTLVException
+	 * @throws MalformedOSPFSubTLVException MalformedOSPFSubTLVException
 	 */
 	protected void decode() throws MalformedOSPFSubTLVException{
 		int offset=4;

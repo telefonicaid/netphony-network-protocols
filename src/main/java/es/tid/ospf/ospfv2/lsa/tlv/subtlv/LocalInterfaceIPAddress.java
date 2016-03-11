@@ -51,7 +51,7 @@ public class LocalInterfaceIPAddress extends OSPFSubTLV {
 	
 	/**
 	 * 
-	 * @throws MalformedOSPFSubTLVException
+	 * @throws MalformedOSPFSubTLVException MalformedOSPFSubTLVException
 	 */
 	protected void decode()throws MalformedOSPFSubTLVException{
 		int numIPAddresses=(this.getTLVValueLength()/4);
