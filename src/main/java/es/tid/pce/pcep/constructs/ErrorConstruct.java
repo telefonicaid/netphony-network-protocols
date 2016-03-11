@@ -10,8 +10,10 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.RequestParameters;
 
 /**
+ * Error Construct
+ * {@code 
  *  <error>::=[<request-id-list>]
-              <error-obj-list>
+              <error-obj-list>}
  */
 public class ErrorConstruct extends PCEPConstruct {
 	

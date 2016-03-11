@@ -35,7 +35,7 @@ public class PCEPTELinkConfirmation extends PCEPMessage {
 	/**
 	 * Contructs and decodes new PCEP TELinkSuggestion Message from a byte array
 	 * @param bytes Bytes of the message
-	 * @throws PCEPProtocolViolationException
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public PCEPTELinkConfirmation(byte[] bytes) throws PCEPProtocolViolationException {
 		super(bytes);
@@ -59,6 +59,7 @@ public class PCEPTELinkConfirmation extends PCEPMessage {
 	/**
 	 * Decode a PCEP Message from a byte array. 
 	 * The byte array is copied in messageBytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	private void decode()  throws PCEPProtocolViolationException {
 		//Decoding PCEP TE Link Suggestion Message

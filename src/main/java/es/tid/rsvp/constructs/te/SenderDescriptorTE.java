@@ -17,14 +17,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
-Awduche, et al.             Standards Track                    [Page 15]
-
-RFC 3209           Extensions to RSVP for LSP Tunnels      December 2001
 
- * 
+ * {@code
       <sender descriptor> ::=  <SENDER_TEMPLATE> <SENDER_TSPEC>
                                [ <ADSPEC> ]
-                               [ <RECORD_ROUTE> ]
+                               [ <RECORD_ROUTE> ]}
 
 
  * @author fmn
@@ -57,8 +54,8 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	
 	/**
 	 * Builder to be used when a new Sender Descriptor TE wanted to be created and sent 
-	 * @param senderTemplate
-	 * @param senderTSPEC
+	 * @param senderTemplate Sender Template
+	 * @param senderTSPEC Sender TSPEC
 	 * @param adspec	Optional, might be null
 	 * @param rro		Optional, migth be null
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
@@ -116,7 +113,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	 * 
 	 * Sender Descriptor TE encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
 	 * 
 	 */
 			
@@ -161,7 +158,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 	 * 
 	 * Sender Descriptor TE decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

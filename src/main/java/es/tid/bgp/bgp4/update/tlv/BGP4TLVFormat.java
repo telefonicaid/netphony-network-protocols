@@ -106,7 +106,7 @@ public abstract class BGP4TLVFormat {
 
 	/**
 	 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-	 * @param TLVValueLength
+	 * @param TLVValueLength TLV Value Length
 	 */
 	protected void setTLVValueLength(int TLVValueLength) {
 		this.TLVValueLength = TLVValueLength;

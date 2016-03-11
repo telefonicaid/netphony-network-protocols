@@ -10,10 +10,10 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.RequestedVolumeSizeSubTLV;
 
 
 /**
- * EndPointStorage TLV, Experimental & Propietary from GEYSERS.
+ * EndPointStorage TLV, Experimental and Propietary from GEYSERS.
   * From GEYSERS
   *  
-	Storage description � in this case the End-point description field includes the
+	Storage description  in this case the End-point description field includes the
 	description of the characteristics of the requested storage and is structured in
 	a set of TLVs.
 

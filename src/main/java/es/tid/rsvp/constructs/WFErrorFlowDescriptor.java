@@ -70,7 +70,7 @@ public class WFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Builder to be used when a new WF Error Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
+	 * @param flowSpec Flow Spec
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -97,7 +97,7 @@ public class WFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * WF Error Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  Thrown when a mandatory field is not present
 	 * 
 	 */
 			
@@ -121,7 +121,7 @@ public class WFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * Error Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  Thrown when there is a problem with the decoding
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

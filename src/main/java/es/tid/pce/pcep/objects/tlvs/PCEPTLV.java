@@ -125,7 +125,7 @@ public abstract class PCEPTLV {
 
 	/**
 	 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-	 * @param TLVValueLength
+	 * @param TLVValueLength Length of the TLV Value
 	 */
 	protected void setTLVValueLength(int TLVValueLength) {
 		this.TLVValueLength = TLVValueLength;

@@ -143,7 +143,7 @@ public abstract class OSPFSubTLV {
 
 		/**
 		 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-		 * @param TLVValueLength
+		 * @param TLVValueLength TLVValueLength
 		 */
 		protected void setTLVValueLength(int TLVValueLength) {
 			this.TLVValueLength = TLVValueLength;

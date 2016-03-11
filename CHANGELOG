@@ -1,3 +1,7 @@
+v1.2.3
+- Version ready to be deployed in maven central
+- All javadoc errors fixed
+- Added javadoc plugin. API generated and mainted in gh-pages branch
 - Fixed more JUNit tests errors in lists with jdk 7
 v1.2.2
 - Fixed maven errors with unmappable character for encoding UTF8

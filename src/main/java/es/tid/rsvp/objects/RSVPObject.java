@@ -186,8 +186,8 @@ public abstract class RSVPObject implements RSVPElement{
 	
 	/**
 	 * Common RSVP Objects Header decoding method
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes 
+	 * @param offset offset
 	 */
 	
 	public void decodeHeader(byte[] bytes, int offset){

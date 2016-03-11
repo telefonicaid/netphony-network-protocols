@@ -16,9 +16,8 @@ import org.slf4j.LoggerFactory;
 /**
  * <p>Represents a FF Style Error Flow Descriptor construct, as defined in RFC 2205.</p>
  * 
- * <UL TYPE="CIRCLE">
- * <LI>&lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
- * </UL>
+ * &lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
+ *
  * <p>If the INTEGRITY object is present, it must immediately follow the
  * common header.  The STYLE object followed by the flow descriptor list
  * must occur at the end of the message, and objects within the flow
@@ -40,17 +39,16 @@ import org.slf4j.LoggerFactory;
  * detail the composition of a valid flow descriptor list for each of the
  * reservation styles.</p>
  * 
- * <UL TYPE="CIRCLE">
- * <LI>FF style: &lt;flow descriptor list&gt; ::= &lt;FLOWSPEC&gt; &lt;FILTER_SPEC&gt;  |
+ * FF style: &lt;flow descriptor list&gt; ::= &lt;FLOWSPEC&gt; &lt;FILTER_SPEC&gt;  |
  * &lt;flow descriptor list&gt; &lt;FF flow descriptor&gt; &lt;FF flow descriptor&gt; ::=
  * [ &lt;FLOWSPEC&gt; ] &lt;FILTER_SPEC&gt;
- * <LI><p>Each elementary FF style request is defined by a single
+ * Each elementary FF style request is defined by a single
  * (FLOWSPEC, FILTER_SPEC) pair, and multiple such requests may be packed
  * into the flow descriptor list of a single Resv message.  A FLOWSPEC
  * object can be omitted if it is identical to the most recent such
  * object that appeared in  the list; the first FF flow descriptor
  * must contain a FLOWSPEC.
- * </UL>
+
  * @author Fernando Munoz del Nuevo
  *
  */
@@ -90,8 +88,8 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new FF Error Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -132,7 +130,7 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * FF Error Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 *  @throws RSVPProtocolViolationException Exception is thrown when there is a problem encoding the RSVP Message 
 	 * 
 	 */
 			
@@ -176,7 +174,7 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * FF Error Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 *  @throws RSVPProtocolViolationException Exception is thrown when there is a problem decoding the RSVP Message
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

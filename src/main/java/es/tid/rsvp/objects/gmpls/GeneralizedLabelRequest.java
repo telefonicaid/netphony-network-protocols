@@ -268,8 +268,8 @@ public class GeneralizedLabelRequest extends LabelRequest {
 	/**
 	 * Constructor to be used when a new Label Request With ATM Label Range Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public GeneralizedLabelRequest(byte[] bytes, int offset){

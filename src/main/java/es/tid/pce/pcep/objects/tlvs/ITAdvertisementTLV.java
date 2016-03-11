@@ -7,7 +7,7 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * GEYSERS IT Advertisement TLV, Experimental & Propietary, from GEYSERS.
+ * GEYSERS IT Advertisement TLV, Experimental and Propietary, from GEYSERS.
  * 
 All PCEP TLVs have the following format:
 

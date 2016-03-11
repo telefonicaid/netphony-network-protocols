@@ -75,8 +75,8 @@ public class HelloRequest extends Hello{
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
 	 * to a new message.
-	 * @param srcInstance
-	 * @param dstInstance
+	 * @param srcInstance source instance
+	 * @param dstInstance destination instance
 	 */
 	
 	public HelloRequest(int srcInstance, int dstInstance){
@@ -96,8 +96,8 @@ public class HelloRequest extends Hello{
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be decoded 
 	 * from a received message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public HelloRequest(byte[] bytes, int offset){

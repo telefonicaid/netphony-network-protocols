@@ -34,20 +34,11 @@ public class LinkID extends OSPFSubTLV {
 		this.setTLVType(OSPFSubTLVTypes.LinkID);
 	}
 
-	/**
-	 * 
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFSubTLVException
-	 */
 	public LinkID(byte[] bytes, int offset)throws MalformedOSPFSubTLVException{
 		super(bytes,offset);
 		decode();
 	}
 
-	/**
-	 * 
-	 */
 	public void encode() {
 		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -69,7 +60,7 @@ public class LinkID extends OSPFSubTLV {
 
 	/**
 	 * Decode the linkID OSPFv2 sub-TLV
-	 * @throws MalformedOSPFSubTLVException
+	 * @throws MalformedOSPFSubTLVException MalformedOSPFSubTLVException
 	 */
 	protected void decode()throws MalformedOSPFSubTLVException{
 		if (this.getTLVValueLength()!=4){
