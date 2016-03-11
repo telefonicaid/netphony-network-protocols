@@ -1,4 +1,4 @@
-netphony-network-protocols v1.2.2
+netphony-network-protocols v1.2.3
 =================================
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440).
@@ -31,7 +31,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.2.2</version>
+      <version>1.2.3</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
