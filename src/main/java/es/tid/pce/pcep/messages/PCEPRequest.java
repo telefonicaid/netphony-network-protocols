@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *  error message to the requesting PCC.  Other objects are optional.
  *  </p>
  *  The format of a PCReq message is as follows:
- *
+ *{@code
  *  <PCReq Message>::= <Common Header>
  *  					[<MONITORING>]
  *                      [<PCC-ID-REQ>]
@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  *  where:
  *
  *  <metric-list>::=<METRIC>[<metric-list>]
- *
+ *}
  *  The SVEC, RP, END-POINTS, LSPA, BANDWIDTH, METRIC, RRO, IRO, and
  *  LOAD-BALANCING objects are defined in Section 7.  The special case of
  *  two BANDWIDTH objects is discussed in detail in Section 7.7.
@@ -170,7 +170,8 @@ public class PCEPRequest extends PCEPMessage {
 	}
 	
 	/**
-	 * Decodes a PCEP Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521 
+	 * Decodes a PCEP Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public void decode() throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 

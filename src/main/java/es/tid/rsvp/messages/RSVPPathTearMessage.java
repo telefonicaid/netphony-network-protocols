@@ -17,8 +17,8 @@ import es.tid.rsvp.objects.SessionIPv6;
 import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
 import org.slf4j.LoggerFactory;
 
-/*
-RFC 2205: RSVP		Path Teardown Messages
+/**
+RFC 2205: RSVP		Path Teardown Message.
 
          Receipt of a PathTear (path teardown) message deletes matching
          path state.  Matching state must have match the SESSION,
@@ -40,14 +40,14 @@ RFC 2205: RSVP		Path Teardown Messages
          address must be the session DestAddress, and its IP source
          address must be the sender address from the path state being
          torn down.
-
+{@code
              <PathTear Message> ::= <Common Header> [ <INTEGRITY> ]
 
                                          <SESSION> <RSVP_HOP>
 
                                         [ <sender descriptor> ]
 
-             <sender descriptor> ::= (see earlier definition)
+             <sender descriptor> ::= (see earlier definition)}
 
 
          A PathTear message may include a SENDER_TSPEC or ADSPEC object

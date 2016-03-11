@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Notify Construct RFC 5440
  * From RFC 5440 Section 6.6
+ * {@code 
  *  <notify>::= [<request-id-list>]
                 <notification-list>
 
    <request-id-list>::=<RP>[<request-id-list>]
 
-   <notification-list>::=<NOTIFICATION>[<notification-list>]
-
+   <notification-list>::=<NOTIFICATION>[<notification-list>]}
 
  * @author ogondio
  *

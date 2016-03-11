@@ -123,7 +123,7 @@ public abstract class BGP4SubTLV {
 
 		/**
 		 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-		 * @param SubTLVValueLength
+		 * @param SubTLVValueLength SubTLV Value Length
 		 */
 		protected void setSubTLVValueLength(int SubTLVValueLength) {
 			this.SubTLVValueLength = SubTLVValueLength;

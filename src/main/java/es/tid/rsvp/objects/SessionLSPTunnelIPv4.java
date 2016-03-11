@@ -68,6 +68,7 @@ public class SessionLSPTunnelIPv4 extends Session{
 	 * attached to a new message
 	 * @param egressNodeAddress egressNodeAddress
 	 * @param extendedTunnelId extendedTunnelId
+	 * @param tunnelId tunnelId
 	 */	
 	public SessionLSPTunnelIPv4(Inet4Address egressNodeAddress, long tunnelId, Inet4Address extendedTunnelId){
 		

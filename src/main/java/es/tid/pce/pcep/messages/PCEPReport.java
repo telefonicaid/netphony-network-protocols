@@ -10,7 +10,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
  *  Path Computation State Report (PCRpt) Message.
  *  
  * A Path Computation LSP State Report message (also referred to as
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
    for the PCRpt message is set to [TBD].
 
    The format of the PCRpt message is as follows:
-   
+   {@code
   <PCRpt Message> ::= <Common Header>
                        <state-report-list>
 Where:
@@ -37,7 +37,7 @@ Where:
 
 Where:
    <attribute-list> is defined in [RFC5440] and extended by PCEP extensions.
-
+}
    The SRP object (see Section 7.2) is optional.  If the PCRpt message
    is not in response to a PCupd message, the SRP object MAY be omitted.
    When the PCC does not include the SRP object, the PCE treats this as

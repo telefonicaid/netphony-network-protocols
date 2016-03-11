@@ -8,7 +8,7 @@ import es.tid.bgp.bgp4.objects.BGP4Object;
          This is a variable-length field that contains a list of IP
          address prefixes for the routes that are being withdrawn from
          service.  Each IP address prefix is encoded as a 2-tuple of the
-         form <length, prefix>, whose fields are described below:
+         form {@code<length, prefix>}, whose fields are described below:
 <pre>
                   +---------------------------+
                   |   Length (1 octet)        |

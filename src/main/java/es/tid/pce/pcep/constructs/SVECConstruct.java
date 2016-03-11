@@ -10,12 +10,14 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.Svec;
 
 /**
+ * SVEC Construct.
  * From RFC 5440 y 5541
+ * {@code
  * <svec-list> ::= <SVEC>
                          [<OF>]
                          [<metric-list>]
                          [<svec-list>]
-
+}
  * @author ogondio
  *
  */

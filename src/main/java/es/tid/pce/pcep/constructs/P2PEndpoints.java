@@ -10,11 +10,12 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 
 /**
+ * {@code
  *      <p2p-endpoints> ::=
               <endpoint>
               [<endpoint-restrictions>]
               <endpoint>
-              [<endpoint-restrictions>]
+              [<endpoint-restrictions>]}
  **/
 
 public class P2PEndpoints extends PCEPConstruct {

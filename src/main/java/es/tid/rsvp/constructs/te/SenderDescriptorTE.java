@@ -17,14 +17,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
-Awduche, et al.             Standards Track                    [Page 15]
-
-RFC 3209           Extensions to RSVP for LSP Tunnels      December 2001
 
- * 
+ * {@code
       <sender descriptor> ::=  <SENDER_TEMPLATE> <SENDER_TSPEC>
                                [ <ADSPEC> ]
-                               [ <RECORD_ROUTE> ]
+                               [ <RECORD_ROUTE> ]}
 
 
  * @author fmn

@@ -158,6 +158,7 @@ public abstract class PCEPObject implements PCEPElement {
 	/**
 	 * Decode the object. It is specific to the PCEP Object. Must be implemented
 	 * in each object!!!!
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public abstract void decode() throws MalformedPCEPObjectException;
 
@@ -216,7 +217,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @return OT
+	 * @return OT Object Type
 	 */
 	public int getOT(){
 		return OT;
@@ -224,7 +225,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @param oT
+	 * @param oT Object Type
 	 */
 	public void setOT(int oT){
 		OT = oT;
@@ -240,7 +241,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @param res
+	 * @param res res
 	 */
 	public void setRes(int res) {
 		Res = res;

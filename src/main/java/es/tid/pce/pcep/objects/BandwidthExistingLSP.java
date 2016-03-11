@@ -76,6 +76,7 @@ public class BandwidthExistingLSP extends Bandwidth{
 	 * Constructs a PCEP object from a sequence of bytes 
 	 * @param bytes Sequence of bytes where the object is present
 	 * @param offset Position at which the object starts
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public BandwidthExistingLSP (byte []bytes, int offset) throws MalformedPCEPObjectException{
 		super(bytes, offset);

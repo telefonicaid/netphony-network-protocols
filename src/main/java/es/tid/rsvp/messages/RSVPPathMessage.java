@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
-     RFC 2205: RSVP		PATH Message
+     RFC 2205: RSVP		PATH Message.
 
          Each sender host periodically sends a Path message for each
          data flow it originates.  It contains a SENDER_TEMPLATE object
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
          The format of a Path message is as follows:
 
-           <Path Message> ::= <Common Header> [ <INTEGRITY> ]
+           {@code <Path Message> ::= <Common Header> [ <INTEGRITY> ]
 
                                      <SESSION> <RSVP_HOP>
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
            <sender descriptor> ::= <SENDER_TEMPLATE> <SENDER_TSPEC>
 
-                                    [ <ADSPEC> ]
+                                    [ <ADSPEC> ]}
 
 
          If the INTEGRITY object is present, it must immediately follow

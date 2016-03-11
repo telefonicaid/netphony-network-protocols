@@ -71,9 +71,9 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 	
 	/**
 	 * Construct from a byte array and a given offest
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFLSAException
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws MalformedOSPFLSAException Malformed OSPF LSA Exception
 	 */
 	public OSPFTEv2LSA(byte[] bytes, int offset)throws MalformedOSPFLSAException{		
 		super(bytes,offset);		

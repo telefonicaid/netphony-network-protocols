@@ -1,14 +1,8 @@
 package es.tid.pce.pcep.objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * <p> Base abstract class for representing Bandwidth Object.</p>
- * <p> </p>
- * <pre>
- 
- * </pre>  
+ * Base abstract class for representing Bandwidth Object.
+
  * @author Oscar Gonzalez de Dios (ogondio@tid.es)
  *
  */

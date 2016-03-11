@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
+ * {@code
             <flow descriptor list> ::=  <empty> |
 
-                            <flow descriptor list> <flow descriptor>
+                            <flow descriptor list> <flow descriptor>}
 
 
          If the INTEGRITY object is present, it must immediately follow
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
          descriptor list for each of the reservation styles.
 
          o    FF style:
-
+{@code
                 <flow descriptor list> ::=
 
                           <FLOWSPEC>  <FILTER_SPEC>  |
@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 
                 <FF flow descriptor> ::=
 
-                          [ <FLOWSPEC> ] <FILTER_SPEC>
+                          [ <FLOWSPEC> ] <FILTER_SPEC>}
 
               Each elementary FF style request is defined by a single
               (FLOWSPEC, FILTER_SPEC) pair, and multiple such requests

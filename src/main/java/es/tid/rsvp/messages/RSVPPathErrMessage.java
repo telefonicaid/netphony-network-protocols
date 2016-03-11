@@ -18,12 +18,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Braden, Ed., et. al.        Standards Track                    [Page 43]
-
-RFC 2205                          RSVP                    September 1997
-
-
-      3.1.7 Path Error Messages
+  Path Error Message.
 
          PathErr (path error) messages report errors in processing Path
          messages.  They are travel upstream towards senders and are
@@ -33,7 +28,7 @@ RFC 2205                          RSVP                    September 1997
          which they pass; they are only reported to the sender
          application.
 
-
+{@code
            <PathErr message> ::= <Common Header> [ <INTEGRITY> ]
 
                                       <SESSION> <ERROR_SPEC>
@@ -42,7 +37,7 @@ RFC 2205                          RSVP                    September 1997
 
                                      [ <sender descriptor> ]
 
-           <sender descriptor> ::= (see earlier definition)
+           <sender descriptor> ::= (see earlier definition)}
 
          The ERROR_SPEC object specifies the error and includes the IP
          address of the node that detected the error (Error Node

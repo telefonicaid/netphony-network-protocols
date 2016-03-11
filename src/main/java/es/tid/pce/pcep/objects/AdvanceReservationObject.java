@@ -61,9 +61,7 @@ public class AdvanceReservationObject extends PCEPObject{
 		ARList = new LinkedList<AdvanceReservation>();
 	}
 	
-	/**
-	 * 
-	 */
+
 	public AdvanceReservationObject(byte []bytes, int offset)throws MalformedPCEPObjectException {
 		super(bytes,offset);
 		ARList = new LinkedList<AdvanceReservation>();

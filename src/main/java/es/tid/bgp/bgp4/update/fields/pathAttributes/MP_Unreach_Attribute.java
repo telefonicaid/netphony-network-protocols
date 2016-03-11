@@ -31,15 +31,6 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
          that follows.  If the Next Hop is allowed to be from more than
          one Network Layer protocol, the encoding of the Next Hop MUST
          provide a way to determine its Network Layer protocol.
-
-
-
-
-Bates, et al.               Standards Track                     [Page 5]
- 
-RFC 4760           Multiprotocol Extensions for BGP-4       January 2007
-
-
          Presently defined values for the Address Family Identifier
          field are specified in the IANA's Address Family Numbers
          registry [IANA-AF].
@@ -59,7 +50,7 @@ RFC 4760           Multiprotocol Extensions for BGP-4       January 2007
 
          A variable-length field that lists NLRI for the routes that are
          being withdrawn from service.  The semantics of NLRI is
-         identified by a combination of <AFI, SAFI> carried in the
+         identified by a combination of {@code<AFI, SAFI>}carried in the
          attribute.
 
          When the Subsequent Address Family Identifier field is set to

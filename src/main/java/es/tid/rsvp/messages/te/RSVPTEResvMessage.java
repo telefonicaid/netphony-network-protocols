@@ -15,11 +15,10 @@ import es.tid.rsvp.objects.*;
 import org.slf4j.LoggerFactory;
 
 /**
-
-<p>RFC 3209  RSVP-TE	Reservation Message</p>
+* RFC 3209  RSVP-TE	Reservation Message.
 
 <p>The format of the Resv message is as follows:
-
+{@code
       <Resv Message> ::=       <Common Header> [ <INTEGRITY> ]
                                <SESSION>  <RSVP_HOP>
                                <TIME_VALUES>
@@ -43,7 +42,7 @@ import org.slf4j.LoggerFactory;
       <SE filter spec list> ::= <SE filter spec>
                                | <SE filter spec list> <SE filter spec>
 
-      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]
+      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]}
 
       Note:  LABEL and RECORD_ROUTE (if present), are bound to the
              preceding FILTER_SPEC.  No more than one LABEL and/or

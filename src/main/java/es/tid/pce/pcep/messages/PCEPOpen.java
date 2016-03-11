@@ -30,10 +30,10 @@ import es.tid.pce.pcep.objects.*;
  *   characteristics, the PCEP session is successfully established.
  *
  *   The format of an Open message is as follows:
- *
+ *{@code
  *   <Open Message>::= <Common Header>
  *                     <OPEN>
- *
+ *}
  *   The Open message MUST contain exactly one OPEN object (see
  *   Section 7.3).
  *
@@ -99,6 +99,8 @@ public class PCEPOpen extends PCEPMessage {
 	
 	/**
 	 * Construct new PCEP Open message from scratch
+	 * @param bytes bytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public PCEPOpen (byte[] bytes)throws PCEPProtocolViolationException {
 		super(bytes);
@@ -108,7 +110,7 @@ public class PCEPOpen extends PCEPMessage {
 
 	/**
 	 * 	
-	 * @param session_id
+	 * @param session_id session id
 	 */
 	public void setSID(int session_id) {
 		open.setSID(session_id);
@@ -126,7 +128,7 @@ public class PCEPOpen extends PCEPMessage {
 	
 	/**
 	 * 
-	 * @param ka
+	 * @param ka keepalive timer
 	 */
 	public void setKeepalive(int ka){
 		 open.setKeeealive(ka);
@@ -147,9 +149,6 @@ public class PCEPOpen extends PCEPMessage {
 	}
 	
 	
-	/**
-	 * 
-	 */
 	public String toString () {
 		return open.toString();
 	}

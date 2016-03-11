@@ -24,12 +24,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
-Braden, Ed., et. al.        Standards Track                    [Page 46]
-
-RFC 2205                          RSVP                    September 1997
-
-		 Reservation Confirmation Messages
+ * Reservation Confirmation Message.
 
          ResvConf messages are sent to (probabilistically) acknowledge
          reservation requests.  A ResvConf message is sent as the result
@@ -43,7 +38,7 @@ RFC 2205                          RSVP                    September 1997
          However, a ResvConf message is forwarded to the receiver hop-
          by-hop, to accommodate the hop-by-hop integrity check
          mechanism.
-
+{@code
            <ResvConf message> ::= <Common Header> [ <INTEGRITY> ]
 
                                       <SESSION> <ERROR_SPEC>
@@ -53,7 +48,7 @@ RFC 2205                          RSVP                    September 1997
                                       <STYLE> <flow descriptor list>
 
            <flow descriptor list> ::= (see earlier definition)
-
+}
 
          The object order requirements are the same as those given
          earlier for a Resv message, but the above order is recommended.

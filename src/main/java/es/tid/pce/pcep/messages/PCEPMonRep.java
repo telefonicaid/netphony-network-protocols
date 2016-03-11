@@ -6,7 +6,7 @@ import es.tid.pce.pcep.objects.PccReqId;
 import es.tid.pce.pcep.objects.RequestParameters;
 
 /**
- * <h1> Path Monitoring Reply (PCMonRep) Message (RFC 5886). </h1>
+ * Path Monitoring Reply (PCMonRep) Message (RFC 5886).
  * <p>The PCMonRep message is used to provide PCE state metrics back to the
    requester for out-of-band monitoring requests.  The Message-Type
    field of the PCEP common header for the PCMonRep message is set to 9.</p>
@@ -17,7 +17,7 @@ import es.tid.pce.pcep.objects.RequestParameters;
    object missing).</p>
 
    <p>   Format of a PCMonRep (out-of-band request):</p>
-
+{@code
     <PCMonRep Message>::= <Common Header>
                          <MONITORING>
                          <PCC-ID-REQ>
@@ -30,7 +30,7 @@ import es.tid.pce.pcep.objects.RequestParameters;
 
    <metric-pce>::=<PCE-ID>
                   [<PROC-TIME>]
-                  [<OVERLOAD>]
+                  [<OVERLOAD>]}
 
 
  *

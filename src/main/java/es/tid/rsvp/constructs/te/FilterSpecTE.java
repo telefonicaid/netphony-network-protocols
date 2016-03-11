@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
-
-      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]
+{@code
+      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]}
 
       Note:  LABEL and RECORD_ROUTE (if present), are bound to the
              preceding FILTER_SPEC.  No more than one LABEL and/or

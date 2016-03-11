@@ -25,7 +25,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
    The PCNtf message may be sent by a PCC or a PCE in response to a
    request or in an unsolicited manner.
    The format of a PCNtf message is as follows:
-
+{@code
    <PCNtf Message>::=<Common Header>
                      <notify-list>
 
@@ -36,7 +36,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
 
    <request-id-list>::=<RP>[<request-id-list>]
 
-   <notification-list>::=<NOTIFICATION>[<notification-list>]
+   <notification-list>::=<NOTIFICATION>[<notification-list>]}
 
  * @author ogondio
  *
@@ -59,8 +59,8 @@ public class PCEPNotification extends PCEPMessage {
 	
 	/**
 	 * Create a new PCEP Notification Message from a byte array
-	 * @param bytes
-	 * @throws PCEPProtocolViolationException
+	 * @param bytes bytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public PCEPNotification(byte[] bytes)throws PCEPProtocolViolationException {
 		super(bytes);
@@ -94,6 +94,7 @@ public class PCEPNotification extends PCEPMessage {
 
 	/**
 	 * Decode the PCEP Notification Message
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public void decode() throws PCEPProtocolViolationException {
 		//Decoding PCEP Notification Message

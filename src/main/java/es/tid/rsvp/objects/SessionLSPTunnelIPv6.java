@@ -115,6 +115,7 @@ public class SessionLSPTunnelIPv6 extends Session{
 	 * attached to a new message
 	 * @param egressNodeAddress egressNodeAddress
 	 * @param extendedTunnelId extendedTunnelId
+	 * @param tunnelId tunnelID
 	 */	
 	
 	public SessionLSPTunnelIPv6(Inet6Address egressNodeAddress, int tunnelId, int extendedTunnelId){

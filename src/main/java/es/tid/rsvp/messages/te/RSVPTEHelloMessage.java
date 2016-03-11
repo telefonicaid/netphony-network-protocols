@@ -14,11 +14,8 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * RFC 3209		RSVP-TE
- * 
- * <p>5. Hello Extension
-
+ * Hello Message.
+<p>
    The RSVP Hello extension enables RSVP nodes to detect when a
    neighboring node is not reachable.  The mechanism provides node to
    node failure detection.  When such a failure is detected it is
@@ -78,9 +75,10 @@ import org.slf4j.LoggerFactory;
 
    The Hello message has a Msg Type of 20.  The Hello message format is
    as follows:
-
+{@code
       <Hello Message> ::= <Common Header> [ <INTEGRITY> ]
                               <HELLO>
+  }
 </p>
  * @author Fernando Munoz del Nuevo fmn@tid.es
  *
@@ -191,11 +189,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		
 	}
 
-	
-	/**
-	 *  <Hello Message> ::= <Common Header> [ <INTEGRITY> ] <HELLO>
-	 */
-	
+
 	public void encode() throws RSVPProtocolViolationException {
 		
 		log.debug("RSVP-TE Hello Message Header encoding started");
@@ -241,10 +235,6 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		log.debug("RSVP-TE Hello Message encoding accomplished");
 		
 	}
-
-	/**
-	 *  <Hello Message> ::= <Common Header> [ <INTEGRITY> ] <HELLO>
-	 */
 	
 	public void decode() throws RSVPProtocolViolationException {
 		

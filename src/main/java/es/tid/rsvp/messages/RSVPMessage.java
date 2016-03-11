@@ -3,7 +3,9 @@ package es.tid.rsvp.messages;
 import es.tid.rsvp.*;
 
 
-/*	RSVP Message. From RFC 2205
+/**	RSVP Message. 
+ * 
+ * From RFC 2205
  * 	
  * 	RFC 2205:
  * 
