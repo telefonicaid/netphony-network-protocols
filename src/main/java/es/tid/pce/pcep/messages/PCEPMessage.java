@@ -16,12 +16,13 @@ import org.slf4j.LoggerFactory;
 
 /** Base class for PCEP Messages.
  * 
- * Cabecera comun de los mensajes PCEP
+ * Common Header PCEP
+ * {@code
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 | Ver |  Flags  |  Message-Type |       Message-Length          |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+}
 */
 public abstract class PCEPMessage implements PCEPElement {
 
@@ -56,8 +57,8 @@ public abstract class PCEPMessage implements PCEPElement {
 	/**
 	 * Creates a PCEP message from a byte array. 
 	 * Decodes the message header 
-	 * @param bytes
-	 * @throws PCEPProtocolViolationException
+	 * @param bytes bytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public PCEPMessage(byte []bytes) throws PCEPProtocolViolationException{
 		messageLength=(bytes[2] & 0xFF)* 256 + (bytes[3]& 0xFF);
@@ -74,6 +75,7 @@ public abstract class PCEPMessage implements PCEPElement {
 
 	/**
 	 * Get the message Bytes
+	 * @return bytes of the message
 	 */
 	public byte[] getBytes() {
 		return messageBytes;
@@ -95,6 +97,7 @@ public abstract class PCEPMessage implements PCEPElement {
            9		PCMonRep
           TBD  		PCUpdate
           TBD		PCReport
+          @return message Type
 */
 	public int getMessageType() {
 		return messageType;	

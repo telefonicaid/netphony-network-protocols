@@ -3,8 +3,6 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 /**
  * Switching Capability SpecificInformation for TDM.
  * 
-Kompella & Rekhter          Standards Track                     [Page 4]
-
  
 	RFC 4203                OSPF Extensions in MPLS             October 2005
  
@@ -54,8 +52,8 @@ public class SwitchingCapabilitySpecificInformationTDM extends SwitchingCapabili
 
 	/**
 	 * 
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	public SwitchingCapabilitySpecificInformationTDM(byte[] bytes, int offset) {
 		this.length=8;

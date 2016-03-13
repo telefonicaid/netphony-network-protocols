@@ -20,9 +20,9 @@ import java.util.Vector;
    Object-Class and Object-Type for the ADVANCE-RESERVATION object are
    to be defined. The P flag in the header must be set. The format of
    the object is the following, where:
-   �	Start time is a 32-bit unsigned number specifying the time when
+   	Start time is a 32-bit unsigned number specifying the time when
         the resources reserved for the service have to be committed.
-   �	Duration is a 32-bit unsigned number specifying the service 
+   	Duration is a 32-bit unsigned number specifying the service 
         lifetime in units of seconds. 
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -61,9 +61,7 @@ public class AdvanceReservationObject extends PCEPObject{
 		ARList = new LinkedList<AdvanceReservation>();
 	}
 	
-	/**
-	 * 
-	 */
+
 	public AdvanceReservationObject(byte []bytes, int offset)throws MalformedPCEPObjectException {
 		super(bytes,offset);
 		ARList = new LinkedList<AdvanceReservation>();
@@ -87,6 +85,7 @@ public class AdvanceReservationObject extends PCEPObject{
 	
 	/**
 	 * Decodes Advance Reservation Object
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public void decode() throws MalformedPCEPObjectException{
 		boolean fin=false;

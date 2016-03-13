@@ -12,6 +12,7 @@ import es.tid.pce.pcep.objects.*;
  * ADDED SUPPORT FOR OF from RFC 5541  AND XRO from RFC 5521
  * ADDED INTERLAYER-SWITCH-LAYER SUPPORT
  * <p> From RFC 5440, Section 6.4
+ * {@code
  *  <request>::= <RP>
                    <END-POINTS>
                    [<LSPA>]
@@ -25,7 +26,7 @@ import es.tid.pce.pcep.objects.*;
                    [<XRO>] 
                    [<INTER-LAYER> [<SWITCH-LAYER>]]
                    [<REQ-ADAP-CAP>]
-
+}
  There are two mandatory objects that MUST be included within a PCReq
    message: the RP and the END-POINTS objects (see Section 7).  If one
    or both of these objects is missing, the receiving PCE MUST send an
@@ -69,9 +70,9 @@ public class Request extends PCEPConstruct{
 	/**
 	 * 
 	 * Use this method to create a new Request from a sequence of bytes	 
-	 * @param bytes
-	 * @param offset
-	 * @throws PCEPProtocolViolationException
+	 * @param bytes bytes
+	 * @param offset bytes 
+	 * @throws PCEPProtocolViolationException Exception when the bytes do not lead to a valid PCEP Request Construct 
 	 */
 	public Request(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		metricList=new LinkedList<Metric>();
@@ -211,6 +212,9 @@ public class Request extends PCEPConstruct{
 
 	/**
 	 * Decode a Request rule;
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws PCEPProtocolViolationException Exception when the bytes do not lead to a valid PCEP Request Construct 
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		//Decoding Request Rule

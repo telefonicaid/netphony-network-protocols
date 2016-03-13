@@ -81,6 +81,8 @@ public class LabelRROSubobject extends RROSubobject {
 	
 	/**
 	 * Constructor used to create a new Label RRO subobject when decoding is needed
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public LabelRROSubobject(byte [] bytes, int offset){
@@ -132,6 +134,8 @@ public class LabelRROSubobject extends RROSubobject {
    |       Contents of Label Object                                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    </p>
+   	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public void decode(byte [] bytes, int offset){

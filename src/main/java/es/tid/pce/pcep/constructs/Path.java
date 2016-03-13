@@ -25,6 +25,7 @@ import es.tid.pce.pcep.objects.SwitchLayer;
 /**
  * Path PCEP Construct. RFC 5440
  * From RFC 5440 Section 6.5
+ * {@code 
  *      <path>::= <ERO><attribute-list>
 
    where:
@@ -40,7 +41,7 @@ import es.tid.pce.pcep.objects.SwitchLayer;
                             [<REQ-ADAP-CAP>]
                             [<SERVER-INDICATION>]
                             
-    <metric-list>::=<METRIC>[<metric-list>]
+    <metric-list>::=<METRIC>[<metric-list>]}
  * @author ogondio
  *
  */

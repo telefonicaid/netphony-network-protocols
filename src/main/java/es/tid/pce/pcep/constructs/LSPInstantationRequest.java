@@ -7,12 +7,14 @@ import es.tid.pce.pcep.objects.*;
 
 
 /**
+ * LSP Instantiation Request
+ * {@code 
  <lsp-instantiation-request> ::= <END-POINTS>
                                    <LSPA>
                                    [<ERO>]
                                    [<BANDWIDTH>]
-                                   [<metric-list>]
- * </p>
+                                   [<metric-list>]}
+ * 
  * @author ogondio
  *
  */
@@ -35,9 +37,9 @@ public class LSPInstantationRequest extends PCEPConstruct{
 	/**
 	 * 
 	 * Use this method to create a new Request from a sequence of bytes	 
-	 * @param bytes
-	 * @param offset
-	 * @throws PCEPProtocolViolationException
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws PCEPProtocolViolationException Exception when the bytes do not lead to a valid PCEP Request Construct 
 	 */
 	public LSPInstantationRequest(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		this.metricList=new LinkedList<Metric>();
@@ -109,6 +111,9 @@ public class LSPInstantationRequest extends PCEPConstruct{
 
 	/**
 	 * Decode a Request rule;
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws PCEPProtocolViolationException Exception when the bytes do not lead to a valid PCEP Request Construct 
 	 */
 	private void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		int len=0;		

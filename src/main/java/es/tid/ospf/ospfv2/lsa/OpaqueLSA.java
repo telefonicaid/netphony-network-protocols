@@ -33,8 +33,9 @@ package es.tid.ospf.ospfv2.lsa;
    scope) of an Opaque LSA is identified by its link-state type.  This
    section documents the flooding of Opaque LSAs.</P>
 
-   <P>The flooding scope associated with each Opaque link-state type is
-   defined as follows.<UL>
+   The flooding scope associated with each Opaque link-state type is
+   defined as follows.
+   <UL>
 
    <li>Link-state type-9 denotes a link-local scope.  Type-9 Opaque LSAs
       are not flooded beyond the local (sub)network.</li>
@@ -53,7 +54,7 @@ package es.tid.ospf.ospfv2.lsa;
       area or NSSA from a neighboring router within the stub area or
       NSSA, the LSA is rejected.</li>
       
-      </UL></P>
+      </UL>
       
       <p>The link-state ID of the Opaque LSA is divided into an Opaque type
    field (the first 8 bits) and a type-specific ID (the remaining 24
@@ -104,9 +105,9 @@ public abstract class OpaqueLSA extends LSA{
 	
 	/**
 	 * Create opaque LSA from a bunch of bytes
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFLSAException
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws MalformedOSPFLSAException Malformed OSPF LSA Exception
 	 */
 	public OpaqueLSA(byte[] bytes, int offset)throws MalformedOSPFLSAException{
 		super(bytes,offset);

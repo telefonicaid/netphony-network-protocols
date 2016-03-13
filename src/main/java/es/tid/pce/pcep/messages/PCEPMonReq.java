@@ -9,7 +9,7 @@ import es.tid.pce.pcep.objects.*;
 
 
 /**
- * <h1> Path Computation Monitoring Request (PCMonReq) Message (RFC 5886). </h1>
+ * Path Computation Monitoring Request (PCMonReq) Message (RFC 5886).
  * <p>The Message-Type field of the PCEP common header for the PCMonReq
    message is set to 8.</p>
    <p>There is one mandatory object that MUST be included within a PCMonReq
@@ -19,7 +19,7 @@ import es.tid.pce.pcep.objects.*;
    object missing).  Other objects are optional.</p>
 
    <p>Format of a PCMonReq message (out-of-band request):</p>
-
+{@code
     <PCMonReq Message>::= <Common Header>
                          <MONITORING>
                          <PCC-ID-REQ>
@@ -46,7 +46,7 @@ import es.tid.pce.pcep.objects.*;
                 [<LOAD-BALANCING>]
                 [<XRO>]
 
-   <metric-list>::=<METRIC>[<metric-list>]
+   <metric-list>::=<METRIC>[<metric-list>]}
    
    <p> The SVEC, RP, END-POINTS, LSPA, BANDWIDTH, METRIC, RRO, IRO, and
    LOAD-BALANCING objects are defined in [RFC5440].  The XRO object is
@@ -151,6 +151,8 @@ public class PCEPMonReq  extends PCEPMessage {
 	
 	/**
 	 * Decodes a PCEP Mon Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521 
+	 * @param bytes bytes
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public void decode(byte[] bytes) throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 

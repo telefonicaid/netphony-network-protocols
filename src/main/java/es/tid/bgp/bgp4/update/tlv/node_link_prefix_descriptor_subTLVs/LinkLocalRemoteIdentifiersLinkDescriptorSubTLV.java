@@ -19,18 +19,6 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkLocalRemoteIdentifiers;
    The following illustrates encoding of the Value field of the Link
    Local/Remote Identifiers sub-TLV.
 
-
-
-
-
-
-
-
-Kompella & Rekhter          Standards Track                     [Page 2]
- 
-RFC 5307               IS-IS Extensions for GMPLS           October 2008
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

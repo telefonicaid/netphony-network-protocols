@@ -137,7 +137,7 @@ public abstract class PCEPSubTLV {
 
 		/**
 		 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-		 * @param SubTLVValueLength
+		 * @param SubTLVValueLength length of the SUBTLV Value
 		 */
 		protected void setSubTLVValueLength(int SubTLVValueLength) {
 			this.SubTLVValueLength = SubTLVValueLength;

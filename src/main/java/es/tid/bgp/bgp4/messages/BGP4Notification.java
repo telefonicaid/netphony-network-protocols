@@ -1,9 +1,9 @@
 package es.tid.bgp.bgp4.messages;
 /**
- * <h1>BGP Notification Message Format (RFC 4271). <h1>
+ * BGP Notification Message Format (RFC 4271).
  * <p>From RFC 4271, Section 4.5</p>
  * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
-  * 4.5. NOTIFICATION Message Format
+ * 4.5. NOTIFICATION Message Format
 
    A NOTIFICATION message is sent when an error condition is detected.
    The BGP connection is closed immediately after it is sent.
@@ -49,20 +49,6 @@ package es.tid.bgp.bgp4.messages;
                1 - Connection Not Synchronized.
                2 - Bad Message Length.
                3 - Bad Message Type.
-
-
-
-
-
-
-
-
-
-
-Rekhter, et al.             Standards Track                    [Page 22]
- 
-RFC 4271                         BGP-4                      January 2006
-
 
       OPEN Message Error subcodes:
 

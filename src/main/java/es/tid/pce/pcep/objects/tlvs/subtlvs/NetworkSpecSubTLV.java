@@ -33,7 +33,7 @@ The NetworkSpec sub-TLV is further structured in the sub-TLVs:
 Sub-TLV type	Sub-TLV name	Description	Occur
 
 TBD				EP Address		The address of the IT resource. It is a string in
- 								the format <protocol>: <address>:<port>	1
+ 								the format {@code<protocol>: <address>:<port>}	1
 TBD				TNA				Transport Network Assigned name, compliant with
  								[OIF-UNI-2.0] specification	0..1
 TBD				MTU				Maximum amount of data that can be processed per
@@ -43,7 +43,7 @@ TBD				Network Adapter	Type of adapter for network connectivity	0..1
  
  * 
  * 
- * @author Alejandro Tovar de Due�as
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class NetworkSpecSubTLV extends PCEPSubTLV {

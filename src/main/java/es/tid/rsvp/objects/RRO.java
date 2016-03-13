@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
    propagated.  Similarly, if in a Resv message multiple RROs are
    encountered following a FILTER_SPEC before another FILTER_SPEC is
    encountered, only the first RRO is meaningful.  Subsequent RROs
-   SHOULD be ignored and SHOULD NOT be propagated.<p>
+   SHOULD be ignored and SHOULD NOT be propagated.</p>
 
 
 
@@ -77,8 +77,8 @@ public class RRO extends RSVPObject{
 	/**
 	 * Constructor to be used when a new RRO Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public RRO(byte[] bytes, int offset){
@@ -93,7 +93,7 @@ public class RRO extends RSVPObject{
 	
 	/**
 	 * Method to add a new RRO subobject to the ERO object.
-	 * @param rroSO
+	 * @param rroSO RRO Subobject
 	 */	
 	public void addRROubobject(RROSubobject rroSO){
 		

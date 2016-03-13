@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
    the path computation failure).
 
    The format of a PCRep message is as follows:
-
+{@code
 
    <PCRep Message> ::= <Common Header>
                        <response-list>
@@ -90,7 +90,7 @@ import org.slf4j.LoggerFactory;
                        [<IRO>]
 
     <metric-list>::=<METRIC>[<metric-list>]
-
+}
  * 
  * 
 * @author Oscar Gonzalez de Dios
@@ -160,6 +160,7 @@ public class PCEPResponse extends PCEPMessage {
 
 	/**
 	 * Decode the PCEP Response message
+	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public void decode() throws PCEPProtocolViolationException {
 		//Decoding PCEP Response Message

@@ -19,7 +19,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
 /**
   * Storage TLV (From GEYSERS).
   *  
-	Storage description � is part of the Notification, it includes the
+	Storage description  is part of the Notification, it includes the
 	description of the characteristics of the requested storage and is structured in
 	a set of TLVs.
 
@@ -37,7 +37,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
  
- * @author Alejandro Tovar de Due�as
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class StorageTLV extends PCEPTLV {

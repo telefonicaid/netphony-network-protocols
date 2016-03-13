@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *  
- * <h1>BGP Message Header Format (RFC 4271). <h1>
+ * BGP Message Header Format (RFC 4271).
  * <p>From RFC 4271, Section 4.1</p>
  * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
  * 
@@ -73,7 +73,12 @@ public abstract class BGP4Message  implements BGP4Element {
 	protected byte messageBytes[]; 
 	
 	/**
-	 *  MessageType
+	 *  MessageType:          
+	 *  Value    Meaning
+           1        Open
+           2        Update
+           3        Notification
+           4        Keepalive
 	 */
 	private int messageType;
 	
@@ -107,8 +112,7 @@ public abstract class BGP4Message  implements BGP4Element {
 	/**
 	 * Creates a PCEP message from a byte array. 
 	 * Decodes the message header 
-	 * @param bytes
-	 * @throws PCEPProtocolViolationException
+	 * @param bytes Bytes of the message
 	 */
 	public BGP4Message(byte []bytes){
 		messageLength=(bytes[16] & 0xFF)* 256 + (bytes[17]& 0xFF);
@@ -128,20 +132,15 @@ public abstract class BGP4Message  implements BGP4Element {
 		return messageBytes;
 	}
 
-/**
-	Message-Type (8 bits):  The following message types are currently
-      defined:
 
-         Value    Meaning
-           1        Open
-           2        Update
-           3        Notification
-           4        Keepalive
-    
-*/
+	/**
+	 * Get the message type 
+	 * @return the message type
+	 */
 	public int getMessageType() {
 		return messageType;	
 	}
+	
 	public static int getMessageType(byte[] bytes){
 		int mt;
 		mt= bytes[18];//Type is in 18 byte
@@ -153,9 +152,7 @@ public abstract class BGP4Message  implements BGP4Element {
 		return messageLength;
 	}
 
-	
-	//public abstract void decode(byte[] bytes) throws PCEPProtocolViolationException;
-	
+		
 	protected void encodeHeader() { 
 		for (int i = 0;i<16;i++)
 		messageBytes[i]=(byte)0xFF;

@@ -11,10 +11,10 @@ import es.tid.bgp.bgp4.open.BGP4OptionalParametersTypes;
 
 /**
  * BGP Open Message.
- * 
- * <h1>BGP Open Message Format (RFC 4271). <h1>
- * <p>From RFC 4271, Section 4.2</p>
- * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
+ * <p>
+ * BGP Open Message Format (RFC 4271). From 
+ * {link <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>}
+ * Section 4.2
  * 4.2. OPEN Message Format
  *    
  *   After a TCP connection is established, the first message sent by each
@@ -84,8 +84,8 @@ import es.tid.bgp.bgp4.open.BGP4OptionalParametersTypes;
       Optional Parameters:
 
          This field contains a list of optional parameters, in which
-         each parameter is encoded as a <Parameter Type, Parameter
-         Length, Parameter Value> triplet.
+         each parameter is encoded as a Parameter Type, Parameter
+         Length, Parameter Value triplet.
 <pre>
          0                   1
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
@@ -133,8 +133,6 @@ public class BGP4Open extends BGP4Message {
 	 */
 	private int optionalParameterLength = 0;
 	
-	
-	//Pensar los optionalParameters como son
 	/**
 	 * optional parameters
 	 */
@@ -151,7 +149,8 @@ public class BGP4Open extends BGP4Message {
 	}
 
 	/**
-	 * Construct new PCEP Open message from scratch
+	 * Construct new BGP4 Open message from scratch
+	 * @param bytes bytes of the  BGP4 Open message to decode
 	 */
 	public BGP4Open (byte[] bytes) {//throws PCEPProtocolViolationException {
 		super(bytes);		
@@ -194,7 +193,7 @@ public class BGP4Open extends BGP4Message {
 	}
 	
 	
-	public void decode() {// throws PCEPProtocolViolationException {
+	public void decode() {
 		int offset = BGPHeaderLength;
 		version = (int)((messageBytes[offset] & 0xFF));		
 		offset=offset+1;
@@ -297,7 +296,6 @@ public class BGP4Open extends BGP4Message {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		StringBuffer sb=new StringBuffer((BGPOpenMessageMandatoryFileds+optionalParameterLength)*400);
 		sb.append("BGP Open Message: \n");
 		sb.append("> Version: "+ version+"\n");

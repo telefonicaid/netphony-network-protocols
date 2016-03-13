@@ -8,8 +8,16 @@ import java.util.BitSet;
 public class ByteHandler {
 
 	/*
-	 * Returns the bytes between begin and end. The bytes int the begin position
+	 * 
+	 */
+	
+	/**
+	 * Returns an int from the bytes between begin and end. 
 	 * and end position too.
+	 * @param begin position of the start 
+	 * @param end position of the end 
+	 * @param bytes Bytes to copy
+	 * @return int number
 	 */
 	public static int easyCopy(int begin,int end,byte ... bytes)
 	{
@@ -83,9 +91,15 @@ public class ByteHandler {
 	}
 
 	/*
-	 * The same as above but returns a long instead of an int.
+	 * 
 	 */
-
+/**
+ * Returns a long from the bytes between begin and end. 
+ * @param begin position of the start 
+ * @param end position of the end 
+ * @param bytes Bytes to take the number
+ * @return long number 
+ */
 	public static long easyCopyL(int begin,int end,byte ... bytes) //throws Exception
 	{
 		long dest = 0;
@@ -169,7 +183,7 @@ public class ByteHandler {
 		return bytes;
 	}
 
-	/* Substitute of Bitset.valueOf();
+	/** Substitute of Bitset.valueOf();
 	 * 
 	 * This function is available in SE7(My PC) but not in SE6(simpsongsw).
 	 * So this function tries to emulate it
@@ -180,6 +194,8 @@ public class ByteHandler {
 		for all n < 8 * bytes.length.
 
 		This method is equivalent to BitSet.valueOf(ByteBuffer.wrap(bytes)).
+	 * @param bs bytes 
+	 * @return BitSet 
 	 */
 	private static BitSet myBitSetValueOf(byte[] bs)
 	{
@@ -259,6 +275,7 @@ public class ByteHandler {
 
 	/**
 	 * macAddress = "AA:BB:CC:DD:EE:FF";
+	 * @param macAddress MAC address in String format
 	 * @return byte array
 	 */
 	public static byte[] MACFormatStringtoByteArray(String macAddress)
@@ -289,7 +306,8 @@ public class ByteHandler {
 	}
 
 	/**
-	 * DataPath = "AA:BB:CC:DD:EE:FF:GG:HH";
+	 * DataPath = "AA:BB:CC:DD:EE:FF:GG:HH"; 
+	 * @param DataPath Data Path in String format "AA:BB:CC:DD:EE:FF:GG:HH"
 	 * @return byte array
 	 */
 	public static byte[] DataPathFormatStringtoByteArray(String DataPath)
