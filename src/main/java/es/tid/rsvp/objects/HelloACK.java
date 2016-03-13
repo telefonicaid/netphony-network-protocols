@@ -76,8 +76,8 @@ public class HelloACK extends Hello{
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
 	 * to a new message.
-	 * @param srcInstance
-	 * @param dstInstance
+	 * @param srcInstance source instance 
+	 * @param dstInstance destination instance
 	 */
 	
 	public HelloACK(int srcInstance, int dstInstance){
@@ -97,8 +97,8 @@ public class HelloACK extends Hello{
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be decoded 
 	 * from a received message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes 
+	 * @param offset offset
 	 */
 	
 	public HelloACK(byte[] bytes, int offset){

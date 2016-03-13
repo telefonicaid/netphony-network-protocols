@@ -3,6 +3,7 @@ package es.tid.pce.pcep.objects;
 import java.util.Arrays;
 
 import es.tid.pce.pcep.PCEPElement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,9 +137,9 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * Construct a new PCEP Object from a sequence of bytes.
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedPCEPObjectException
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public PCEPObject(byte []bytes, int offset) throws MalformedPCEPObjectException{
 		ObjectLength=((bytes[offset+2]<<8)& 0xFF00) |  (bytes[offset+3] & 0xFF);
@@ -157,15 +158,16 @@ public abstract class PCEPObject implements PCEPElement {
 	/**
 	 * Decode the object. It is specific to the PCEP Object. Must be implemented
 	 * in each object!!!!
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public abstract void decode() throws MalformedPCEPObjectException;
 
 	/**
 	 * Decodes an object from a sequence of bytes starting in offset. It is the same as calling
 	 * the constructor with the sequence of bytes. 
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedPCEPObjectException
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws MalformedPCEPObjectException Exception when the object is malformed
 	 */
 	public void decode(byte[] bytes,int offset) throws MalformedPCEPObjectException{
 		ObjectLength=((bytes[offset+2]<<8)& 0xFF00) |  (bytes[offset+3] & 0xFF);
@@ -199,6 +201,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * Returns the Object-Class (8 bits) which  identifies the PCEP object class.
+	 * @return the object class
 	 */
 	public int getObjectClass() {
 		return ObjectClass;
@@ -214,7 +217,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @return OT
+	 * @return OT Object Type
 	 */
 	public int getOT(){
 		return OT;
@@ -222,7 +225,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @param oT
+	 * @param oT Object Type
 	 */
 	public void setOT(int oT){
 		OT = oT;
@@ -238,7 +241,7 @@ public abstract class PCEPObject implements PCEPElement {
 
 	/**
 	 * 
-	 * @param res
+	 * @param res res
 	 */
 	public void setRes(int res) {
 		Res = res;

@@ -12,6 +12,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import org.slf4j.LoggerFactory;
 
 /**
+ * {@code
  * <PCInitiate Message> ::= <Common Header>
                             <PCE-initiated-lsp-list>
 Where:
@@ -23,6 +24,7 @@ Where:
                                    <END-POINTS>
                                    <ERO>
                                    [<attribute-list>]
+                                   }
  * 
  * @author jaume
  *

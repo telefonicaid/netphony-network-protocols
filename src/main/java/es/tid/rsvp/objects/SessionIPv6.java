@@ -94,10 +94,10 @@ public class SessionIPv6 extends Session{
 	
 	/**
 	 * 
-	 * @param destAddress
-	 * @param protocolId
-	 * @param flags
-	 * @param destPort
+	 * @param destAddress destAddress
+	 * @param protocolId protocolId
+	 * @param flags flags
+	 * @param destPort destPort
 	 */
 	
 	public SessionIPv6(Inet6Address destAddress, int protocolId, int flags, int destPort){

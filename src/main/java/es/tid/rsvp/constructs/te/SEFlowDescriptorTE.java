@@ -14,12 +14,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
+ * {@code
       <SE flow descriptor> ::= <FLOWSPEC> <SE filter spec list>
 
       <SE filter spec list> ::= <SE filter spec>
                                | <SE filter spec list> <SE filter spec>
 
-      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]
+      <SE filter spec> ::=     <FILTER_SPEC> <LABEL> [ <RECORD_ROUTE> ]}
 
       Note:  LABEL and RECORD_ROUTE (if present), are bound to the
              preceding FILTER_SPEC.  No more than one LABEL and/or
@@ -67,8 +68,8 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new SE Flow Descriptor TE it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -108,7 +109,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	
 	/**
 	 * Method to add new Filter Spec TE object to the filter Spec list
-	 * @param filterSpec
+	 * @param filterSpec filter spec
 	 */
 	
 	public void addFilterSpec(FilterSpecTE filterSpec){
@@ -122,7 +123,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor TE encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown if a mandatory field is not present
 	 * 
 	 */
 			
@@ -172,7 +173,7 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException exception decoding bytes
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

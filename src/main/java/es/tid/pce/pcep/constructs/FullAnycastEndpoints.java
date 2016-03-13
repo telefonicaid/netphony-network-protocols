@@ -10,6 +10,8 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 
 /**
+ * 
+ * {@code 
  *      <fullAnycast-endpoints> ::=
               <endpoint>
               [<endpoint-restrictions>]
@@ -17,7 +19,7 @@ import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
               [<endpoint-restrictions>]
               
         
-        For <endpoint> only Storage, Server or Application TLVs are allowed
+        For <endpoint> only Storage, Server or Application TLVs are allowed}
  **/
 
 public class FullAnycastEndpoints extends PCEPConstruct {

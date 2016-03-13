@@ -7,7 +7,7 @@ import java.lang.String;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * @author ogondio
+ * Generalized Bandwidth of SSON Network.
  *  The SSON traffic parameters carried in both objects have the same
    format as shown in Figure 1.
 
@@ -20,7 +20,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
                    Figure 1: The SSON Traffic Parameters
 
    m (16 bits): the slot width is specified by m*12.5 GHz.
- *
+ *@author ogondio
  */
 
 

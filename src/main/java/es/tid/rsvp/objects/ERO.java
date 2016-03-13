@@ -72,8 +72,8 @@ public class ERO extends RSVPObject{
 	/**
 	 * Constructor to be used when a new ERO Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public ERO(byte[] bytes, int offset){
@@ -94,7 +94,7 @@ public class ERO extends RSVPObject{
 	
 	/**
 	 * Method to add a new ERO subobject to the ERO object.
-	 * @param eroSO
+	 * @param eroSO ERO Subobject
 	 */
 	
 	public void addEROSubobject(EROSubobject eroSO){

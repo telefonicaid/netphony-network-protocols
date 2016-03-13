@@ -48,7 +48,7 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
          2: LABEL_RANGE1 (Label range device with a movable center label
          and width)
 
-         3: SIMPLE_LABEL & CHANNEL_COUNT (Combination of SIMPLE_LABEL
+         3: SIMPLE_LABEL and CHANNEL_COUNT (Combination of SIMPLE_LABEL
          and CHANNEL_COUNT restriction. The accompanying label set and
          channel count indicate labels permitted on the port and the
          maximum number of channels that can be simultaneously used on
@@ -112,9 +112,9 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
    to existing signals.
 
 
-   2.6.4. SIMPLE_LABEL & CHANNEL_COUNT
+   2.6.4. SIMPLE_LABEL and CHANNEL_COUNT
 
-   In the case of the SIMPLE_LABEL & CHANNEL_COUNT the format is given
+   In the case of the SIMPLE_LABEL and CHANNEL_COUNT the format is given
    by:
 
       0                   1                   2                   3
@@ -132,7 +132,7 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
 
    2.6.5. Link Label Exclusivity
 
-   In the case of the SIMPLE_LABEL & CHANNEL_COUNT the format is given
+   In the case of the SIMPLE_LABEL and CHANNEL_COUNT the format is given
    by:
 
       0                   1                   2                   3

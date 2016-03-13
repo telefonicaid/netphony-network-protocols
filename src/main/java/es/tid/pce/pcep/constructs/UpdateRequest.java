@@ -10,11 +10,12 @@ import es.tid.pce.pcep.objects.SRP;
 
 /**
  * Update Request Construct
+ * {@code
  * <update-request>::=
  *      <SRP>
  *      <LSP>
  *      <path>
- * 
+ * }
  * @author Fernando Munoz del Nuevo
  * @author ogondio
  *

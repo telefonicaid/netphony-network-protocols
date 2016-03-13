@@ -8,9 +8,7 @@ import java.net.UnknownHostException;
 import es.tid.bgp.bgp4.update.fields.PathAttribute;
 
 /**
- * RFC 4760           Multiprotocol Extensions for BGP-4       January 2007
- * 
-3.  Multiprotocol Reachable NLRI - MP_REACH_NLRI (Type Code 14):
+ * RFC 4760  Multiprotocol Reachable NLRI - MP_REACH_NLRI (Type Code 14).
 
    This is an optional non-transitive attribute that can be used for the
    following purposes:
@@ -76,7 +74,7 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
          A variable-length field that contains the Network Address of
          the next router on the path to the destination system.  The
          Network Layer protocol associated with the Network Address of
-         the Next Hop is identified by a combination of <AFI, SAFI>
+         the Next Hop is identified by a combination of {@code<AFI, SAFI>}
          carried in the attribute.
 
       Reserved:
@@ -88,7 +86,7 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
 
          A variable length field that lists NLRI for the feasible routes
          that are being advertised in this attribute.  The semantics of
-         NLRI is identified by a combination of <AFI, SAFI> carried in
+         NLRI is identified by a combination of {@code<AFI, SAFI>} carried in
          the attribute.
 
          When the Subsequent Address Family Identifier field is set to
@@ -116,7 +114,7 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
    that receives the message SHOULD ignore this attribute.
 
    An UPDATE message SHOULD NOT include the same address prefix (of the
-   same <AFI, SAFI>) in more than one of the following fields: WITHDRAWN
+   same {@code<AFI, SAFI>}) in more than one of the following fields: WITHDRAWN
    ROUTES field, Network Reachability Information fields, MP_REACH_NLRI
    field, and MP_UNREACH_NLRI field.  The processing of an UPDATE
    message in this form is undefined.

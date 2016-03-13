@@ -10,11 +10,11 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 
 
 /**
-  * Application END-POINT TLV, Experimental & Propietary from GEYSERS.
+  * Application END-POINT TLV, Experimental and Propietary from GEYSERS.
   * Enconding: propietary based on GEYSERS project interoperability.
   * TLV Typer: 1002, non-standard
   * 
-	Application description � in this case the End-point description field includes the
+	Application description  in this case the End-point description field includes the
 	description of the characteristics of the requested Application and is structured in
 	a set of TLVs.
 
@@ -32,7 +32,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
  
- * @author Alejandro Tovar de Due�as
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class EndPointApplicationTLV extends PCEPTLV {

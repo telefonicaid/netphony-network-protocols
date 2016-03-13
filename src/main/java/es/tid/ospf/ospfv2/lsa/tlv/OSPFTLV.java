@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Base class for OSPF TLVs,
- * from <a href="link http://tools.ietf.org/html/rfc5392"> RFC 3630 </a>. 
+ * Base class for OSPF TLVs.
+ * from <a href="http://tools.ietf.org/html/rfc5392"> RFC 3630 </a>. 
  * 
  * RFC 3630  TE Extensions to OSPF Version 2 
 
@@ -68,11 +68,6 @@ public abstract class OSPFTLV {
 	public OSPFTLV(){
 	}
 	
-	/**
-	 * 
-	 * @param bytes
-	 * @param offset
-	 */
 	public OSPFTLV(byte []bytes, int offset) {
 		this.TLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 		this.TLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
@@ -85,9 +80,6 @@ public abstract class OSPFTLV {
 		System.arraycopy(bytes, offset, tlv_bytes, 0, TotalTLVLength);
 	}
 	
-	/**
-	 * 
-	 */
 	protected void encodeHeader(){
 		this.tlv_bytes[0]=(byte)(TLVType>>>8 & 0xFF);
 		this.tlv_bytes[1]=(byte)(TLVType & 0xFF);
@@ -147,7 +139,7 @@ public abstract class OSPFTLV {
 
 	/**
 	 * Sets the lenght of the VALUE of the TLV. The total length is computed!!!
-	 * @param TLVValueLength
+	 * @param TLVValueLength TLVValueLength
 	 */
 	protected void setTLVValueLength(int TLVValueLength) {
 		this.TLVValueLength = TLVValueLength;

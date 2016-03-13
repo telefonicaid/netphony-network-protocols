@@ -7,9 +7,10 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * Base class for OSPF v2 LSA (Link State Advertisement) messages,
+ * Base class for OSPF v2 LSA (Link State Advertisement) messages.
+ * <p>
  * See <a href="http://www.ietf.org/rfc/rfc2328"> RFC 2328</a>.
- <p>
+ 
     All LSAs begin with a common 20 byte header.  This header contains
     enough information to uniquely identify the LSA (LS type, Link State
     ID, and Advertising Router).  Multiple instances of the LSA may
@@ -17,7 +18,7 @@ import java.net.UnknownHostException;
     to determine which instance is more recent.  This is accomplished by
     examining the LS age, LS sequence number and LS checksum fields that
     are also contained in the LSA header.
-<p>
+</p>
 <pre>
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -96,8 +97,9 @@ public abstract class LSA {
 	
 	/**
 	 * Decodes the header of a LSA
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
+	 * @throws MalformedOSPFLSAException Malformed OSPF LSA Exception
 	 */
 	public LSA(byte[] bytes, int offset) throws MalformedOSPFLSAException{
 		this.LSage= ((bytes[offset]&0xFF)<<8) |  (bytes[offset+1] & 0xFF);

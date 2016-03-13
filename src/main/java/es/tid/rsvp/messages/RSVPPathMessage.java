@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
-     RFC 2205: RSVP		PATH Message
+     RFC 2205: RSVP		PATH Message.
 
          Each sender host periodically sends a Path message for each
          data flow it originates.  It contains a SENDER_TEMPLATE object
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
          The format of a Path message is as follows:
 
-           <Path Message> ::= <Common Header> [ <INTEGRITY> ]
+           {@code <Path Message> ::= <Common Header> [ <INTEGRITY> ]
 
                                      <SESSION> <RSVP_HOP>
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
            <sender descriptor> ::= <SENDER_TEMPLATE> <SENDER_TSPEC>
 
-                                    [ <ADSPEC> ]
+                                    [ <ADSPEC> ]}
 
 
          If the INTEGRITY object is present, it must immediately follow
@@ -220,8 +220,8 @@ public class RSVPPathMessage extends RSVPMessage{
 	
 	/**
 	 * 
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length
 	 */
 	
 	public RSVPPathMessage(byte[] bytes, int length){
@@ -252,7 +252,7 @@ public class RSVPPathMessage extends RSVPMessage{
 	}
 	
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
 	 */
 	
 	public void encode() throws RSVPProtocolViolationException{
@@ -408,7 +408,7 @@ public class RSVPPathMessage extends RSVPMessage{
 	}
 
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding
 	 */
 	
 	public void decode() throws RSVPProtocolViolationException {
@@ -541,7 +541,7 @@ public class RSVPPathMessage extends RSVPMessage{
 	
 	/**
 	 * 
-	 * @param senderDescriptor
+	 * @param senderDescriptor Sender Descriptor
 	 */
 	
 	public void addSenderDescriptor(SenderDescriptor senderDescriptor){

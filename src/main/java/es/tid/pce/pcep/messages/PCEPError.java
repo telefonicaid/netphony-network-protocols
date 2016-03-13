@@ -11,7 +11,7 @@ import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.pce.pcep.objects.PCEPObject;
 
 /**
- * <h1> PCEP Error Message (RFC 5440). </h1>
+ * PCEP Error Message (RFC 5440).
  * <p>From RFC 5440 Section 6.7. Error (PCErr) Message</p>
    <p>The PCEP Error message (also referred to as a PCErr message) is sent
    in several situations: when a protocol error condition is met or when
@@ -33,7 +33,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
    ERROR object is defined in Section 7.15.</p>
 
    <p>The format of a PCErr message is as follows:</p>
-
+{@code
    <PCErr Message> ::= <Common Header>
                        ( <error-obj-list> [<Open>] ) | <error>
                        [<error-list>]
@@ -44,7 +44,7 @@ import es.tid.pce.pcep.objects.PCEPObject;
               <error-obj-list>
 
    <request-id-list>::=<RP>[<request-id-list>]
-   <error-list>::=<error>[<error-list>] 
+   <error-list>::=<error>[<error-list>] }
  *
  * @author Oscar Gonzalez de Dios
  *

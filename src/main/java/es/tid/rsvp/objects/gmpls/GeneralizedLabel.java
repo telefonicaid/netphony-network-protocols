@@ -55,8 +55,8 @@ public class GeneralizedLabel extends Label {
 	/**
 	 * Constructor to be used when a new Label Request With ATM Label Range Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public GeneralizedLabel(byte[] bytes, int offset){

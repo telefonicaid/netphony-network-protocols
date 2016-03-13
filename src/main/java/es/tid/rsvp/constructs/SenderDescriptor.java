@@ -15,7 +15,7 @@ import es.tid.rsvp.objects.SenderTemplateIPv6;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ * Sender Descriptor construct.
  * <p>Represents a Sender Descriptor construct, as defined in RFC 2205.</p>
  * 
  * <p>The format of a Path message is as follows:</p>
@@ -69,8 +69,8 @@ public class SenderDescriptor extends RSVPConstruct {
 	
 	/**
 	 * Builder to be used when a new Sender Descriptor it wanted to be created and sent 
-	 * @param senderTemplate
-	 * @param senderTSPEC
+	 * @param senderTemplate Sender Template 
+	 * @param senderTSPEC Sender TSPEC∫
 	 * @param adspec	Optional, might be null
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
@@ -119,7 +119,7 @@ public class SenderDescriptor extends RSVPConstruct {
 	 * 
 	 * Sender Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when a mandatory field is not set.
 	 * 
 	 */
 			
@@ -152,7 +152,7 @@ public class SenderDescriptor extends RSVPConstruct {
 	 * 
 	 * Sender Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException  Thrown then there is a problem decoding message
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

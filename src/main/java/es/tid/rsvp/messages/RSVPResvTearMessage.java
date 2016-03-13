@@ -22,8 +22,8 @@ import es.tid.rsvp.objects.SessionIPv6;
 import es.tid.rsvp.objects.Style;
 import org.slf4j.LoggerFactory;
 
-/*
- * 	RFC 2205   RSVP		Resv Teardown Messages
+/**
+ * 	RFC 2205   RSVP		Resv Teardown Message.
 
          Receipt of a ResvTear (reservation teardown) message deletes
          matching reservation state.  Matching reservation state must
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
          A ResvTear message must be routed like the corresponding Resv
          message, and its IP destination address will be the unicast
          address of a previous hop.
-
+{@code
              <ResvTear Message> ::= <Common Header> [<INTEGRITY>]
 
                                          <SESSION> <RSVP_HOP>
@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 
              <flow descriptor list> ::= (see earlier definition)
 
+}
 
          FLOWSPEC objects in the flow descriptor list of a ResvTear
          message will be ignored and may be omitted.  The order
@@ -177,8 +178,8 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	
 	/**
 	 * 
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes 
+	 * @param length length 
 	 */
 	
 	public RSVPResvTearMessage(byte[] bytes, int length){

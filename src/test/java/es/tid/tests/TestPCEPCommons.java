@@ -15,6 +15,8 @@ import java.util.List;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
+import es.tid.pce.pcep.constructs.MetricPCE;
+import es.tid.pce.pcep.constructs.NCF;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.objects.BandwidthRequested;
@@ -174,6 +176,22 @@ public class TestPCEPCommons {
 									method2.invoke(object,ll);
 									
 								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.NCF")) {
+									LinkedList<NCF> ll=new LinkedList<NCF>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((NCF)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.MetricPCE")) {
+									LinkedList<MetricPCE> ll=new LinkedList<MetricPCE>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((MetricPCE)o);
+									method2.invoke(object,ll);
+									
+								}
 								else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 
@@ -188,8 +206,10 @@ public class TestPCEPCommons {
 										Long in=new Long(5);
 										methods[0].invoke(res, in);
 									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
+										LinkedList<Inet4Address> ll=new LinkedList<Inet4Address>();
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
-										methods[0].invoke(res, in);
+										ll.add(in);
+										method2.invoke(object,ll);
 									}else {
 										
 										//Object ll= pt.getRawType(). .newInstance();
