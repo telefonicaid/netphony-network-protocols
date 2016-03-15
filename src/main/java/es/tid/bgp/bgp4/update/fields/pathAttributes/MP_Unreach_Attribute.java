@@ -64,13 +64,96 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
 
  * @author mcs
  *
+ * TODO: It is assumed "Withdraw routes" is empty (length=0). To be implemented.
  */
-public class MP_Unreach_Attribute extends PathAttribute{
+public abstract class MP_Unreach_Attribute extends PathAttribute{
+
+	private int addressFamilyIdentifier;
+
+	private int subsequentAddressFamilyIdentifier;
+
+	public MP_Unreach_Attribute(){
+		super();
+		this.setTypeCode(PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_MP_UN_REACH_NLRI);
+		this.optionalBit=true;
+		this.transitiveBit=false;
+	}
+
+	public MP_Unreach_Attribute(byte[] bytes, int offset){
+		super(bytes,offset);
+		int newOffset = this.getMandatoryLength();
+		this.addressFamilyIdentifier = ((this.bytes[newOffset]&0xFF)<<8) | (this.bytes[newOffset+1]&0xFF);
+		this.subsequentAddressFamilyIdentifier = this.bytes[newOffset+2]&0xFF;
+	}
+
+	public void encodeMP_Unreach_Header() {
+		int offset = this.getMandatoryLength();
+		//AFI
+		this.bytes[offset] = (byte)((this.addressFamilyIdentifier>>8)&0xFF);
+		this.bytes[offset+1] = (byte)((this.addressFamilyIdentifier)&0xFF);
+		//SAFI
+		this.bytes[offset+2] = (byte)((this.subsequentAddressFamilyIdentifier)&0xFF);
+	}
 
 	@Override
-	public void encode() {
-		// TODO Auto-generated method stub
-		
+	public int hashCode(){
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + addressFamilyIdentifier;
+		result = prime * result + subsequentAddressFamilyIdentifier;
+		return result;
 	}
+
+	@Override
+	public String toString(){
+		return "mpu";
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(!super.equals(obj))
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		MP_Unreach_Attribute other = (MP_Unreach_Attribute) obj;
+		if(addressFamilyIdentifier != other.getAddressFamilyIdentifier())
+			return false;
+		if(subsequentAddressFamilyIdentifier != other.getSubsequentAddressFamilyIdentifier())
+			return false;
+		return true;
+	}
+
+	public int getAddressFamilyIdentifier(){
+		return addressFamilyIdentifier;
+	}
+
+	public int getSubsequentAddressFamilyIdentifier(){
+		return subsequentAddressFamilyIdentifier;
+	}
+
+	public void setAddressFamilyIdentifier(int addressFamilyIdentifier){
+		this.addressFamilyIdentifier = addressFamilyIdentifier;
+	}
+
+	public void setSubsequentAddressFamilyIdentifier(int subsequentAddressFamilyIdentifier){
+		this.subsequentAddressFamilyIdentifier = subsequentAddressFamilyIdentifier;
+	}
+
+	public static int getAFI(byte [] bytes, int offset){
+		int ml= PathAttribute.getMandatoryLength(bytes, offset);
+		int offset2= offset+ml;
+		int addressFamilyIdentifier=((bytes[offset2]&0xFF)<<8) | (bytes[offset2+1]&0xFF);
+		return addressFamilyIdentifier;
+	}
+
+	public static int getSAFI(byte [] bytes, int offset){
+		int ml= PathAttribute.getMandatoryLength(bytes, offset);
+		int offset2= offset+ml;
+		int subsequentAddressFamilyIdentifier = (bytes[offset2+2]&0xFF);
+		return subsequentAddressFamilyIdentifier;
+	}
+
 
 }
