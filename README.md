@@ -1,5 +1,10 @@
 netphony-network-protocols v1.2.3
 =================================
+
+Repository branch build status:
+* **Master:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
+* **Develop:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
+
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440).
 * **RSVP-TE protocol**: Resource reservation protocol (RSVP) with Traffic Engineering extensions.
