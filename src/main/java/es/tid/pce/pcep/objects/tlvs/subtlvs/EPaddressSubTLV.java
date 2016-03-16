@@ -24,7 +24,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
    IANA management of the PCEP Object TLV type identifier codespace is
    described in Section 9.
 
-In GEYSERS, EP Address (Figure 3.19) is a string in the format <protocol>:<address>:<port>.
+In GEYSERS, EP Address (Figure 3.19) is a string in the format {@code<protocol>:<address>:<port>}.
 
          0                   1                   2                   3
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -40,7 +40,7 @@ In GEYSERS, EP Address (Figure 3.19) is a string in the format <protocol>:<addre
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class EPaddressSubTLV extends PCEPSubTLV {

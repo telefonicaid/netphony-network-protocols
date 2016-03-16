@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * that appeared in the list; the first FF flow descriptor must contain a
  * FLOWSPEC.</p>
  * </UL>
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 
@@ -88,7 +88,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a FF Flow Descriptor has been received and it is wanted to decode it
-	 * @param first
+	 * @param first true or false
 	 */
 	
 	public FFFlowDescriptor(boolean first) {
@@ -100,9 +100,9 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new FF Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
-	 * @param first
+	 * @param flowSpec Flow Spec
+	 * @param filterSpec Filter Spce 
+	 * @param first First true or false
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -145,7 +145,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	 * 
 	 * FF Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present 
 	 * 
 	 */
 			
@@ -158,7 +158,7 @@ public class FFFlowDescriptor extends FlowDescriptor {
 		int offset=0;
 		
 		if(flowSpec != null){
-			// Campo s�lo obligatorio en el primer FFlowDescriptor
+			// Campo solo obligatorio en el primer FFlowDescriptor
 			flowSpec.encode();
 			System.arraycopy(flowSpec.getBytes(), 0, bytes, offset, flowSpec.getLength());
 			offset = offset + flowSpec.getLength();
@@ -191,9 +191,8 @@ public class FFFlowDescriptor extends FlowDescriptor {
 	 * 
 	 * FF Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 *@throws RSVPProtocolViolationException It is thrown when there is a problem decoding the message
 	 */
-	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
 		
 		log.debug("FF Flow Descriptor Decode");

@@ -1,5 +1,10 @@
-netphony-network-protocols v1.2.1
+netphony-network-protocols v1.2.3
 =================================
+
+Repository branch build status:
+* **Master:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
+* **Develop:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
+
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440).
 * **RSVP-TE protocol**: Resource reservation protocol (RSVP) with Traffic Engineering extensions.
@@ -14,6 +19,8 @@ The Netphony BGP-LS implementation is known to interoperate with Telecom Italia 
 
 The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
+Detailed CHANGELOG [click here](CHANGELOG)
+
 ## Compilation and use
 
 The library can be built using the maven tool. There is a set of Junit tests included that check the enconding/decoding process . Contributions on expanding the test suite are welcomed.
@@ -21,6 +28,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
  ```bash
     cd netphony-network-protocols
     mvn package
+    mvn install
  ```
  
  To use the library in your application, add the dependency in your pom.xml file:
@@ -28,7 +36,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.2.1</version>
+      <version>1.2.3</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
@@ -106,6 +114,9 @@ Inter-AS-TE-v2 LSA from RFC5392 http://tools.ietf.org/html/rfc5392
 Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 
 http://tools.ietf.org/html/draft-ietf-idr-ls-distribution-03
+
+
+
 
 (*) The BGLP-LS Speaker is available in https://github.com/telefonicaid/netphony-topology
 

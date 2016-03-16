@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
          resources with itself. </p>
 
 
-@author Fernando Mu�oz del Nuevo	fmn@tid.es
+@author Fernando Munoz del Nuevo	fmn@tid.es
 
  */
 
@@ -84,8 +84,8 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	/**
 	 * <p>Constructor to be used when a new Sender Template LSP Tunnel IPv4 Object wanted 
 	 * to be decoded from a received message.</p>
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public SenderTemplateLSPTunnelIPv4(byte[] bytes, int offset){

@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
+ * BGP4CapabilitiesOptionalParameter.
  * <a href="http://tools.ietf.org/html/rfc3392">RFC 3392</a>.
  * 
  *  This is an Optional Parameter that is used by a BGP speaker to convey
    to its BGP peer the list of capabilities supported by the speaker.
 
-   The parameter contains one or more triples <Capability Code,
-   Capability Length, Capability Value>, where each triple is encoded as
+   The parameter contains one or more triples &lt;Capability Code,
+   Capability Length, Capability Value&gt;, where each triple is encoded as
    shown below:
  * <pre>
        +------------------------------+

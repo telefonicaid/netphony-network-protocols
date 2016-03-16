@@ -18,12 +18,6 @@ import org.slf4j.LoggerFactory;
  * 
  * <p>Represents a SE Style Error Flow Descriptor construct, as defined in RFC 2205.</p>
  * 
- * 
- * <UL TYPE="CIRCLE">
- * <LI>&lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
- * </UL>
- * 
-* 
  * <p>If the INTEGRITY object is present, it must immediately follow the
  * common header.  The STYLE object followed by the flow descriptor list
  * must occur at the end of the message, and objects within the flow
@@ -44,24 +38,16 @@ import org.slf4j.LoggerFactory;
  * flow descriptors.  The following style-dependent rules specify in more
  * detail the composition of a valid flow descriptor list for each of
  * the reservation styles.</p>
- * 
- * <UL TYPE="CIRCLE">
- * 
- * <LI>SE style: &lt;flow descriptor list&gt; ::= &lt;SE flow descriptor&gt;
- * &lt;SE flow descriptor&gt; ::= &lt;FLOWSPEC&gt; &lt;filter spec list&gt;
- * &lt;filter spec list&gt; ::=  &lt;FILTER_SPEC&gt; |  &lt;filter spec list&gt; &lt;FILTER_SPEC&gt;
- * 
+ * * 
  * <p>The reservation scope, i.e., the set of senders towards which a
  * particular reservation is to be forwarded (after merging), is determined
  * as follows:</p>
- * <LI>Explicit sender selection
+ * Explicit sender selection
  * <p>The reservation is forwarded to all senders whose SENDER_TEMPLATE
  * objects recorded in the path state match a FILTER_SPEC object in the
  * reservation. This match must follow the rules of Section 3.2.</p>
  * 
- * <UL>
- * 
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  *
  */
 
@@ -101,8 +87,8 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Constructor to be used when a new SE Error Flow Descriptor it wanted to be created and sent 
-	 * @param flowSpec
-	 * @param filterSpec
+	 * @param flowSpec Flow Spec 
+	 * @param filterSpec Filter Spec 
 	 * @throws RSVPProtocolViolationException It is thrown when a mandatory field is not present
 	 */
 		
@@ -142,7 +128,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	
 	/**
 	 * Method to add new Filter Spec object to the filter Spec list
-	 * @param filterSpec
+	 * @param filterSpec Filter Spec
 	 */
 	
 	public void addFilterSpec(FilterSpec filterSpec){
@@ -156,7 +142,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * SE Flow Descriptor encoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when a mandatory field is not set. 
 	 * 
 	 */
 			
@@ -168,7 +154,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 		
 		int offset=0;
 		if(flowSpec != null){
-			// Campo s�lo obligatorio en el primer FFlowDescriptor
+			// Campo solo obligatorio en el primer FFlowDescriptor
 			flowSpec.encode();
 			System.arraycopy(flowSpec.getBytes(), 0, bytes, offset, flowSpec.getLength());
 			offset = offset + flowSpec.getLength();
@@ -206,7 +192,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 	 * 
 	 * SE Error Flow Descriptor decoding method. In failure case it throws an exception.
 	 * 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem decoding the field
 	 */
 	
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {

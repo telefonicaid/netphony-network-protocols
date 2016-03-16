@@ -141,8 +141,6 @@ package es.tid.pce.pcep.constructs;
  *  <p>Optional TLVs may be included within the object body to specify more
  *  specific bandwidth requirements.  The specification of such TLVs is
  *  outside the scope of this document.</p>
- *
- *	</pre>
  * 
  *  GENERALIZED_BANDWIDTH Object Class = 155
  * 

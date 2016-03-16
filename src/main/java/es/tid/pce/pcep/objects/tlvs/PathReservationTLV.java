@@ -7,9 +7,11 @@ import es.tid.pce.pcep.objects.PCEPObject;
 
 
 /**
- * PathReservation TLV, Experimental & propietary.
+ * PathReservation TLV, Experimental and propietary.
+ * 
  * Encoding: propietary
  * Type: 30003 (non-standard)
+ * 
  *       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

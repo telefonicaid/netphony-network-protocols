@@ -2,8 +2,9 @@ package es.tid.rsvp.messages;
 
 public class RSVPMessageTypes {
 
-	/*
-	 * 	RFC 2205                          RSVP                    September 1997
+	/**
+	 * 
+	 * Message Types from	RFC 2205
 	 *      
 	 *      Msg Type: 8 bits
 

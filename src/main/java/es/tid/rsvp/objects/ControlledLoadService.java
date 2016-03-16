@@ -2,7 +2,7 @@ package es.tid.rsvp.objects;
 
 /**
  * 
- * @author Fernando Muñoz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * 
  * Controlled-Load Service ADSPEC Data Fragment
 

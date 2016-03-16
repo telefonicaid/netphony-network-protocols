@@ -12,10 +12,10 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
 
 2.2. Label Set Field
 
-
+ {@code
    Label Set Field is used within the <AvailableLabels> sub-TLV or the
    <SharedBackupLabels> sub-TLV, which is defined in Section 2.3.  and
-   2.4. , respectively.
+   2.4. , respectively.}
 
    The general format for a label set is given below. This format uses
    the Action concept from [RFC3471] with an additional Action to define
@@ -53,7 +53,7 @@ Internet-Draft  General Network Element Constraint Encoding    May 2011
 
  * 
  * @author ogondio
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  */
 
 public abstract class LabelSetField{

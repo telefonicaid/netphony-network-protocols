@@ -3,13 +3,12 @@ package es.tid.bgp.bgp4.update.fields.pathAttributes;
 import es.tid.bgp.bgp4.update.fields.PathAttribute;
 
 /**
- * RFC 4271                         BGP-4
- *  b) AS_PATH (Type Code 2):
+ * AS_PATH (Type Code 2):
 
             AS_PATH is a well-known mandatory attribute that is composed
             of a sequence of AS path segments.  Each AS path segment is
-            represented by a triple <path segment type, path segment
-            length, path segment value>.
+            represented by a triple{@code <path segment type, path segment
+            length, path segment value>}.
 
             The path segment type is a 1-octet length field with the
             following values defined:

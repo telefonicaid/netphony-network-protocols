@@ -152,8 +152,8 @@ public class Label extends RSVPObject{
 	/**
 	 * Constructor to be used when a new ERO Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public Label(byte[] bytes, int offset){

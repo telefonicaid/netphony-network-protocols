@@ -29,17 +29,17 @@ In GEYSERS,
 Network Adapter (Figure 3.21) includes two field, Adapter Type and FullDuplex. 
 The following values are defined for the adapter type:
 
-•	0x01: Ethernet
-•	0x02: Fibre
-•	0x03: Infiniband
-•	0x04: TokenRing
+	0x01: Ethernet
+	0x02: Fibre
+	0x03: Infiniband
+	0x04: TokenRing
 
 The FullDuplex field indicate if the connection is full duplex. The following values 
 are defined:
 
-•	0x01: full duplex
-•	0x02: half duplex
-•	0x03: undefined
+	0x01: full duplex
+	0x02: half duplex
+	0x03: undefined
 
 
          0                   1                   2                   3
@@ -54,7 +54,7 @@ are defined:
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class NetworkAdapterSubTLV extends PCEPSubTLV {

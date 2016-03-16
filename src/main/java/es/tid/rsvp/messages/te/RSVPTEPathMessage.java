@@ -14,41 +14,11 @@ import es.tid.rsvp.objects.*;
 import org.slf4j.LoggerFactory;
 
 
-/*
-     RFC 3209: LSP Tunnel related Message Formats
-
-   Five new objects are defined in this section:
-
-      Object name          Applicable RSVP messages
-      ---------------      ------------------------
-      LABEL_REQUEST          Path
-      LABEL                  Resv
-      EXPLICIT_ROUTE         Path
-      RECORD_ROUTE           Path, Resv
-      SESSION_ATTRIBUTE      Path
-
-   New C-Types are also assigned for the SESSION, SENDER_TEMPLATE, and
-   FILTER_SPEC, objects.
-
-   Detailed descriptions of the new objects are given in later sections.
-   All new objects are OPTIONAL with respect to RSVP.  An implementation
-   can choose to support a subset of objects.  However, the
-   LABEL_REQUEST and LABEL objects are mandatory with respect to this
-   specification.
-
-   The LABEL and RECORD_ROUTE objects, are sender specific.  In Resv
-   messages they MUST appear after the associated FILTER_SPEC and prior
-   to any subsequent FILTER_SPEC.
-
-   The relative placement of EXPLICIT_ROUTE, LABEL_REQUEST, and
-   SESSION_ATTRIBUTE objects is simply a recommendation.  The ordering
-   of these objects is not important, so an implementation MUST be
-   prepared to accept objects in any order.
-
-3.1. Path Message
+/**
+ * Path Message
 
    The format of the Path message is as follows:
-
+{@code
       <Path Message> ::=       <Common Header> [ <INTEGRITY> ]
                                <SESSION> <RSVP_HOP>
                                <TIME_VALUES>
@@ -63,7 +33,7 @@ import org.slf4j.LoggerFactory;
                                [ <ADSPEC> ]
                                [ <RECORD_ROUTE> ]
 
-
+}
 */
 
 public class RSVPTEPathMessage extends RSVPPathMessage{
@@ -154,8 +124,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	/**
 	 * Constructor to be used when an RSVP-TE Path Message wanted to be decoded
-	 * @param bytes
-	 * @param length
+	 * @param bytes bytes
+	 * @param length length 
 	 */
 	
 	public RSVPTEPathMessage(byte[] bytes, int length){
@@ -189,7 +159,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	}
 
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
 	 */
 	
 	public void encode() throws RSVPProtocolViolationException{
@@ -448,7 +418,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	}
 
 	/**
-	 * @throws RSVPProtocolViolationException
+	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding
 	 */
 	
 	public void decode() throws RSVPProtocolViolationException {
@@ -663,7 +633,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	
 	/**
 	 * 
-	 * @param senderDescriptor
+	 * @param senderDescriptor Sender Descriptor
 	 */
 	
 	public void addSenderDescriptor(SenderDescriptor senderDescriptor){
@@ -674,7 +644,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 
 	/**
 	 * 
-	 * @param senderTSpec
+	 * @param senderTSpec Sender TSPec
 	 */
 	
 	public void addIntservSenderTSpecDescriptor(IntservSenderTSpec senderTSpec){	

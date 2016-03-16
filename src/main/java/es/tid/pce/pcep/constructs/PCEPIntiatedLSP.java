@@ -23,11 +23,13 @@ import es.tid.pce.pcep.objects.XifiEndPoints;
 import es.tid.pce.pcep.objects.XifiUniCastEndPoints;
 
 /**
+ * PCEP Initiated LSP.
+ * {@code
  *   <PCE-initiated-lsp-request> ::= <SRP>
                                    <LSP>
                                    <END-POINTS>
                                    <ERO>
-                                   [<attribute-list>]
+                                   [<attribute-list>]}
  * @author ogondio
  *
  */

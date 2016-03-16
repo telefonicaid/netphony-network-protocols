@@ -1,22 +1,24 @@
 package es.tid.tests;
 
-import static org.junit.Assert.assertTrue;
+import es.tid.bgp.bgp4.update.fields.LinkNLRI;
+import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
+import es.tid.bgp.bgp4.update.fields.NodeNLRI;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.MP_Unreach_Attribute;
+import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
+import es.tid.protocol.commons.ByteHandler;
+import junit.framework.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.lang.reflect.Constructor;
 import java.net.Inet4Address;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized.Parameters;
-
-import es.tid.bgp.bgp4.update.fields.LinkNLRI;
-import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
-import es.tid.bgp.bgp4.update.fields.NodeNLRI;
-import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
-import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
-import es.tid.protocol.commons.ByteHandler;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.Parameterized.class)
 public class TestBGPLSPathAttributes {
@@ -82,7 +84,23 @@ public class TestBGPLSPathAttributes {
 		}
 	}
 
+	@Test
+	public void testMP_Unreach_Attriute(){
+		MP_Unreach_Attribute mu1 = new Generic_MP_Unreach_Attribute();
+		mu1.encode();
+		byte[] bytes1 = mu1.getBytes();
 
+		MP_Unreach_Attribute mu2 = new Generic_MP_Unreach_Attribute(bytes1,0);
+		byte[] bytes2 = mu2.getBytes();
+
+		System.out.println(Arrays.toString(bytes1));
+		System.out.println(Arrays.toString(bytes2));
+
+		Assert.assertEquals("Both objects should be equal", mu1, mu2);
+		Assert.assertTrue("Bytes from both objects should be the equal", Arrays.equals(bytes1, bytes2));
+
+
+	}
 
 
 }

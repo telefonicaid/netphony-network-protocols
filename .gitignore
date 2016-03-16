@@ -57,3 +57,4 @@ local.properties
 .cproject
 # PDT-specific
 .buildpath
+network-protocols.iml

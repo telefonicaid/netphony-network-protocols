@@ -41,7 +41,7 @@ TBD				Volume info		Contains information about the			0..1
 
  * 
  * 
- * @author Alejandro Tovar de Due�as
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class VolumeSubTLV extends PCEPSubTLV {

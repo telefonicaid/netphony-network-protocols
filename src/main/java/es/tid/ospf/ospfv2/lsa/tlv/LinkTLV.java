@@ -472,9 +472,6 @@ public class LinkTLV extends OSPFTLV {
 		this.iPv4RemoteASBRID = iPv4RemoteASBRID;
 	}
 
-	/**
-	 * 
-	 */
 	public String toString(){
 		StringBuffer sb=new StringBuffer(1000);		
 		if (linkType!=null){
@@ -540,9 +537,6 @@ public class LinkTLV extends OSPFTLV {
 		return sb.toString();
 	}
 	
-	/**
-	 * 
-	 */
 	public String printShort(){
 		StringBuffer sb=new StringBuffer(1000);		
 		if (linkID!=null){

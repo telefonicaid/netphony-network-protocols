@@ -10,24 +10,24 @@ import org.slf4j.LoggerFactory;
  * From RFC 4271, Section 4.2.  OPEN Message Format
  * <a href="http://www.ietf.org/rfc/rfc4271.txt">RFC 4271</a>.
  * Optional Parameters:
- *  	
+ *  {@code	
  *  	This field contains a list of optional parameters, in which
          each parameter is encoded as a <Parameter Type, Parameter
          Length, Parameter Value> triplet.
- * <pre>
+ * 
          0                   1
          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...
          |  Parm. Type   | Parm. Length  |  Parameter Value (variable)
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...
-
+}
          Parameter Type is a one octet field that unambiguously
          identifies individual parameters.  Parameter Length is a one
          octet field that contains the length of the Parameter Value
          field in octets.  Parameter Value is a variable length field
          that is interpreted according to the value of the Parameter
          Type field.
-  * </pre>        
+  *     
  * @author mcs
  *
  */

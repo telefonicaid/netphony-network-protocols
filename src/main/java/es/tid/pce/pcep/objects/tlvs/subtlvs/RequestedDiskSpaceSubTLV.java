@@ -31,7 +31,7 @@ In GEYSERS, when the End-point describes a RequestedDiskSpace element, it includ
  amount of the requested resource in byte.
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class RequestedDiskSpaceSubTLV extends PCEPSubTLV {

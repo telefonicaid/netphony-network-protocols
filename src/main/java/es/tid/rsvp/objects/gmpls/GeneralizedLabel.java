@@ -8,7 +8,7 @@ import es.tid.rsvp.objects.RSVPObjectParameters;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * 
  * 
 		0                   1                   2                   3
@@ -55,8 +55,8 @@ public class GeneralizedLabel extends Label {
 	/**
 	 * Constructor to be used when a new Label Request With ATM Label Range Object wanted to be decoded from a received
 	 * message.
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes
+	 * @param offset offset
 	 */
 	
 	public GeneralizedLabel(byte[] bytes, int offset){

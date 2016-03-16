@@ -1,7 +1,7 @@
 package es.tid.pce.pcep.objects;
 
 /**
- * Wavelength Assignement Object
+ * Wavelength Assignement Object.
  * 
  * http://tools.ietf.org/html/draft-lee-pce-wson-rwa-ext-03
  * 
@@ -18,14 +18,6 @@ package es.tid.pce.pcep.objects;
       |                                                               |
       //                      Optional TLVs                          //
       |                                                               |
-
-
-
-Lee & Casellas           Expires April31,2012                  [Page 7]
- 
-Internet-Draft       PCEP Extension for WSON RWA           October 2011
-
-
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                             Figure 3 WA Object
@@ -71,13 +63,6 @@ Internet-Draft       PCEP Extension for WSON RWA           October 2011
          101 - Last Fit (LF) in descending Order
 
          110 - Vendor Specific/Private
-
-
-
-Lee & Casellas           Expires April31,2012                  [Page 8]
- 
-Internet-Draft       PCEP Extension for WSON RWA           October 2011
-
 
          111 - Reserved
 

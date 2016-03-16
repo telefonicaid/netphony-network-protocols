@@ -20,7 +20,7 @@ import es.tid.bgp.bgp4.objects.BGP4Object;
          Withdrawn Routes Length field.
 
          Reachability information is encoded as one or more 2-tuples of
-         the form <length, prefix>, whose fields are described below:
+         the form length, prefix, whose fields are described below:
  * <pre>
                   +---------------------------+
                   |   Length (1 octet)        |

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
    The format of the PCUpd message is defined in
    [I-D.ietf-pce-stateful-pce] and included here for easy reference:
 
-
+{@code
       <PCUpd Message> ::= <Common Header>
                           <udpate-request-list>
    Where:
@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
                            [<BANDWIDTH>]
                            [<metric-list>]
 
-      <metric-list> ::= <METRIC>[<metric-list>]
+      <metric-list> ::= <METRIC>[<metric-list>]}
 
    There is one mandatory object that MUST be included within each LSP
    Update Request in the PCUpd message: the LSP object (see
@@ -96,7 +96,7 @@ import org.slf4j.LoggerFactory;
    wait for an LSP State Report for a previous LSP before triggering the
    LSP setup of a next LSP.
    
- * @author Fernando Mu�oz del Nuevo
+ * @author Fernando Munoz del Nuevo
  * 
  *
  */

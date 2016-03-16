@@ -4,7 +4,7 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * Bandwidth TLV, Experimental & Proprietary.
+ * Bandwidth TLV, Experimental and Proprietary.
  * Encoding: non-standard
  * TLV Type: 502, non-standard
  * 

@@ -9,15 +9,24 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
+import es.tid.pce.pcep.constructs.MetricPCE;
+import es.tid.pce.pcep.constructs.NCF;
+import es.tid.pce.pcep.constructs.Path;
+import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.Metric;
+import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PceIdIPv4;
+import es.tid.rsvp.objects.subobjects.EROSubobject;
+import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
 public class TestPCEPCommons {
 	public static void createAllFields(Object object){
@@ -107,37 +116,113 @@ public class TestPCEPCommons {
 							Class ca=(Class)rt;
 							
 							if (ca.getName().equals("java.util.LinkedList")){
+								
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
-								Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								String name2="set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
+								
+								//System.out.println("name "+name);
+								//System.out.println("name2 "+name2);
+								//Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								Method method = object.getClass().getMethod(name);
+								Method method2 = object.getClass().getMethod(name2,ca);
+								
 								Object res=method.invoke(object);
+								
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
-									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.EROSubobject");
+									LinkedList<EROSubobject> llero = new LinkedList<EROSubobject>();
+									IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
+									Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+									eroso.setIpv4address(in);
+									eroso.setPrefix(16);
+									llero.add(eroso);
+									method2.invoke(object, llero);									
 								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
 									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
 									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.tlvs.PCEPTLV")) {
 									System.out.println("FIXME: es.tid.pce.pcep.tlvs.PCEPTLV");
-								}else if (((Class) at).isPrimitive()){
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.Metric")) {
+									LinkedList<Metric> ll=new LinkedList<Metric>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((Metric)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.ObjectiveFunction")) {
+									LinkedList<ObjectiveFunction> ll2=new LinkedList<ObjectiveFunction>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll2.add((ObjectiveFunction)o);
+									method2.invoke(object,ll2);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.SwitchEncodingType")) {
+									LinkedList<SwitchEncodingType> ll=new LinkedList<SwitchEncodingType>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((SwitchEncodingType)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Path")) {
+									LinkedList<Path> ll=new LinkedList<Path>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((Path)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.NCF")) {
+									LinkedList<NCF> ll=new LinkedList<NCF>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((NCF)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.MetricPCE")) {
+									LinkedList<MetricPCE> ll=new LinkedList<MetricPCE>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o);
+									ll.add((MetricPCE)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 
 								}
 								else {
 									if  (((Class)at).getName().equals("java.lang.Integer")) {
+										LinkedList<Integer> ll=new LinkedList<Integer>();
+										method2.invoke(object,ll);										
 										Integer in=new Integer(3);
-										methods[0].invoke(res, in);
+										ll.add(in);
 									}else if  (((Class)at).getName().equals("java.lang.Long")) {
 										Long in=new Long(5);
 										methods[0].invoke(res, in);
 									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
+										LinkedList<Inet4Address> ll=new LinkedList<Inet4Address>();
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
-										methods[0].invoke(res, in);
+										ll.add(in);
+										method2.invoke(object,ll);
 									}else {
-										System.out.println("Creating "+((Class)at).getName());
+										
+										//Object ll= pt.getRawType(). .newInstance();
+										Object ll= ca.newInstance();
+										System.out.println("FIXME in java 7: "+((Class)at).getName());
 										Object o = ((Class)at).newInstance();
 										createAllFields(o);
-										methods[0].invoke(res, o);}
+										//Method method3 = ll.getClass().getMethod("add");
+										//method3.invoke(ll, o);
+										Method[] methodss =ll.getClass().getDeclaredMethods();
+										methodss[0].invoke(ll, o);
+										method2.invoke(object,ll);	
+									}
 								}
 								
 	

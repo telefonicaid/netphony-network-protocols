@@ -26,7 +26,7 @@ import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 
  * 
  * 
- * @author Alejandro Tovar de Dueñas
+ * @author Alejandro Tovar de Duenas
  *
  */
 public class VolumeSizeSubTLV extends PCEPSubTLV {

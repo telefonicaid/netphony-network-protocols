@@ -30,9 +30,9 @@ public class LinkType extends OSPFSubTLV {
 
 	/**
 	 * Use this to decode a LinkType OSPF Sub TLV from a sequence of bytes
-	 * @param bytes
-	 * @param offset
-	 * @throws MalformedOSPFSubTLVException
+	 * @param bytes bytes
+	 * @param offset offset 
+	 * @throws MalformedOSPFSubTLVException Malformed OSPF SubTLV Exception
 	 */
 	public LinkType(byte[] bytes, int offset)throws MalformedOSPFSubTLVException{
 		super(bytes,offset);
@@ -50,7 +50,7 @@ public class LinkType extends OSPFSubTLV {
 
 	/**
 	 * Decode a LinkType OSPF Sub TLV
-	 * @throws MalformedOSPFSubTLVException
+	 * @throws MalformedOSPFSubTLVException Malformed OSPF SubTLV Exception
 	 */
 	protected void decode()throws MalformedOSPFSubTLVException{
 		this.linkType=this.tlv_bytes[4] & 0xFF;
@@ -64,16 +64,14 @@ public class LinkType extends OSPFSubTLV {
 		return linkType;
 	}
 
-	/**
-	 * 
-	 * @param linkType
-	 */
+
 	public void setLinkType(int linkType) {
 		this.linkType = linkType;
 	}
 	
 	/**
 	 * Prints the details of the LinkType;
+	 * @return details of the LinkType
 	 */
 	public String toString(){
 		String text="Link Type: "+this.getLinkType();

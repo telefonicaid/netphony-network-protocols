@@ -28,7 +28,7 @@ public class PCEPTELinkSuggestion extends PCEPMessage {
 	/**
 	 * Contructs and decodes new PCEP TELinkSuggestion Message from a byte array
 	 * @param bytes Bytes of the message
-	 * @throws PCEPProtocolViolationException
+	 * @throws PCEPProtocolViolationException PCEPProtocolViolationException
 	 */
 	public PCEPTELinkSuggestion(byte[] bytes) throws PCEPProtocolViolationException {
 		super(bytes);
@@ -36,6 +36,7 @@ public class PCEPTELinkSuggestion extends PCEPMessage {
 	}
 	/**
 	 * Encode the PCEP Message
+	 * @throws PCEPProtocolViolationException PCEPProtocolViolationException
 	 */
 	public void encode() throws PCEPProtocolViolationException {
 		if (path==null){
@@ -52,6 +53,7 @@ public class PCEPTELinkSuggestion extends PCEPMessage {
 	/**
 	 * Decode a PCEP Message from a byte array. 
 	 * The byte array is copied in messageBytes
+	 * @throws PCEPProtocolViolationException PCEPProtocolViolationException
 	 */
 	private void decode()  throws PCEPProtocolViolationException {
 		//Decoding PCEP TE Link Suggestion Message

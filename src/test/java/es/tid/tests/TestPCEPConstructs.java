@@ -43,7 +43,7 @@ public class TestPCEPConstructs {
     			{"es.tid.pce.pcep.constructs.RROBandwidth"},
     			{"es.tid.pce.pcep.constructs.Request"},
     			{"es.tid.pce.pcep.constructs.Response"},
-   			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
+  			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
     			{"es.tid.pce.pcep.constructs.StateReport"},
     			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
     			{"es.tid.pce.pcep.constructs.TNA"},
@@ -75,7 +75,7 @@ public class TestPCEPConstructs {
 			System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 
 			//Check if the fields are the same
-			assertTrue("testing Construct "+object.getClass().getName() + "values "+object.toString(),object.equals(object2));
+			assertTrue("testing Construct "+object.getClass().getName() + " original:  "+object.toString()+" copy: "+object2.toString(),object.equals(object2));
 	    	} catch(Exception e){
 	    		e.printStackTrace();
 	    		assertTrue("Exception in construct "+object,false);

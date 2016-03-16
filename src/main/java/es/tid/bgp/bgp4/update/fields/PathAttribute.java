@@ -11,19 +11,19 @@ import org.slf4j.LoggerFactory;
          A variable-length sequence of path attributes is present in
          every UPDATE message, except for an UPDATE message that carries
          only the withdrawn routes.  Each path attribute is a triple
-         <attribute type, attribute length, attribute value> of variable
+        {@code <attribute type, attribute length, attribute value> }of variable
          length.
 
          Attribute Type is a two-octet field that consists of the
          Attribute Flags octet, followed by the Attribute Type Code
          octet.
- * <pre>
+ * {@code
                0                   1
                0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                |  Attr. Flags  |Attr. Type Code|
                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  * </pre>              
+  * }             
          If the Extended Length bit of the Attribute Flags octet is set
          to 0, the third octet of the Path Attribute contains the length
          of the attribute data in octets.

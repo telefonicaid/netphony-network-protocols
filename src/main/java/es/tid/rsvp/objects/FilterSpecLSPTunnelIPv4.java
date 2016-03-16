@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
          resources with itself. </p>
 
 
-@author Fernando Mu�oz del Nuevo	fmn@tid.es
+@author Fernando Munoz del Nuevo	fmn@tid.es
 
  */
 
@@ -87,8 +87,8 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
 	/**
 	 * <p>Constructor to be used when a new Filter Spec LSP Tunnel IPv4 Object wanted 
 	 * to be decoded from a received message.</p>
-	 * @param bytes
-	 * @param offset
+	 * @param bytes bytes 
+	 * @param offset offset
 	 */
 	
 	public FilterSpecLSPTunnelIPv4(byte[] bytes, int offset){
