@@ -22,7 +22,7 @@
 		</developer>
     </developers>
 	<scm>
-		<connection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</connection>
+		<connection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</connection>
 		<developerConnection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</developerConnection>
 		<url>git@github.com:telefonicaid/netphony-network-protocols.git</url>
 	</scm>
