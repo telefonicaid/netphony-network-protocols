@@ -55,15 +55,15 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 	}
 	@Override
 	public void encode() {
-		int len = 4;
+		int len = 5;
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
-		//??System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		System.arraycopy(utilizedBw,0, this.tlv_bytes, 0, 4);
+		System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
+		System.arraycopy(utilizedBw,0, this.tlv_bytes, 1, 4);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=8){
+		if (this.getTLVValueLength()!=9){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
