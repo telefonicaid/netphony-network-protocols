@@ -1,0 +1,430 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Netphony Network Protocols 1.2.2
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ network-protocols ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/victoruceda/workspace/ABNO-completo/cne-network-protocols/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.5.1:compile (default-compile) @ network-protocols ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 445 source files to /home/victoruceda/workspace/ABNO-completo/cne-network-protocols/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.3:testResources (default-testResources) @ network-protocols ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/victoruceda/workspace/ABNO-completo/cne-network-protocols/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.5.1:testCompile (default-testCompile) @ network-protocols ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ network-protocols ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running es.tid.tests.TestPCEP
+Testing Close Message
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+PCEP Close test with reason 0
+20:07:00:0c:0f:10:00:08:00:00:00:00
+20:07:00:0c:0f:10:00:08:00:00:00:00
+PCEP Close test with reason 4
+20:07:00:0c:0f:10:00:08:00:00:00:04
+20:07:00:0c:0f:10:00:08:00:00:00:04
+PCEP Close test with reason 255
+20:07:00:0c:0f:10:00:08:00:00:00:ff
+20:07:00:0c:0f:10:00:08:00:00:00:ff
+Testing PCEPError Message
+Test #1 of PCEPError with a single Error
+Testing Keepalive Message
+20:02:00:04
+20:02:00:04
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.071 sec - in es.tid.tests.TestPCEP
+Running es.tid.tests.TestPCEPObjects
+Testing PCEP Object es.tid.pce.pcep.objects.BandwidthExistingLSP
+05:20:00:08:00:00:00:00
+05:20:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth
+BW SPC 4
+BW SPC 4
+05:40:00:14:00:04:00:04:0a:00:00:00:00:00:00:00:00:00:00:00
+05:40:00:14:00:04:00:04:0a:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.BandwidthRequested
+05:10:00:08:00:00:00:00
+05:10:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth
+05:30:00:14:00:04:00:04:0a:00:00:00:00:00:00:00:00:00:00:00
+05:30:00:14:00:04:00:04:0a:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.BitmapLabelSet
+82:10:00:0c:00:00:00:00:00:00:00:00
+82:10:00:0c:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.Close
+0f:10:00:08:00:00:00:00
+0f:10:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.EndPointDataPathID
+04:e0:00:14:11:22:00:aa:33:bb:11:11:11:22:00:aa:33:bb:11:11
+04:e0:00:14:11:22:00:aa:33:bb:11:11:11:22:00:aa:33:bb:11:11
+Testing PCEP Object es.tid.pce.pcep.objects.EndPointsIPv4
+04:10:00:0c:01:01:01:01:01:01:01:01
+04:10:00:0c:01:01:01:01:01:01:01:01
+Testing PCEP Object es.tid.pce.pcep.objects.EndPointsIPv6
+04:20:00:24:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a
+04:20:00:24:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a
+Testing PCEP Object es.tid.pce.pcep.objects.EndPointsUnnumberedIntf
+04:40:00:14:01:01:01:01:00:00:00:00:01:01:01:01:00:00:00:00
+04:40:00:14:01:01:01:01:00:00:00:00:01:01:01:01:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.ExcludeRouteObject
+FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject
+11:10:00:08:00:00:00:01
+11:10:00:08:00:00:00:01
+Testing PCEP Object es.tid.pce.pcep.objects.ExplicitRouteObject
+07:10:00:0c:01:08:01:01:01:01:10:00
+07:10:00:0c:01:08:01:01:01:01:10:00
+Testing PCEP Object es.tid.pce.pcep.objects.IncludeRouteObject
+0a:10:00:0c:01:08:01:01:01:01:10:00
+0a:10:00:0c:01:08:01:01:01:01:10:00
+Testing PCEP Object es.tid.pce.pcep.objects.InterLayer
+76:10:00:08:00:00:00:07
+76:10:00:08:00:00:00:07
+Testing PCEP Object es.tid.pce.pcep.objects.LSP
+20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00
+20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.LSPA
+09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00
+09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00
+Testing PCEP Object es.tid.pce.pcep.objects.LabelSetInclusiveList
+FIXME in java 7: es.tid.pce.pcep.constructs.NCF
+java.lang.IllegalAccessException: Class es.tid.tests.TestPCEPCommons can not access a member of class java.util.LinkedList with modifiers "private"
+	at sun.reflect.Reflection.ensureMemberAccess(Reflection.java:110)
+	at java.lang.reflect.AccessibleObject.slowCheckMemberAccess(AccessibleObject.java:262)
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:254)
+	at java.lang.reflect.Method.invoke(Method.java:599)
+	at es.tid.tests.TestPCEPCommons.createAllFields(TestPCEPCommons.java:203)
+	at es.tid.tests.TestPCEPObjects.test(TestPCEPObjects.java:89)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+82:20:00:08:00:00:00:00
+82:20:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.LoadBalancing
+0e:10:00:0c:00:00:00:00:00:00:00:00
+0e:10:00:0c:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.Metric
+06:10:00:0c:00:00:03:00:00:00:00:00
+06:10:00:0c:00:00:03:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.Monitoring
+13:10:00:18:00:00:00:1f:00:00:00:00:00:46:00:08:01:01:01:01:00:00:00:00
+13:10:00:18:00:00:00:1f:00:00:00:00:00:46:00:08:01:01:01:01:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.NoPath
+03:10:00:10:00:80:00:00:00:3c:00:04:00:00:00:07
+03:10:00:10:00:80:00:00:00:3c:00:04:00:00:00:07
+Testing PCEP Object es.tid.pce.pcep.objects.OPEN
+01:10:00:58:18:00:00:00:00:04:00:02:00:03:00:00:80:03:00:08:00:00:00:00:01:01:01:01:80:01:00:08:00:00:00:00:01:01:01:01:00:0e:00:04:00:00:00:00:00:10:00:04:00:00:00:1f:00:1a:00:04:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:15:b5:00:05:00:00:00:00:00:00:00:00
+01:10:00:58:18:00:00:00:00:04:00:02:00:03:00:00:80:03:00:08:00:00:00:00:01:01:01:01:80:01:00:08:00:00:00:00:01:01:01:01:00:0e:00:04:00:00:00:00:00:10:00:04:00:00:00:1f:00:1a:00:04:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:15:b5:00:05:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.ObjectiveFunction
+15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00
+15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.P2MPEndPointsIPv4
+java.lang.IllegalAccessException: Class es.tid.tests.TestPCEPCommons can not access a member of class java.util.LinkedList with modifiers "private"
+	at sun.reflect.Reflection.ensureMemberAccess(Reflection.java:110)
+	at java.lang.reflect.AccessibleObject.slowCheckMemberAccess(AccessibleObject.java:262)
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:254)
+	at java.lang.reflect.Method.invoke(Method.java:599)
+	at es.tid.tests.TestPCEPCommons.createAllFields(TestPCEPCommons.java:192)
+	at es.tid.tests.TestPCEPObjects.test(TestPCEPObjects.java:89)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at es.tid.tests.TestPCEPObjects.test(TestPCEPObjects.java:92)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+Caused by: es.tid.pce.pcep.objects.MalformedPCEPObjectException
+	at es.tid.pce.pcep.objects.P2MPEndPointsIPv4.decode(P2MPEndPointsIPv4.java:138)
+	at es.tid.pce.pcep.objects.P2MPEndPointsIPv4.<init>(P2MPEndPointsIPv4.java:104)
+	... 36 more
+Testing PCEP Object es.tid.pce.pcep.objects.PCEPErrorObject
+0d:10:00:10:00:00:00:00:00:03:00:04:00:00:00:00
+0d:10:00:10:00:00:00:00:00:03:00:04:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.PccReqId
+14:10:00:08:01:01:01:01
+14:10:00:08:01:01:01:01
+Testing PCEP Object es.tid.pce.pcep.objects.PceIdIPv4
+19:10:00:08:01:01:01:01
+19:10:00:08:01:01:01:01
+Testing PCEP Object es.tid.pce.pcep.objects.ProcTime
+1a:10:00:1c:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+1a:10:00:1c:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.ReportedRouteObject
+FIXME: es.tid.rsvp.objects.subobjects.RROSubobject
+08:10:00:04
+08:10:00:04
+Testing PCEP Object es.tid.pce.pcep.objects.ReqAdapCap
+78:00:00:08:00:00:00:00
+78:00:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.RequestParameters
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.Reservation
+a0:10:00:0c:00:00:00:00:00:00:00:00
+a0:10:00:0c:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.ReservationConf
+a1:10:00:10:00:00:00:00:00:00:00:00:00:00:00:00
+a1:10:00:10:00:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.SRP
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.ServerIndication
+79:10:00:08:00:00:00:00
+79:10:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.SuggestedLabel
+81:10:00:08:00:00:00:00
+81:10:00:08:00:00:00:00
+Testing PCEP Object es.tid.pce.pcep.objects.Svec
+0b:10:00:08:00:00:00:07
+0b:10:00:08:00:00:00:07
+Testing PCEP Object es.tid.pce.pcep.objects.SwitchLayer
+77:10:00:08:00:00:00:01
+77:10:00:08:00:00:00:01
+Testing PCEP Object es.tid.pce.pcep.objects.WavelengthAssignementObject
+96:10:00:08:00:00:00:10
+96:10:00:08:00:00:00:10
+Tests run: 39, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.228 sec <<< FAILURE! - in es.tid.tests.TestPCEPObjects
+test[es.tid.pce.pcep.objects.P2MPEndPointsIPv4](es.tid.tests.TestPCEPObjects)  Time elapsed: 0.025 sec  <<< FAILURE!
+java.lang.AssertionError: Exception in object es.tid.pce.pcep.objects.P2MPEndPointsIPv4
+	at es.tid.tests.TestPCEPObjects.test(TestPCEPObjects.java:101)
+
+Running es.tid.tests.TestPCEPConstructs
+Testing PCEP Construct es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON
+00:00:00:00
+00:00:00:00
+00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.LSPInstantationRequest
+04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.MetricPCE
+19:10:00:08:01:01:01:01:1a:10:00:1c:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+19:10:00:08:01:01:01:01:1a:10:00:1c:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+19:10:00:08:01:01:01:01:1a:10:00:1c:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.NCF
+00:00:00:00
+00:00:00:00
+00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.PCEPIntiatedLSP
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:07:10:00:0c:01:08:01:01:01:01:10:00:05:10:00:08:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.Path
+07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.RROBandwidth
+FIXME: es.tid.rsvp.objects.subobjects.RROSubobject
+08:10:00:04:05:10:00:08:00:00:00:00
+08:10:00:04:05:10:00:08:00:00:00:00
+08:10:00:04:05:10:00:08:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.Request
+FIXME: es.tid.rsvp.objects.subobjects.RROSubobject
+FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:a0:10:00:0c:00:00:00:00:00:00:00:00:08:10:00:04:05:10:00:08:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:0e:10:00:0c:00:00:00:00:00:00:00:00:11:10:00:08:00:00:00:01:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:a0:10:00:0c:00:00:00:00:00:00:00:00:08:10:00:04:05:10:00:08:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:0e:10:00:0c:00:00:00:00:00:00:00:00:11:10:00:08:00:00:00:01:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:04:10:00:0c:01:01:01:01:01:01:01:01:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:a0:10:00:0c:00:00:00:00:00:00:00:00:08:10:00:04:05:10:00:08:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:0e:10:00:0c:00:00:00:00:00:00:00:00:11:10:00:08:00:00:00:01:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.Response
+FIXME in java 7: es.tid.pce.pcep.constructs.MetricPCE
+java.lang.IllegalAccessException: Class es.tid.tests.TestPCEPCommons can not access a member of class java.util.LinkedList with modifiers "private"
+	at sun.reflect.Reflection.ensureMemberAccess(Reflection.java:110)
+	at java.lang.reflect.AccessibleObject.slowCheckMemberAccess(AccessibleObject.java:262)
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:254)
+	at java.lang.reflect.Method.invoke(Method.java:599)
+	at es.tid.tests.TestPCEPCommons.createAllFields(TestPCEPCommons.java:203)
+	at es.tid.tests.TestPCEPConstructs.test(TestPCEPConstructs.java:68)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:13:10:00:18:00:00:00:1f:00:00:00:00:00:46:00:08:01:01:01:01:00:00:00:00:14:10:00:08:01:01:01:01:03:10:00:10:00:80:00:00:00:3c:00:04:00:00:00:07:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:a1:10:00:10:00:00:00:00:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:13:10:00:18:00:00:00:1f:00:00:00:00:00:46:00:08:01:01:01:01:00:00:00:00:14:10:00:08:01:01:01:01:03:10:00:10:00:80:00:00:00:3c:00:04:00:00:00:07:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:a1:10:00:10:00:00:00:00:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+02:10:00:1c:80:00:38:78:00:00:00:00:0b:b8:00:04:00:00:00:00:02:9a:00:04:00:00:00:00:13:10:00:18:00:00:00:1f:00:00:00:00:00:46:00:08:01:01:01:01:00:00:00:00:14:10:00:08:01:01:01:01:03:10:00:10:00:80:00:00:00:3c:00:04:00:00:00:07:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:a1:10:00:10:00:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.SVECConstruct
+0b:10:00:08:00:00:00:07:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+0b:10:00:08:00:00:00:07:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+0b:10:00:08:00:00:00:07:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:06:10:00:0c:00:00:03:00:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.StateReport
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.SwitchEncodingType
+00:00:00:01
+00:00:00:01
+00:00:00:01
+Testing PCEP Construct es.tid.pce.pcep.constructs.TNA
+leeen 56
+03:fb:00:08:00:00:00:00:01:01:01:01:03:fc:00:14:00:00:00:00:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a:03:fd:00:0d:05:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+leeen 56
+03:fb:00:08:00:00:00:00:01:01:01:01:03:fc:00:14:00:00:00:00:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a:03:fd:00:0d:05:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+03:fb:00:08:00:00:00:00:01:01:01:01:03:fc:00:14:00:00:00:00:10:80:00:00:00:00:00:00:00:08:08:00:20:0c:41:7a:03:fd:00:0d:05:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+Testing PCEP Construct es.tid.pce.pcep.constructs.UpdateRequest
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+21:10:00:20:00:00:00:01:00:00:00:00:00:11:00:05:00:00:00:00:00:00:00:00:02:9a:00:04:00:00:00:00:20:10:00:48:00:00:00:0f:00:11:00:05:00:00:00:00:00:00:00:00:00:12:00:0c:01:01:01:01:00:00:00:00:00:00:00:00:00:14:00:04:00:00:00:00:00:15:00:0c:00:0c:06:01:01:01:01:01:00:00:00:00:15:b4:00:08:00:00:00:00:00:00:00:00:07:10:00:0c:01:08:01:01:01:01:10:00:15:10:00:10:00:00:00:00:00:04:00:02:00:03:00:00:09:10:00:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01:00:05:10:00:08:00:00:00:00:06:10:00:0c:00:00:03:00:00:00:00:00:0a:10:00:0c:01:08:01:01:01:01:10:00:76:10:00:08:00:00:00:07:77:10:00:08:00:00:00:01:78:00:00:08:00:00:00:00:79:10:00:08:00:00:00:00:82:10:00:0c:00:00:00:00:00:00:00:00:81:10:00:08:00:00:00:00
+Tests run: 14, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.165 sec <<< FAILURE! - in es.tid.tests.TestPCEPConstructs
+test[es.tid.pce.pcep.constructs.Response](es.tid.tests.TestPCEPConstructs)  Time elapsed: 0.031 sec  <<< FAILURE!
+java.lang.AssertionError: testing Construct es.tid.pce.pcep.constructs.Response original:  <RP ReqID: 0 Prio: 0 Reopt: 1 Bid: 1 Loose: 1 SupOF: true retry true<PathSetupTLV es.tid.pce.pcep.objects.tlvs.PathSetupTLV@51c07180>><NOPATH><LSPA><BW><METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1<IRO>PATH={ <ERO: /1.1.1.1/16 ><OF code= 0<OF code= 0><LSAP sp = 0 hp= 0><BW= 0.0>es.tid.pce.pcep.objects.ServerIndication@147b4b59<METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1es.tid.pce.pcep.objects.IncludeRouteObject@13eb7975n base: 0 - Grid 0 n:0 m:0 } copy: <RP ReqID: 0 Prio: 0 Reopt: 1 Bid: 1 Loose: 1 SupOF: true retry true<PathSetupTLV es.tid.pce.pcep.objects.tlvs.PathSetupTLV@51c07180>><NOPATH><LSPA><BW><METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1<IRO>
+	at es.tid.tests.TestPCEPConstructs.test(TestPCEPConstructs.java:78)
+
+Running es.tid.tests.TestBGPLSPathAttributes
+Testing BGP-LS  MP_Reach_Attribute with es.tid.bgp.bgp4.update.fields.NodeNLRI
+80:0e:3a:40:04:47:04:01:01:01:01:00:00:01:00:2d:01:00:00:00:00:00:00:00:01:01:00:00:20:02:00:00:04:01:01:01:01:02:01:00:04:01:01:01:01:02:02:00:04:01:01:01:01:02:03:00:04:01:01:01:01
+80:0e:3a:40:04:47:04:01:01:01:01:00:00:01:00:2d:01:00:00:00:00:00:00:00:01:01:00:00:20:02:00:00:04:01:01:01:01:02:01:00:04:01:01:01:01:02:02:00:04:01:01:01:01:02:03:00:04:01:01:01:01
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in es.tid.tests.TestBGPLSPathAttributes
+Running es.tid.tests.TestBGPLSMessages
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in es.tid.tests.TestBGPLSMessages
+
+Results :
+
+Failed tests: 
+  TestPCEPConstructs.test:78 testing Construct es.tid.pce.pcep.constructs.Response original:  <RP ReqID: 0 Prio: 0 Reopt: 1 Bid: 1 Loose: 1 SupOF: true retry true<PathSetupTLV es.tid.pce.pcep.objects.tlvs.PathSetupTLV@51c07180>><NOPATH><LSPA><BW><METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1<IRO>PATH={ <ERO: /1.1.1.1/16 ><OF code= 0<OF code= 0><LSAP sp = 0 hp= 0><BW= 0.0>es.tid.pce.pcep.objects.ServerIndication@147b4b59<METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1es.tid.pce.pcep.objects.IncludeRouteObject@13eb7975n base: 0 - Grid 0 n:0 m:0 } copy: <RP ReqID: 0 Prio: 0 Reopt: 1 Bid: 1 Loose: 1 SupOF: true retry true<PathSetupTLV es.tid.pce.pcep.objects.tlvs.PathSetupTLV@51c07180>><NOPATH><LSPA><BW><METRIC type=0(UNK) val:0.0 Bound: 1CompMet: 1<IRO>
+  TestPCEPObjects.test:101 Exception in object es.tid.pce.pcep.objects.P2MPEndPointsIPv4
+
+Tests run: 59, Failures: 2, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.700s
+[INFO] Finished at: Wed Mar 09 15:13:18 CET 2016
+[INFO] Final Memory: 14M/239M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project network-protocols: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /home/victoruceda/workspace/ABNO-completo/cne-network-protocols/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
