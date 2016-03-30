@@ -1,5 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,5 +118,38 @@ public abstract class BGP4TLVFormat {
 
 
 	public abstract void encode();
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + TLVType;
+		result = prime * result + TLVValueLength;
+		result = prime * result + TotalTLVLength;
+		result = prime * result + Arrays.hashCode(tlv_bytes);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BGP4TLVFormat other = (BGP4TLVFormat) obj;
+		if (TLVType != other.TLVType)
+			return false;
+		if (TLVValueLength != other.TLVValueLength)
+			return false;
+		if (TotalTLVLength != other.TotalTLVLength)
+			return false;
+		if (!Arrays.equals(tlv_bytes, other.tlv_bytes))
+			return false;
+		return true;
+	}
+	
+	
 
 }

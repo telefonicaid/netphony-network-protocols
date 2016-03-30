@@ -130,11 +130,28 @@ public class LinkLocalRemoteIdentifiersLinkDescriptorSubTLV extends BGP4TLVForma
 	
 	
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (linkLocalIdentifier ^ (linkLocalIdentifier >>> 32));
+		result = prime * result + (int) (linkRemoteIdentifier ^ (linkRemoteIdentifier >>> 32));
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-	if (((Long.valueOf(((LinkLocalRemoteIdentifiers)obj).getLinkLocalIdentifier())).equals(Long.valueOf(linkLocalIdentifier)))&&				
-			((Long.valueOf(((LinkLocalRemoteIdentifiers)obj).getLinkRemoteIdentifier())).equals(Long.valueOf(linkRemoteIdentifier))))
+		if (this == obj)
 			return true;
-		return false;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LinkLocalRemoteIdentifiersLinkDescriptorSubTLV other = (LinkLocalRemoteIdentifiersLinkDescriptorSubTLV) obj;
+		if (linkLocalIdentifier != other.linkLocalIdentifier)
+			return false;
+		if (linkRemoteIdentifier != other.linkRemoteIdentifier)
+			return false;
+		return true;
 	}
 	
 	@Override
@@ -142,5 +159,8 @@ public class LinkLocalRemoteIdentifiersLinkDescriptorSubTLV extends BGP4TLVForma
 		String ret="LinkIdentifiers [Local Link Identifier=" + linkLocalIdentifier + "\n\t\tRemote Link Identifier=" +linkRemoteIdentifier;
 		return ret;
 	}
+	
+	
+	
 	
 }

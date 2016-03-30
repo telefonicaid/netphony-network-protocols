@@ -1,3 +1,4 @@
+- Implementation of draft-ietf-idr-te-pm-bgp-02
 v1.2.3
 - Version ready to be deployed in maven central
 - All javadoc errors fixed
