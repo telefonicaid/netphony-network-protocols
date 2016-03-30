@@ -59,8 +59,6 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
-		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		//System.arraycopy(availableBw,0, this.tlv_bytes, 1, 4);
 		int offset=4;
 		this.tlv_bytes[offset]=0;
 		this.tlv_bytes[offset + 1] = (byte)(availableBw >> 24 & 0xff);
@@ -82,6 +80,30 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 	@Override
 	public String toString() {
 		return "UndirectionalAvailableBW [bw_bytes_per_second=" + availableBw + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + availableBw;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UndirectionalAvailableBandwidthDescriptorSubTLV other = (UndirectionalAvailableBandwidthDescriptorSubTLV) obj;
+		if (availableBw != other.availableBw)
+			return false;
+		return true;
 	}
 
 }

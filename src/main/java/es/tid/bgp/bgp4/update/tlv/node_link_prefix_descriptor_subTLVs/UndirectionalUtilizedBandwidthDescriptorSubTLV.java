@@ -35,7 +35,7 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 	int utilizedBw;
 	public UndirectionalUtilizedBandwidthDescriptorSubTLV(){
 		super();
-		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID);
+		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID);
 	}
 	
 	
@@ -65,9 +65,6 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 		this.tlv_bytes[offset + 2] = (byte)(utilizedBw >> 16 & 0xff);
 		this.tlv_bytes[offset + 3] = (byte)(utilizedBw >> 8 & 0xff);
 		this.tlv_bytes[offset + 4] = (byte)(utilizedBw & 0xff);
-		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		//System.arraycopy(utilizedBw,0, this.tlv_bytes, 1, 4);
-		
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=9){
@@ -83,6 +80,30 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 	@Override
 	public String toString() {
 		return "UndirectionalAvailableBW [bw_bytes_per_second=" + utilizedBw + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + utilizedBw;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UndirectionalUtilizedBandwidthDescriptorSubTLV other = (UndirectionalUtilizedBandwidthDescriptorSubTLV) obj;
+		if (utilizedBw != other.utilizedBw)
+			return false;
+		return true;
 	}
 
 }

@@ -82,4 +82,28 @@ public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVForma
 		return "UndirectionalResidualBW [bw_bytes_per_second=" + residualBw + "]";
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + residualBw;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UndirectionalResidualBandwidthDescriptorSubTLV other = (UndirectionalResidualBandwidthDescriptorSubTLV) obj;
+		if (residualBw != other.residualBw)
+			return false;
+		return true;
+	}
+
 }

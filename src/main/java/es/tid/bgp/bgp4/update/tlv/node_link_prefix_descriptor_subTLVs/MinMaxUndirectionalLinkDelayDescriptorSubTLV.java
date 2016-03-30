@@ -36,7 +36,7 @@ public class MinMaxUndirectionalLinkDelayDescriptorSubTLV extends BGP4TLVFormat{
 	int highDelay;
 	public MinMaxUndirectionalLinkDelayDescriptorSubTLV(){
 		super();
-		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID);
+		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MINMAXUNDIRLINKDELAY_ID);
 	}
 	
 	
@@ -108,6 +108,33 @@ public class MinMaxUndirectionalLinkDelayDescriptorSubTLV extends BGP4TLVFormat{
 		if(highDelay < 0)highDelay=0;
 		if(highDelay > 16777215)highDelay=16777215;
 		this.highDelay = highDelay;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + highDelay;
+		result = prime * result + lowDelay;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MinMaxUndirectionalLinkDelayDescriptorSubTLV other = (MinMaxUndirectionalLinkDelayDescriptorSubTLV) obj;
+		if (highDelay != other.highDelay)
+			return false;
+		if (lowDelay != other.lowDelay)
+			return false;
+		return true;
 	}
 	
 

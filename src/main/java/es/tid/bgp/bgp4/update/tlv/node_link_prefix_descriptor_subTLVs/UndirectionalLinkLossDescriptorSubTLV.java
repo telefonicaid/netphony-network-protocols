@@ -95,4 +95,28 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 		return "UndirectionalLinkDelay [delay_ms=" + linkLoss + "]";
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + linkLoss;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UndirectionalLinkLossDescriptorSubTLV other = (UndirectionalLinkLossDescriptorSubTLV) obj;
+		if (linkLoss != other.linkLoss)
+			return false;
+		return true;
+	}
+
 }
