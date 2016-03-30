@@ -51,18 +51,35 @@ public class MinMaxUndirectionalLinkDelayDescriptorSubTLV extends BGP4TLVFormat{
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
-		System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		System.arraycopy(lowDelay,1, this.tlv_bytes, 1, 3);
-		System.arraycopy(0, 0,  this.tlv_bytes, 4, 1);
-		System.arraycopy(highDelay,1, this.tlv_bytes, 5, 3);
+		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
+		//System.arraycopy(lowDelay,1, this.tlv_bytes, 1, 3);
+		//System.arraycopy(0, 0,  this.tlv_bytes, 4, 1);
+		//System.arraycopy(highDelay,1, this.tlv_bytes, 5, 3);
+		int offset=4;
+		this.tlv_bytes[offset]=0;
+		this.tlv_bytes[offset + 1] = (byte)(lowDelay >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(lowDelay >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(lowDelay & 0xff);
+		offset=8;
+		this.tlv_bytes[offset]=0;
+		this.tlv_bytes[offset + 1] = (byte)(highDelay >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(highDelay >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(highDelay & 0xff);
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=12){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
-		System.arraycopy(this.tlv_bytes,1, lowDelay, 1, 3);
-		System.arraycopy(this.tlv_bytes, 5, highDelay,  1, 3);
+		//System.arraycopy(this.tlv_bytes,1, lowDelay, 1, 3);
+		//System.arraycopy(this.tlv_bytes, 5, highDelay,  1, 3);
+		int offset=4;
+		this.lowDelay=0;
+		this.lowDelay= (((int)(tlv_bytes[offset+1]<<16)& (int)0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
+		offset=8;
+		this.highDelay=0;
+		this.highDelay= (((int)(tlv_bytes[offset+1]<<16)& (int)0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
+		
 	}
 
 	@Override

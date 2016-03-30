@@ -57,15 +57,23 @@ public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
-		System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		System.arraycopy(delayVar,1, this.tlv_bytes, 1, 3);
+		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
+		//System.arraycopy(delayVar,1, this.tlv_bytes, 1, 3);
+		int offset=4;
+		this.tlv_bytes[offset]=0;
+		this.tlv_bytes[offset + 1] = (byte)(delayVar >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(delayVar >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(delayVar & 0xff);
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=8){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
-		System.arraycopy(this.tlv_bytes,1, delayVar, 1, 3);
+		//System.arraycopy(this.tlv_bytes,1, delayVar, 1, 3);
+		int offset=4;
+		this.delayVar=0;
+		this.delayVar= (((int)(tlv_bytes[offset+1]<<16)& (int)0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
 		
 	}
 

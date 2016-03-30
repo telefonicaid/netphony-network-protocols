@@ -59,15 +59,23 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
-		System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
-		System.arraycopy(availableBw,0, this.tlv_bytes, 1, 4);
+		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
+		//System.arraycopy(availableBw,0, this.tlv_bytes, 1, 4);
+		int offset=4;
+		this.tlv_bytes[offset]=0;
+		this.tlv_bytes[offset + 1] = (byte)(availableBw >> 24 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(availableBw >> 16 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(availableBw >> 8 & 0xff);
+		this.tlv_bytes[offset + 4] = (byte)(availableBw & 0xff);
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=9){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
-		System.arraycopy(this.tlv_bytes,0, availableBw, 0, 4);
+		//System.arraycopy(this.tlv_bytes,0, availableBw, 0, 4);
+		int offset=5;
+		this.availableBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
 		
 	}
 
