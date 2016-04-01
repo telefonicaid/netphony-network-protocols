@@ -81,7 +81,7 @@ public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 
 	@Override
 	public String toString() {
-		return "UndirectionalDelayVariation [delay_ms=" + delayVar + "]";
+		return "UndirectionalDelayVariation [delayVar_ms=" + delayVar + "]";
 	}
 
 
