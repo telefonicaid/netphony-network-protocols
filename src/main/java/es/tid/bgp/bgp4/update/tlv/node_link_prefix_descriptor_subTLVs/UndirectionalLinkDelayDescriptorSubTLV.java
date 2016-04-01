@@ -6,23 +6,29 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
  *  
- * [ISIS-TE-METRIC] Internet-Draft        IS-IS Extensions for Traffic Engineering (TE) Metric Extensions    October 2014
- * https://tools.ietf.org/html/draft-ietf-isis-te-metric-extensions-04#section-4.1
- * Section 4.1
+ * BGP-LS Traffic Engineering (TE) Metric Extensions    February 29, 2016
+ * https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00#section-3.1
+ * Section 3.1
  *
- This sub-TLV advertises the average link delay between two directly
-   connected IS-IS neighbors.  The delay advertised by this sub-TLV MUST
-   be the delay from the local neighbor to the remote one (i.e. the
-   forward path latency).  The format of this sub-TLV is shown in the
-   following diagram:
+ This TLV advertises the average link delay between two directly
+   connected IGP link-state neighbors.  The semantic of the TLV is
+   described in [I-D.ietf-isis-te-metric-extensions] and [RFC7471].
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   Type        |     Length    |
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |A|   RESERVED  |                   Delay                       |
+   |   Type                      |           Length                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |A|  RESERVED   |                   Delay                       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   where:
+
+                                 Figure 1
+
+   Type: TBA (suggested value: 1104).
+
+   Length: 4.
    
  * @author victorUceda
  *
