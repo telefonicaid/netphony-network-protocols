@@ -67,7 +67,7 @@ public class MinMaxUndirectionalLinkDelayDescriptorSubTLV extends BGP4TLVFormat{
 		this.tlv_bytes[offset + 3] = (byte)(highDelay & 0xff);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=12){
+		if (this.getTLVValueLength()!=8){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}

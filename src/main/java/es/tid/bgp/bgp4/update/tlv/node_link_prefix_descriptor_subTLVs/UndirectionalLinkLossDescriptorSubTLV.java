@@ -82,7 +82,7 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 		this.tlv_bytes[offset + 3] = (byte)(linkLoss & 0xff);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=8){
+		if (this.getTLVValueLength()!=4){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
