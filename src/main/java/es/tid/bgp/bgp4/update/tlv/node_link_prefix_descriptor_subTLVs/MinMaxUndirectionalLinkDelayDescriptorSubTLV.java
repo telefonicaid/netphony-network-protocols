@@ -1,31 +1,31 @@
 package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
  *  
- * [ISIS-TE-METRIC] Internet-Draft        IS-IS Extensions for Traffic Engineering (TE) Metric Extensions    April 2015
- * https://tools.ietf.org/html/draft-ietf-isis-te-metric-extensions-04#section-4.1
- * Section 4.2
+ * BGP-LS Traffic Engineering (TE) Metric Extensions    February 29, 2016
+ * https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00#section-3.2
+ * Section 3.2
  *
  This sub-TLV advertises the minimum and maximum delay values between
-   two directly connected IS-IS neighbors.  The delay advertised by this
-   sub-TLV MUST be the delay from the local neighbor to the remote one
-   (i.e. the forward path latency).  The format of this sub-TLV is shown
-   in the following diagram:
+   two directly connected IGP link-state neighbors.  The semantic of the
+   TLV is described in [I-D.ietf-isis-te-metric-extensions] and
+   [RFC7471].
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   Type        |     Length    |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |A| RESERVED    |                   Low Delay                   |
+   |   Type                      |           Length                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   RESERVED    |                   High Delay                  |
+   |A| RESERVED    |                   Min Delay                   |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   RESERVED    |                   Max Delay                   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   Type: TBA (suggested value: 1105).
+
+   Length: 8.
 
    
  * @author victor uceda
@@ -67,7 +67,7 @@ public class MinMaxUndirectionalLinkDelayDescriptorSubTLV extends BGP4TLVFormat{
 		this.tlv_bytes[offset + 3] = (byte)(highDelay & 0xff);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=12){
+		if (this.getTLVValueLength()!=8){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}

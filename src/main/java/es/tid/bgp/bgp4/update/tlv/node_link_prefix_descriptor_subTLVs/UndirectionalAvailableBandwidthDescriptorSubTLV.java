@@ -6,24 +6,27 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
  *  
- * [ISIS-TE-METRIC] Internet-Draft        IS-IS Extensions for Traffic Engineering (TE) Metric Extensions    October 2014
- * https://tools.ietf.org/html/draft-ietf-isis-te-metric-extensions-04#section-4.6
- * Section 4.6
+ * BGP-LS Traffic Engineering (TE) Metric Extensions    February 29, 2016
+ * https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00#section-3.6
+ * Section 3.6
  *
 
-      This Sub-TLV advertises the available bandwidth between two directly
-   connected IS-IS neighbors.  The available bandwidth advertised by
-   this sub-TLV MUST be the available bandwidth from the system
-   originating this Sub-TLV.  The format of this Sub-TLV is shown in the
-   following diagram:
+  This sub-TLV advertises the available bandwidth between two directly
+   connected IGP link-state neighbors.  The semantic of the TLV is
+   described in [I-D.ietf-isis-te-metric-extensions] and [RFC7471].
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   Type        |     Length    |A|  RESERVED   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   Type                      |           Length                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                      Available Bandwidth                      |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+   Type: TBA (suggested value: 1109).
+
+   Length: 4.
 
    
  * @author victorUceda
@@ -55,24 +58,23 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 	}
 	@Override
 	public void encode() {
-		int len = 5;
+		int len = 4;
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
 		int offset=4;
-		this.tlv_bytes[offset]=0;
-		this.tlv_bytes[offset + 1] = (byte)(availableBw >> 24 & 0xff);
-		this.tlv_bytes[offset + 2] = (byte)(availableBw >> 16 & 0xff);
-		this.tlv_bytes[offset + 3] = (byte)(availableBw >> 8 & 0xff);
-		this.tlv_bytes[offset + 4] = (byte)(availableBw & 0xff);
+		this.tlv_bytes[offset ] = (byte)(availableBw >> 24 & 0xff);
+		this.tlv_bytes[offset + 1] = (byte)(availableBw >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(availableBw >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(availableBw & 0xff);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=9){
+		if (this.getTLVValueLength()!=4){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
 		//System.arraycopy(this.tlv_bytes,0, availableBw, 0, 4);
-		int offset=5;
+		int offset=4;
 		this.availableBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
 		
 	}

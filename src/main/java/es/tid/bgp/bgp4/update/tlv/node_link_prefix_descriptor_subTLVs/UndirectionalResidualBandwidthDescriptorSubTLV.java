@@ -6,23 +6,27 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
  *  
- * [ISIS-TE-METRIC] Internet-Draft        IS-IS Extensions for Traffic Engineering (TE) Metric Extensions    October 2014
- * https://tools.ietf.org/html/draft-ietf-isis-te-metric-extensions-04#section-4.5
- * Section 4.5
+ * BGP-LS Traffic Engineering (TE) Metric Extensions    February 29, 2016
+ * https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00#section-3.6
+ * Section 3.6
  *
 
-   This TLV advertises the residual bandwidth between two directly
-   connected IS-IS neighbors.  The residual bandwidth advertised by this
-   sub-TLV MUST be the residual bandwidth from the system originating
-   the LSA to its neighbor.
+   
+   This sub-TLV advertises the residual bandwidth between two directly
+   connected IGP link-state neighbors.  The semantic of the TLV is
+   described in [I-D.ietf-isis-te-metric-extensions] and [RFC7471].
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   Type        |     Length    |A|  RESERVED   |
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   Type                      |           Length                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                          Residual Bandwidth                   |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   Type: TBA (suggested value: 1108).
+
+   Length: 4.
    
  * @author victorUceda
  *
@@ -53,26 +57,25 @@ public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVForma
 	}
 	@Override
 	public void encode() {
-		int len = 5;
+		int len = 4;
 		this.setTLVValueLength(len);		
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
 		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
 		//System.arraycopy(residualBw,0, this.tlv_bytes, 1, 4);
 		int offset=4;
-		this.tlv_bytes[offset]=0;
-		this.tlv_bytes[offset + 1] = (byte)(residualBw >> 24 & 0xff);
-		this.tlv_bytes[offset + 2] = (byte)(residualBw >> 16 & 0xff);
-		this.tlv_bytes[offset + 3] = (byte)(residualBw >> 8 & 0xff);
-		this.tlv_bytes[offset + 4] = (byte)(residualBw & 0xff);
+		this.tlv_bytes[offset ] = (byte)(residualBw >> 24 & 0xff);
+		this.tlv_bytes[offset + 1] = (byte)(residualBw >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(residualBw >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(residualBw & 0xff);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=9){
+		if (this.getTLVValueLength()!=4){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
 		//System.arraycopy(this.tlv_bytes,0, residualBw, 0, 4);
-		int offset=5;
+		int offset=4;
 		this.residualBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
 		
 	}
