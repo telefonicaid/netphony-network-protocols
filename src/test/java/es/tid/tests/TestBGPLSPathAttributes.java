@@ -1,22 +1,38 @@
 package es.tid.tests;
 
-import static org.junit.Assert.assertTrue;
+import es.tid.bgp.bgp4.update.fields.LinkNLRI;
+import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
+import es.tid.bgp.bgp4.update.fields.NodeNLRI;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.MP_Unreach_Attribute;
+import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
+import es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4InterfaceAddressLinkDescriptorsSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4NeighborAddressLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6InterfaceAddressLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6NeighborAddressLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkLocalRemoteIdentifiersLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MinMaxUndirectionalLinkDelayDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MultiTopologyIDLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalAvailableBandwidthDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalDelayVariationDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkDelayDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkLossDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalResidualBandwidthDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalUtilizedBandwidthDescriptorSubTLV;
+import es.tid.protocol.commons.ByteHandler;
+import junit.framework.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.lang.reflect.Constructor;
 import java.net.Inet4Address;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized.Parameters;
-
-import es.tid.bgp.bgp4.update.fields.LinkNLRI;
-import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
-import es.tid.bgp.bgp4.update.fields.NodeNLRI;
-import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
-import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
-import es.tid.protocol.commons.ByteHandler;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.Parameterized.class)
 public class TestBGPLSPathAttributes {
@@ -27,7 +43,7 @@ public class TestBGPLSPathAttributes {
 	public static Collection<Object[]> configs() {
 		Object[][] objects={
 				{"es.tid.bgp.bgp4.update.fields.NodeNLRI"},
-				//{"es.tid.bgp.bgp4.update.fields.LinkNLRI"}
+				{"es.tid.bgp.bgp4.update.fields.LinkNLRI"}
 		};
 		return Arrays.asList(objects);
 	}
@@ -58,6 +74,62 @@ public class TestBGPLSPathAttributes {
 				TestPCEPCommons.createAllFields(ln);
 			}else {
 				LinkNLRI linkNLRI=(LinkNLRI)ls;
+				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
+				linkNLRI.setLocalNodeDescriptors(ln);
+				TestPCEPCommons.createAllFields(ln);
+				RemoteNodeDescriptorsTLV lnr= new RemoteNodeDescriptorsTLV();
+				linkNLRI.setRemoteNodeDescriptorsTLV(lnr);
+				TestPCEPCommons.createAllFields(lnr);
+				
+				LinkLocalRemoteIdentifiersLinkDescriptorSubTLV llrIdSTLV = new LinkLocalRemoteIdentifiersLinkDescriptorSubTLV();
+				llrIdSTLV.setLinkLocalIdentifier(1);
+				llrIdSTLV.setLinkRemoteIdentifier(2);
+				linkNLRI.setLinkIdentifiersTLV(llrIdSTLV);
+				
+				IPv4InterfaceAddressLinkDescriptorsSubTLV ipInteSTLV= new IPv4InterfaceAddressLinkDescriptorsSubTLV();
+				TestPCEPCommons.createAllFields(ipInteSTLV);
+				linkNLRI.setIpv4InterfaceAddressTLV(ipInteSTLV);
+				
+				IPv4NeighborAddressLinkDescriptorSubTLV ipNeiAddSTLV = new IPv4NeighborAddressLinkDescriptorSubTLV();
+				TestPCEPCommons.createAllFields(ipNeiAddSTLV);
+				linkNLRI.setIpv4NeighborAddressTLV(ipNeiAddSTLV);
+				
+				UndirectionalLinkDelayDescriptorSubTLV uldSTLV = new UndirectionalLinkDelayDescriptorSubTLV();
+				uldSTLV.setDelay(100);
+				linkNLRI.setUndirectionalLinkDelayTLV(uldSTLV);
+				
+				UndirectionalDelayVariationDescriptorSubTLV udvSTLV=new UndirectionalDelayVariationDescriptorSubTLV();
+				udvSTLV.setDelayVar(7);
+				linkNLRI.setUndirectionalDelayVariationTLV(udvSTLV);
+				
+				UndirectionalLinkLossDescriptorSubTLV ullSTLV = new UndirectionalLinkLossDescriptorSubTLV();
+				ullSTLV.setLinkLoss(256);
+				linkNLRI.setUndirectionalLinkLossTLV(ullSTLV);
+				
+				UndirectionalResidualBandwidthDescriptorSubTLV urbwSTLV = new UndirectionalResidualBandwidthDescriptorSubTLV();
+				urbwSTLV.setResidualBw(2);
+				linkNLRI.setUndirectionalResidualBwTLV(urbwSTLV);
+				
+				UndirectionalAvailableBandwidthDescriptorSubTLV uabwSTLV = new UndirectionalAvailableBandwidthDescriptorSubTLV();
+				uabwSTLV.setAvailableBw(3);
+				linkNLRI.setUndirectionalAvailableBwTLV(uabwSTLV);
+				
+				UndirectionalUtilizedBandwidthDescriptorSubTLV uubwSTLV = new UndirectionalUtilizedBandwidthDescriptorSubTLV();
+				uubwSTLV.setUtilizedBw(4);
+				linkNLRI.setUndirectionalUtilizedBwTLV(uubwSTLV);
+				
+				MinMaxUndirectionalLinkDelayDescriptorSubTLV muldSTLV= new MinMaxUndirectionalLinkDelayDescriptorSubTLV();
+				muldSTLV.setHighDelay(233);
+				muldSTLV.setLowDelay(20);
+				linkNLRI.setMinMaxUndirectionalLinkDelayTLV(muldSTLV);
+				
+				/*TODO:not tested     	IPv4NeighborAddressLinkDescriptorSubTLV		because are not implemented
+								  		ipv4NeighborAddressTLV,
+								  		ipv6InterfaceAddressTLV,
+								  		ipv6NeighborAddressTLV and
+							   	  		MultiTopologyIDLinkDescriptorSubTLV  
+				*/
+				
 				//linkNLRI.s
 				//TestPCEPCommons.createAllFields(ls);
 				linkNLRI.setIdentifier(1);
@@ -82,7 +154,23 @@ public class TestBGPLSPathAttributes {
 		}
 	}
 
+	@Test
+	public void testMP_Unreach_Attriute(){
+		MP_Unreach_Attribute mu1 = new Generic_MP_Unreach_Attribute();
+		mu1.encode();
+		byte[] bytes1 = mu1.getBytes();
 
+		MP_Unreach_Attribute mu2 = new Generic_MP_Unreach_Attribute(bytes1,0);
+		byte[] bytes2 = mu2.getBytes();
+
+		System.out.println(Arrays.toString(bytes1));
+		System.out.println(Arrays.toString(bytes2));
+
+		Assert.assertEquals("Both objects should be equal", mu1, mu2);
+		Assert.assertTrue("Bytes from both objects should be the equal", Arrays.equals(bytes1, bytes2));
+
+
+	}
 
 
 }

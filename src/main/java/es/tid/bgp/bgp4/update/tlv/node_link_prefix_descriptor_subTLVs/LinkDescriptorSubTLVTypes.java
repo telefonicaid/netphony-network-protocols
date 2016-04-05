@@ -4,7 +4,7 @@ public class LinkDescriptorSubTLVTypes {
 
 	/**  
 	 * Para link descriptors TLVs
-	    +------------+--------------------+---------------+-----------------+
+   +------------+--------------------+---------------+-----------------+
    |  TLV Code  | Description        |   IS-IS TLV   | Value defined   |
    |   Point    |                    |    /Sub-TLV   | in:             |
    +------------+--------------------+---------------+-----------------+
@@ -31,5 +31,40 @@ public class LinkDescriptorSubTLVTypes {
 	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6INTERFACE = 261;
 	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6NEIGHBOR = 262;
 	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_MULTITOPOLOGY_ID=263;//Draft BGP-LS
+/*	
+	  Draft  https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00
+	   +------------+---------------------+--------------+-----------------+
+	   |  TLV Code  | Description         |     IS-IS    | Defined in:     |
+	   |    Point   |                     |  TLV/Sub-TLV |                 |
+	   +------------+---------------------+--------------+-----------------+
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1104    | Link Delay          |              | METRIC]/4.1     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Min/Max Unidirection|    22/xx     | [ISIS-TE-       |
+	   |    1105    | Link Delay          |              | METRIC]/4.2     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1106    | Delay Variation     |              | METRIC]/4.3     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1107    | Link Loss           |              | METRIC]/4.4     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1108    |Residual Bandwidth   |              | METRIC]/4.5     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1109    |Available Bandwidth  |              | METRIC]/4.6     |
+	   |            |                     |              |                 |
+	   |    xxxx    | Unidirectional      |    22/xx     | [ISIS-TE-       |
+	   |    1110    |Utilized Bandwidth   |              | METRIC]/4.7     |
+	   +------------+---------------------+--------------+-----------------+
+*/
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID=1104;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_MINMAXUNDIRLINKDELAY_ID=1105;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRDELAYVAR_ID=1106;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKLOSS_ID=1107;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRESIDUALBW_ID=1108;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID=1109;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID=1110;//Draft BGP-LS
 
 }

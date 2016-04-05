@@ -48,7 +48,7 @@ public class IPv4InterfaceAddressLinkDescriptorsSubTLV extends BGP4TLVFormat{
 		System.arraycopy(ipv4Address.getAddress(),0, this.tlv_bytes, 4, 4);
 	}
 	public void decode(){
-		if (this.getTLVValueLength()!=8){
+		if (this.getTLVValueLength()!=4){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
 		}
