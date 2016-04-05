@@ -1,4 +1,6 @@
-- Implementation of draft-ietf-idr-te-pm-bgp-02
+v.1.3.0
+- Checked implemenation supports RFC 7752 (previously it supported draft-ietf-idr-ls-distribution-13)
+- Implementation of draft-previdi-idr-bgpls-te-metric-extensions-01 using the suggested values in the draft 
 v1.2.3
 - Version ready to be deployed in maven central
 - All javadoc errors fixed
