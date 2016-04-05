@@ -43,28 +43,32 @@ Fields in UPDATE Message
 |  3   | IPv4 Topology Prefix NLRI |
 |  4   | IPv6 Topology Prefix NLRI (**Not Implemented**)|
 
-###TLVs
-----
-* Local Node Descriptors TLV (Type 256)
-* Remote Node Descriptors TLV (Type 257)
+### Link State NLRI TLVs 
+| **Type**  | **NLRI Type**   |
+|:---:|:---:|
+| (Type 256)|Local Node Descriptors TLV |
+|(Type 257) |Remote Node Descriptors TLV |
 
  ### Node Descriptor Sub-TLVs
- * Autonomous System
- * BGP-LS Identifier 
- * OSPF Area-ID   
- * IGP Router-ID
+| **Type**  | **NLRI Type**   |
+|:---:|:---:| 
+| | Autonomous System|
+| |BGP-LS Identifier |
+| |OSPF Area-ID   |
+| |IGP Router-ID|
 
-###Link Descriptors TLVs
-----------------------
-*  258   Link Local/Remote Identifiers
-*  259    IPv4 interface  address   
-*  260    | IPv4 neighbor    address 
-*  261    | IPv6 interface address  
-*  262    | IPv6 neighbor address 
-*  263    | Multi-Topology Identifier     
-     
+### Link Descriptors TLVs
 
-## BGP- Link State Attribute  TLVs
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|  258  | Link Local/Remote Identifiers |
+|  259   | IPv4 interface  address   |
+|  260    | IPv4 neighbor    address |
+|  261    | IPv6 interface address  |
+| 262    | IPv6 neighbor address |
+|  263    | Multi-Topology Identifier |    
+
+## BGP-LS Attribute TLVs
 
 ### Node Attribute TLVs
 
@@ -78,7 +82,7 @@ Fields in UPDATE Message
 |     1028    | IPv4 Router-ID of  Local Node  |
 |     1029    | IPv6 Router-ID of Local Node     |
   
-  ### Link Attribute TLVs
+### Link Attribute TLVs
   
 | **TLV Code points**  | **Name**   |
 |:---:|:---:| 
@@ -98,10 +102,12 @@ Fields in UPDATE Message
 |    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
 |    1098   | Link Name      (**Not Implemented**)      | 
 
--------------------------
-* Administrative Group
-* Link Local/Remote 
-* IPv4 interface
-* IPv4 neighbor
-
-
+### Prefix Attribute TLVs
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|      1152     | IGP Flags            |
+|      1153     | IGP Route Tag    (**Not Implemented**)       | 
+|      1154     | IGP Extended Route Tag   (**Not Implemented**)   |
+|      1155     | Prefix Metric        |
+|      1156     | OSPF Forwarding  Address    |
+|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    
