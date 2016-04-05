@@ -1,15 +1,21 @@
-netphony-network-protocols v1.2.3
+netphony-network-protocols v1.3.0
 =================================
 
 Repository branch build status:
-* **Master:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
-* **Develop:** [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols)
+
+| **Master**  | **Develop**   |
+|:---:|:---:|
+| [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
+
+Latest Maven Central Release: 
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
 
 The netphony-network-protocols library is an implementation of four networking protocols: 
-* **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440).
+* **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440 https://tools.ietf.org/html/rfc5440 ). 
 * **RSVP-TE protocol**: Resource reservation protocol (RSVP) with Traffic Engineering extensions.
 * **OSPF-TE protocol**: OSPF Version 2 protocol with Traffic Engineering extensions.
-* **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://datatracker.ietf.org/doc/draft-ietf-idr-ls-distribution.
+* **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://tools.ietf.org/html/rfc7752. Support of  BGP-LS Traffic Engineering (TE) Metric Extensions https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-01 
 
 The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
@@ -36,7 +42,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.2.3</version>
+      <version>1.3.0</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
@@ -107,16 +113,15 @@ Detailed OSPF-TE Support [click here](doc/OSPF-TE_Support.md)
 OSPF-TE v2 LSA from RFC3630
 Inter-AS-TE-v2 LSA from RFC5392 http://tools.ietf.org/html/rfc5392
 
-# BGP-LS Support
+## BGP-LS Support
 
  It is used to exchange TE information between BGP-LS speakers.
 
 Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 
-http://tools.ietf.org/html/draft-ietf-idr-ls-distribution-03
+* North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://tools.ietf.org/html/rfc7752. 
 
-https://tools.ietf.org/html/draft-ietf-idr-te-pm-bgp-02
-
+* BGP-LS Traffic Engineering (TE) Metric Extensions https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-01
 
 
 (*) The BGLP-LS Speaker is available in https://github.com/telefonicaid/netphony-topology
