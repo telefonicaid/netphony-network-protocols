@@ -1,4 +1,4 @@
-Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0) (to be completed)
+Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0) 
 =======================================================
 
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
@@ -36,12 +36,12 @@ Fields in UPDATE Message
 
 ### NLRI Types
 
-| **Type**  | **NLRI Type**   |
-|:---:|:---:|
-|  1   | Node NLRI                 |
-|  2   | Link NLRI                 |
-|  3   | IPv4 Topology Prefix NLRI |
-|  4   | IPv6 Topology Prefix NLRI (**Not Implemented**)|
+| **Type**  | **NLRI Type**   | Class in the implementation |
+|:---:|:---:|:---:|
+|  1   | Node NLRI                 | http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/LinkNLRI.html |
+|  2   | Link NLRI                 |http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/NodeNLRI.html |
+|  3   | IPv4 Topology Prefix NLRI | http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/PrefixNLRI.html | 
+|  4   | IPv6 Topology Prefix NLRI | (**Not Implemented**)|
 
 ### Link State NLRI TLVs 
 | **Type**  | **NLRI Type**   |
