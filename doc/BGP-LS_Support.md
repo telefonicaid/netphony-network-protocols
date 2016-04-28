@@ -1,4 +1,4 @@
-Detailed BGP-4 & BGP-LS Implementation Support (v1.0.1)
+Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0) 
 =======================================================
 
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
@@ -34,26 +34,80 @@ Fields in UPDATE Message
 * MP Reach (Type Code 14)
 * MP Unreach (Type Code 15)
 
-TLVs
-----
-* Local Node Descriptors TLV (Type 256)
-* Remote Node Descriptors TLV (Type 257)
+### NLRI Types
+
+| **Type**  | **NLRI Type**   | Class in the implementation |
+|:---:|:---:|:---:|
+|  1   | Node NLRI                 | http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/LinkNLRI.html |
+|  2   | Link NLRI                 |http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/NodeNLRI.html |
+|  3   | IPv4 Topology Prefix NLRI | http://telefonicaid.github.io/netphony-network-protocols/api/es/tid/bgp/bgp4/update/fields/PrefixNLRI.html | 
+|  4   | IPv6 Topology Prefix NLRI | (**Not Implemented**)|
+
+### Link State NLRI TLVs 
+| **Type**  | **NLRI Type**   |
+|:---:|:---:|
+| (Type 256)|Local Node Descriptors TLV |
+|(Type 257) |Remote Node Descriptors TLV |
 
  ### Node Descriptor Sub-TLVs
- * Autonomous System
- * BGP-LS Identifier 
- * OSPF Area-ID   
- * IGP Router-ID
+| **Type**  | **NLRI Type**   |
+|:---:|:---:| 
+| | Autonomous System|
+| |BGP-LS Identifier |
+| |OSPF Area-ID   |
+| |IGP Router-ID|
 
-Link Descriptors TLVs
-----------------------
+### Link Descriptors TLVs
 
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|  258  | Link Local/Remote Identifiers |
+|  259   | IPv4 interface  address   |
+|  260    | IPv4 neighbor    address |
+|  261    | IPv6 interface address  |
+| 262    | IPv6 neighbor address |
+|  263    | Multi-Topology Identifier |    
 
-Link State Attribute TLVs
--------------------------
-* Administrative Group
-* Link Local/Remote 
-* IPv4 interface
-* IPv4 neighbor
+## BGP-LS Attribute TLVs
 
+### Node Attribute TLVs
 
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|     263     | Multi-Topology   Identifier   (**Not Implemented**)  | 
+|     1024    | Node Flag Bits       | 
+|     1025    | Opaque Node    Attribute    (**Not Implemented**)    | 
+|     1026    | Node Name            | 
+|     1027    | IS-IS Area    Identifier        | 
+|     1028    | IPv4 Router-ID of  Local Node  |
+|     1029    | IPv6 Router-ID of Local Node     |
+  
+### Link Attribute TLVs
+  
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|    1028   | IPv4 Router-ID of Local Node  | 
+|    1029   | IPv6 Router-ID of Local Node (**Not Implemented**)  | 
+|    1030   | IPv4 Router-ID of Remote Node  |  
+|    1031   | IPv6 Router-ID of Remote Node  (**Not Implemented**)  | 
+|    1088   | Administrative group (color)     |   
+|    1089   | Maximum link   bandwidth      |   
+|    1090   | Max. reservable  link bandwidth   |   
+|    1091   | Unreserved  bandwidth        |  
+|    1092   | TE Default Metric   | 
+|    1093   | Link Protection   Type  |
+|    1094   | MPLS Protocol Mask (**Not Implemented**)  |  
+|    1095   | IGP Metric          |  
+|    1096   | Shared Risk Link   Group |
+|    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
+|    1098   | Link Name      (**Not Implemented**)      | 
+
+### Prefix Attribute TLVs
+| **TLV Code points**  | **Name**   |
+|:---:|:---:| 
+|      1152     | IGP Flags            |
+|      1153     | IGP Route Tag    (**Not Implemented**)       | 
+|      1154     | IGP Extended Route Tag   (**Not Implemented**)   |
+|      1155     | Prefix Metric        |
+|      1156     | OSPF Forwarding  Address    |
+|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    

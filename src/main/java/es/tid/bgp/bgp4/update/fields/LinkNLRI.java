@@ -10,7 +10,14 @@ import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6Interf
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6NeighborAddressLinkDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkDescriptorSubTLVTypes;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkLocalRemoteIdentifiersLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MinMaxUndirectionalLinkDelayDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MultiTopologyIDLinkDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalAvailableBandwidthDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalDelayVariationDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkDelayDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkLossDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalResidualBandwidthDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalUtilizedBandwidthDescriptorSubTLV;
 
 /**
 The Link NLRI (NLRI Type = 2) is shown in the following figure.
@@ -92,7 +99,6 @@ Internet-Draft   Link-State Info Distribution using BGP    November 2013
 
                        Table 3: Link Descriptor TLVs
  * @author pac
- *
  */
 public class LinkNLRI extends LinkStateNLRI {
 	private int protocolID;
@@ -109,9 +115,14 @@ public class LinkNLRI extends LinkStateNLRI {
 	private IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV;
 	private MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV;
 	
+	private UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV;
+	private MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV;
+	private UndirectionalDelayVariationDescriptorSubTLV undirectionalDelayVariationTLV;
+	private UndirectionalLinkLossDescriptorSubTLV undirectionalLinkLossTLV;
+	private UndirectionalResidualBandwidthDescriptorSubTLV undirectionalResidualBwTLV;
+	private UndirectionalAvailableBandwidthDescriptorSubTLV undirectionalAvailableBwTLV;
+	private UndirectionalUtilizedBandwidthDescriptorSubTLV undirectionalUtilizedBwTLV;
 	
-	
-
 	public LinkNLRI(){
 		//FIXME: BY DEFAULT L3?
 		this.setIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
@@ -160,6 +171,35 @@ public class LinkNLRI extends LinkStateNLRI {
 			multiTopologyIDTLV.encode();
 			len=len+multiTopologyIDTLV.getTotalTLVLength();
 		}
+		if(undirectionalLinkDelayTLV!=null){
+			undirectionalLinkDelayTLV.encode();
+			len += undirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(minMaxUndirectionalLinkDelayTLV!=null){
+			minMaxUndirectionalLinkDelayTLV.encode();
+			len += minMaxUndirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(undirectionalDelayVariationTLV!=null){
+			undirectionalDelayVariationTLV.encode();
+			len += undirectionalDelayVariationTLV.getTotalTLVLength();
+		}
+		if(undirectionalLinkLossTLV!=null){
+			undirectionalLinkLossTLV.encode();
+			len += undirectionalLinkLossTLV.getTotalTLVLength();
+		}
+		if(undirectionalResidualBwTLV!=null){
+			undirectionalResidualBwTLV.encode();
+			len += undirectionalResidualBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalAvailableBwTLV!=null){
+			undirectionalAvailableBwTLV.encode();
+			len += undirectionalAvailableBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalUtilizedBwTLV!=null){
+			undirectionalUtilizedBwTLV.encode();
+			len += undirectionalUtilizedBwTLV.getTotalTLVLength();
+		}
+		
 		this.setTotalNLRILength(len); 
 		this.setLength(len);
 		this.bytes=new byte[len];
@@ -225,6 +265,35 @@ public class LinkNLRI extends LinkStateNLRI {
 			System.arraycopy(multiTopologyIDTLV.getTlv_bytes(), 0, this.bytes, offset, multiTopologyIDTLV.getTotalTLVLength());
 			offset=offset+multiTopologyIDTLV.getTotalTLVLength();
 		}
+		if (undirectionalLinkDelayTLV!=null){
+			System.arraycopy(undirectionalLinkDelayTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalLinkDelayTLV.getTotalTLVLength());
+			offset=offset+undirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if (minMaxUndirectionalLinkDelayTLV!=null){
+			System.arraycopy(minMaxUndirectionalLinkDelayTLV.getTlv_bytes(), 0, this.bytes, offset, minMaxUndirectionalLinkDelayTLV.getTotalTLVLength());
+			offset=offset+minMaxUndirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if (undirectionalDelayVariationTLV!=null){
+			System.arraycopy(undirectionalDelayVariationTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalDelayVariationTLV.getTotalTLVLength());
+			offset=offset+undirectionalDelayVariationTLV.getTotalTLVLength();
+		}
+		if (undirectionalLinkLossTLV!=null){
+			System.arraycopy(undirectionalLinkLossTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalLinkLossTLV.getTotalTLVLength());
+			offset=offset+undirectionalLinkLossTLV.getTotalTLVLength();
+		}
+		if (undirectionalResidualBwTLV!=null){
+			System.arraycopy(undirectionalResidualBwTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalResidualBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalResidualBwTLV.getTotalTLVLength();
+		}
+		if (undirectionalAvailableBwTLV!=null){
+			System.arraycopy(undirectionalAvailableBwTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalAvailableBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalAvailableBwTLV.getTotalTLVLength();
+		}
+		if (undirectionalUtilizedBwTLV!=null){
+			System.arraycopy(undirectionalUtilizedBwTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalUtilizedBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalUtilizedBwTLV.getTotalTLVLength();
+		}
+		
 		
 	}
 	public void decode(){
@@ -246,7 +315,9 @@ public class LinkNLRI extends LinkStateNLRI {
 		this.remoteNodeDescriptorsTLV=new RemoteNodeDescriptorsTLV(this.bytes, offset);
 		offset = offset + remoteNodeDescriptorsTLV.getTotalTLVLength();
 		boolean fin=false;
-		
+		if (offset>=(this.getTotalNLRILength()/*+4*/)){
+			fin=true;
+		}
 		while (!fin) {
 			int subTLVType=BGP4TLVFormat.getType(bytes, offset);
 			int subTLVLength=BGP4TLVFormat.getTotalTLVLength(bytes, offset);
@@ -254,27 +325,44 @@ public class LinkNLRI extends LinkStateNLRI {
 				switch (subTLVType){
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_LINKIDENTIFIERS:
 					this.linkIdentifiersTLV=new LinkLocalRemoteIdentifiersLinkDescriptorSubTLV(bytes, offset);
-					break;
-					
+					break;	
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv4INTERFACE:
 					this.ipv4InterfaceAddressTLV=new IPv4InterfaceAddressLinkDescriptorsSubTLV(bytes, offset);
 					break;
-					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv4NEIGHBOR:
 					this.ipv4NeighborAddressTLV=new IPv4NeighborAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6INTERFACE:
 					this.ipv6InterfaceAddressTLV=new IPv6InterfaceAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
-					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6NEIGHBOR:
 					this.ipv6NeighborAddressTLV=new IPv6NeighborAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
-					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MULTITOPOLOGY_ID:
 					this.multiTopologyIDTLV=new MultiTopologyIDLinkDescriptorSubTLV(bytes, offset);
-					break;				
+					break;
 					
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID:
+					this.undirectionalLinkDelayTLV=new UndirectionalLinkDelayDescriptorSubTLV(bytes, offset);
+					break;	
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MINMAXUNDIRLINKDELAY_ID:
+					this.minMaxUndirectionalLinkDelayTLV=new MinMaxUndirectionalLinkDelayDescriptorSubTLV(bytes, offset);
+					break;	
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRDELAYVAR_ID:
+					this.undirectionalDelayVariationTLV=new UndirectionalDelayVariationDescriptorSubTLV(bytes, offset);
+					break;	
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKLOSS_ID:
+					this.undirectionalLinkLossTLV=new UndirectionalLinkLossDescriptorSubTLV(bytes, offset);
+					break;
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRESIDUALBW_ID:
+					this.undirectionalResidualBwTLV=new UndirectionalResidualBandwidthDescriptorSubTLV(bytes, offset);
+					break;
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID:
+					this.undirectionalAvailableBwTLV=new UndirectionalAvailableBandwidthDescriptorSubTLV(bytes, offset);
+					break;
+				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID:
+					this.undirectionalUtilizedBwTLV=new UndirectionalUtilizedBandwidthDescriptorSubTLV(bytes, offset);
+					break;
 			
 				default:
 					log.warn("Unknown TLV found, type :"+subTLVType);
@@ -388,6 +476,65 @@ public class LinkNLRI extends LinkStateNLRI {
 		this.multiTopologyIDTLV = multiTopologyIDTLV;
 	}
 
+	public UndirectionalLinkDelayDescriptorSubTLV getUndirectionalLinkDelayTLV() {
+		return undirectionalLinkDelayTLV;
+	}
+
+	public void setUndirectionalLinkDelayTLV(UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV) {
+		this.undirectionalLinkDelayTLV = undirectionalLinkDelayTLV;
+	}
+
+	public MinMaxUndirectionalLinkDelayDescriptorSubTLV getMinMaxUndirectionalLinkDelayTLV() {
+		return minMaxUndirectionalLinkDelayTLV;
+	}
+
+	public void setMinMaxUndirectionalLinkDelayTLV(
+			MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV) {
+		this.minMaxUndirectionalLinkDelayTLV = minMaxUndirectionalLinkDelayTLV;
+	}
+
+	public UndirectionalDelayVariationDescriptorSubTLV getUndirectionalDelayVariationTLV() {
+		return undirectionalDelayVariationTLV;
+	}
+
+	public void setUndirectionalDelayVariationTLV(
+			UndirectionalDelayVariationDescriptorSubTLV undirectionalDelayVariationTLV) {
+		this.undirectionalDelayVariationTLV = undirectionalDelayVariationTLV;
+	}
+
+	public UndirectionalLinkLossDescriptorSubTLV getUndirectionalLinkLossTLV() {
+		return undirectionalLinkLossTLV;
+	}
+
+	public void setUndirectionalLinkLossTLV(UndirectionalLinkLossDescriptorSubTLV undirectionalPackectLossTLV) {
+		this.undirectionalLinkLossTLV = undirectionalPackectLossTLV;
+	}
+
+	public UndirectionalResidualBandwidthDescriptorSubTLV getUndirectionalResidualBwTLV() {
+		return undirectionalResidualBwTLV;
+	}
+
+	public void setUndirectionalResidualBwTLV(UndirectionalResidualBandwidthDescriptorSubTLV undirectionalResidualBwTLV) {
+		this.undirectionalResidualBwTLV = undirectionalResidualBwTLV;
+	}
+
+	public UndirectionalAvailableBandwidthDescriptorSubTLV getUndirectionalAvailableBwTLV() {
+		return undirectionalAvailableBwTLV;
+	}
+
+	public void setUndirectionalAvailableBwTLV(
+			UndirectionalAvailableBandwidthDescriptorSubTLV undirectionalAvailableBwTLV) {
+		this.undirectionalAvailableBwTLV = undirectionalAvailableBwTLV;
+	}
+
+	public UndirectionalUtilizedBandwidthDescriptorSubTLV getUndirectionalUtilizedBwTLV() {
+		return undirectionalUtilizedBwTLV;
+	}
+
+	public void setUndirectionalUtilizedBwTLV(UndirectionalUtilizedBandwidthDescriptorSubTLV undirectionalUtilizedBwTLV) {
+		this.undirectionalUtilizedBwTLV = undirectionalUtilizedBwTLV;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb=new StringBuffer(1000);
@@ -437,7 +584,161 @@ public class LinkNLRI extends LinkStateNLRI {
 			sb.append("> Multi Topology ID TLV:");
 			sb.append("\n\t> "+multiTopologyIDTLV.toString());
 		}
+		if (undirectionalLinkDelayTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Link Delay TLV:");
+			sb.append("\n\t> "+undirectionalLinkDelayTLV.toString());
+		}
+		if(minMaxUndirectionalLinkDelayTLV != null){
+			sb.append(" ");
+			sb.append("> Min/Max Undirectional Link Delay TLV:");
+			sb.append("\n\t> "+minMaxUndirectionalLinkDelayTLV.toString());
+		}
+		if(undirectionalDelayVariationTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Delay Variation TLV:");
+			sb.append("\n\t> "+undirectionalDelayVariationTLV.toString());
+		}
+		if(undirectionalLinkLossTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Link Loss TLV:");
+			sb.append("\n\t> "+undirectionalLinkLossTLV.toString());
+		}
+		if(undirectionalResidualBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Residual Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalResidualBwTLV.toString());
+		}
+		if(undirectionalAvailableBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Available Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalAvailableBwTLV.toString());
+		}
+		if(undirectionalUtilizedBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Utilized Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalUtilizedBwTLV.toString());
+		}
 		return sb.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (identifier ^ (identifier >>> 32));
+		result = prime * result + ((ipv4InterfaceAddressTLV == null) ? 0 : ipv4InterfaceAddressTLV.hashCode());
+		result = prime * result + ((ipv4NeighborAddressTLV == null) ? 0 : ipv4NeighborAddressTLV.hashCode());
+		result = prime * result + ((ipv6InterfaceAddressTLV == null) ? 0 : ipv6InterfaceAddressTLV.hashCode());
+		result = prime * result + ((ipv6NeighborAddressTLV == null) ? 0 : ipv6NeighborAddressTLV.hashCode());
+		result = prime * result + ((linkIdentifiersTLV == null) ? 0 : linkIdentifiersTLV.hashCode());
+		result = prime * result + ((localNodeDescriptors == null) ? 0 : localNodeDescriptors.hashCode());
+		result = prime * result
+				+ ((minMaxUndirectionalLinkDelayTLV == null) ? 0 : minMaxUndirectionalLinkDelayTLV.hashCode());
+		result = prime * result + ((multiTopologyIDTLV == null) ? 0 : multiTopologyIDTLV.hashCode());
+		result = prime * result + protocolID;
+		result = prime * result + ((remoteNodeDescriptorsTLV == null) ? 0 : remoteNodeDescriptorsTLV.hashCode());
+		result = prime * result + ((undirectionalAvailableBwTLV == null) ? 0 : undirectionalAvailableBwTLV.hashCode());
+		result = prime * result
+				+ ((undirectionalDelayVariationTLV == null) ? 0 : undirectionalDelayVariationTLV.hashCode());
+		result = prime * result + ((undirectionalLinkDelayTLV == null) ? 0 : undirectionalLinkDelayTLV.hashCode());
+		result = prime * result + ((undirectionalLinkLossTLV == null) ? 0 : undirectionalLinkLossTLV.hashCode());
+		result = prime * result + ((undirectionalResidualBwTLV == null) ? 0 : undirectionalResidualBwTLV.hashCode());
+		result = prime * result + ((undirectionalUtilizedBwTLV == null) ? 0 : undirectionalUtilizedBwTLV.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LinkNLRI other = (LinkNLRI) obj;
+		if (identifier != other.identifier)
+			return false;
+		if (ipv4InterfaceAddressTLV == null) {
+			if (other.ipv4InterfaceAddressTLV != null)
+				return false;
+		} else if (!ipv4InterfaceAddressTLV.equals(other.ipv4InterfaceAddressTLV))
+			return false;
+		if (ipv4NeighborAddressTLV == null) {
+			if (other.ipv4NeighborAddressTLV != null)
+				return false;
+		} else if (!ipv4NeighborAddressTLV.equals(other.ipv4NeighborAddressTLV))
+			return false;
+		if (ipv6InterfaceAddressTLV == null) {
+			if (other.ipv6InterfaceAddressTLV != null)
+				return false;
+		} else if (!ipv6InterfaceAddressTLV.equals(other.ipv6InterfaceAddressTLV))
+			return false;
+		if (ipv6NeighborAddressTLV == null) {
+			if (other.ipv6NeighborAddressTLV != null)
+				return false;
+		} else if (!ipv6NeighborAddressTLV.equals(other.ipv6NeighborAddressTLV))
+			return false;
+		if (linkIdentifiersTLV == null) {
+			if (other.linkIdentifiersTLV != null)
+				return false;
+		} else if (!linkIdentifiersTLV.equals(other.linkIdentifiersTLV))
+			return false;
+		if (localNodeDescriptors == null) {
+			if (other.localNodeDescriptors != null)
+				return false;
+		} else if (!localNodeDescriptors.equals(other.localNodeDescriptors))
+			return false;
+		if (minMaxUndirectionalLinkDelayTLV == null) {
+			if (other.minMaxUndirectionalLinkDelayTLV != null)
+				return false;
+		} else if (!minMaxUndirectionalLinkDelayTLV.equals(other.minMaxUndirectionalLinkDelayTLV))
+			return false;
+		if (multiTopologyIDTLV == null) {
+			if (other.multiTopologyIDTLV != null)
+				return false;
+		} else if (!multiTopologyIDTLV.equals(other.multiTopologyIDTLV))
+			return false;
+		if (protocolID != other.protocolID)
+			return false;
+		if (remoteNodeDescriptorsTLV == null) {
+			if (other.remoteNodeDescriptorsTLV != null)
+				return false;
+		} else if (!remoteNodeDescriptorsTLV.equals(other.remoteNodeDescriptorsTLV))
+			return false;
+		if (undirectionalAvailableBwTLV == null) {
+			if (other.undirectionalAvailableBwTLV != null)
+				return false;
+		} else if (!undirectionalAvailableBwTLV.equals(other.undirectionalAvailableBwTLV))
+			return false;
+		if (undirectionalDelayVariationTLV == null) {
+			if (other.undirectionalDelayVariationTLV != null)
+				return false;
+		} else if (!undirectionalDelayVariationTLV.equals(other.undirectionalDelayVariationTLV))
+			return false;
+		if (undirectionalLinkDelayTLV == null) {
+			if (other.undirectionalLinkDelayTLV != null)
+				return false;
+		} else if (!undirectionalLinkDelayTLV.equals(other.undirectionalLinkDelayTLV))
+			return false;
+		if (undirectionalLinkLossTLV == null) {
+			if (other.undirectionalLinkLossTLV != null)
+				return false;
+		} else if (!undirectionalLinkLossTLV.equals(other.undirectionalLinkLossTLV))
+			return false;
+		if (undirectionalResidualBwTLV == null) {
+			if (other.undirectionalResidualBwTLV != null)
+				return false;
+		} else if (!undirectionalResidualBwTLV.equals(other.undirectionalResidualBwTLV))
+			return false;
+		if (undirectionalUtilizedBwTLV == null) {
+			if (other.undirectionalUtilizedBwTLV != null)
+				return false;
+		} else if (!undirectionalUtilizedBwTLV.equals(other.undirectionalUtilizedBwTLV))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

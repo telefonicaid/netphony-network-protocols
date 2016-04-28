@@ -68,7 +68,7 @@ public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
 			}	
 	}
 
-	public float getLinkMetric() {
+	public long getLinkMetric() {
 		return linkMetric;
 	}
 
