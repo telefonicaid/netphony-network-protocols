@@ -17,7 +17,7 @@ import es.tid.protocol.commons.ByteHandler;
  * 
  * http://tools.ietf.org/html/draft-ietf-pce-stateful-pce-9
  * 
- * 
+ * Modified: https://tools.ietf.org/html/draft-ietf-pce-pce-initiated-lsp-05#page-13
 7.3. LSP Object
 
 The LSP object MUST be present within PCRpt and PCUpd messages.  The
@@ -39,7 +39,7 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                PLSP-ID                |    Flag |    O|A|R|S|D|
+     |                PLSP-ID                |Flags  |C|    O|A|R|S|D|
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      //                        TLVs                                 //
      |                                                               |
@@ -111,6 +111,14 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
       4 - GOING-UP:  LSP is being signalled.
 
       5-7 - Reserved:  these values are reserved for future use.
+      
+   c (Create - 1 bit): A new flag, the Create (C) flag is introduced.  On a PCRpt message,
+   the C Flag set to 1 indicates that this LSP was created via a
+   PCInitiate message.  The C Flag MUST be set to 1 on each PCRpt
+   message for the duration of existence of the LSP.  The Create flag
+   allows PCEs to be aware of which LSPs were PCE-initiated (a state
+   that would otherwise only be known by the PCC and the PCE that
+   initiated them).
 
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
