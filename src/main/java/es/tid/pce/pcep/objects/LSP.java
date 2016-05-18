@@ -136,6 +136,8 @@ public class LSP extends PCEPObject{
 	
 	protected int opFlags;
 	
+	protected boolean cFlag;
+	
 	private int LSP_sig_type;
 	
 	
@@ -197,7 +199,8 @@ public class LSP extends PCEPObject{
 		
 		offset += 3;
 		
-		ByteHandler.IntToBuffer (1, offset*8, 3, opFlags, this.object_bytes);
+		ByteHandler.BoolToBuffer(0 + offset*8, cFlag,object_bytes);
+		ByteHandler.IntToBuffer (0, 1 + offset*8, 3, opFlags, this.object_bytes);//ByteHandler.IntToBuffer (1, offset*8, 3, opFlags, this.object_bytes);
 		ByteHandler.BoolToBuffer(4 + offset*8, aFlag,object_bytes);
 		ByteHandler.BoolToBuffer(5 + offset*8, rFlag,object_bytes);
 		ByteHandler.BoolToBuffer(6 + offset*8, sFlag,object_bytes);
@@ -246,7 +249,8 @@ public class LSP extends PCEPObject{
 		}
 		
 		lspId = ByteHandler.easyCopy(0,19,object_bytes[4],object_bytes[5],object_bytes[6]);
-				
+		
+		cFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
 		aFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
 		rFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
@@ -356,6 +360,14 @@ public class LSP extends PCEPObject{
 	public void setLspId(int lspId) 
 	{
 		this.lspId = lspId;
+	}
+	public boolean iscFlag() 
+	{
+		return cFlag;
+	}
+	public void setCFlag(boolean cFlag) 
+	{
+		this.cFlag = cFlag;
 	}
 	public boolean isdFlag() 
 	{
