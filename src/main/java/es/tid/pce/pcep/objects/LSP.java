@@ -146,7 +146,7 @@ public class LSP extends PCEPObject{
 	
 	protected boolean cFlag;
 	
-	private int LSP_sig_type;
+	//private int LSP_sig_type;
 	
 	
 	private SymbolicPathNameTLV symbolicPathNameTLV_tlv = null;
@@ -208,7 +208,8 @@ public class LSP extends PCEPObject{
 		offset += 3;
 		
 		ByteHandler.BoolToBuffer(0 + offset*8, cFlag,object_bytes);
-		ByteHandler.IntToBuffer (0, 1 + offset*8, 3, opFlags, this.object_bytes);//ByteHandler.IntToBuffer (1, offset*8, 3, opFlags, this.object_bytes);
+		//ByteHandler.IntToBuffer (0, 1 + offset*8, 3, opFlags, this.object_bytes);
+		ByteHandler.IntToBuffer (29, 1+offset*8, 3, opFlags, this.object_bytes);
 		ByteHandler.BoolToBuffer(4 + offset*8, aFlag,object_bytes);
 		ByteHandler.BoolToBuffer(5 + offset*8, rFlag,object_bytes);
 		ByteHandler.BoolToBuffer(6 + offset*8, sFlag,object_bytes);
@@ -259,7 +260,9 @@ public class LSP extends PCEPObject{
 		lspId = ByteHandler.easyCopy(0,19,object_bytes[4],object_bytes[5],object_bytes[6]);
 		
 		cFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
+		System.out.println("cFlag="+cFlag);
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
+		System.out.println("opFlag="+opFlags);
 		aFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
 		rFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
 		sFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
@@ -403,7 +406,7 @@ public class LSP extends PCEPObject{
 		this.opFlags = opFlags;
 	}
 
-	public int getLSP_sig_type() 
+	/*public int getLSP_sig_type() 
 	{
 		return LSP_sig_type;
 	}
@@ -411,6 +414,7 @@ public class LSP extends PCEPObject{
 	{
 		LSP_sig_type = lSP_sig_type;
 	}
+	*/
 	public boolean isrFlag() 
 	{
 		return rFlag;
@@ -451,7 +455,7 @@ public class LSP extends PCEPObject{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + LSP_sig_type;
+		//result = prime * result + LSP_sig_type;
 		result = prime * result + (aFlag ? 1231 : 1237);
 		result = prime * result + (dFlag ? 1231 : 1237);
 		result = prime
@@ -489,10 +493,17 @@ public class LSP extends PCEPObject{
 		if (getClass() != obj.getClass())
 			return false;
 		LSP other = (LSP) obj;
-		if (LSP_sig_type != other.LSP_sig_type)
+		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
+		/*if (LSP_sig_type != other.LSP_sig_type)
 			return false;
+		*/
+		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
 		if (aFlag != other.aFlag)
 			return false;
+		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
+		if (cFlag != other.cFlag)
+			return false;
+		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
 		if (dFlag != other.dFlag)
 			return false;
 		if (lspDBVersion_tlv == null) {
