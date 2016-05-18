@@ -148,6 +148,7 @@ public class UpdateRequest extends PCEPConstruct
 			log.warn("Malformed Update Request Construct.");
 			throw new PCEPProtocolViolationException();
 		}
+		this.setLength(len);
 	}
 
 

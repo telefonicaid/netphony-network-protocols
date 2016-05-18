@@ -192,6 +192,7 @@ public class StateReport extends PCEPConstruct
 			log.warn("Malformed Report Message. There must be at least one ERO or SRERO message!");
 			//throw new PCEPProtocolViolationException();
 		}
+		this.setLength(len);
 	}
 
 	public SRP getSRP() {
