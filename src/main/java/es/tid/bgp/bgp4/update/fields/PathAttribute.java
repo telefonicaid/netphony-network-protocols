@@ -105,7 +105,6 @@ public abstract class PathAttribute extends BGP4Object {
 		}
 		else
 			bytes[2]=(byte)(pathAttributeLength & 0xFF );
-		
 	}
 	
 	protected void setPathAttributeLength(int pal){
