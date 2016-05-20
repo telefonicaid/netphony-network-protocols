@@ -42,6 +42,7 @@ public abstract class LinkStateNLRI extends NLRI {
 		int valueNLRILength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
 		this.TotalNLRILength=valueNLRILength+4;
 		this.bytes=new byte[TotalNLRILength];
+		this.length=this.TotalNLRILength;
 		System.arraycopy(bytes, offset, this.bytes, 0, TotalNLRILength);
 	}
 	
