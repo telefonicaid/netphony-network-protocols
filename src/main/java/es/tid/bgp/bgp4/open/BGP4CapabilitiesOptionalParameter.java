@@ -84,13 +84,16 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 
 		while (offset<this.getLength()) {
 			int capabilityCode = BGP4Capability.getCapalitityCode(this.bytes, offset);
+			log.debug("Capability code "+capabilityCode);
 			if (capabilityCode == BGP4OptionalParametersTypes.CAPABILITY_CODE_MULTIPROTOCOLEXTENSION)
 			{
 				MultiprotocolExtensionCapabilityAdvertisement meca = new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset);
 				capabilityList.add(meca);
+				log.debug("Length "+meca.getLength());
 				offset=offset+meca.getLength();
 			}else {
-				offset= offset+BGP4Capability.getCapabilityLength(this.bytes, offset);
+				log.debug("Length "+BGP4Capability.getCapabilityLength(this.bytes, offset));
+				offset= offset+BGP4Capability.getCapabilityLength(this.bytes, offset)+2;
 			}
 		}
 
