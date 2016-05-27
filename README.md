@@ -47,7 +47,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.1</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
