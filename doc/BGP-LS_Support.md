@@ -4,6 +4,7 @@ Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0)
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
 
 RFCs:
+* [RFC 3392](http://tools.ietf.org/html/rfc3392)
 * [RFC 4271](http://tools.ietf.org/html/rfc4271)
 * [RFC 4760](http://tools.ietf.org/html/rfc4760)
 * [RFC 7752](http://tools.ietf.org/html/rfc7752)
