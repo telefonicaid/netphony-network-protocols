@@ -53,16 +53,17 @@ Fields in UPDATE Message
 ### Link State NLRI TLVs 
 | **Type**  | **NLRI Type**   |
 |:---:|:---:|
-| (Type 256)|Local Node Descriptors TLV |
-|(Type 257) |Remote Node Descriptors TLV |
+| (Type 256) | Local Node Descriptors TLV |
+| (Type 257) | Remote Node Descriptors TLV |
 
  ### Node Descriptor Sub-TLVs
+
 | **Type**  | **NLRI Type**   |
 |:---:|:---:| 
-| | Autonomous System|
-| |BGP-LS Identifier |
-| |OSPF Area-ID   |
-| |IGP Router-ID|
+| 512 | Autonomous System|
+| 513 |BGP-LS Identifier |
+| 514 |OSPF Area-ID   |
+| 515 |IGP Router-ID|
 
 ### Link Descriptors TLVs
 
@@ -113,14 +114,21 @@ Fields in UPDATE Message
 |    1096   | Shared Risk Link   Group |
 |    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
 |    1098   | Link Name      (**Not Implemented**)      | 
+|    1104     | Unidirectional Delay            |
+|    1105     | Unidirectional Delay            |
+|    1106     | Unidirectional Min-Max Delay       | 
+|    1107     | Unidirectional Residual Bandwidth   |
+|    1109     | Unidirectional Available Bandwidth        |
+|    1110     | Unidirectional Utilized Bandwidth    |
 
 ### Prefix Attribute TLVs
 | **TLV Code points**  | **Name**   |
 |:---:|:---:| 
-|      1104     | Unidirectional Delay            |
-|      1105     | Unidirectional Delay            |
-|      1106     | Unidirectional Min-Max Delay       | 
-|      1107     | Unidirectional Residual Bandwidth   |
-|      1109     | Unidirectional Available Bandwidth        |
-|      1110     | Unidirectional Utilized Bandwidth    |
+|      1152     | IGP Flags            |
+|      1153     | IGP Route Tag    (**Not Implemented**)       | 
+|      1154     | IGP Extended Route Tag   (**Not Implemented**)   |
+|      1155     | Prefix Metric        |
+|      1156     | OSPF Forwarding  Address    |
+|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    
+
  
