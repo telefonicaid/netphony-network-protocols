@@ -3,6 +3,13 @@ Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0)
 
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
 
+RFCs:
+* [RFC 3392](http://tools.ietf.org/html/rfc3392)
+* [RFC 4271](http://tools.ietf.org/html/rfc4271)
+* [RFC 4760](http://tools.ietf.org/html/rfc4760)
+* [RFC 7752](http://tools.ietf.org/html/rfc7752)
+* [draft-previdi-idr-bgpls-te-metric-extensions-00](http://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00)
+
 BGP-4 Messages
 --------------
 * BGP KeepAlive Message [RFC 4271](http://tools.ietf.org/html/rfc4271#section-4.4 "RFC 4271: A Border Gateway Protocol 4 (BGP-4) Keepalive Message")
@@ -101,13 +108,19 @@ Fields in UPDATE Message
 |    1096   | Shared Risk Link   Group |
 |    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
 |    1098   | Link Name      (**Not Implemented**)      | 
+|    1094   | MPLS Protocol Mask (**Not Implemented**)  |  
+|    1095   | IGP Metric          |  
+|    1096   | Shared Risk Link   Group |
+|    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
+|    1098   | Link Name      (**Not Implemented**)      | 
 
 ### Prefix Attribute TLVs
 | **TLV Code points**  | **Name**   |
 |:---:|:---:| 
-|      1152     | IGP Flags            |
-|      1153     | IGP Route Tag    (**Not Implemented**)       | 
-|      1154     | IGP Extended Route Tag   (**Not Implemented**)   |
-|      1155     | Prefix Metric        |
-|      1156     | OSPF Forwarding  Address    |
-|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    
+|      1104     | Unidirectional Delay            |
+|      1105     | Unidirectional Delay            |
+|      1106     | Unidirectional Min-Max Delay       | 
+|      1107     | Unidirectional Residual Bandwidth   |
+|      1109     | Unidirectional Available Bandwidth        |
+|      1110     | Unidirectional Utilized Bandwidth    |
+ 
