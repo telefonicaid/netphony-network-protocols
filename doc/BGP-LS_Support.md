@@ -1,4 +1,4 @@
-Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0) 
+Detailed BGP-4 & BGP-LS Implementation Support (v1.3.1) 
 =======================================================
 
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
