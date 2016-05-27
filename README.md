@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.0
+netphony-network-protocols v1.3.1
 =================================
 
 Repository branch build status:
@@ -26,6 +26,11 @@ The Netphony BGP-LS implementation is known to interoperate with Telecom Italia 
 The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
 Detailed CHANGELOG [click here](CHANGELOG)
+
+## **Latest news**
+- License is now Apache 2.0 
+- BPG-LS Tested with Juniper MX routers
+- Various bugfixes in BGP-LS
 
 ## Compilation and use
 
