@@ -47,7 +47,6 @@ public class AS_Path_Attribute extends PathAttribute
 		//Poner los flags. 
 		this.typeCode = PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_ASPATH;
 		asPathSegments = new LinkedList<AS_Path_Segment>();
-		length = mandatoryLength; //Initial length FLAGS + TYPE + LENGTH
 	}
 
 	public AS_Path_Attribute(byte[] bytes, int offset) throws MalformedBGP4ElementException
@@ -60,15 +59,22 @@ public class AS_Path_Attribute extends PathAttribute
 	@Override
 	public void encode()
 	{
-		bytes = new byte[length];
-		pathAttributeLength = length - mandatoryLength; //Total length minus (FLAGS + TYPE + LENGTH)
-		encodeHeader();
-		int offset = 3; //After the header encoding
+		int path_attribute_length=0;
+		
 		for(AS_Path_Segment asPathSegment : asPathSegments)
 		{
 			asPathSegment.encode();
-			System.arraycopy(asPathSegment.getBytes(), 0, bytes, offset, asPathSegment.getLength());
-			offset += asPathSegment.getLength();
+			path_attribute_length+=asPathSegment.getLength();
+		}
+		this.setPathAttributeLength(path_attribute_length);
+		bytes = new byte[length];
+		encodeHeader();
+		int offset = this.mandatoryLength; //After the header encoding
+		int num_segs=asPathSegments.size();
+		for(int i=0;i<num_segs;++i)
+		{
+			System.arraycopy(asPathSegments.get(i).getBytes(), 0, bytes, offset, asPathSegments.get(i).getLength());
+			offset += asPathSegments.get(i).getLength();
 		}
 
 	}
@@ -77,8 +83,8 @@ public class AS_Path_Attribute extends PathAttribute
 	{
 		if(typeCode != PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_ASPATH)
 			throw new MalformedBGP4ElementException();
-
-		int offset = 3; //1 octet flags, 1 octet type, 1 octet length
+		
+		int offset = this.mandatoryLength; 
 		while(offset < length)
 		{
 			AS_Path_Segment asPathSegment = new AS_Path_Segment(bytes, offset);
@@ -97,14 +103,17 @@ public class AS_Path_Attribute extends PathAttribute
 	public void setAsPathSegments(List<AS_Path_Segment> asPathSegments)
 	{
 		this.asPathSegments = asPathSegments;
-		for(AS_Path_Segment asPathSegment : asPathSegments)
-			length += asPathSegment.getLength();
 	}
 
 	@Override
 	public String toString()
 	{
-		return "AS_PATH [Type=" + typeCode + " Length=" + length + " NumberOfAsPathSegments=" + asPathSegments.size() + "]";
+		String ret="";
+		ret+="AS_PATH [Type=" + typeCode + " Length=" + length + " NumberOfAsPathSegments=" + asPathSegments.size() + "]";
+		for (int i=0; i<asPathSegments.size();++i){
+			ret+=asPathSegments.toString();
+		}
+		return ret;
 	}
 
 	@Override

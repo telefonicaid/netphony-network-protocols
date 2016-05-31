@@ -28,8 +28,7 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 		super(bytes, offset);
 		int offset2=offset+this.mandatoryLength+5+this.getLengthofNextHopNetworkAddress();
 		lsNLRIList = new LinkedList<LinkStateNLRI>();
-
-		while(offset2 < length)
+		while(offset2 < length+offset)
 		{
 			LinkStateNLRI tempNLri;
 			int type = LinkStateNLRI.getType(bytes, offset2);
@@ -57,9 +56,10 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 		//Encoding BGP_LS_MP_Reach_Attribute
 //		this.pathAttributeLength = 5+lsNLRI.getLength()+this.getLengthofNextHopNetworkAddress();
 		this.pathAttributeLength = 5+getLengthofNextHopNetworkAddress();
-		for(LinkStateNLRI ls : lsNLRIList)
+		for(int i=0; i< lsNLRIList.size() ;++i)
 		{
-			this.pathAttributeLength += ls.getTotalNLRILength();
+			lsNLRIList.get(i).encode();
+			this.pathAttributeLength += lsNLRIList.get(i).getTotalNLRILength();
 		}
 
 		this.setPathAttributeLength(pathAttributeLength);
@@ -67,11 +67,10 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 		encodeHeader();
 		encodeMP_Reach_Header();
 		int offset = this.getMandatoryLength()+5+this.getLengthofNextHopNetworkAddress();
-		for(LinkStateNLRI ls : lsNLRIList)
+		for(int i=0; i< lsNLRIList.size() ;++i)
 		{
-			ls.encode();
-			System.arraycopy(ls.getBytes(), 0, this.bytes, offset, ls.getTotalNLRILength());
-			offset += ls.getTotalNLRILength();
+			System.arraycopy(lsNLRIList.get(i).getBytes(), 0, this.bytes, offset, lsNLRIList.get(i).getTotalNLRILength());
+			offset += lsNLRIList.get(i).getTotalNLRILength();
 		}
 
 	}
@@ -83,6 +82,10 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 
 	public void setLsNLRI(LinkStateNLRI lsNLRI) {
 		this.lsNLRI = lsNLRI;
+		if (this.lsNLRIList.size()>0){
+			this.lsNLRIList=new LinkedList<LinkStateNLRI>();
+		}		
+		this.lsNLRIList.add(lsNLRI);
 	}
 	public void setLsNLRIList(List<LinkStateNLRI> lsNLRIList){ this.lsNLRIList = lsNLRIList; }
 
