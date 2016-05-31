@@ -1,11 +1,10 @@
 package es.tid.bgp.bgp4.objects;
 
-import java.util.Arrays;
-
 import es.tid.bgp.bgp4.BGP4Element;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 public abstract class BGP4Object implements BGP4Element {
 	

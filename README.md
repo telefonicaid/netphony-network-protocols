@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.0
+netphony-network-protocols v1.3.1
 =================================
 
 Repository branch build status:
@@ -27,6 +27,11 @@ The library is maintained to be up-to-date to the latest version of the internet
 
 Detailed CHANGELOG [click here](CHANGELOG)
 
+## **Latest news**
+- License is now Apache 2.0 
+- BPG-LS Tested with Juniper MX routers
+- Various bugfixes in BGP-LS
+
 ## Compilation and use
 
 The library can be built using the maven tool. There is a set of Junit tests included that check the enconding/decoding process . Contributions on expanding the test suite are welcomed.
@@ -42,7 +47,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.1</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process

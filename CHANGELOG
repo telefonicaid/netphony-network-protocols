@@ -1,3 +1,7 @@
+v.1.3.1
+- License is now Apache 2.0 
+- BPG-LS Tested with Juniper MX routers
+- Various bugfixes in BGP-LS
 v.1.3.0
 - Checked implemenation supports RFC 7752 (previously it supported draft-ietf-idr-ls-distribution-13)
 - Implementation of draft-previdi-idr-bgpls-te-metric-extensions-01 using the suggested values in the draft 

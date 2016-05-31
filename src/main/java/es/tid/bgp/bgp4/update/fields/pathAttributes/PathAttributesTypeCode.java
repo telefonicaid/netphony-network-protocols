@@ -30,8 +30,9 @@ public class PathAttributesTypeCode {
 	//public final static int PATH_ATTRIBUTE_TYPECODE_LINKSTATE = 99;
 	//29 	BGP-LS Attribute (TEMPORARY - registered 2014-03-11, expires 2016-03-11)
 	//draft-ietf-idr-ls-distribution
-	public final static int PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE = 29;
-	
+	public final static int PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE        = 29;
+	public final static int PATH_ATTRIBUTE_TYPECODE_BGP_LS_ATTRIBUTE_LEGACY = 99;
+
 	//Para origin (rfc 4271)
 	public final static int PATH_ATTRIBUTE_ORIGIN_IGP = 0;
 	public final static int PATH_ATTRIBUTE_ORIGIN_EGP = 1;

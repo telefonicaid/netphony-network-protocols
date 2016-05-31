@@ -17,7 +17,7 @@ import es.tid.protocol.commons.ByteHandler;
  * 
  * http://tools.ietf.org/html/draft-ietf-pce-stateful-pce-9
  * 
- * 
+ * Modified: https://tools.ietf.org/html/draft-ietf-pce-pce-initiated-lsp-05#page-13
 7.3. LSP Object
 
 The LSP object MUST be present within PCRpt and PCUpd messages.  The
@@ -39,7 +39,7 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                PLSP-ID                |    Flag |    O|A|R|S|D|
+     |                PLSP-ID                |Flags  |C|    O|A|R|S|D|
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      //                        TLVs                                 //
      |                                                               |
@@ -111,6 +111,14 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
       4 - GOING-UP:  LSP is being signalled.
 
       5-7 - Reserved:  these values are reserved for future use.
+      
+   c (Create - 1 bit): A new flag, the Create (C) flag is introduced.  On a PCRpt message,
+   the C Flag set to 1 indicates that this LSP was created via a
+   PCInitiate message.  The C Flag MUST be set to 1 on each PCRpt
+   message for the duration of existence of the LSP.  The Create flag
+   allows PCEs to be aware of which LSPs were PCE-initiated (a state
+   that would otherwise only be known by the PCC and the PCE that
+   initiated them).
 
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
@@ -136,7 +144,9 @@ public class LSP extends PCEPObject{
 	
 	protected int opFlags;
 	
-	private int LSP_sig_type;
+	protected boolean cFlag;
+	
+	//private int LSP_sig_type;
 	
 	
 	private SymbolicPathNameTLV symbolicPathNameTLV_tlv = null;
@@ -197,7 +207,9 @@ public class LSP extends PCEPObject{
 		
 		offset += 3;
 		
-		ByteHandler.IntToBuffer (1, offset*8, 3, opFlags, this.object_bytes);
+		ByteHandler.BoolToBuffer(0 + offset*8, cFlag,object_bytes);
+		//ByteHandler.IntToBuffer (0, 1 + offset*8, 3, opFlags, this.object_bytes);
+		ByteHandler.IntToBuffer (29, 1+offset*8, 3, opFlags, this.object_bytes);
 		ByteHandler.BoolToBuffer(4 + offset*8, aFlag,object_bytes);
 		ByteHandler.BoolToBuffer(5 + offset*8, rFlag,object_bytes);
 		ByteHandler.BoolToBuffer(6 + offset*8, sFlag,object_bytes);
@@ -246,8 +258,11 @@ public class LSP extends PCEPObject{
 		}
 		
 		lspId = ByteHandler.easyCopy(0,19,object_bytes[4],object_bytes[5],object_bytes[6]);
-				
+		
+		cFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
+		System.out.println("cFlag="+cFlag);
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
+		System.out.println("opFlag="+opFlags);
 		aFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
 		rFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
 		sFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
@@ -357,6 +372,14 @@ public class LSP extends PCEPObject{
 	{
 		this.lspId = lspId;
 	}
+	public boolean iscFlag() 
+	{
+		return cFlag;
+	}
+	public void setCFlag(boolean cFlag) 
+	{
+		this.cFlag = cFlag;
+	}
 	public boolean isdFlag() 
 	{
 		return dFlag;
@@ -383,7 +406,7 @@ public class LSP extends PCEPObject{
 		this.opFlags = opFlags;
 	}
 
-	public int getLSP_sig_type() 
+	/*public int getLSP_sig_type() 
 	{
 		return LSP_sig_type;
 	}
@@ -391,6 +414,7 @@ public class LSP extends PCEPObject{
 	{
 		LSP_sig_type = lSP_sig_type;
 	}
+	*/
 	public boolean isrFlag() 
 	{
 		return rFlag;
@@ -431,7 +455,7 @@ public class LSP extends PCEPObject{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + LSP_sig_type;
+		//result = prime * result + LSP_sig_type;
 		result = prime * result + (aFlag ? 1231 : 1237);
 		result = prime * result + (dFlag ? 1231 : 1237);
 		result = prime
@@ -469,10 +493,17 @@ public class LSP extends PCEPObject{
 		if (getClass() != obj.getClass())
 			return false;
 		LSP other = (LSP) obj;
-		if (LSP_sig_type != other.LSP_sig_type)
+		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
+		/*if (LSP_sig_type != other.LSP_sig_type)
 			return false;
+		*/
+		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
 		if (aFlag != other.aFlag)
 			return false;
+		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
+		if (cFlag != other.cFlag)
+			return false;
+		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
 		if (dFlag != other.dFlag)
 			return false;
 		if (lspDBVersion_tlv == null) {

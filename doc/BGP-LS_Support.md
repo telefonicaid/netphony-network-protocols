@@ -1,7 +1,14 @@
-Detailed BGP-4 & BGP-LS Implementation Support (v1.3.0) 
+Detailed BGP-4 & BGP-LS Implementation Support (v1.3.1) 
 =======================================================
 
 The BGP-4 and BGP-LS elements shown below are implemented in current version, unless **Not Implemented** is mentioned.  
+
+RFCs:
+* [RFC 3392](http://tools.ietf.org/html/rfc3392)
+* [RFC 4271](http://tools.ietf.org/html/rfc4271)
+* [RFC 4760](http://tools.ietf.org/html/rfc4760)
+* [RFC 7752](http://tools.ietf.org/html/rfc7752)
+* [draft-previdi-idr-bgpls-te-metric-extensions-00](http://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-00)
 
 BGP-4 Messages
 --------------
@@ -46,16 +53,17 @@ Fields in UPDATE Message
 ### Link State NLRI TLVs 
 | **Type**  | **NLRI Type**   |
 |:---:|:---:|
-| (Type 256)|Local Node Descriptors TLV |
-|(Type 257) |Remote Node Descriptors TLV |
+| (Type 256) | Local Node Descriptors TLV |
+| (Type 257) | Remote Node Descriptors TLV |
 
  ### Node Descriptor Sub-TLVs
+
 | **Type**  | **NLRI Type**   |
 |:---:|:---:| 
-| | Autonomous System|
-| |BGP-LS Identifier |
-| |OSPF Area-ID   |
-| |IGP Router-ID|
+| 512 | Autonomous System|
+| 513 |BGP-LS Identifier |
+| 514 |OSPF Area-ID   |
+| 515 |IGP Router-ID|
 
 ### Link Descriptors TLVs
 
@@ -101,6 +109,17 @@ Fields in UPDATE Message
 |    1096   | Shared Risk Link   Group |
 |    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
 |    1098   | Link Name      (**Not Implemented**)      | 
+|    1094   | MPLS Protocol Mask (**Not Implemented**)  |  
+|    1095   | IGP Metric          |  
+|    1096   | Shared Risk Link   Group |
+|    1097   | Opaque Link    Attribute   (**Not Implemented**)   | 
+|    1098   | Link Name      (**Not Implemented**)      | 
+|    1104     | Unidirectional Delay            |
+|    1105     | Unidirectional Delay            |
+|    1106     | Unidirectional Min-Max Delay       | 
+|    1107     | Unidirectional Residual Bandwidth   |
+|    1109     | Unidirectional Available Bandwidth        |
+|    1110     | Unidirectional Utilized Bandwidth    |
 
 ### Prefix Attribute TLVs
 | **TLV Code points**  | **Name**   |
@@ -111,3 +130,5 @@ Fields in UPDATE Message
 |      1155     | Prefix Metric        |
 |      1156     | OSPF Forwarding  Address    |
 |      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    
+
+ 
