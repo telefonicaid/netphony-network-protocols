@@ -149,7 +149,6 @@ public class BGP4Update extends BGP4Message
 		//Add Path Attributes
 		for(int i = 0; i < pathAttributes.size(); ++ i)
 		{
-
 			System.arraycopy(pathAttributes.get(i).getBytes(), 0, messageBytes, offset, pathAttributes.get(i).getLength());
 			offset = offset + pathAttributes.get(i).getLength();
 		}
@@ -178,7 +177,6 @@ public class BGP4Update extends BGP4Message
 		//Path Attributes Length
 		totalPathAttibuteLength = ((((int) messageBytes[offset]) << 8) & 0xFF00) | ((int) messageBytes[offset + 1] & 0xFF);
 		offset = offset + 2;
-		//QUITAR log.info("OSCAR totalPathAttibuteLength "+totalPathAttibuteLength+" Y offset a "+offset);
 		if(totalPathAttibuteLength != 0)
 		{
 			pathAttributes = new ArrayList<PathAttribute>();
@@ -229,6 +227,9 @@ public class BGP4Update extends BGP4Message
 				}
 				offset = offset + attribute_length + mandatory_length;
 				len = len + attribute_length + mandatory_length;
+			}
+			if (offset>=this.getLength()){
+				return;
 			}
 			//NLRI
 			//if (nlri != null){

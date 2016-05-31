@@ -45,12 +45,12 @@ public class AS_Path_Segment implements BGP4Element
 
 	public AS_Path_Segment()
 	{
-		length = 2;
 		type = PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE;
 	} //Type and number, and nothing else;
 
 	public AS_Path_Segment(byte[] bytes, int offset) throws MalformedBGP4ElementException
 	{
+		
 		this.type = (int) bytes[offset] & 0xFF;
 		if(this.type != PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE && this.type != PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SET)
 			throw new MalformedBGP4ElementException();
@@ -75,6 +75,8 @@ public class AS_Path_Segment implements BGP4Element
 	@Override
 	public void encode()
 	{
+		this.length = 2 + numberOfSegments * 2;
+		
 		int offset = 0;
 		bytes = new byte[this.length];
 		bytes[offset++] = (byte) (type & 0xFF); //1 octet, TYPE of AS_PATH_SEGMENT
@@ -119,7 +121,6 @@ public class AS_Path_Segment implements BGP4Element
 		{
 			this.segments = segments;
 			numberOfSegments = this.segments.length;
-			length = 2 + numberOfSegments * 2;
 		}
 	}
 
