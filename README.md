@@ -19,9 +19,9 @@ The netphony-network-protocols library is an implementation of four networking p
 
 The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
-The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) . 
+The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) .  
 
-The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04 
+The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation and Juniper MX routers. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04  
 
 The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
