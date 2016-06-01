@@ -29,6 +29,7 @@ public class TestBGPAsPathAttribute
 
 			as1.setSegments(segments);
 			as1.encode();
+
 			as2 = new AS_Path_Segment(as1.getBytes(), 0);
 
 			Assert.assertEquals("2-Both objects should be equal", as1, as2);
@@ -55,6 +56,8 @@ public class TestBGPAsPathAttribute
 
 		AS_Path_Attribute ap2 = new AS_Path_Attribute(ap1.getBytes(), 0);
 		ap2.encode();
+		System.out.println("AP1 "+ap1.toString());
+		System.out.println("AP2 "+ap2.toString());
 
 		Assert.assertEquals("Both PathAttribute_AS_PATH should be equal", ap1, ap2);
 		Assert.assertArrayEquals("Bytes from both PathAttribute_AS_PATH objects should be the same", ap1.getBytes(), ap2.getBytes());

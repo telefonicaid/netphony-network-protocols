@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.1
+netphony-network-protocols v1.3.2
 =================================
 
 Repository branch build status:
@@ -19,15 +19,17 @@ The netphony-network-protocols library is an implementation of four networking p
 
 The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
-The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) . 
+The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) .  
 
-The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04 
+The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation and Juniper MX routers. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04  
 
 The library is maintained to be up-to-date to the latest version of the internet-drafts/RFCs. **Contributions are highly welcomed.**
 
 Detailed CHANGELOG [click here](CHANGELOG)
 
 ## **Latest news**
+- Hotfix to work with BPGPeer
+- Ability to work with multiple NLRIs in the same BGP-LS MP Reach
 - License is now Apache 2.0 
 - BPG-LS Tested with Juniper MX routers
 - Various bugfixes in BGP-LS
@@ -47,7 +49,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.1</version>
+      <version>1.3.2</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
