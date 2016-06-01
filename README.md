@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.1
+netphony-network-protocols v1.3.2
 =================================
 
 Repository branch build status:
@@ -28,6 +28,8 @@ The library is maintained to be up-to-date to the latest version of the internet
 Detailed CHANGELOG [click here](CHANGELOG)
 
 ## **Latest news**
+- Hotfix to work with BPGPeer
+- Ability to work with multiple NLRIs in the same BGP-LS MP Reach
 - License is now Apache 2.0 
 - BPG-LS Tested with Juniper MX routers
 - Various bugfixes in BGP-LS
