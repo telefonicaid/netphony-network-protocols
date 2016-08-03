@@ -55,7 +55,6 @@ public class ITNodeNLRI extends LinkStateNLRI {
 	}
 	@Override
 	public void encode() {
-		System.out.println(" --- ---------------------------Codificando ITNodeNLRI");
 		int len=4;// The four bytes of the header plus the 4 first bytes)
 //		if (localNodeDescriptors!=null){
 //			localNodeDescriptors.encode();
@@ -83,73 +82,79 @@ public class ITNodeNLRI extends LinkStateNLRI {
 		
 		this.bytes=new byte[len];
 		this.encodeHeader();
-		
-		
-		System.out.println(" --- ---------------------------len: "+len);
-		
-		
+				
 		
 		int offset=4;//Header
-		offset = encodeHeaderSubTLV(0, bytesStringNodeId.length,offset);
+		offset = encodeHeaderSubTLV(1, bytesStringNodeId.length,offset);
 		for(int i=0;i<bytesStringNodeId.length;i++){
 			this.bytes[offset]=bytesStringNodeId[i];
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(1, bytesStringCpu.length,offset);
+		offset = encodeHeaderSubTLV(2, bytesStringCpu.length,offset);
 		for(int i=0;i<bytesStringCpu.length;i++){
 			this.bytes[offset]=bytesStringCpu[i];
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(2, bytesStringMem.length,offset);
+		offset = encodeHeaderSubTLV(3, bytesStringMem.length,offset);
 		for(int i=0;i<bytesStringMem.length;i++){
 			this.bytes[offset]=bytesStringMem[i];
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(3, bytesStringStorage.length,offset);
+		offset = encodeHeaderSubTLV(4, bytesStringStorage.length,offset);
 		for(int i=0;i<bytesStringStorage.length;i++){
 			this.bytes[offset]=bytesStringStorage[i];
 			offset++;
-		}
-		
-		System.out.println(" --- ---------------------------After for");
-//		this.bytes[4]=(byte)protocolID;
-//		this.bytes[5]=(byte)(routingUniverseIdentifier>>>56 & 0xFF);
-//		this.bytes[6]=(byte)(routingUniverseIdentifier>>>48 & 0xFF);
-//		this.bytes[7]=(byte)(routingUniverseIdentifier >>> 40 & 0xFF);
-//		this.bytes[8]=(byte)(routingUniverseIdentifier>>>32 & 0xFF);
-//		this.bytes[9]=(byte)(routingUniverseIdentifier>>>24 & 0xFF);
-//		this.bytes[10]=(byte)(routingUniverseIdentifier >>> 16 & 0xFF);
-//		this.bytes[11]=(byte)(routingUniverseIdentifier >>>8 & 0xFF);
-//		this.bytes[12]=(byte)(routingUniverseIdentifier & 0xFF);
-//		
-//		int offset=13;
-//		
-//		if (localNodeDescriptors!=null){
-//			System.arraycopy(localNodeDescriptors.getTlv_bytes(), 0, this.bytes, offset,localNodeDescriptors.getTotalTLVLength());
-//			offset=offset+localNodeDescriptors.getTotalTLVLength();
-//		}
-		
-		
+		}		
 	}
 	public void decode(){
-		System.out.println("Decodificnado ITNodeNLRI");
-//		//Decoding NodeNLRI
-//		int offset = 4; //Cabecera del LinkState NLRI
-//		protocolID = this.bytes[offset];
-//		offset=offset +1; //identifier
-//		
-//		byte[] ip=new byte[8]; 
-//		System.arraycopy(this.bytes,offset, ip, 0, 8);
-//		
-//		long routingUniverseIdentifieraux1 = ((  ((long)bytes[offset]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+1]<<16) & 0xFF0000) | (((long)bytes[offset+2]<<8) & 0xFF00) |(((long)bytes[offset+3]) & 0xFF);
-//		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
-//		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
-//		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-//		offset = offset +8;
-//		this.localNodeDescriptors=new LocalNodeDescriptorsTLV(this.bytes, offset);
+		//Decoding ITNodeNL
+		//Header 2(type)+2(length)
+		int offset = 2;
+		
+		byte[] lengthITNodeNLRIBytes = new byte[2];
+		System.arraycopy(this.bytes,offset, lengthITNodeNLRIBytes, 0, 2);
+		int lengthITNodeNLRI = ((lengthITNodeNLRIBytes[0] << 8) & 0xFF00) | ((lengthITNodeNLRIBytes[1]) & 0xFF);
+		offset+=2;
+				
+		int lengthResourcesgeted = 0;
+		while (lengthResourcesgeted<lengthITNodeNLRI){
+			//int typeResource = null;
+			
+			byte[] typeResourceBytes = new byte[2];
+			System.arraycopy(this.bytes,offset, typeResourceBytes, 0, 2);
+			int typeResource = ((typeResourceBytes[0] << 8) & 0xFF00) | ((typeResourceBytes[1]) & 0xFF);
+			offset+=2;
+			
+			byte[] lengthResourceBytes = new byte[2];
+			System.arraycopy(this.bytes,offset, lengthResourceBytes, 0, 2);
+			int lengthResource = ((lengthResourceBytes[0] << 8) & 0xFF00) | ((lengthResourceBytes[1]) & 0xFF);
+			offset+=2;
+			
+			byte[] valueResourceBytes = new byte[lengthResource];
+			System.arraycopy(this.bytes,offset, valueResourceBytes, 0, lengthResource);
+			String valueResource=new String(valueResourceBytes);
+			offset+=lengthResource;
+			
+			switch (typeResource) {
+				case 1:
+					this.nodeId = valueResource;
+					break;
+				case 2:
+					this.cpu = valueResource;
+					break;
+				case 3:
+					this.mem = valueResource;
+					break;
+				case 4:
+					this.storage = valueResource;
+					break;
+			}
+			
+			lengthResourcesgeted+=4+lengthResource;
+		}
 	}
 	protected int encodeHeaderSubTLV(int type, int valueLength,int byteStart){
 		this.bytes[byteStart]=(byte)(type>>>8 & 0xFF);
