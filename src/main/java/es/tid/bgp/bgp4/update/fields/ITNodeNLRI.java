@@ -40,6 +40,7 @@ import es.tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
  */
 public class ITNodeNLRI extends LinkStateNLRI {
 	private String nodeId;
+	private String controllerIT;
 	private String cpu;
 	private String mem;
 	private String storage;
@@ -64,6 +65,9 @@ public class ITNodeNLRI extends LinkStateNLRI {
 		//len+=5;
 		byte bytesStringNodeId[]=nodeId.getBytes();
 		len = len + 4 +bytesStringNodeId.length;
+		
+		byte bytesStringControllerIT[]=controllerIT.getBytes();
+		len = len + 4 +bytesStringControllerIT.length;
 		
 		byte bytesStringCpu[]=cpu.getBytes();
 		len+=4+bytesStringCpu.length;
@@ -91,19 +95,25 @@ public class ITNodeNLRI extends LinkStateNLRI {
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(2, bytesStringCpu.length,offset);
+		offset = encodeHeaderSubTLV(2, bytesStringControllerIT.length,offset);
+		for(int i=0;i<bytesStringControllerIT.length;i++){
+			this.bytes[offset]=bytesStringControllerIT[i];
+			offset++;
+		}
+		
+		offset = encodeHeaderSubTLV(3, bytesStringCpu.length,offset);
 		for(int i=0;i<bytesStringCpu.length;i++){
 			this.bytes[offset]=bytesStringCpu[i];
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(3, bytesStringMem.length,offset);
+		offset = encodeHeaderSubTLV(4, bytesStringMem.length,offset);
 		for(int i=0;i<bytesStringMem.length;i++){
 			this.bytes[offset]=bytesStringMem[i];
 			offset++;
 		}
 		
-		offset = encodeHeaderSubTLV(4, bytesStringStorage.length,offset);
+		offset = encodeHeaderSubTLV(5, bytesStringStorage.length,offset);
 		for(int i=0;i<bytesStringStorage.length;i++){
 			this.bytes[offset]=bytesStringStorage[i];
 			offset++;
@@ -143,12 +153,15 @@ public class ITNodeNLRI extends LinkStateNLRI {
 					this.nodeId = valueResource;
 					break;
 				case 2:
-					this.cpu = valueResource;
+					this.controllerIT = valueResource;
 					break;
 				case 3:
-					this.mem = valueResource;
+					this.cpu = valueResource;
 					break;
 				case 4:
+					this.mem = valueResource;
+					break;
+				case 5:
 					this.storage = valueResource;
 					break;
 			}
@@ -198,9 +211,17 @@ public class ITNodeNLRI extends LinkStateNLRI {
 
 	@Override
 	public String toString() {
-		return "ITNodeNLRI [nodeID=" + nodeId + ", cpu="
+		return "ITNodeNLRI [nodeID=" + nodeId + "controllerIT=" + controllerIT + ", cpu="
 				+ cpu + ", mem="
 				+ mem+  ", storage="+ storage+"]";
+	}
+
+	public String getControllerIT() {
+		return controllerIT;
+	}
+
+	public void setControllerIT(String controllerIT) {
+		this.controllerIT = controllerIT;
 	}
 
 }
