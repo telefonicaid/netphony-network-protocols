@@ -38,6 +38,9 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 			} else if(type == NLRITypes.Node_NLRI)
 			{
 				tempNLri = new NodeNLRI(bytes, offset2);
+			}else if(type == NLRITypes.IT_Node_NLRI)
+			{
+				tempNLri = new ITNodeNLRI(bytes, offset2);
 			} else if(type == NLRITypes.Prefix_v4_NLRI)
 			{
 				tempNLri = new PrefixNLRI(bytes, offset2);
