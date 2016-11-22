@@ -1,7 +1,7 @@
-netphony-network-protocols v1.3.2
+netphony-network-protocols v1.3.3
 =================================
 
-Repository branch build status:
+Repository branch build status in Travis CI:
 
 | **Master**  | **Develop**   |
 |:---:|:---:|
@@ -33,6 +33,7 @@ Detailed CHANGELOG [click here](CHANGELOG)
 - License is now Apache 2.0 
 - BPG-LS Tested with Juniper MX routers
 - Various bugfixes in BGP-LS
+- 5GEX extensions to carry IT information in BGP-LS (propietary)
 
 ## Compilation and use
 
