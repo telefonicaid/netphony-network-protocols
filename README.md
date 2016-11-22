@@ -5,7 +5,7 @@ Repository branch build status:
 
 | **Master**  | **Develop**   |
 |:---:|:---:|
-| [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
+| [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
 
 Latest Maven Central Release: 
 
