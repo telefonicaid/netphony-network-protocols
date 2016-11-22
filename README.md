@@ -1,11 +1,11 @@
-netphony-network-protocols v1.3.2
+netphony-network-protocols v1.3.3
 =================================
 
-Repository branch build status:
+Repository branch build status in Travis CI:
 
 | **Master**  | **Develop**   |
 |:---:|:---:|
-| [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
+| [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
 
 Latest Maven Central Release: 
 
@@ -33,6 +33,7 @@ Detailed CHANGELOG [click here](CHANGELOG)
 - License is now Apache 2.0 
 - BPG-LS Tested with Juniper MX routers
 - Various bugfixes in BGP-LS
+- 5GEX extensions to carry IT information in BGP-LS (propietary)
 
 ## Compilation and use
 
@@ -130,6 +131,13 @@ Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 
 * BGP-LS Traffic Engineering (TE) Metric Extensions https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-01
 
-
 (*) The BGLP-LS Speaker is available in https://github.com/telefonicaid/netphony-topology
+
+#Acknowledgements
+
+The software has been developed by Telefonica I+D Core & Transport Team, led by Juan Pedro Fernandez Palacios, in internal innovation projects and through several EU funded research proyects, which continuously added functionality. The Core & Transport Team group of Telefonica working with the propocols if formed by Juan Pedro Fernandez Palacios (team leader), Victor Lopez, Oscar Gonzalez de Dios, Felipe Jiménez, Luis Miguel Contreras, Michel Carnero and Eduardo Yusta. All of them have contributed to the code, either directly of with ideas and as beta-testers. The main maintainer of the code is Oscar Gonzalez de Dios. 
+
+The effort to release as open source of the code was funded by the E.U. CSA PACE. The code has been upgraded in the E.U. projects STRONGEST, PACE, IDEALIST, ACINO and 5GEx, as well as Telefonica Innovation activities.
+
+
 
