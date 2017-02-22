@@ -25,6 +25,8 @@ public class PathAttributesTypeCode {
 	public final static int PATH_ATTRIBUTE_TYPECODE_MP_REACH_NLRI=14;
 	//NLRI - MP_UNREACH_NLRI rfc4760
 	public final static int PATH_ATTRIBUTE_TYPECODE_MP_UN_REACH_NLRI=15;
+	//AS 4 OCTET PATH RFC 6793
+	public final static int PATH_ATTRIBUTE_TYPECODE_AS4PATH = 17;
 	
 	//LINKSTATE (Inventado!!!!!! no lo encuentro)
 	//public final static int PATH_ATTRIBUTE_TYPECODE_LINKSTATE = 99;
