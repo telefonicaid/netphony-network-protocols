@@ -35,13 +35,19 @@ import java.util.Arrays;
  *
  * @author Jose-Juan Pedreno-Manresa
  */
-public class AS_Path_Segment implements BGP4Element
-{
-	private int  type;
-	private int  numberOfSegments;
-	private int  segments[];
+public class AS_Path_Segment implements BGP4Element {
+	private int type;
+	private int numberOfSegments;
+	private long segments[];
 	private byte bytes[];
-	private int  length;
+	private int length;
+
+
+	private boolean AS4 = true;
+
+	public void setAS4(boolean as4){
+		this.AS4= as4;
+	}
 
 	public AS_Path_Segment()
 	{
@@ -50,33 +56,44 @@ public class AS_Path_Segment implements BGP4Element
 
 	public AS_Path_Segment(byte[] bytes, int offset) throws MalformedBGP4ElementException
 	{
-		
 		this.type = (int) bytes[offset] & 0xFF;
+		this.numberOfSegments = bytes[offset + 1] & 0xFF;
+		this.length = 2+numberOfSegments*4;
+		if ((bytes.length-offset)<length){
+			this.length = 2+numberOfSegments*2;
+			AS4=false;
+		}
+		else AS4=true;
+
+		this.segments = new long[this.numberOfSegments];
 		if(this.type != PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SEQUENCE && this.type != PathAttributesTypeCode.PATH_ATTRIBUTE_ASPATH_AS_SET)
 			throw new MalformedBGP4ElementException();
 
-		this.numberOfSegments = bytes[offset + 1] & 0xFF;
-		this.segments = new int[this.numberOfSegments];
 
-		for(int i = 0; i < this.numberOfSegments; i++)
+		for (int i = 0; i < this.numberOfSegments; i++)
 		{
-			this.segments[i] = (int) (((bytes[offset + 2 + (i * 2)] & 0xFF) << 8) & 0xFF00 | bytes[offset + 2 + (i * 2) + 1] & 0xFF);
+			//AS PATH 2Bytes
+			if (AS4==false)
+				this.segments[i] = (long) (((bytes[offset + 2 + (i * 2)] & 0xFF) << 8) & 0xFF00 | bytes[offset + 2 + (i * 2) + 1] & 0xFF);
+			else
+				this.segments[i] = (long) ( ((bytes[offset + 2 + (i * 4)] & 0xFF) << 24) & 0xFF000000 | ((bytes[offset + 2 + (i * 4)+1] & 0xFF0000) << 16) & 0xFF00 |  ((bytes[offset + 2 + (i * 4)+2] & 0xFF) << 8) & 0xFF00 | bytes[offset + 2 + (i * 4) + 3] & 0xFF);
 		}
 
-		/*
-		 * Type 1 octet
-		 * Number of AS segments: 1 octet
-		 * Segments: 2 octets each one
-		 * Total length = 2 + numberOfSegments*2 octets
-		 */
-		this.length = 2 + this.numberOfSegments * 2;
 	}
 
 	@Override
 	public void encode()
 	{
-		this.length = 2 + numberOfSegments * 2;
-		
+		//AS PATH 2Bytes
+		if(AS4==true)
+			this.length = 2 + numberOfSegments * 4;
+
+		if(AS4==false)
+			this.length = 2 + numberOfSegments * 2;
+
+		//AS PATH 4Bytes
+		//this.length = 2 + numberOfSegments * 4;
+
 		int offset = 0;
 		bytes = new byte[this.length];
 		bytes[offset++] = (byte) (type & 0xFF); //1 octet, TYPE of AS_PATH_SEGMENT
@@ -84,8 +101,19 @@ public class AS_Path_Segment implements BGP4Element
 
 		for(int i = 0; i < numberOfSegments; i++)
 		{
-			bytes[offset++] = (byte) ((segments[i] & 0xFF00 >> 8) & 0xFF);
-			bytes[offset++] = (byte) (segments[i] & 0xFF);
+			//AS PATH 4Bytes
+			if (AS4==true) {
+				bytes[offset++] = (byte) ((segments[i] & 0xFF000000 >> 24) & 0xFF);
+				bytes[offset++] = (byte) ((segments[i] & 0xFF0000 >> 16) & 0xFF);
+				bytes[offset++] = (byte) ((segments[i] & 0xFF00 >> 8) & 0xFF);
+				bytes[offset++] = (byte) (segments[i] & 0xFF);
+			}
+			//AS PATH 2Bytes
+			else{
+				bytes[offset++] = (byte) ((segments[i] & 0xFF00 >> 8) & 0xFF);
+				bytes[offset++] = (byte) (segments[i] & 0xFF);
+
+			}
 		}
 
 	}
@@ -112,17 +140,39 @@ public class AS_Path_Segment implements BGP4Element
 		return numberOfSegments;
 	}
 
-	public int[] getSegments(){ return segments; }
+	public int[] getSegments(){
 
-	public void setSegments(int[] segments)
+		int temp_segments[] = new int[segments.length];
+		for (int i=0;i<segments.length;++i){
+			temp_segments[i]=(int)segments[i];
+		}
+		return temp_segments;
+	}
+	public long[] get4Segments(){ return segments; }
+
+	public void set4Segments(long[] segments)
 	{
-		if(segments == null) this.segments = new int[0];
+		if(segments == null) this.segments = new long[0];
 		else
 		{
 			this.segments = segments;
 			numberOfSegments = this.segments.length;
 		}
 	}
+
+	public void setSegments(int[] segments)
+	{
+		if(segments == null) this.segments = new long[0];
+		else
+		{
+			this.segments = new long[segments.length];
+			for (int i=0;i<segments.length;++i){
+				this.segments[i]=(long)segments[i];
+			}
+			numberOfSegments = this.segments.length;
+		}
+	}
+
 
 	@Override
 	public String toString(){ return "AS_PATH_SEGMENT [Type=" + type + " NumberOfSegments=" + numberOfSegments + " Total Length=" + length+"]"; }

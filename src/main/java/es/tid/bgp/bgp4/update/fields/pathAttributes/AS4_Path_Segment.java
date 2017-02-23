@@ -60,8 +60,9 @@ public class AS4_Path_Segment implements BGP4Element
 
 		for(int i = 0; i < this.numberOfSegments; i++)
 		{
-			this.segments[i] = (int) ( ((bytes[offset + 2 + (i * 2)] & 0xFF) << 24) & 0xFF000000 | ((bytes[offset + 2 + (i * 2)+1] & 0xFF0000) << 16) & 0xFF00 |  ((bytes[offset + 2 + (i * 2)+3] & 0xFF) << 8) & 0xFF00 | bytes[offset + 2 + (i * 2) + 4] & 0xFF);
+			this.segments[i] = (int) ( ((bytes[offset + 2 + (i * 4)] & 0xFF) << 24) & 0xFF000000 | ((bytes[offset + 2 + (i * 4)+1] & 0xFF0000) << 16) & 0xFF00 |  ((bytes[offset + 2 + (i * 4)+3] & 0xFF) << 8) & 0xFF00 | bytes[offset + 2 + (i * 4) + 4] & 0xFF);
 		}
+
 
 		/*
 		 * Type 1 octet
@@ -75,7 +76,7 @@ public class AS4_Path_Segment implements BGP4Element
 	@Override
 	public void encode()
 	{
-		this.length = 2 + numberOfSegments * 2;
+		this.length = 2 + numberOfSegments * 4;
 		
 		int offset = 0;
 		bytes = new byte[this.length];
@@ -84,11 +85,17 @@ public class AS4_Path_Segment implements BGP4Element
 
 		for(int i = 0; i < numberOfSegments; i++)
 		{
+			//bytes[offset++]=(byte)(segments[i]>>>24 & 0xFF);
+			//bytes[offset++]=(byte)(segments[i]>>>16 & 0xFF);
+			//bytes[offset++]=(byte)(segments[i]>>>8 & 0xFF);
+			//bytes[offset++]=(byte)(segments[i]>>>0 & 0xFF);
 			bytes[offset++] = (byte) ((segments[i] & 0xFF000000 >> 24) & 0xFF);
 			bytes[offset++] = (byte) ((segments[i] & 0xFF0000 >> 16) & 0xFF);
 			bytes[offset++] = (byte) ((segments[i] & 0xFF00 >> 8) & 0xFF);
 			bytes[offset++] = (byte) (segments[i] & 0xFF);
+
 		}
+
 
 	}
 
