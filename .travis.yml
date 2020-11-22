@@ -1,7 +1,6 @@
 language: java
 jdk:
-  - oraclejdk7
-  - oraclejdk8
+  - oraclejdk11
 script:
   - mvn package -X -f ./pom.xml
   - mvn install -X -f ./pom.xml
