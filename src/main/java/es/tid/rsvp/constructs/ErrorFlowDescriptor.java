@@ -11,7 +11,7 @@ import es.tid.rsvp.RSVPProtocolViolationException;
  * valid error flow descriptor; the object order requirements are as given
  * earlier for flow descriptor.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>WF Style: &lt;error flow descriptor&gt; ::= &lt;WF flow descriptor&gt;
  * <LI>FF style: &lt;error flow descriptor&gt; ::= &lt;FF flow descriptor&gt;
  * <p>Each flow descriptor in a FF-style Resv message must be processed

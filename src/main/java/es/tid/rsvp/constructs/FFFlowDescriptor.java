@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * 
  * <p>Represents a FF Style Flow Descriptor construct, as defined in RFC 2205.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>&lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
  * </UL>
  * 
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * detail the composition of a valid flow descriptor list for each of
  * the reservation styles.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>FF style: &lt;flow descriptor list&gt; ::= &lt;FLOWSPEC&gt; &lt;FILTER_SPEC&gt;  |
  * &lt;Flow descriptor list&gt; &lt;FF flow descriptor&gt;
  * <LI>&lt;FF flow descriptor&gt; ::= [ &lt;FLOWSPEC&gt; ] &lt;FILTER_SPEC&gt;

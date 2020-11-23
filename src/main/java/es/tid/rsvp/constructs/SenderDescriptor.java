@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * 
  * <p>The format of a Path message is as follows:</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI> &lt;Path Message&gt; ::= &lt;Common Header&gt; [ &lt;INTEGRITY&gt; ]
  * &lt;SESSION&gt; &lt;RSVP_HOP&gt; &lt;TIME_VALUES&gt; [ &lt;POLICY_DATA&gt; ... ]
  * [ &lt;sender descriptor&gt; ]

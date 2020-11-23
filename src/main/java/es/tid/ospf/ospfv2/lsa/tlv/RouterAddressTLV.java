@@ -48,7 +48,7 @@ public class RouterAddressTLV extends OSPFTLV {
 	/**
 	 * Use this constructor to create and decode 
 	 * @param bytes bytes
-	 * @param offsetÂ offset
+	 * @param offset offset
 	 * @throws MalformedOSPFTLVException Malformed OSPF TLV Exception
 	 */
 	public RouterAddressTLV(byte[] bytes, int offset)throws MalformedOSPFTLVException{

@@ -200,7 +200,6 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	 * @param excludeAny excludeAny
 	 * @param includeAny includeAny
 	 * @param includeAll includeAll
-	 * @param excludeAny excludeAny
 	 * @param setupPriority setupPriority
 	 * @param holdingPriority holdingPriority
 	 * @param flags flags

@@ -6,7 +6,7 @@ import es.tid.rsvp.RSVPProtocolViolationException;
 /**
  * <p>Represents a Flow Descriptor construct, as defined in RFC 2205.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL >
  * <LI>&lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
  * </UL>
  * 
@@ -31,7 +31,7 @@ import es.tid.rsvp.RSVPProtocolViolationException;
  * detail the composition of a valid flow descriptor list for each of
  * the reservation styles.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>WF Style: &lt;flow descriptor list&gt; ::=  &lt;WF flow descriptor&gt;
  * &lt;WF flow descriptor&gt; ::= &lt;FLOWSPEC&gt;
  * <LI>FF style: &lt;flow descriptor list&gt; ::= &lt;FLOWSPEC&gt;  &lt;FILTER_SPEC&gt;  |
