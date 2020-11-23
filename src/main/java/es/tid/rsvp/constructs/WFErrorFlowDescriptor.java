@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * <p>Represents a WF Style Error Flow Descriptor construct, as defined in RFC 2205.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>&lt;flow descriptor list&gt; ::=  &lt;empty&gt; | &lt;flow descriptor list&gt; &lt;flow descriptor&gt;
  * </UL>
  * 
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * detail the composition of a valid flow descriptor list for each of
  * the reservation styles.</p>
  * 
- * <UL TYPE="CIRCLE">
+ * <UL>
  * <LI>WF Style: &lt;flow descriptor list&gt; ::=  &lt;WF flow descriptor&gt;
  * &lt;WF flow descriptor&gt; ::= &lt;FLOWSPEC&gt;
  * </UL>
