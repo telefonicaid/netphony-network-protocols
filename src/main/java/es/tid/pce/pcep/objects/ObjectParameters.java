@@ -7,11 +7,17 @@
 
 package es.tid.pce.pcep.objects;
 
+/*
+ * PCEP Object Related Numbers (Object Clasess
+ * @see https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-objects
+ */
+
 public class ObjectParameters {
 	
 	/*
-	 * PCEP Object Classes from RFC 5440
+	 * PCEP Standard Object Classes 
 	 */
+	
 	public static final int PCEP_OBJECT_CLASS_OPEN = 1;
 	public static final int PCEP_OBJECT_CLASS_RP = 2;
 	public static final int PCEP_OBJECT_CLASS_NOPATH = 3;
@@ -48,22 +54,45 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_CLASS_UNREACH_DESTINATION=28;
 	public static final int PCEP_OBJECT_CLASS_SERO=29;
 	public static final int PCEP_OBJECT_CLASS_SRRO=30;
-
-	//PCEP Object classes from draft-ietf-pce-inter-layer-ext-04.txt NOT SUPPORTED YET!!!
-	// NUMBERS FOR INTERNAL USE ONLY THEY DONT FOLLOW THE DRAFT as they use already existing numbers!!!!
-	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=118;
-	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=119;
-	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=120;
+	// BNC Object Not implemented
+	public static final int PCEP_OBJECT_CLASS_BNC=31;
+    // From Stateful PCEP objects
+    //LSP class
+    public static final int PCEP_OBJECT_CLASS_LSP = 32; 
+    //SRP class
+    public static final int PCEP_OBJECT_CLASS_SRP = 33;
+    //VENDOR_INFORMATION class NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_VENDOR_INFORMATION = 34;
+    //BU class NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_BU = 34;
+	// inter-layer
+	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=36;
+	// switch-layer
+	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=37;
+	// req-adap-ca
+	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=38;
+	// SERVER_INDICATION NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_INDICATION=39;
+    // ASSOCIATION NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_ASSOCIATION=40;
+    // S2LS NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_S2LS=41;
+    // Wavelength assignment
+	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=42;
+	// Flow_spec NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_CLASS_FLOWSPEC=43;
+	
+	/*
+	 * Experimental Object classes. 
+	 *  // NUMBERS FOR INTERNAL USE ONLY!!!!
+	 */
+	
 	
 	//IDEALIST
 	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
 	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
 
-	
-	public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=121;
-	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
-	// NUMBERS FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=150;
+
 	// PCEP Obect classes from draft-gonzalezdedios-pce-reservation-state-00
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
 	public static final int PCEP_OBJECT_CLASS_RESERVATION=160;
@@ -474,14 +503,6 @@ public class ObjectParameters {
     public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       
     
     public static final byte[] redundancyID= new byte[]{1,2,3,4}; 
-    
-    
-    // From Stateful PCEP objects
-    //LSP class
-    public static final int PCEP_OBJECT_CLASS_LSP = 32;
-    
-    //RSP class
-    public static final int PCEP_OBJECT_CLASS_SRP = 33;
     
     /*******************************************************************/
     
