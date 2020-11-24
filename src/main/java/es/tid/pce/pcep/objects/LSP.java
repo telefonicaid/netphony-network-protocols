@@ -162,7 +162,7 @@ public class LSP extends PCEPObject{
 	public LSP(){
 		super();
 		this.ObjectClass = ObjectParameters.PCEP_OBJECT_CLASS_LSP;
-		this.setOT(1);
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_LSP);
 		
 	}
 	

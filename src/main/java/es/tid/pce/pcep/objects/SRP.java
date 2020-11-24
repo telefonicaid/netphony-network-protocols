@@ -84,7 +84,7 @@ public class SRP extends PCEPObject
 	{
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_SRP);
-		this.setOT(1);
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_SRP);
 	}
 
 	public SRP(byte []bytes, int offset)throws MalformedPCEPObjectException 

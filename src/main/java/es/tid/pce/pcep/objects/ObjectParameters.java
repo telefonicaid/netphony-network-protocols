@@ -8,59 +8,259 @@
 package es.tid.pce.pcep.objects;
 
 /*
- * PCEP Object Related Numbers (Object Clasess
- * @see https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-objects
+ * PCEP Object Related Numbers (Object Classes, Types, TLV Types)
+ * @see <a href="https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-objects">IANA PCEP Objects Registry</a>
+ * @see <a href="https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators">IANA PCEP TLVs Registry</a> 
  */
 
 public class ObjectParameters {
 	
 	/*
-	 * PCEP Standard Object Classes 
+	 * PCEP Standard Object Classes & Types
+	 * https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-objects
 	 */
 	
+	/**
+	 * Open Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_OPEN = 1;
+	public static final int PCEP_OBJECT_TYPE_OPEN = 1;
+	
+	/**
+	 * RP Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_RP = 2;
+	public static final int PCEP_OBJECT_TYPE_RP = 1;
+	
+	/**
+	 * NO-PATH Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_NOPATH = 3;
+	public static final int PCEP_OBJECT_TYPE_NOPATH = 1;
+	
+	/**
+	 * END-POINTS Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_ENDPOINTS = 4;
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV4 = 1;
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV6 = 2;
+	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4 = 3;
+	//TODO: NOT IMPLEMENTED
+	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV6 = 4; //RFC 8306
+	//TODO: NOT IMPLEMENTED
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_GEN_EP = 5; //https://www.iana.org/go/rfc8779 
+	
+	/**
+	 * BANDWIDTH Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_BANDWIDTH = 5;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST = 1;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP= 2;
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST = 3; // https://www.iana.org/go/rfc8779
+	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP = 4;// https://www.iana.org/go/rfc8779
+	
+	/**
+	 * METRIC Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_METRIC = 6;
+	public static final int PCEP_OBJECT_TYPE_METRIC = 1;
+
+	/**
+	 * ERO Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_ERO = 7;
+	public static final int PCEP_OBJECT_TYPE_ERO = 1;
+	
+	/**
+	 * RRO Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_RRO = 8;
+	public static final int PCEP_OBJECT_TYPE_RRO = 1;
+	
+	/**
+	 * LSPA Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_LSPA = 9;
+	public static final int PCEP_OBJECT_TYPE_LSPA = 1;
+	
+	/**
+	 * IRO Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_IRO = 10;
+	public static final int PCEP_OBJECT_TYPE_IRO = 1;
+	
+	/**
+	 * SVEC Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_SVEC = 11;
+	public static final int PCEP_OBJECT_TYPE_SVEC = 1;
+	
+	/**
+	 * NOTIFICATION Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_NOTIFICATION = 12;
+	public static final int PCEP_OBJECT_TYPE_NOTIFICATION = 1;
+	
+	/**
+	 * PCEP-ERROR Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_PCEPERROR = 13;
+	public static final int PCEP_OBJECT_TYPE_PCEPERROR = 1;
+	
+	/**
+	 * LOAD-BALANCING Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_LOADBALANCING = 14;
+	public static final int PCEP_OBJECT_TYPE_LOADBALANCING = 1;
+	
+	/**
+	 * CLOSE Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5440">RFC 5440</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_CLOSE = 15;
-	//PCEP Object classes from RFC 5520 NOT SUPPORTED YET!!!!!
+	public static final int PCEP_OBJECT_TYPE_CLOSE = 1;
+
+	
+	/**
+	 * CLOSE Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5520">RFC 5520</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_PATH_KEY=16;
-	//PCEP Object classes from RFC 5521 NOT SUPPORTED YET!!!!!
+	public static final int PCEP_OBJECT_TYPE_PATH_KEY=1;
+	
+	/**
+	 * XRO Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5521">RFC 5521</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_XRO = 17;
-	//PCEP Object classes from 	RFC 5886 NOT SUPPORTED YET!!!
+	public static final int PCEP_OBJECT_TYPE_XRO = 1;
+	
+	/**
+	 * MONITORING Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_MONITORING=19;
+	public static final int PCEP_OBJECT_TYPE_MONITORING=1;
+	
+	/**
+	 * PCC-REQ-ID Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_PCC_REQ_ID=20;
-	// PCEP Object classes from RFC 5541 NOT SUPPORTED YET!!!!!
+	public static final int PCEP_OBJECT_TYPE_PCC_REQ_ID_IPV4=1;
+	public static final int PCEP_OBJECT_TYPE_PCC_REQ_ID_IPV6=2;
+	
+	/**
+	 * OF Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc5541">RFC 5541</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION = 21;
-	// PCEP Object clasess from RFC 5455 NOT SUPPORTED YET!!!
+	public static final int PCEP_OBJECT_TYPE_OBJECTIVE_FUNCTION = 1;// PCEP Object types from RFC 5541
+	
+	/**
+	 * CLASSTYPE Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5455">RFC 5455</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_CLASSTYPE=22;
-	// PCEP Object classes from RFC 5557 NOT SUPPORTED YET!!!
+	public static final int PCEP_OBJECT_TYPE_CLASSTYPE=1;
+	
+	/**
+	 * GLOBAL-CONSTRAINTS Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5557">RFC 5557</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_GLOBAL_CONSTRAINTS=24;
-	// PCEP Object classes from RFC 5886 NOT SUPPORTED YET!!
-	public static final int PCEP_OBJECT_CLASS_PCE_ID=25;
+	public static final int PCEP_OBJECT_TYPE_GLOBAL_CONSTRAINTS=1;
+
+	/**
+	 * PCE-ID Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
+	 */
+	public static final int PCEP_OBJECT_CLASS_PCE_ID=25;	
+	public static final int PCEP_OBJECT_TYPE_PCE_ID_IPV4=1;
+	public static final int PCEP_OBJECT_TYPE_PCE_ID_IPV6=2;
+	
+	/**
+	 * PROC-TIME Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_PROC_TIME=26;
+	public static final int PCEP_OBJECT_TYPE_PROC_TIME=1;
+	
+	/**
+	 * OVERLOAD Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_OVERLOAD=27;
-	// PCEP Object classes from RFC 6006 NOT SUPPORTED YET!!!
+	public static final int PCEP_OBJECT_TYPE_OVERLOAD=1;
+	
+	/**
+	 * UNREACH-DESTINATION Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_UNREACH_DESTINATION=28;
-	public static final int PCEP_OBJECT_CLASS_SERO=29;
+	public static final int PCEP_OBJECT_TYPE_UNREACH_DESTINATION_IPV4=1;
+	public static final int PCEP_OBJECT_TYPE_UNREACH_DESTINATION_IPV6=2;
+	
+	/**
+	 * SERO Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
+	 */
+	public static final int PCEP_OBJECT_CLASS_SR_ERO = 29;
+	public static final int PCEP_OBJECT_TYPE_SR_ERO = 1;
+	
+	/**
+	 * SRRO Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
+	 */
 	public static final int PCEP_OBJECT_CLASS_SRRO=30;
-	// BNC Object Not implemented
+	
+	
+	/**
+	 * BNC Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
+	 */ 
 	public static final int PCEP_OBJECT_CLASS_BNC=31;
-    // From Stateful PCEP objects
-    //LSP class
+	public static final int PCEP_OBJECT_TYPE_BNC=1;
+	
+	/**
+	 * LSP Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc8231">RFC 8231</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_LSP = 32; 
-    //SRP class
+    public static final int PCEP_OBJECT_TYPE_LSP = 1;
+    
+	/**
+	 * SRP Object Class
+	 * @see <a href="https://tools.ietf.org/html/rfc8231">RFC 8231</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_SRP = 33;
+    public static final int PCEP_OBJECT_TYPE_SRP = 1;
+    
     //VENDOR_INFORMATION class NOT IMPLEMENTED
     public static final int PCEP_OBJECT_CLASS_VENDOR_INFORMATION = 34;
     //BU class NOT IMPLEMENTED
@@ -72,11 +272,11 @@ public class ObjectParameters {
 	// req-adap-ca
 	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=38;
 	// SERVER_INDICATION NOT IMPLEMENTED
-    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_INDICATION=39;
+    public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=39;
     // ASSOCIATION NOT IMPLEMENTED
-    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_ASSOCIATION=40;
+    public static final int PCEP_OBJECT_CLASS_SERVER_ASSOCIATION=40;
     // S2LS NOT IMPLEMENTED
-    public static final int PCEP_OBJECT_CLASS_REQ_SERVER_S2LS=41;
+    public static final int PCEP_OBJECT_CLASS_S2LS=41;
     // Wavelength assignment
 	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=42;
 	// Flow_spec NOT IMPLEMENTED
@@ -87,92 +287,39 @@ public class ObjectParameters {
 	 *  // NUMBERS FOR INTERNAL USE ONLY!!!!
 	 */
 	
-	
 	//IDEALIST
 	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
 	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
-
-
 	// PCEP Obect classes from draft-gonzalezdedios-pce-reservation-state-00
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
 	public static final int PCEP_OBJECT_CLASS_RESERVATION=160;
 	public static final int PCEP_OBJECT_CLASS_RESERVATION_CONF=161;
-	//PCEP Object classes from GEYSERS!!!
-	
 	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
 	// NUMBER FOR INTERNAL USE ONLY!!!!
 	public static final int PCEP_OBJECT_CLASS_GENERALIZED_BANDWIDTH=155;
-	
-	
+	//PCEP Object classes from GEYSERS!!!
 	public static final int PCEP_OBJECT_CLASS_ADVANCE_RESERVATION=100;
-	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;
+	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;	
 
-	
-	//TODO: Aun por determinar los valores finales 
-	public static final int PCEP_OBJECT_CLASS_SR_ERO = 31;
-	public static final int PCEP_OBJECT_TYPE_SR_ERO = 2;
-	public static final int PCEP_SUBOBJECT_TYPE_SR_ERO = 5; 
-	
-	
+	//TODO: DEPRECATED
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED = 10;
+
 	/*
-	 * Object types from RFC 5440
+	 * EXPERIMENTAL PCE Object types
 	 */
-	public static final int PCEP_OBJECT_TYPE_OPEN = 1;
-	public static final int PCEP_OBJECT_TYPE_RP = 1;
-	public static final int PCEP_OBJECT_TYPE_NOPATH = 1;
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS = 1;
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST = 1;
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP= 2;
-	
-	// from draft-ietf-gmpls
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST = 3;
-	public static final int PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP = 4;
-	
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV4 = 1;
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_IPV6 = 2;
-
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST = 10;
-	
-	/*
-	 * Object type from nowhere
-	 */
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 6;
-	
-	/*
-	 * Object types from RFC 6006
-	 */
-	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4 = 3;
 	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID = 15;
-	
 	/*
 	 * From Strauss project
 	 */
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID = 14;
 	
+
 	
+
 	
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED = 4;
-	public static final int PCEP_OBJECT_TYPE_METRIC = 1;
-	public static final int PCEP_OBJECT_TYPE_ERO = 1;
-	public static final int PCEP_OBJECT_TYPE_RRO = 1;
-	public static final int PCEP_OBJECT_TYPE_LSPA = 1;
-	public static final int PCEP_OBJECT_TYPE_IRO = 1;
-	public static final int PCEP_OBJECT_TYPE_SVEC = 1;
-	public static final int PCEP_OBJECT_TYPE_NOTIFICATION = 1;
-	public static final int PCEP_OBJECT_TYPE_PCEPERROR = 1;
-	public static final int PCEP_OBJECT_TYPE_LOADBALANCING = 1;
-	public static final int PCEP_OBJECT_TYPE_CLOSE = 1;
-	//PCEP Object classes from RFC 5521 NOT SUPPORTED YET!!!!!
-	public static final int PCEP_OBJECT_TYPE_XRO = 1;
-	//PCEP Object types from RFC 5886
-	public static final int PCEP_OBJECT_TYPE_MONITORING=1;
-	public static final int PCEP_OBJECT_TYPE_PCC_REQ_ID=1;
-	public static final int PCEP_OBJECT_TYPE_PCE_ID_IPV4=1;
-	public static final int PCEP_OBJECT_TYPE_PCE_ID_IPV6=2;
-	public static final int PCEP_OBJECT_TYPE_PROC_TIME=1;
-	public static final int PCEP_OBJECT_TYPE_OVERLOAD=1;
-	
-	
+
 	
 	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
 	////NUMBERS FOR INTERNAL USE ONLY!!!!
@@ -189,8 +336,7 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
 	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
 	
-	// PCEP Object types from RFC 5541
-	public static final int PCEP_OBJECT_TYPE_OBJECTIVE_FUNCTION = 1;
+
 	
 	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
 	// NUMBERS FOR INTERNAL USE ONLY!!!!
@@ -228,7 +374,8 @@ public class ObjectParameters {
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_MODIFIED=3;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_UNCHANGED=4;
 	
-	
+	public static final int PCEP_SUBOBJECT_TYPE_SR_ERO = 5; 
+
 	public static final int PCEP_TLV_TYPE_LABEL_REQUEST=2000;
 	
 	public static final int PCEP_TLV_TYPE_MAX_REQ_TIME=3000;
@@ -351,8 +498,62 @@ public class ObjectParameters {
 	public static final int NOPATH_NOPATH_SAT_CONSTRAINTS=0x00;
 	public static final int NOPATH_PCE_CHAIN_BROKEN=0x01;
 	
-	/**
-	 * TLVs
+	/*
+	 * Standard PCEP TLVs https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators 
+	 * 
+	 * 1	NO-PATH-VECTOR TLV	[RFC5440]
+2	OVERLOAD-DURATION TLV	[RFC5440]
+3	REQ-MISSING TLV	[RFC5440]
+4	OF-List	[RFC5541]
+5	Order TLV	[RFC5557]
+6	P2MP capable	[RFC8306]
+7	VENDOR-INFORMATION-TLV	[RFC7470]
+8	Wavelength Selection	[RFC8780]
+9	Wavelength Restriction	[RFC8780]
+10	Wavelength Allocation	[RFC8780]
+11	Optical Interface Class List	[RFC8780]
+12	Client Signal Information	[RFC8780]
+13	H-PCE-CAPABILITY	[RFC8685]
+14	Domain-ID	[RFC8685]
+15	H-PCE-FLAG	[RFC8685]
+16	STATEFUL-PCE-CAPABILITY	[RFC8231]
+17	SYMBOLIC-PATH-NAME	[RFC8231]
+18	IPV4-LSP-IDENTIFIERS	[RFC8231]
+19	IPV6-LSP-IDENTIFIERS	[RFC8231]
+20	LSP-ERROR-CODE	[RFC8231]
+21	RSVP-ERROR-SPEC	[RFC8231]
+22	Unassigned	
+23	LSP-DB-VERSION	[RFC8232]
+24	SPEAKER-ENTITY-ID	[RFC8232]
+25	Unassigned	
+26	SR-PCE-CAPABILITY (deprecated)	[RFC8664]
+27	Unassigned	
+28	PATH-SETUP-TYPE	[RFC8408]
+29	Operator-configured Association Range	[RFC8697]
+30	Global Association Source	[RFC8697]
+31	Extended Association ID	[RFC8697]
+32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
+33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
+34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
+35	ASSOC-Type-List	[RFC8697]
+36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
+37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
+38	Path Protection Association Group TLV	[RFC8745]
+39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
+40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
+41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
+42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]
+43	LABEL-SET	[RFC8779, Section 2.5.2.5]
+44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
+45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
+46	DISJOINTNESS-CONFIGURATION	[RFC8800]
+47	DISJOINTNESS-STATUS	[RFC8800]
+48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
+49	SCHED-LSP-ATTRIBUTE	[RFC8934]
+50	SCHED-PD-LSP-ATTRIBUTE	[RFC8934]
+51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
+52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 	 */
 	public static final int PCEP_TLV_TYPE_NO_PATH_VECTOR=60; 
 	public static final int PCEP_TLV_OVERLOADED_DURATION=0x02;
@@ -376,7 +577,9 @@ public class ObjectParameters {
 	
 	public static final int PCEP_TLV_PATH_SETUP=666;	
 
-	
+	/**
+	 * EXPERIMENTAL ONLY PCEP TLVs  
+	 * 
 	// TLV types from GEYSERS!!!
 
 	public static final int PCEP_TLV_TYPE_ENDPOINT_IPV4=33033;
