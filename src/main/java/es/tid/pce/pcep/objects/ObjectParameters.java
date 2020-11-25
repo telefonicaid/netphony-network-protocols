@@ -136,7 +136,7 @@ public class ObjectParameters {
 
 	
 	/**
-	 * CLOSE Object Class
+	 * PATH KEY Object Class
 	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5520">RFC 5520</a>
 	 */
@@ -282,103 +282,11 @@ public class ObjectParameters {
 	// Flow_spec NOT IMPLEMENTED
     public static final int PCEP_OBJECT_CLASS_FLOWSPEC=43;
 	
-	/*
-	 * Experimental Object classes. 
-	 *  // NUMBERS FOR INTERNAL USE ONLY!!!!
-	 */
-	
-	//IDEALIST
-	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
-	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
-	// PCEP Obect classes from draft-gonzalezdedios-pce-reservation-state-00
-	// NUMBERS FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_CLASS_RESERVATION=160;
-	public static final int PCEP_OBJECT_CLASS_RESERVATION_CONF=161;
-	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
-	// NUMBER FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_CLASS_GENERALIZED_BANDWIDTH=155;
-	//PCEP Object classes from GEYSERS!!!
-	public static final int PCEP_OBJECT_CLASS_ADVANCE_RESERVATION=100;
-	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;	
-
-	//TODO: DEPRECATED
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED = 10;
-
-	/*
-	 * EXPERIMENTAL PCE Object types
-	 */
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST = 10;
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 6;
-	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID = 15;
-	/*
-	 * From Strauss project
-	 */
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID = 14;
-	
 
 	
-
-	
-
-	
-	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
-	////NUMBERS FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_TYPE_GB_INTERSERV=2;
-	public static final int PCEP_OBJECT_TYPE_GB_SONET_SDH=4;
-	public static final int PCEP_OBJECT_TYPE_GB_G709=5;
-	public static final int PCEP_OBJECT_TYPE_GB_ETHERNET=6;
-	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
-	
-	// PCEP Extensions for Inter-Layer MPLS and GMPLS Traffic Engineering
-    //draft-ietf-pce-inter-layer-ext-08
-	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
-	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
-	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
-	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
-	
-
-	
-	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
-	// NUMBERS FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_TYPE_WAVELENGTH_ASSIGNEMENT=1;
-	
-	// PCEP Object types from GEYSERS!!!
 	
 	
-	public static final int PCEP_OBJECT_TYPE_ADVANCE_RESERVATION = 1;
-	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP4 = 1;
-	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP6 = 2;
-	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_NSAP = 3;
-	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_IPV4 = 3;
-	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_IPV6 = 4;
-	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_NSAP = 5;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST = 245;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST = 247;
-
 	
-	//PCEP Object types from draft-ietf-pce-gmpls-pcep-extensions-02
-	public static final int PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS = 5;
-	
-	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
-	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
-	
-	//IDEALIST
-	public static final int PCEP_OBJECT_TYPE_SUGGESTED_LABEL=1;
-	public static final int PCEP_OBJECT_TYPE_LABEL_SET_INCLUSIVE=2;
-	public static final int PCEP_OBJECT_TYPE_LABEL_SET_BITMAP=1;
-	
-	//Values from draft-ietf-pce-gmpls-pcep-extensions-09
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=0;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=1;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_REMOVE=2;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_MODIFIED=3;
-	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_UNCHANGED=4;
-	
-	public static final int PCEP_SUBOBJECT_TYPE_SR_ERO = 5; 
-
-	public static final int PCEP_TLV_TYPE_LABEL_REQUEST=2000;
-	
-	public static final int PCEP_TLV_TYPE_MAX_REQ_TIME=3000;
 	
 	/*
 	 * CLOSE reasons
@@ -499,9 +407,8 @@ public class ObjectParameters {
 	public static final int NOPATH_PCE_CHAIN_BROKEN=0x01;
 	
 	/*
-	 * Standard PCEP TLVs https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators 
-	 * 
-	 * 1	NO-PATH-VECTOR TLV	[RFC5440]
+ * Standard PCEP TLVs https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators  
+1	NO-PATH-VECTOR TLV	[RFC5440]
 2	OVERLOAD-DURATION TLV	[RFC5440]
 3	REQ-MISSING TLV	[RFC5440]
 4	OF-List	[RFC5541]
@@ -555,33 +462,362 @@ public class ObjectParameters {
 52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 	 */
-	public static final int PCEP_TLV_TYPE_NO_PATH_VECTOR=60; 
+    /**
+    * 1	NO-PATH-VECTOR TLV	[RFC5440] 
+    */
+	public static final int PCEP_TLV_TYPE_NO_PATH_VECTOR=1;
+	
+    /**
+    * 2	OVERLOAD-DURATION TLV	[RFC5440] 
+    */
 	public static final int PCEP_TLV_OVERLOADED_DURATION=0x02;
+	
+    /**
+    * 3	REQ-MISSING TLV	[RFC5440] 
+    */	
 	public static final int PCEP_TLV_REQ_MISSING_TLV=0x03;
+	
+    /**
+    * 4	OF-List	[RFC5541] 
+    */	
 	public static final int PCEP_TLV_OF_LIST_TLV=4;
+	
+    /**
+    * 5	Order TLV	[RFC5557] 
+    * TODO: NOT IMPLEMENTED
+    */		
 	public static final int PCEP_TLV_ORDER_TLV=5;
+	
+    /**
+    * 6	P2MP capable	[RFC8306] 
+    * TODO: NOT IMPLEMENTED
+    */	
 	public static final int PCEP_TLV_P2MP_CAPABLE=6;
-	public static final int PCEP_TLV_REQUEST_INFO=70;//FIXME
 	
-	//From draft-ietf-pce-gmpls-pcep-extensions-09
-	public static final int PCEP_TLV_TYPE_IPV4_ADDRESS=7;
-	public static final int PCEP_TLV_TYPE_IPV6_ADDRESS=8;
-	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT=9;
-	public static final int PCEP_TLV_BANDWIDTH=502;
-	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=14;
+    /**
+    * 7	VENDOR-INFORMATION-TLV	[RFC7470]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_VENDOR_INFORMATION_TLV=7;
 	
-	public static final int PCEP_TLV_TYPE_DATAPATHID = 49;
-	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT_DATAPATHID = 50;
-		
-	public static final int PCEP_TLV_TYPE_XIFI=500;
+    /**
+    * 8	Wavelength Selection	[RFC8780]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_WAVELENGTH_SELECTION=8;
 	
-	public static final int PCEP_TLV_PATH_SETUP=666;	
-
 	/**
-	 * EXPERIMENTAL ONLY PCEP TLVs  
-	 * 
-	// TLV types from GEYSERS!!!
+    * 9	Wavelength Restriction	[RFC8780] 
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_WAVELENGTH_RESTRICTION=9;
+	
+    /**
+    * 10	Wavelength Allocation	[RFC8780]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_WAVELENGTH_ALLOCATION=10;
+	
+    /**
+    * 11	Optical Interface Class List	[RFC8780]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_OPTICAL_INTERFACE_CLASS=11;
+	
+    /**
+    * 12	Client Signal Information	[RFC8780] 
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_CLIENT_SIGNAL_INFORMATION=12;
+	
+    /**
+    * 13	H-PCE-CAPABILITY	[RFC8685] 
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_H_PCE_CAPABILITY=13;
+	
+    /**
+    * 14	Domain-ID	[RFC8685] 
+    * TODO: CHECK
+    */	
+	public static final int PCEP_TLV_DOMAIN_ID_TLV=14;	
+	
+    /**
+    * 15	H-PCE-FLAG	[RFC8685]
+    * TODO: NOT IMPLEMENTED 
+    */
+	public static final int PCEP_TLV_H_PCE_FLAG=15;
+	
+    /**
+     * 16	STATEFUL-PCE-CAPABILITY	[RFC8231]
+     */
+    public static final int PCEP_TLV_TYPE_STATEFUL_CAPABILITY=16;
+    
+    /**
+    * 17	SYMBOLIC-PATH-NAME	[RFC8231] 
+    */
+    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=17;  
+    
+   /**
+    * 18 IPV4-LSP-IDENTIFIERS [RFC8231] 
+    */
+    public static final int PCEP_TLV_TYPE_IPV4_LSP_IDENTIFIERS=18;  
+    
+    /**
+     * 19 IPV6-LSP-IDENTIFIERS [RFC8231] 
+     * TODO: NOT IMPLEMENTED
+     */
+    public static final int PCEP_TLV_TYPE_IPV6_LSP_IDENTIFIERS=19;
 
+    /**
+     * 20	LSP-ERROR-CODE	[RFC8231]
+     */
+    public static final int PCEP_TLV_TYPE_LSP_ERROR_CODE=20;
+    
+    /**
+     * 21	RSVP-ERROR-SPEC	[RFC8231] 
+     */
+    public static final int PCEP_TLV_TYPE_RSVP_ERROR_SPEC=21;
+    
+    /**
+     * 23	LSP-DB-VERSION	[RFC8232] 
+     */
+    public static final int PCEP_TLV_TYPE_LSP_DATABASE_VERSION=23;
+    
+    /**
+     * 24 SPEAKER-ENTITY-ID	[RFC8232] 
+     */
+    public static final int PCEP_TLV_TYPE_SPEAKER_ENTITY_ID=24;
+    
+    /**
+     * 26	SR-PCE-CAPABILITY (deprecated)	[RFC8664] 
+     */
+    public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;  
+      
+    /**
+     * 28	PATH-SETUP-TYPE	[RFC8408]
+     * TODO: CHECK
+     */		
+    public static final int PCEP_TLV_PATH_SETUP=28;	
+    
+    /**
+    * 29	Operator-configured Association Range	[RFC8697] 
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_OPERATOR_CONF_ASSOCIATION_RANGE=29;	
+	
+    /**
+    * 30	Global Association Source	[RFC8697] 
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_GLOBAL_ASSOCIATION_SOURCE=30;	
+	
+    /**
+    * 31	Extended Association ID	[RFC8697]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_EXTENDED_ASSOCIATION_ID=31;	
+	
+    /**
+    * 32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_P2MP_IPV4_LSP_IDENTIFIERS=32;
+	
+    /**
+    * 33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_P2MP_IPV6_LSP_IDENTIFIERS=33;
+	
+    /**
+    * 34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_PATH_SETUP_TYPE_CAPABILITY=34;
+	
+    /**
+    * 35	ASSOC-Type-List	[RFC8697]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_ASSOC_TYPE_LIST=35;
+	
+    /**
+    * 36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_AUTO_BANDWIDTH_CAPABILITY=36;
+	
+    /**
+    * 37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_AUTO_BANDWIDTH_ATTRIBUTES=37;
+	
+    /**
+     * 38	Path Protection Association Group TLV	[RFC8745]
+     */
+	public static final int PCEP_TLV_PATH_PROT_ASSOCIATION_GROUP=39;
+	
+    /**
+    * 39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
+    */	
+	public static final int PCEP_TLV_TYPE_IPV4_ADDRESS=39;
+	
+    /**
+    * 40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
+    */	
+	public static final int PCEP_TLV_TYPE_IPV6_ADDRESS=40;
+	
+    /**
+    * 41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
+    */	
+	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT=41;
+	
+    /**
+    * 42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_LABEL_REQUEST=42;
+	
+    /**
+    * 43	LABEL-SET	[RFC8779, Section 2.5.2.5]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_AUTO_LABEL_SET=43;
+	
+    /**
+    * 44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
+    * TODO: NOT IMPLEMENTED
+    */	
+	public static final int PCEP_TLV_PROTECTION_ATTRIBUTE=44;
+	
+	/**
+	 * 45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2] 
+	 * TODO: CHECK
+	 */
+	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=45;
+	
+	
+	/**
+	 * 46	DISJOINTNESS-CONFIGURATION	[RFC8800]
+47	DISJOINTNESS-STATUS	[RFC8800]
+48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
+49	SCHED-LSP-ATTRIBUTE	[RFC8934]
+50	SCHED-PD-LSP-ATTRIBUTE	[RFC8934]
+51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
+52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+	 */
+	
+	/* **************************************************************
+	 * 
+	 * EXPERIMENTAL VALUES SECTION: 
+	 * DO NOT USE STANDARD VALUES
+	 * USE ONLY FOR EXPERIMENTS
+	 * 
+	 * ***************************************************************
+	 */	
+	
+	/*
+	 * Experimental Object classes. 
+	 *  // NUMBERS FOR INTERNAL USE ONLY!!!!
+	 */
+	
+	//IDEALIST
+	public static final int PCEP_OBJECT_CLASS_SUGGESTED_LABEL=129;
+	public static final int PCEP_OBJECT_CLASS_LABEL_SET=130;
+	// PCEP Obect classes from draft-gonzalezdedios-pce-reservation-state-00
+	// NUMBERS FOR INTERNAL USE ONLY!!!!
+	public static final int PCEP_OBJECT_CLASS_RESERVATION=160;
+	public static final int PCEP_OBJECT_CLASS_RESERVATION_CONF=161;
+	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
+	// NUMBER FOR INTERNAL USE ONLY!!!!
+	public static final int PCEP_OBJECT_CLASS_GENERALIZED_BANDWIDTH=155;
+	//PCEP Object classes from GEYSERS!!!
+	public static final int PCEP_OBJECT_CLASS_ADVANCE_RESERVATION=100;
+	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;	
+
+	//TODO: DEPRECATED
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED = 10;
+
+	/*
+	 * EXPERIMENTAL PCE Object types
+	 */
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST = 10;
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_MAC = 6;
+	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID = 15;
+	/*
+	 * From Strauss project
+	 */
+	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID = 14;
+
+	//PCEP extensions for GMPLS draft-ietf-pce-gmpls-pcep-extensions-04
+	////NUMBERS FOR INTERNAL USE ONLY!!!!
+	public static final int PCEP_OBJECT_TYPE_GB_INTERSERV=2;
+	public static final int PCEP_OBJECT_TYPE_GB_SONET_SDH=4;
+	public static final int PCEP_OBJECT_TYPE_GB_G709=5;
+	public static final int PCEP_OBJECT_TYPE_GB_ETHERNET=6;
+	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
+	
+	// PCEP Extensions for Inter-Layer MPLS and GMPLS Traffic Engineering
+    //draft-ietf-pce-inter-layer-ext-08
+	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
+	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
+	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
+	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
+
+	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
+	// NUMBERS FOR INTERNAL USE ONLY!!!!
+	public static final int PCEP_OBJECT_TYPE_WAVELENGTH_ASSIGNEMENT=1;
+	
+	// PCEP Object types from GEYSERS!!!
+
+	public static final int PCEP_OBJECT_TYPE_ADVANCE_RESERVATION = 1;
+	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP4 = 1;
+	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP6 = 2;
+	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_NSAP = 3;
+	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_IPV4 = 3;
+	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_IPV6 = 4;
+	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_NSAP = 5;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST = 245;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST = 247;
+
+	
+	//PCEP Object types from draft-ietf-pce-gmpls-pcep-extensions-02
+	public static final int PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS = 5;
+	
+	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
+	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
+	
+	//IDEALIST
+	public static final int PCEP_OBJECT_TYPE_SUGGESTED_LABEL=1;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_INCLUSIVE=2;
+	public static final int PCEP_OBJECT_TYPE_LABEL_SET_BITMAP=1;
+	
+	//Values from draft-ietf-pce-gmpls-pcep-extensions-09
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2P=0;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_NEW_LEAVES=1;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_REMOVE=2;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_MODIFIED=3;
+	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_P2MP_OLD_LEAVES_UNCHANGED=4;
+	
+	public static final int PCEP_SUBOBJECT_TYPE_SR_ERO = 5; 
+
+	public static final int PCEP_TLV_TYPE_LABEL_REQUEST=2000;
+	
+	public static final int PCEP_TLV_TYPE_MAX_REQ_TIME=3000;
+	
+	/*
+	 * EXPERIMENTAL ONLY PCEP TLVS  
+	 */
+	
+	public static final int PCEP_TLV_BANDWIDTH=502;
+	public static final int PCEP_TLV_REQUEST_INFO=3070;
+	public static final int PCEP_TLV_TYPE_DATAPATHID = 3049;
+	public static final int PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT_DATAPATHID = 3050;
+	public static final int PCEP_TLV_TYPE_XIFI=500;
+	// TLV types from GEYSERS!!!
 	public static final int PCEP_TLV_TYPE_ENDPOINT_IPV4=33033;
 	public static final int PCEP_TLV_TYPE_ENDPOINTS_IPV4=33035;
 	public static final int PCEP_TLV_TYPE_ENDPOINTS_IPV6=33034;
@@ -595,20 +831,14 @@ public class ObjectParameters {
 	public static final int PCEP_TLV_TYPE_REQUESTED_MEMORY=1006;
 	public static final int PCEP_TLV_TYPE_REQUESTED_DISK_SPACE=1007;
 	public static final int PCEP_TLV_TYPE_OPERATIVE_SYSTEM=1008;
-	public static final int PCEP_TLV_TYPE_APPLICATION=1009;
-	
+	public static final int PCEP_TLV_TYPE_APPLICATION=1009;	
 	public static final int PCEP_TLV_TYPE_IT_ADV=1010;
 	public static final int PCEP_TLV_TYPE_STORAGE=1011;
 	public static final int PCEP_TLV_TYPE_SERVER=1012;
-	
 	// draft-gonzalezdedios-pce-reservation-state
 	public static final int PCEP_TLV_TYPE_RESERVATION_ID=20000;
-	
 	//TLV STRONGEST: collaborative PCEs
 	public static final int PCEP_TLV_TYPE_PATH_RESERVATION=30003;
-	
-	// FOR STRONGEST USE ONLY!!!!!
-	public static final int PCEP_TLV_DOMAIN_ID_TLV=32771;
 	// FOR STRONGEST USE ONLY!!!!!
 	public static final int PCEP_TLV_REACHABILITY_TLV=32777;
 	//FOR STRONGEST USE ONLY!!!!!
@@ -675,35 +905,23 @@ public class ObjectParameters {
     
     /*******************************************************************/
     
-    //Stateful PCE Capability TLV type from draft-ietf-pce-stateful-pce-11
-    public static final int PCEP_TLV_TYPE_STATEFUL_CAPABILITY=16;
+
     
-    //LSP database version TLV type
-    public static final int PCEP_TLV_TYPE_LSP_DATABASE_VERSION=5556;
+
     
     //Redundancy group identifier TLV type
     public static final int PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER=5557;
     
-    //IPv4 LSP Identifiers TLV
-    public static final int PCEP_TLV_TYPE_IPV4_LSP_IDENTIFIERS=18;
+
     
-    //IPv6 LSP Identifiers TLV
-    public static final int PCEP_TLV_TYPE_IPV6_LSP_IDENTIFIERS=19;
-    
-    //LSP Error Code TLV
-    public static final int PCEP_TLV_TYPE_LSP_ERROR_CODE=20;
-    
-    //RSVP Error Spec TLV
-    public static final int PCEP_TLV_TYPE_RSVP_ERROR_SPEC=21;
+
     
     //Tunnel ID TLV
     public static final int PCEP_TLV_TYPE_TUNNEL_ID=5561;
         
-	//Symbolic Path Name
-    public static final int PCEP_TLV_TYPE_SYMBOLIC_PATH_NAME=17;  
+
     
-    //Segment Routing PCE Capability TLV type. Value 26 according to draft-sivabalan-pce-segment-routing-02
-    public static final int PCEP_TLV_TYPE_SR_CAPABILITY=26;       
+   
     
     public static final byte[] redundancyID= new byte[]{1,2,3,4}; 
     
