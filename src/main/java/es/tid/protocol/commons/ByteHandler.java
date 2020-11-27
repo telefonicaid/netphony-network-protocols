@@ -229,6 +229,16 @@ public class ByteHandler {
 			dest[i] = intDestSet[i];        
 	}
 
+	/**
+	 * Copies bits from an Integer value (which has 32 bits), starting from begS bit
+	 *  (0 is the most significant), into a byte array, starting at the bit
+	 *  in the position begD (0 is the most significant)
+	 * @param begS Start position (from most significant bit) in the value to copy
+	 * @param begD Start position (from most significant bit) in the destination byte array.
+	 * @param length number of bits to copy
+	 * @param value Integer value from which the bits are copied
+	 * @param dest destination byte array to copy
+	 */
 	public static void IntToBuffer(int begS, int begD, int length,int value , byte[] dest)
 	{
 		bufferToBuffer (begS, ByteBuffer.allocate(4).putInt(value).array(), begD, dest, length);

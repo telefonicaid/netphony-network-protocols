@@ -9,6 +9,15 @@ import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 
 
 /**
+ * Generalized bandwidth of an existing TE-LSP for which a reoptimization is requested 
+ * @see <a href="https://tools.ietf.org/html/rfc8779">RFC 87791 Section 2.3</a>
+ * @author ogondio
+ *
+ */
+public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
+	
+	/*
+	 *  *  
  *  *    0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -28,10 +37,7 @@ import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
       ~                       Optional TLVs                           ~
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * @author ogondio
- *
- */
-public class BandwidthExistingLSPGeneralizedBandwidth extends Bandwidth{
+	 */
 	
 	protected int bwSpecLength = 0;
 	public int getBwSpecLength() {

@@ -14,11 +14,15 @@ import es.tid.protocol.commons.ByteHandler;
 
 
 /**
- * 
- * http://tools.ietf.org/html/draft-ietf-pce-stateful-pce-9
- * 
- * Modified: https://tools.ietf.org/html/draft-ietf-pce-pce-initiated-lsp-05#page-13
-7.3. LSP Object
+ * LSP Object
+ * @see <a href="https://tools.ietf.org/html/rfc8231">RFC 8231</a>
+ * @author Fernando Munoz del Nuevo
+ * @author Oscar Gonzalez de Dios
+ */
+public class LSP extends PCEPObject{
+	
+	/*
+	 * 7.3. LSP Object
 
 The LSP object MUST be present within PCRpt and PCUpd messages.  The
    LSP object MAY be carried within PCReq and PCRep messages if the
@@ -125,28 +129,45 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 
    TLVs that may be included in the LSP Object are described in the
    following sections.
-
- * 
- * @author Fernando Munoz del Nuevo
- * @author Oscar Gonzalez de Dios
- */
-
-public class LSP extends PCEPObject{
+   */ 
+	
+	/*
+   FLAGS: 
+   0	Unassigned	
+1	ERO-compression	[RFC8623]
+2	Fragmentation	[RFC8623]
+3	P2MP	[RFC8623]
+4	Create	[RFC8281]
+5-7	Operational (3 bits)	[RFC8231]
+8	Administrative	[RFC8231]
+9	Remove	[RFC8231]
+10	SYNC	[RFC8231]
+11	Delegate	[RFC8231]
+	 */
 
 	protected int lspId;
-	protected boolean dFlag;
 	
-	protected boolean sFlag;
+	protected boolean delegateFlag=false;
 	
-	protected boolean rFlag;
+	protected boolean syncFlag=false;
 	
-	protected boolean aFlag;
+	protected boolean removeFlag=false;
+	
+	protected boolean administrativeFlag=false;
 	
 	protected int opFlags;
 	
-	protected boolean cFlag;
+	protected boolean createFlag=false;
 	
-	//private int LSP_sig_type;
+	protected boolean p2mpFlag=false;
+	
+	protected boolean fragmentationFlag=false;
+	
+	protected boolean eroCompressionFlag=false;
+	
+	/* 
+	 * TLVs
+	 */
 	
 	
 	private SymbolicPathNameTLV symbolicPathNameTLV_tlv = null;
@@ -158,18 +179,25 @@ public class LSP extends PCEPObject{
 	private RSVPErrorSpecTLV rsvpErrorSpec_tlv = null;
 	
 	private LSPDatabaseVersionTLV lspDBVersion_tlv = null;
+	
+	/* 
+	 * Constructors
+	 */
 		
 	public LSP(){
 		super();
 		this.ObjectClass = ObjectParameters.PCEP_OBJECT_CLASS_LSP;
-		this.setOT(1);
-		
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_LSP);	
 	}
 	
 	public LSP(byte []bytes, int offset)throws MalformedPCEPObjectException {
 		super(bytes, offset);
 		decode();
 	}
+	
+	/* 
+	 * Encode and decode 
+	 */
 	
 	@Override
 	public void encode() 
@@ -204,16 +232,20 @@ public class LSP extends PCEPObject{
 		
 		
 		ByteHandler.IntToBuffer(12,offset*8, 20,lspId,this.object_bytes);
+
+		offset += 2;
+		ByteHandler.BoolToBuffer(5 + offset*8, eroCompressionFlag,object_bytes);
+		ByteHandler.BoolToBuffer(6 + offset*8, fragmentationFlag,object_bytes);
+		ByteHandler.BoolToBuffer(7 + offset*8, p2mpFlag,object_bytes);
+		offset+=1;
 		
-		offset += 3;
-		
-		ByteHandler.BoolToBuffer(0 + offset*8, cFlag,object_bytes);
+		ByteHandler.BoolToBuffer(0 + offset*8, createFlag,object_bytes);
 		//ByteHandler.IntToBuffer (0, 1 + offset*8, 3, opFlags, this.object_bytes);
 		ByteHandler.IntToBuffer (29, 1+offset*8, 3, opFlags, this.object_bytes);
-		ByteHandler.BoolToBuffer(4 + offset*8, aFlag,object_bytes);
-		ByteHandler.BoolToBuffer(5 + offset*8, rFlag,object_bytes);
-		ByteHandler.BoolToBuffer(6 + offset*8, sFlag,object_bytes);
-		ByteHandler.BoolToBuffer(7 + offset*8, dFlag,object_bytes);
+		ByteHandler.BoolToBuffer(4 + offset*8, administrativeFlag,object_bytes);
+		ByteHandler.BoolToBuffer(5 + offset*8, removeFlag,object_bytes);
+		ByteHandler.BoolToBuffer(6 + offset*8, syncFlag,object_bytes);
+		ByteHandler.BoolToBuffer(7 + offset*8, delegateFlag,object_bytes);
 
 //		offset += 1;
 //		offset += 3;
@@ -258,21 +290,20 @@ public class LSP extends PCEPObject{
 		}
 		
 		lspId = ByteHandler.easyCopy(0,19,object_bytes[4],object_bytes[5],object_bytes[6]);
-		
-		cFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
-		System.out.println("cFlag="+cFlag);
+		p2mpFlag=(object_bytes[6]&0x01)==0x01;
+		fragmentationFlag=(object_bytes[6]&0x02)==0x02;
+		eroCompressionFlag=(object_bytes[6]&0x4)==0x04;
+		createFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
+		log.debug("cFlag="+createFlag);
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
-		System.out.println("opFlag="+opFlags);
-		aFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
-		rFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
-		sFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
-		dFlag = (ByteHandler.easyCopy(7,7,object_bytes[7]) == 1) ? true : false ;
+		log.debug("opFlag="+opFlags);
+		administrativeFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
+		removeFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
+		syncFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
+		delegateFlag = (ByteHandler.easyCopy(7,7,object_bytes[7]) == 1) ? true : false ;
 			
 		boolean fin;
 		int offset = 8;
-		
-//		LSP_sig_type = ByteHandler.easyCopy(0,7,object_bytes[offset+3]);
-//		offset += 4;
 		
 		if (ObjectLength==8){
 			fin=true;
@@ -318,10 +349,10 @@ public class LSP extends PCEPObject{
 		
 	}
 	
-	
-	//GETTERS & SETTERS
-
-	
+	/*
+	 * GETTERS, SETTERS, HASH & EQUALS
+	 * (autogenerated with eclipe) 
+	 */
 	
 	public int getLspId() 
 	{
@@ -374,27 +405,27 @@ public class LSP extends PCEPObject{
 	}
 	public boolean iscFlag() 
 	{
-		return cFlag;
+		return createFlag;
 	}
 	public void setCFlag(boolean cFlag) 
 	{
-		this.cFlag = cFlag;
+		this.createFlag = cFlag;
 	}
 	public boolean isdFlag() 
 	{
-		return dFlag;
+		return delegateFlag;
 	}
 	public void setDFlag(boolean dFlag) 
 	{
-		this.dFlag = dFlag;
+		this.delegateFlag = dFlag;
 	}
 	public boolean issFlag() 
 	{
-		return sFlag;
+		return syncFlag;
 	}
 	public void setSFlag(boolean sFlag) 
 	{
-		this.sFlag = sFlag;
+		this.syncFlag = sFlag;
 	}
 	public int getOpFlags() 
 	{
@@ -406,30 +437,21 @@ public class LSP extends PCEPObject{
 		this.opFlags = opFlags;
 	}
 
-	/*public int getLSP_sig_type() 
-	{
-		return LSP_sig_type;
-	}
-	public void setLSP_sig_type(int lSP_sig_type) 
-	{
-		LSP_sig_type = lSP_sig_type;
-	}
-	*/
 	public boolean isrFlag() 
 	{
-		return rFlag;
+		return removeFlag;
 	}
 	public void setRFlag(boolean rFlag) 
 	{
-		this.rFlag = rFlag;
+		this.removeFlag = rFlag;
 	}
 	public boolean isaFlag() 
 	{
-		return aFlag;
+		return administrativeFlag;
 	}
 	public void setAFlag(boolean aFlag) 
 	{
-		this.aFlag = aFlag;
+		this.administrativeFlag = aFlag;
 	}
 	public LSPDatabaseVersionTLV getLspDBVersion_tlv() 
 	{
@@ -440,47 +462,91 @@ public class LSP extends PCEPObject{
 		this.lspDBVersion_tlv = lspDBVersion_tlv;
 	}
 	
-	public String toString(){
-		StringBuffer sb=new StringBuffer(100);
-		sb.append("<LSP id = ");
-		sb.append(lspId);	
-		if (symbolicPathNameTLV_tlv!=null){
-			sb.append(symbolicPathNameTLV_tlv.toString());
-		}
-		sb.append(">");
-		return sb.toString();	
+	public boolean isP2mpFlag() {
+		return p2mpFlag;
 	}
+
+	public void setP2mpFlag(boolean p2mpFlag) {
+		this.p2mpFlag = p2mpFlag;
+	}
+
+	public boolean isFragmentationFlag() {
+		return fragmentationFlag;
+	}
+
+	public void setFragmentationFlag(boolean fragmentationFlag) {
+		this.fragmentationFlag = fragmentationFlag;
+	}
+
+	public boolean isEroCompressionFlag() {
+		return eroCompressionFlag;
+	}
+
+	public void setEroCompressionFlag(boolean eroCompressionFlag) {
+		this.eroCompressionFlag = eroCompressionFlag;
+	}
+	
+	public boolean isDelegateFlag() {
+		return delegateFlag;
+	}
+
+	public void setDelegateFlag(boolean delegateFlag) {
+		this.delegateFlag = delegateFlag;
+	}
+
+	public boolean isSyncFlag() {
+		return syncFlag;
+	}
+
+	public void setSyncFlag(boolean syncFlag) {
+		this.syncFlag = syncFlag;
+	}
+
+	public boolean isRemoveFlag() {
+		return removeFlag;
+	}
+
+	public void setRemoveFlag(boolean removeFlag) {
+		this.removeFlag = removeFlag;
+	}
+
+	public boolean isAdministrativeFlag() {
+		return administrativeFlag;
+	}
+
+	public void setAdministrativeFlag(boolean administrativeFlag) {
+		this.administrativeFlag = administrativeFlag;
+	}
+
+	public boolean isCreateFlag() {
+		return createFlag;
+	}
+
+	public void setCreateFlag(boolean createFlag) {
+		this.createFlag = createFlag;
+	}
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		//result = prime * result + LSP_sig_type;
-		result = prime * result + (aFlag ? 1231 : 1237);
-		result = prime * result + (dFlag ? 1231 : 1237);
-		result = prime
-				* result
-				+ ((lspDBVersion_tlv == null) ? 0 : lspDBVersion_tlv.hashCode());
-		result = prime
-				* result
-				+ ((lspErrorCodes_tlv == null) ? 0 : lspErrorCodes_tlv
-						.hashCode());
+		result = prime * result + (administrativeFlag ? 1231 : 1237);
+		result = prime * result + (createFlag ? 1231 : 1237);
+		result = prime * result + (delegateFlag ? 1231 : 1237);
+		result = prime * result + (eroCompressionFlag ? 1231 : 1237);
+		result = prime * result + (fragmentationFlag ? 1231 : 1237);
+		result = prime * result + ((lspDBVersion_tlv == null) ? 0 : lspDBVersion_tlv.hashCode());
+		result = prime * result + ((lspErrorCodes_tlv == null) ? 0 : lspErrorCodes_tlv.hashCode());
 		result = prime * result + lspId;
-		result = prime
-				* result
-				+ ((lspIdentifiers_tlv == null) ? 0 : lspIdentifiers_tlv
-						.hashCode());
+		result = prime * result + ((lspIdentifiers_tlv == null) ? 0 : lspIdentifiers_tlv.hashCode());
 		result = prime * result + opFlags;
-		result = prime * result + (rFlag ? 1231 : 1237);
-		result = prime
-				* result
-				+ ((rsvpErrorSpec_tlv == null) ? 0 : rsvpErrorSpec_tlv
-						.hashCode());
-		result = prime * result + (sFlag ? 1231 : 1237);
-		result = prime
-				* result
-				+ ((symbolicPathNameTLV_tlv == null) ? 0
-						: symbolicPathNameTLV_tlv.hashCode());
+		result = prime * result + (p2mpFlag ? 1231 : 1237);
+		result = prime * result + (removeFlag ? 1231 : 1237);
+		result = prime * result + ((rsvpErrorSpec_tlv == null) ? 0 : rsvpErrorSpec_tlv.hashCode());
+		result = prime * result + ((symbolicPathNameTLV_tlv == null) ? 0 : symbolicPathNameTLV_tlv.hashCode());
+		result = prime * result + (syncFlag ? 1231 : 1237);
 		return result;
 	}
 
@@ -489,22 +555,19 @@ public class LSP extends PCEPObject{
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
-		return false;
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		LSP other = (LSP) obj;
-		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
-		/*if (LSP_sig_type != other.LSP_sig_type)
+		if (administrativeFlag != other.administrativeFlag)
 			return false;
-		*/
-		System.out.println("equalLSP: ¿"+aFlag+ " = "+other.aFlag+"?");
-		if (aFlag != other.aFlag)
+		if (createFlag != other.createFlag)
 			return false;
-		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
-		if (cFlag != other.cFlag)
+		if (delegateFlag != other.delegateFlag)
 			return false;
-		System.out.println("equalLSP: ¿"+opFlags+ " = "+other.opFlags+"?");
-		if (dFlag != other.dFlag)
+		if (eroCompressionFlag != other.eroCompressionFlag)
+			return false;
+		if (fragmentationFlag != other.fragmentationFlag)
 			return false;
 		if (lspDBVersion_tlv == null) {
 			if (other.lspDBVersion_tlv != null)
@@ -525,23 +588,39 @@ public class LSP extends PCEPObject{
 			return false;
 		if (opFlags != other.opFlags)
 			return false;
-		if (rFlag != other.rFlag)
+		if (p2mpFlag != other.p2mpFlag)
+			return false;
+		if (removeFlag != other.removeFlag)
 			return false;
 		if (rsvpErrorSpec_tlv == null) {
 			if (other.rsvpErrorSpec_tlv != null)
 				return false;
 		} else if (!rsvpErrorSpec_tlv.equals(other.rsvpErrorSpec_tlv))
 			return false;
-		if (sFlag != other.sFlag)
-			return false;
 		if (symbolicPathNameTLV_tlv == null) {
 			if (other.symbolicPathNameTLV_tlv != null)
 				return false;
-		} else if (!symbolicPathNameTLV_tlv
-				.equals(other.symbolicPathNameTLV_tlv))
+		} else if (!symbolicPathNameTLV_tlv.equals(other.symbolicPathNameTLV_tlv))
 			return false;
-
+		if (syncFlag != other.syncFlag)
+			return false;
 		return true;
+	}
+
+	/*
+	 * toString
+	 * Use this method to represent the most significant information of the object 
+	 */
+	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(100);
+		sb.append("<LSP id = ");
+		sb.append(lspId);	
+		if (symbolicPathNameTLV_tlv!=null){
+			sb.append(symbolicPathNameTLV_tlv.toString());
+		}
+		sb.append(">");
+		return sb.toString();	
 	}
 	
 	

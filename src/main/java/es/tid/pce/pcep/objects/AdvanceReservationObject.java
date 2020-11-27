@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 /**
- * <h1> Advance Reservation Object as described in GEYSERS D4.1</h1>
+ * <p> PROPIETARY Object: Advance Reservation Object as described in GEYSERS D4.1</p>
  * 
  * <p> From GEYSERS D4.1 Section 6.3.1.3 Advance Reservation</p>
 

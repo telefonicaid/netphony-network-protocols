@@ -19,12 +19,24 @@ import es.tid.protocol.commons.ByteHandler;
 
                Figure 14: STATEFUL-PCE-CAPABILITY TLV format
 
-   The type of the TLV is [TBD] and it has a fixed length of 4 octets.
+   The type of the TLV is 16 and it has a fixed length of 4 octets.
 
    The value comprises a single field - Flags (32 bits):
+   
+   0-20	Unassigned	
+21	PD-LSP-CAPABILITY (PD-bit)	[RFC8934] (NOT IMPLEMENTED)
+22	LSP-SCHEDULING-CAPABILITY (B-bit)	[RFC8934] (NOT IMPLEMENTED)
+23	P2MP-LSP-INSTANTIATION-CAPABILITY	[RFC8623] (NOT IMPLEMENTED)
+24	P2MP-LSP-UPDATE-CAPABILITY	[RFC8623] (NOT IMPLEMENTED)
+25	P2MP-CAPABILITY	[RFC8623] (NOT IMPLEMENTED)
+26	TRIGGERED-INITIAL-SYNC	[RFC8232]
+27	DELTA-LSP-SYNC-CAPABILITY	[RFC8232]
+28	TRIGGERED-RESYNC	[RFC8232]
+29	LSP-INSTANTIATION-CAPABILITY (I)	[RFC8281]
+30	INCLUDE-DB-VERSION	[RFC8232]
+31	LSP-UPDATE-CAPABILITY	[RFC8231] --> U
 
-   U (LSP-UPDATE-CAPABILITY - 1 bit):  defined in
-      [I-D.ietf-pce-stateful-pce].
+   U (LSP-UPDATE-CAPABILITY - 1 bit): RFC8231
 
    S (INCLUDE-DB-VERSION = IDB - 1 bit):  if set to 1 by both PCEP Speakers,
       the PCC will include the LSP-DB-VERSION TLV in each LSP Object.

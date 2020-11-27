@@ -46,7 +46,7 @@ public class PccReqId extends PCEPObject {
 	public PccReqId(){
 		super(); 
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_PCC_REQ_ID);
-		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_PCC_REQ_ID);
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_PCC_REQ_ID_IPV4);
 	}
 	
 	public PccReqId(byte[] bytes, int offset)throws MalformedPCEPObjectException{		

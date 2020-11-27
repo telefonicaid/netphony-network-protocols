@@ -275,8 +275,8 @@ public class Metric extends PCEPObject{
 		} 
 		else if (metricType==3){
 			return "<METRIC type=3(HOP COUNT) val:"+metricValue+" Bound: "+(this.boundBit?1:0)+"CompMet: "+(this.computedMetricBit?1:0+">");			
-		}else if (metricType==ObjectParameters.PCEP_METRIC_TYPE_LATENCY_METRIC){
-			return "<METRIC type="+ObjectParameters.PCEP_METRIC_TYPE_LATENCY_METRIC+"(LATENCY) val:"+metricValue+" Bound: "+(this.boundBit?1:0)+"CompMet: "+(this.computedMetricBit?1:0+">");			
+		}else if (metricType==ObjectParameters.PCEP_METRIC_TYPE_PATH_DELAY_METRIC){
+			return "<METRIC type="+ObjectParameters.PCEP_METRIC_TYPE_PATH_DELAY_METRIC+"(DELAY) val:"+metricValue+" Bound: "+(this.boundBit?1:0)+"CompMet: "+(this.computedMetricBit?1:0+">");			
 		}
 		else {
 			return "<METRIC type="+metricType+"(UNK) val:"+metricValue+" Bound: "+(this.boundBit?1:0)+"CompMet: "+(this.computedMetricBit?1:0+">");			
