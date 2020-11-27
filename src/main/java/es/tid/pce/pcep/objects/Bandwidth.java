@@ -2,7 +2,6 @@ package es.tid.pce.pcep.objects;
 
 /**
  * Base abstract class for representing Bandwidth Object.
-
  * @author Oscar Gonzalez de Dios (ogondio@tid.es)
  *
  */

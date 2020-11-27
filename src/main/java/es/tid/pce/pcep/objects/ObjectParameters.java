@@ -51,8 +51,8 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4 = 3;
 	//TODO: NOT IMPLEMENTED
 	public static final int PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV6 = 4; //RFC 8306
-	//TODO: NOT IMPLEMENTED
-	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_GEN_EP = 5; //https://www.iana.org/go/rfc8779 
+	//TODO: CHECK from draft-ietf-pce-gmpls-pcep-extensions-02 //https://www.iana.org/go/rfc8779
+	public static final int PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS = 5;
 	
 	/**
 	 * BANDWIDTH Object Class
@@ -145,7 +145,6 @@ public class ObjectParameters {
 	
 	/**
 	 * XRO Object Class
-	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5521">RFC 5521</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_XRO = 17;
@@ -153,7 +152,6 @@ public class ObjectParameters {
 	
 	/**
 	 * MONITORING Object Class
-	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_MONITORING=19;
@@ -161,7 +159,6 @@ public class ObjectParameters {
 	
 	/**
 	 * PCC-REQ-ID Object Class
-	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_PCC_REQ_ID=20;
@@ -202,7 +199,6 @@ public class ObjectParameters {
 	
 	/**
 	 * PROC-TIME Object Class
-	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_PROC_TIME=26;
@@ -227,6 +223,7 @@ public class ObjectParameters {
 	
 	/**
 	 * SERO Object Class
+	 * TODO: CHECK now, it equals a path construct
 	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_SR_ERO = 29;
@@ -234,6 +231,7 @@ public class ObjectParameters {
 	
 	/**
 	 * SRRO Object Class
+	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc8306">RFC 8306</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_SRRO=30;
@@ -261,41 +259,217 @@ public class ObjectParameters {
     public static final int PCEP_OBJECT_CLASS_SRP = 33;
     public static final int PCEP_OBJECT_TYPE_SRP = 1;
     
-    //VENDOR_INFORMATION class NOT IMPLEMENTED
+	/**
+	 * VENDOR-INFORMATION Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/rfc7470">RFC 7470</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_VENDOR_INFORMATION = 34;
-    //BU class NOT IMPLEMENTED
-    public static final int PCEP_OBJECT_CLASS_BU = 34;
-	// inter-layer
+    public static final int PCEP_OBJECT_TYPE_VENDOR_SPECIFIC_CONSTRAINTS = 1;
+    
+    /**
+	 * BU Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/rfc8233">RFC 8233</a>
+	 */ 
+    public static final int PCEP_OBJECT_CLASS_BU = 35;
+    public static final int PCEP_OBJECT_TYPE_BU=1;
+	
+	/**
+	 * INTER-LAYER Object Class
+	 * TODO: CHECK:  DRAFT draft-ietf-pce-inter-layer-ext-08 implemented
+	 * @see <a href="https://www.iana.org/go/rfc8282">RFC 8282</a>
+	 */ 
 	public static final int PCEP_OBJECT_CLASS_INTER_LAYER=36;
-	// switch-layer
+	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
+	
+	/**
+	 * SWITCH-LAYER Object Class
+	 * TODO: CHECK:  DRAFT draft-ietf-pce-inter-layer-ext-08 implemented
+	 * @see <a href="https://www.iana.org/go/rfc8282">RFC 8282</a>
+	 */ 
 	public static final int PCEP_OBJECT_CLASS_SWITCH_LAYER=37;
-	// req-adap-ca
+	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
+	
+	/**
+	 * REQ_ADAP_CAP Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/rfc8282">RFC 8282</a>
+	 */ 
 	public static final int PCEP_OBJECT_CLASS_REQ_ADAP_CAP=38;
-	// SERVER_INDICATION NOT IMPLEMENTED
+	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;	
+	
+	/**
+	 * SERVER_INDICATION Object Class
+	 * TODO: CHECK:  DRAFT draft-ietf-pce-inter-layer-ext-08 implemented
+	 * @see <a href="https://www.iana.org/go/rfc8282">RFC 8282</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_SERVER_INDICATION=39;
-    // ASSOCIATION NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
+    
+	/**
+	 * ASSOCIATION Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/rfc8697">RFC 8697</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_SERVER_ASSOCIATION=40;
-    // S2LS NOT IMPLEMENTED
+    public static final int PCEP_OBJECT_TYPE_SERVER_ASSOCIATION=1;
+    
+	/**
+	 * S2LS Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/rfc8623">RFC 8623</a>
+	 */ 
     public static final int PCEP_OBJECT_CLASS_S2LS=41;
-    // Wavelength assignment
+    public static final int PCEP_OBJECT_TYPE_SL2=1;
+ 
+	/**
+	 * WA Object Class
+	 * TODO: CHECK (it was implemented  http://tools.ietf.org/html/draft-lee-pce-wson-rwa-ext-03)
+	 * @see <a href="https://www.iana.org/go/rfc8780">RFC 8780</a>
+	 */ 
 	public static final int PCEP_OBJECT_CLASS_WAVELENGTH_ASSIGNEMENT=42;
-	// Flow_spec NOT IMPLEMENTED
-    public static final int PCEP_OBJECT_CLASS_FLOWSPEC=43;
-	
+	public static final int PCEP_OBJECT_TYPE_WAVELENGTH_ASSIGNEMENT=1;
 
-	
-	
-	
-	
+	/**
+	 * FLOWSPEC Object Class
+	 * TODO: NOT IMPLEMENTED
+	 * @see <a href="https://www.iana.org/go/draft-ietf-pce-pcep-flowspec-12">draft-ietf-pce-pcep-flowspec-12</a>
+	 */ 
+    public static final int PCEP_OBJECT_CLASS_FLOWSPEC=43;
+    public static final int PCEP_OBJECT_TYPE_FLOWSPEC=1;
+
+	/* 
+	 * Metric Types
+	 * https://www.iana.org/assignments/pcep/pcep.xhtml#metric-object-ni-field
+	 * 0	Reserved	[RFC5440]
+1	IGP metric	[RFC5440]
+2	TE metric	[RFC5440]
+3	Hop Counts	[RFC5440]
+4	Aggregate bandwidth consumption	[RFC5541]
+5	Load of the most loaded link	[RFC5541]
+6	Cumulative IGP cost	[RFC5541]
+7	Cumulative TE cost	[RFC5541]
+8	P2MP IGP metric	[RFC8306]
+9	P2MP TE metric	[RFC8306]
+10	P2MP hop count metric	[RFC8306]
+11	Segment-ID (SID) Depth.	[RFC8664]
+12	Path Delay metric	[RFC8233]
+13	Path Delay Variation metric	[RFC8233]
+14	Path Loss metric	[RFC8233]
+15	P2MP Path Delay metric	[RFC8233]
+16	P2MP Path Delay variation metric	[RFC8233]
+17	P2MP Path Loss metric	[RFC8233]
+18	Number of adaptations on a path	[RFC8282]
+19	Number of layers on a path	[RFC8282]
+20	Domain Count metric	[RFC8685]
+21	Border Node Count metric	[RFC8685]
+	 */
+	/**
+	 * 1	IGP metric	[RFC5440]
+	 */
+    public static final int  PCEP_METRIC_TYPE_IGP_METRIC=1;
+    
+    /**
+     * 2	TE metric	[RFC5440]
+     */
+    public static final int  PCEP_METRIC_TYPE_TE_METRIC=2;
+    //  T=3: Hop Counts
+    public static final int  PCEP_METRIC_TYPE_HOP_COUNT=3;
+    //  T=3: BW    
+    public static final int  PCEP_METRIC_TYPE_BW=4;
+    
+    /**
+     * 5	Load of the most loaded link	[RFC5541]
+     */
+    public static final int  PCEP_METRIC_TYPE_LOAD_OF_MOST_LOADED_LINK=5;
+    
+    /**
+     * 6	Cumulative IGP cost	[RFC5541]
+     */
+    public static final int  PCEP_METRIC_TYPE_CUMULATIVE_IGP_COST=6;
+    
+    /**
+     * 7	Cumulative TE cost	[RFC5541]
+     */
+    public static final int  PCEP_METRIC_TYPE_CUMULATIVE_TE_COST=7;
+    
+    /**
+     * 8	P2MP IGP metric	[RFC8306]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_IGP_METRIC=8;
+    
+    /**
+     * 9	P2MP TE metric	[RFC8306]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_TE_METRIC=9;
+    
+    /**
+     * 10	P2MP hop count metric	[RFC8306]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_HOP_COUNT_METRIC=10;
+    
+    /**
+     * 11	Segment-ID (SID) Depth.	[RFC8664]
+     */
+    public static final int  PCEP_METRIC_TYPE_SEGMENT_ID_DEPTH=11;
+    
+    /**
+     * 12	Path Delay metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_PATH_DELAY_METRIC=12;
+    
+    /**
+     * 13	Path Delay Variation metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_PATH_DELAY_VARIATION=13;
+    
+    /**
+     * 14	Path Loss metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_PATH_LOSS_METRIC=14;
+    
+    /**
+     * 15	P2MP Path Delay metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_PATH_DELAY_METRIC=15;
+    
+    /**
+     * 16	P2MP Path Delay variation metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_PATH_DELAY_VARIATION_METRIC=16;
+    
+    /**
+     * 17	P2MP Path Loss metric	[RFC8233]
+     */
+    public static final int  PCEP_METRIC_TYPE_P2MP_PATH_LOSS_METRIC=17;
+    
+    /**
+     * 18	Number of adaptations on a path	[RFC8282]
+     */
+    public static final int  PCEP_METRIC_TYPE_NUMBER_OF_ADAPTATIONS_OF_A_PATH=18;
+    
+    /**
+     * 19	Number of layers on a path	[RFC8282]
+     */
+    public static final int  PCEP_METRIC_TYPE_NUMBER_OF_LAYERS_ON_A_PATH=19;
+    
+    /**
+     * 20	Domain Count metric	[RFC8685]
+     */
+    public static final int  PCEP_METRIC_TYPE_DOMAIN_COUNT_METRIC=20;
+    
+    /**
+     * 21	Border Node Count metric	[RFC8685]
+     */
+    public static final int  PCEP_METRIC_TYPE_BORDER_NODE_COUNT_METRIC=21;
+    
 	
 	/*
-	 * CLOSE reasons
+	 * ERROR TYPES AND VALUES
+	 * https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-error-object
+	 * TODO: CHECK ALL MISSING
 	 */
-	public static final int REASON_NOEXPLANATION = 1;
-	public static final int REASON_DEADTIMER = 2;
-	public static final int REASON_MALFORMED = 3;
-	public static final int REASON_UNKNOWN = 4;
-	public static final int REASON_UNRECOGNIZED = 5;
 	
 	/*
 	 * ERROR types
@@ -391,6 +565,15 @@ public class ObjectParameters {
 	public static final int ERROR_POLICY_VIOLATION_OF_NOT_ALLOWED=3;
 	public static final int ERROR_POLICY_VIOLATION_OF_BIT_SET=4;
 
+	/*
+	 * CLOSE reasons
+	 * https://www.iana.org/assignments/pcep/pcep.xhtml#close-object-reason-field
+	 */
+	public static final int REASON_NOEXPLANATION = 1;
+	public static final int REASON_DEADTIMER = 2;
+	public static final int REASON_MALFORMED = 3;
+	public static final int REASON_UNKNOWN = 4;
+	public static final int REASON_UNRECOGNIZED = 5;
 	
 	/*
 	 * Routing Object types (ERO, RRO, IRO)
@@ -760,16 +943,8 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_GB_ETHERNET=6;
 	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
 	
-	// PCEP Extensions for Inter-Layer MPLS and GMPLS Traffic Engineering
-    //draft-ietf-pce-inter-layer-ext-08
-	public static final int PCEP_OBJECT_TYPE_INTER_LAYER=1;
-	public static final int PCEP_OBJECT_TYPE_SWITCH_LAYER=1;
-	public static final int PCEP_OBJECT_TYPE_REQ_ADAP_CAP=1;
-	public static final int PCEP_OBJECT_TYPE_SERVER_INDICATION=1;
 
-	// PCEP Obect classes from draft-lee-pce-wson-rwa-ext-03
-	// NUMBERS FOR INTERNAL USE ONLY!!!!
-	public static final int PCEP_OBJECT_TYPE_WAVELENGTH_ASSIGNEMENT=1;
+
 	
 	// PCEP Object types from GEYSERS!!!
 
@@ -784,9 +959,7 @@ public class ObjectParameters {
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST = 247;
 
 	
-	//PCEP Object types from draft-ietf-pce-gmpls-pcep-extensions-02
-	public static final int PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS = 5;
-	
+
 	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
 	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
 	
@@ -879,20 +1052,7 @@ public class ObjectParameters {
 	
 	//Strongest
 	public static final int  PCEP_NOTIFICATION_VALUE_PATH_RESERVATION=1;
-	//Metric Types
-	//Standard Metric Types (RFC 5440)
-	//T=1: IGP metric
-    public static final int  PCEP_METRIC_TYPE_IGP_METRIC=1;
-    //  T=2: TE metric
-    public static final int  PCEP_METRIC_TYPE_TE_METRIC=2;
-    //  T=3: Hop Counts
-    public static final int  PCEP_METRIC_TYPE_HOP_COUNT=3;
-    //  T=3: BW    
-    public static final int  PCEP_METRIC_TYPE_BW=4;
-    
-    //From draft-dhody-pce-pcep-service-aware-02
-    //  T=13(IANA): Latency metric
-    public static final int  PCEP_METRIC_TYPE_LATENCY_METRIC=13;
+
     
     // Nuevos Emuladr PCEP Session Create LSP
     /*private static final int PCEP_OBJECT_CLASS*/
