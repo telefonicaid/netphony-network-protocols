@@ -1,28 +1,26 @@
-Detailed PCEP Implementation Support (v1.0.1)
+Detailed PCEP Implementation Support (v1.4.0)
 =============================================
 
 Messages
 --------
 
-### Standard (RFC & IETF draft) Messages
-* Open Message
-* KeepAlive
-* PCReq Message
-* PCRep Message
-* PCNtf Message
-* PCErr Message
-* Close Message
-* PCMonReq Message
-* PCMonRep Message
-* PCRpt Message
-* PCUpd Message
-* PCInitiate Message
+### Standard Messages
 
-### Experimental propietary messages
-
-* PCEPTELinkSuggestion
-* PCEPTELinkConfirmation
-* PCEPTELinkTearDownSuggestion
+|Number | Message | Reference | Implemented |
+| ------ | ------  | ------    | ------ |
+| 1 | Open | [RFC5440] | YES |
+| 2 | Keepalive | [RFC5440] | YES |
+| 3 | Path Computation Request | [RFC5440] | YES |
+| 4 | Path Computation Reply | [RFC5440] | YES |
+| 5 | Notification | [RFC5440] | YES |
+| 6 | Error | [RFC5440] | YES |
+| 7 | Close | [RFC5440] | YES |
+| 8 | Path Computation Monitoring Request (PCMonReq) | [RFC5886] | YES |
+| 9 | Path Computation Monitoring Reply (PCMonRep) | [RFC5886] | YES |
+| 10 | Report | [RFC8231] | YES |
+| 11 | Update | [RFC8231] | YES |
+| 12 | LSP Initiate Request | [RFC8281] | YES |
+| 13 | StartTLS | [RFC8253] | NO |
 
 Objects
 -------
@@ -97,6 +95,12 @@ TLVs
 * SymbolicPathNameTLV
 * TunnelIDTLV
 * UnnumberedEndpointTLV
+
+### Experimental propietary messages
+
+* PCEPTELinkSuggestion
+* PCEPTELinkConfirmation
+* PCEPTELinkTearDownSuggestion
 
 
 ### Experimental propietary TLVs
