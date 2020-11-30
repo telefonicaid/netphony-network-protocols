@@ -190,7 +190,6 @@ public class ObjectParameters {
 
 	/**
 	 * PCE-ID Object Class
-	 * TODO: NOT IMPLEMENTED
 	 * @see <a href="https://tools.ietf.org/html/rfc5886">RFC 5886</a>
 	 */
 	public static final int PCEP_OBJECT_CLASS_PCE_ID=25;	
@@ -474,71 +473,153 @@ public class ObjectParameters {
 	/*
 	 * ERROR types
 	 */
+    /**
+     * 1	PCEP session establishment failure
+     */
 	public static final int ERROR_ESTABLISHMENT = 1;
-	public static final int ERROR_CAPABILITY = 2;
-	public static final int ERROR_UNKNOWNOBJECT = 3;
-	public static final int ERROR_UNSUPPORTEDOBJECT = 4;
-	public static final int ERROR_POLICY = 5;
-	public static final int ERROR_MISSINGOBJECT = 6;
-	public static final int ERROR_MISSINGREQUEST = 7;
-	public static final int ERROR_UNKNOWNREQUEST = 8;
-	public static final int ERROR_SECONDSESSION = 9;
-	public static final int ERROR_INVALIDOBJECT = 10;
-	
-	
-	public static final int ERROR_INVALID_OPERATION = 19;
-	public static final int ERROR_LSP_SYNC = 20;
-	
-	/*
-	 * ERROR values
+	/**
+	 * reception of an invalid Open message or a non Open message.	
 	 */
-	//ESTABLISHMENT ERRORS
-	
-	public static final int ERROR_LSP_OBJECT_MISSING=8;
-	public static final int ERROR_LSP_DB_VERSION_MISSING=12;
-	public static final int ERROR_STATEFUL_CAPABILITY_NOT_SUPPORTED=555;
-	public static final int ERROR_DELEGATION_NOT_NEGOTIATED=556;
-	
-	
 	public static final int ERROR_ESTABLISHMENT_INVALID_OPEN_MESSAGE=0x01;
+	/**
+	 * no Open message received before the expiration of the OpenWait timer	
+	 */
 	public static final int ERROR_ESTABLISHMENT_NO_OPEN_MESSAGE=0x02;
+	/**
+	 * unacceptable and non negotiable session characteristics	
+	 */
 	public static final int ERROR_ESTABLISHMENT_UNACCEPTABLE_NON_NEGOTIABLE_SESSION_CHARACTERISTICS=0x03;
 	public static final int ERROR_ESTABLISHMENT_UNACCEPTABLE_NEGOTIABLE_SESSION_CHARACTERISTICS=0x04;
 	public static final int ERROR_ESTABLISHMENT_SECOND_OPEN_MESSAGE_UNACCEPTABLE_SESSION_CHARACTERISTICS=0x05;
 	public static final int ERROR_ESTABLISHMENT_PCERR_UNACCEPTABLE_SESSION_CHARACTERISTICS=0x06;
-	/* Error-value=7: No Keepalive or PCErr message received
-                       before the expiration of the KeepWait timer
+	/**
+	 *  Error-value=7: No Keepalive or PCErr message received
+     *                  before the expiration of the KeepWait timer
 	 */
 	public static final int ERROR_ESTABLISHMENT_NO_KA_OR_ERROR_KEEPWAIT_TIMER=0x07;
-	//UNKNOWN OBJECT
+	/**
+	 * PCEP version not supported	
+	 */
+	public static final int ERROR_ESTABLISHMENT_PCEP_VERSION_NOT_SUPPORTED=0x08;
+
+    /**
+     * 2	Capability not supported
+     */
+	public static final int ERROR_CAPABILITY = 2;
+	
+	/**
+	 * 3	Unknown Object
+	 */
+	public static final int ERROR_UNKNOWNOBJECT = 3;
 	public static final int ERROR_UNKNOWNOBJECT_UNRECOGNIZED_OBJECT_CLASS=0x01;
 	public static final int ERROR_UNKNOWNOBJECT_UNRECOGNIZED_OBJECT_TYPE=0x02;
-	//NOT SUPPORTED OBJECT
-	public static final int ERROR_UNSUPPORTEDOBJECT_NOT_SUPPORTED_OBJECT_CLASS=0x01;
-	public static final int ERROR_UNSUPPORTEDOBJECT_NOT_SUPPORTED_OBJECT_TYPE=0x02;
-	/**FROM RFC 5441
-	 Error-Type     Meaning and error values                 Reference
-     4           Not supported object
-
-                 Error-value=4: Unsupported parameter     This document
-*/
-	public static final int ERROR_UNSUPPORTEDOBJECT_UNSUPPORTED_PARAMETER=0x04;
-	/*Policy violation
-     Error-value=1: C bit of the METRIC object set (request rejected)
-     Error-value=2: O bit of the RP object set (request rejected)
-     */ 
-	public static final int ERROR_POLICY_C_BIT_METRIC_SET_REQ_REJ=0x01;
-	public static final int ERROR_POLICY_O_BIT_RP_SET_REQ_REJ=0x02;
-    /*  Mandatory Object missing
-     Error-value=1: RP object missing
-     Error-value=2: RRO object missing for a reoptimization
-                    request (R bit of the RP object set)
-                    when bandwidth is not equal to 0.
-     Error-value=3: END-POINTS object missing
+	
+	/**
+	 * 4	Not supported object
 	 */
+	public static final int ERROR_UNSUPPORTEDOBJECT = 4;
+    public static final int ERROR_UNSUPPORTEDOBJECT_NOT_SUPPORTED_OBJECT_CLASS=0x01;
+    public static final int ERROR_UNSUPPORTEDOBJECT_NOT_SUPPORTED_OBJECT_TYPE=0x02;
+    
+    /**
+     * 4: Unsupported parameter	[RFC5441]    
+     */
+	public static final int ERROR_UNSUPPORTEDOBJECT_UNSUPPORTED_PARAMETER=0x04;
+	
+    /**
+     * 5	Policy violation
+     */
+	public static final int ERROR_POLICY = 5;
+	// Error-value=1: C bit of the METRIC object set (request rejected) 
+	public static final int ERROR_POLICY_C_BIT_METRIC_SET_REQ_REJ=0x01;
+	// Error-value=2: O bit of the RP object set (request rejected)
+	public static final int ERROR_POLICY_O_BIT_RP_SET_REQ_REJ=0x02;
+    //  Error-value=3: objective function not  allowed (request rejected)  RFC 5541
+	public static final int ERROR_POLICY_VIOLATION_OF_NOT_ALLOWED=3;
+	// Error-value=4: OF bit of the RP object set (request rejected) RFC 5541
+	public static final int ERROR_POLICY_VIOLATION_OF_BIT_SET=4;
+	
+	/**
+	 * 6	Mandatory Object missing
+	 */
+	public static final int ERROR_MISSINGOBJECT = 6;
+	
+    //Error-value=1: RP object missing
 	public static final int ERROR_MISSINGOBJECT_RP=0x01;
+	// Error-value=2: RRO object missing for a reoptimization
+    //  request (R bit of the RP object set) when bandwidth is not equal to 0.
 	public static final int ERROR_MISSINGOBJECT_RR0=0x02;
+	//Error-value=3: END-POINTS object missing
 	public static final int ERROR_MISSINGOBJECT_END_POINTS=0x03;
+	public static final int ERROR_LSP_OBJECT_MISSING=8;
+	public static final int ERROR_LSP_DB_VERSION_MISSING=12;
+	/**
+	 * 7	Synchronized path computation request missing
+	 */
+	public static final int ERROR_MISSINGREQUEST = 7;
+	/**
+	 * 8	Unknown request reference
+	 */
+	public static final int ERROR_UNKNOWNREQUEST = 8;
+	/**
+	 * 9	Attempt to establish a second PCEP session
+	 */
+	public static final int ERROR_SECONDSESSION = 9;
+	/**
+	 * 10	Reception of an invalid object
+	 */
+	public static final int ERROR_INVALIDOBJECT = 10;
+	
+	/**
+	 * 11	Unrecognized EXRS subobject https://www.iana.org/go/rfc5521
+	 */
+	public static final int ERROR_UNRECOGNIZED_EXRS_SUBOBJECT = 11;
+	
+	/**
+	 * 12	Diffserv-aware TE error https://www.iana.org/go/rfc5521
+	 */
+	public static final int ERROR_DIFFSERV_AWARE_TE = 12;
+	
+	/**
+	 * 13 BRPC procedure completion failure
+	 */
+	public static final int ERROR_BRPC_PROCEDURE_COMPLETION=13;
+	
+	/**
+	 * 15	Global Concurrent Optimization Error
+	 */
+	public static final int ERROR_GLOBAL_CONCURRENT_OPTIMIZATION=15;
+	
+	/**
+	 * 16	P2MP Capability Error
+	 */
+	public static final int ERROR_P2MP_CAPABILITY=16;
+	
+	/**
+	 * 17	P2MP END-POINTS Error
+	 */
+	public static final int ERROR_P2MP_END_POINTS=17;
+	
+	/**
+	 * 18	P2MP Fragmentation Error
+	 */
+	public static final int ERROR_P2MP_FRAGMENTATION=18;
+	
+	/**
+	 * 19	Invalid Operation
+	 */
+	public static final int ERROR_INVALID_OPERATION = 19;
+	
+	/**
+	 * 20	LSP State Synchronization Error
+	 */
+	public static final int ERROR_LSP_SYNC = 20;
+
+
+	public static final int ERROR_STATEFUL_CAPABILITY_NOT_SUPPORTED=555;
+	public static final int ERROR_DELEGATION_NOT_NEGOTIATED=556;
+	
+
 	/*
 	*   10         Reception of an invalid object
                   Error-value=1: reception of an object with P flag not
@@ -547,24 +628,77 @@ public class ObjectParameters {
 	 */
 	public static final int ERROR_INVALIDOBJECT_P_FLAG_NOT_SET=0x01;
 	
-	/** 
-	 * From RFC 5541
-	 * Two new Error-values are defined for the Error-type "policy
-   violation" (type 5):
 
-      Error-type      Meaning and error values                 Reference
-      ------------------------------------------------------------------
-         5            Policy violation
-
-                      Error-value=3: objective function not     RFC 5541
-                      allowed (request rejected)
-
-                      Error-value=4: OF bit of the RP object    RFC 5541
-                      set (request rejected)
+	/**
+	 * 24	LSP instantiation error
 	 */
-	public static final int ERROR_POLICY_VIOLATION_OF_NOT_ALLOWED=3;
-	public static final int ERROR_POLICY_VIOLATION_OF_BIT_SET=4;
-
+	public static final int ERROR_PCEP_LSP_INST_ERROR=24;
+	public static final int ERROR_PCEP_LSP_INST_ERROR_UNACCEPTABLE_INST_PARAM=1;
+	public static final int ERROR_PCEP_LSP_INST_ERROR_INTERNAL_ERROR=2;
+	public static final int ERROR_PCEP_LSP_INST_ERROR_SIGNALING_ERROR=3;
+	
+	/**
+	 * 25	PCEP StartTLS failure
+	 */
+	public static final int ERROR_PCEP_START_TLS_FAILURE=25;
+	public static final int ERROR_PCEP_START_TLS_FAILURE_RECEP_STARTTLS_AFTER_PCEP_EX=1;
+	public static final int ERROR_PCEP_START_TLS_FAILURE_RECEP_OTHER_MESAGE=2;
+	public static final int ERROR_PCEP_START_TLS_FAILURE_CONN_WITHOUT_TLS_IS_NOT_POSSIBLE_=3;
+	public static final int ERROR_PCEP_START_TLS_FAILURE_CONN_WITHOUT_TLS_IS_POSSIBLE=4;
+	public static final int ERROR_PCEP_START_TLS_FAILURE_NO_STARTTLS_BEF_TIMER_EXP=5;
+	
+	/**
+	 * 26	Association Error [RFC8697]
+	 */
+	public static final int ERROR_ASSOCIATION = 26;
+	public static final int ERROR_ASSOCIATION_ASSOCIATION_TYPE_NOT_SUPPORTED = 1;
+	public static final int ERROR_ASSOCIATION_TOO_MANY_LPS_IN_ASSOCIATION_GROUP = 2;
+	public static final int ERROR_ASSOCIATION_TOO_MANY_ASSOCIATION_GROUPS = 3;
+	public static final int ERROR_ASSOCIATION_ASSOC_UNKNOWN = 4;
+	public static final int ERROR_ASSOCIATION_OPERATOR_CONF_ASSOC_INF_MISMATCH = 5;
+	public static final int ERROR_ASSOCIATION_ASSOC_INF_MISMATCH = 6;
+	public static final int ERROR_ASSOCIATION_CANNOT_JOIN_ASSOC_GROUP = 7;
+	public static final int ERROR_ASSOCIATION_ASSOC_ID_NOT_IN_RANGE = 8;
+	public static final int ERROR_ASSOCIATION_TUNNEL_ID_OR_END_POINTS_MISMATCH_PATH_PROT_ASSOC = 9;
+	public static final int ERROR_ASSOCIATION_ATTEMP_ADD_W_P_LSP_FOR_PROTECTION_PATH_ASSOCIATION = 10;
+	public static final int ERROR_ASSOCIATION_PROTECTION_TYPE_IS_NOT_SUPPORTED = 11;
+	
+	
+	/**
+	 * 27	WSON RWA error
+	 */
+	public static final int ERROR_WSON_RWA = 27;
+	public static final int ERROR_WSON_RWA_INSUFFICIENT_MEMORY = 1;
+	public static final int ERROR_WSON_RWA_RWA_COMPUTATION_NOT_SUPPORTED = 2;
+	public static final int ERROR_WSON_SYTACTICAL_ENCODING_ERROR = 3;
+	
+	/**
+	 * 28	H-PCE Error
+	 */
+	public static final int ERROR_HPCE = 28;
+	public static final int ERROR_HPCE_HPCE_CAPABILITY_NOT_ADVERSTISED=1;
+	public static final int ERROR_HPCE_PARENT_PCE_CAPABILITY_CANNOT_BE_PROVIDED=2;
+	
+	/**
+	 * 29	Path computation failure 	[RFC8779]
+	 */
+	public static final int ERROR_PATH_COMPUTATION_FAILURE=29;
+	public static final int ERROR_PATH_COMPUTATION_FAILURE_UNACCEPTABLE_REQUEST_MESSAGE=1;
+	public static final int ERROR_PATH_COMPUTATION_FAILURE_GEN_BW_VALUE_NOT_SUPPORTED=2;
+	public static final int ERROR_PATH_COMPUTATION_FAILURE_LABEL_SET_CONSTRAINT_COULD_NOT_BE_MET=3;
+	public static final int ERROR_PATH_COMPUTATION_FAILURE_LABEL_CONSTRAINT_COULD_NOT_BE_MET=4;
+	public static final int ERROR_PATH_COMPUTATION_FAILURE_CONSTRAINTS_COULD_NOT_BE_MET_FOR_SOME_INTERVALS=5;
+	
+	/**
+	 *  30	FlowSpec error
+	 */
+	public static final int ERROR_FLOWSPEC = 30;
+	public static final int ERROR_FLOWSPEC_UNSUPPORTED_FLOWSPEC = 1;
+	public static final int ERROR_FLOWSPEC_MALFORMED_FLOWSPEC = 2;
+	public static final int ERROR_FLOWSPEC_UNRESOLVABLE_CONFLICT= 3;
+	public static final int ERROR_FLOWSPEC_UNKNOWN_FLOWSPEC = 4;
+	public static final int ERROR_FLOWSPEC_UNSUPPORTED_LPM_ROUTE = 5;
+	
 	/*
 	 * CLOSE reasons
 	 * https://www.iana.org/assignments/pcep/pcep.xhtml#close-object-reason-field
@@ -590,61 +724,10 @@ public class ObjectParameters {
 	public static final int NOPATH_PCE_CHAIN_BROKEN=0x01;
 	
 	/*
- * Standard PCEP TLVs https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators  
-1	NO-PATH-VECTOR TLV	[RFC5440]
-2	OVERLOAD-DURATION TLV	[RFC5440]
-3	REQ-MISSING TLV	[RFC5440]
-4	OF-List	[RFC5541]
-5	Order TLV	[RFC5557]
-6	P2MP capable	[RFC8306]
-7	VENDOR-INFORMATION-TLV	[RFC7470]
-8	Wavelength Selection	[RFC8780]
-9	Wavelength Restriction	[RFC8780]
-10	Wavelength Allocation	[RFC8780]
-11	Optical Interface Class List	[RFC8780]
-12	Client Signal Information	[RFC8780]
-13	H-PCE-CAPABILITY	[RFC8685]
-14	Domain-ID	[RFC8685]
-15	H-PCE-FLAG	[RFC8685]
-16	STATEFUL-PCE-CAPABILITY	[RFC8231]
-17	SYMBOLIC-PATH-NAME	[RFC8231]
-18	IPV4-LSP-IDENTIFIERS	[RFC8231]
-19	IPV6-LSP-IDENTIFIERS	[RFC8231]
-20	LSP-ERROR-CODE	[RFC8231]
-21	RSVP-ERROR-SPEC	[RFC8231]
-22	Unassigned	
-23	LSP-DB-VERSION	[RFC8232]
-24	SPEAKER-ENTITY-ID	[RFC8232]
-25	Unassigned	
-26	SR-PCE-CAPABILITY (deprecated)	[RFC8664]
-27	Unassigned	
-28	PATH-SETUP-TYPE	[RFC8408]
-29	Operator-configured Association Range	[RFC8697]
-30	Global Association Source	[RFC8697]
-31	Extended Association ID	[RFC8697]
-32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
-33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
-34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
-35	ASSOC-Type-List	[RFC8697]
-36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
-37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
-38	Path Protection Association Group TLV	[RFC8745]
-39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
-40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
-41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
-42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]
-43	LABEL-SET	[RFC8779, Section 2.5.2.5]
-44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
-45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
-46	DISJOINTNESS-CONFIGURATION	[RFC8800]
-47	DISJOINTNESS-STATUS	[RFC8800]
-48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
-49	SCHED-LSP-ATTRIBUTE	[RFC8934]
-50	SCHED-PD-LSP-ATTRIBUTE	[RFC8934]
-51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
-52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
-53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+     * Standard PCEP TLVs 
+     * https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators  
 	 */
+	
     /**
     * 1	NO-PATH-VECTOR TLV	[RFC5440] 
     */
@@ -881,17 +964,55 @@ public class ObjectParameters {
 	 */
 	public static final int PCEP_TLV_TYPE_GMPLS_CAPABILITY=45;
 	
-	
 	/**
 	 * 46	DISJOINTNESS-CONFIGURATION	[RFC8800]
-47	DISJOINTNESS-STATUS	[RFC8800]
-48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
-49	SCHED-LSP-ATTRIBUTE	[RFC8934]
-50	SCHED-PD-LSP-ATTRIBUTE	[RFC8934]
-51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
-52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
-53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+	 * TODO: NOT IMPLEMENTED
 	 */
+	public static final int PCEP_TLV_TYPE_DISJOINTNESS_CONFIGURATION=46;
+	
+	/**
+	 * 47	DISJOINTNESS-STATUS	[RFC8800]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_DISJOINTNESS_STATUS=47;
+	
+	/**
+	 * 48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_POLICY_PARAMETERS=48;
+	
+	/**
+	 * 49	SCHED-LSP-ATTRIBUTE	[RFC8934]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_SCHED_LSP_ATTRIBUTE=49;
+	
+	/**
+	 * 	50	SCHED-PD-LSP-ATTRIBUTE	[RFC8934]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_SCHED_PD_LSP_ATTRIBUTE=50;
+		
+    /**
+     * 51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
+	 * TODO: NOT IMPLEMENTED
+     */
+	public static final int PCEP_TLV_TYPE_PCE_FLOWSPEC_CAPABILITY=51;
+	
+	/**
+	 * 52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_FLOW_FILTER=52;
+	
+	/**
+	 * 53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+	 * TODO: NOT IMPLEMENTED
+	 */
+	public static final int PCEP_TLV_TYPE_L2_FLOW_FILTER=53;
+		
+
 	
 	/* **************************************************************
 	 * 
@@ -920,7 +1041,6 @@ public class ObjectParameters {
 	//PCEP Object classes from GEYSERS!!!
 	public static final int PCEP_OBJECT_CLASS_ADVANCE_RESERVATION=100;
 	public static final int PCEP_OBJECT_CLASS_NET_QUOTATION=101;	
-
 	//TODO: DEPRECATED
 	public static final int PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED = 10;
 
@@ -943,11 +1063,7 @@ public class ObjectParameters {
 	public static final int PCEP_OBJECT_TYPE_GB_ETHERNET=6;
 	public static final int PCEP_OBJECT_TYPE_GB_SSON=7;
 	
-
-
-	
 	// PCEP Object types from GEYSERS!!!
-
 	public static final int PCEP_OBJECT_TYPE_ADVANCE_RESERVATION = 1;
 	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP4 = 1;
 	public static final int PCEP_OBJECT_TYPE_NET_QUOTATION_ENDPOINTS_IP6 = 2;
@@ -957,8 +1073,6 @@ public class ObjectParameters {
 	//public static final int PCEP_OBJECT_TYPE_ENDPOINTS_ASSISTEDUNICAST_NSAP = 5;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_ASSISTED_UNICAST = 245;
 	public static final int PCEP_GENERALIZED_END_POINTS_TYPE_FULL_ANYCAST = 247;
-
-	
 
 	public static final int PCEP_OBJECT_TYPE_RESERVATION =1;
 	public static final int PCEP_OBJECT_TYPE_RESERVATION_CONF=1;
