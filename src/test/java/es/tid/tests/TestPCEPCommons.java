@@ -25,6 +25,7 @@ import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.Metric;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PceIdIPv4;
+import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
@@ -210,7 +211,17 @@ public class TestPCEPCommons {
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
 										ll.add(in);
 										method2.invoke(object,ll);
-									}else {
+									} else if (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.OperatorAssociation")) {
+										LinkedList<OperatorAssociation> operator_associations=new LinkedList<OperatorAssociation>();
+										OperatorAssociation oa= new OperatorAssociation();
+										oa.setAssocType(0x05);
+										oa.setStartAssocID(0x78);
+										oa.setRange(0x54);
+										operator_associations.add(oa);
+										method2.invoke(object, operator_associations);
+										
+									}
+									else {
 										
 										//Object ll= pt.getRawType(). .newInstance();
 										Object ll= ca.newInstance();
