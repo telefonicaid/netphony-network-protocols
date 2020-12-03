@@ -1,5 +1,6 @@
 package es.tid.pce.pcep.objects;
 
+import es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV;
 import es.tid.pce.pcep.objects.tlvs.DomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.GMPLSCapabilityTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
@@ -187,8 +188,10 @@ public class OPEN extends PCEPObject{
 	 */
 	private PCE_Redundancy_Group_Identifier_TLV redundancy_indetifier_tlv = null;
 	
-	
-			
+	/**
+	 * Optional Association Type 
+	 */
+	private ASSOCTypeListTLV assoc_type_list_tlv = null;
 	//Constructors
 	
 	/** 
@@ -256,6 +259,10 @@ public class OPEN extends PCEPObject{
 			redundancy_indetifier_tlv.encode();
 			ObjectLength=ObjectLength+redundancy_indetifier_tlv.getTotalTLVLength();
 		}
+		if (assoc_type_list_tlv!=null){
+			assoc_type_list_tlv.encode();
+			ObjectLength=ObjectLength+assoc_type_list_tlv.getTotalTLVLength();
+		}
 
 		object_bytes=new byte[ObjectLength];
 				
@@ -298,6 +305,11 @@ public class OPEN extends PCEPObject{
 			System.arraycopy(redundancy_indetifier_tlv.getTlv_bytes(),0,this.object_bytes,offset,redundancy_indetifier_tlv.getTotalTLVLength());
 			offset=offset+redundancy_indetifier_tlv.getTotalTLVLength();
 		}
+		if (assoc_type_list_tlv!=null) {
+			System.arraycopy(assoc_type_list_tlv.getTlv_bytes(),0,this.object_bytes,offset,assoc_type_list_tlv.getTotalTLVLength());
+			offset=offset+assoc_type_list_tlv.getTotalTLVLength();
+			
+		}
 	}
 	
 	/**
@@ -309,6 +321,7 @@ public class OPEN extends PCEPObject{
 		lsp_database_version_tlv = null;
 		stateful_capability_tlv = null;
 		SR_capability_tlv = null;		
+		assoc_type_list_tlv = null;
 		
 		Ver=(object_bytes[4]>>>5) & 0x07;
 		parentPCEIndicationBit=(object_bytes[4]&0x08)==0x08;
@@ -348,6 +361,9 @@ public class OPEN extends PCEPObject{
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_PCE_REDUNDANCY_GROUP_INDENTIFIER:
 				redundancy_indetifier_tlv=new PCE_Redundancy_Group_Identifier_TLV(this.getObject_bytes(), offset);
+				break;
+			case ObjectParameters.PCEP_TLV_ASSOC_TYPE_LIST:
+				assoc_type_list_tlv=new ASSOCTypeListTLV(this.getObject_bytes(), offset);
 				break;
 		
 			default:
@@ -523,10 +539,20 @@ public class OPEN extends PCEPObject{
 	public void setGmplsCapabilityTLV(GMPLSCapabilityTLV gmplsCapabilityTLV) {
 		this.gmplsCapabilityTLV = gmplsCapabilityTLV;
 	}
+	
 
-	public String toString() {
-		return "\nVer: "+Ver+" Flags: "+"Parent PCE Indication Bit: "+parentPCEIndicationBit+"Parent PCE Request Bit: "+parentPCERequestBit+" Keepalive"+Keepalive+" Deadtimer: "+Deadtimer+" SID: "+SID;
+	public ASSOCTypeListTLV getAssoc_type_list_tlv() {
+		return assoc_type_list_tlv;
 	}
+
+	public void setAssoc_type_list_tlv(ASSOCTypeListTLV assoc_type_list_tlv) {
+		this.assoc_type_list_tlv = assoc_type_list_tlv;
+	}
+
+//	public String toString() {
+//		return "\nVer: "+Ver+" Flags: "+"Parent PCE Indication Bit: "+parentPCEIndicationBit+"Parent PCE Request Bit: "+parentPCERequestBit+" Keepalive"+Keepalive+" Deadtimer: "+Deadtimer+" SID: "+SID;
+//	}
+	
 
 	@Override
 	public int hashCode() {
@@ -535,42 +561,38 @@ public class OPEN extends PCEPObject{
 		result = prime * result + Deadtimer;
 		result = prime * result + Keepalive;
 		result = prime * result + SID;
-		result = prime
-				* result
-				+ ((SR_capability_tlv == null) ? 0 : SR_capability_tlv
-						.hashCode());
+		result = prime * result + ((SR_capability_tlv == null) ? 0 : SR_capability_tlv.hashCode());
 		result = prime * result + Ver;
-		result = prime * result
-				+ ((domain_id_tlv == null) ? 0 : domain_id_tlv.hashCode());
-		result = prime
-				* result
-				+ ((gmplsCapabilityTLV == null) ? 0 : gmplsCapabilityTLV
-						.hashCode());
-		result = prime
-				* result
-				+ ((lsp_database_version_tlv == null) ? 0
-						: lsp_database_version_tlv.hashCode());
-		result = prime * result
-				+ ((of_list_tlv == null) ? 0 : of_list_tlv.hashCode());
+		result = prime * result + ((assoc_type_list_tlv == null) ? 0 : assoc_type_list_tlv.hashCode());
+		result = prime * result + ((domain_id_tlv == null) ? 0 : domain_id_tlv.hashCode());
+		result = prime * result + ((gmplsCapabilityTLV == null) ? 0 : gmplsCapabilityTLV.hashCode());
+		result = prime * result + ((lsp_database_version_tlv == null) ? 0 : lsp_database_version_tlv.hashCode());
+		result = prime * result + ((of_list_tlv == null) ? 0 : of_list_tlv.hashCode());
 		result = prime * result + (parentPCEIndicationBit ? 1231 : 1237);
 		result = prime * result + (parentPCERequestBit ? 1231 : 1237);
-		result = prime * result
-				+ ((pce_id_tlv == null) ? 0 : pce_id_tlv.hashCode());
-		result = prime
-				* result
-				+ ((redundancy_indetifier_tlv == null) ? 0
-						: redundancy_indetifier_tlv.hashCode());
-		result = prime
-				* result
-				+ ((stateful_capability_tlv == null) ? 0
-						: stateful_capability_tlv.hashCode());
+		result = prime * result + ((pce_id_tlv == null) ? 0 : pce_id_tlv.hashCode());
+		result = prime * result + ((redundancy_indetifier_tlv == null) ? 0 : redundancy_indetifier_tlv.hashCode());
+		result = prime * result + ((stateful_capability_tlv == null) ? 0 : stateful_capability_tlv.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "OPEN [Ver=" + Ver + ", parentPCERequestBit=" + parentPCERequestBit + ", parentPCEIndicationBit="
+				+ parentPCEIndicationBit + ", Keepalive=" + Keepalive + ", Deadtimer=" + Deadtimer + ", SID=" + SID
+				+ ", of_list_tlv=" + of_list_tlv + ", domain_id_tlv=" + domain_id_tlv + ", pce_id_tlv=" + pce_id_tlv
+				+ ", gmplsCapabilityTLV=" + gmplsCapabilityTLV + ", stateful_capability_tlv=" + stateful_capability_tlv
+				+ ", SR_capability_tlv=" + SR_capability_tlv + ", lsp_database_version_tlv=" + lsp_database_version_tlv
+				+ ", redundancy_indetifier_tlv=" + redundancy_indetifier_tlv + ", assoc_type_list_tlv="
+				+ assoc_type_list_tlv + "]";
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		OPEN other = (OPEN) obj;
@@ -587,25 +609,26 @@ public class OPEN extends PCEPObject{
 			return false;
 		if (Ver != other.Ver)
 			return false;
+		if (assoc_type_list_tlv == null) {
+			if (other.assoc_type_list_tlv != null)
+				return false;
+		} else if (!assoc_type_list_tlv.equals(other.assoc_type_list_tlv))
+			return false;
 		if (domain_id_tlv == null) {
 			if (other.domain_id_tlv != null)
 				return false;
 		} else if (!domain_id_tlv.equals(other.domain_id_tlv))
 			return false;
-		
 		if (gmplsCapabilityTLV == null) {
 			if (other.gmplsCapabilityTLV != null)
 				return false;
 		} else if (!gmplsCapabilityTLV.equals(other.gmplsCapabilityTLV))
 			return false;
-
 		if (lsp_database_version_tlv == null) {
 			if (other.lsp_database_version_tlv != null)
 				return false;
-		} else if (!lsp_database_version_tlv
-				.equals(other.lsp_database_version_tlv))
+		} else if (!lsp_database_version_tlv.equals(other.lsp_database_version_tlv))
 			return false;
-		
 		if (of_list_tlv == null) {
 			if (other.of_list_tlv != null)
 				return false;
@@ -620,21 +643,20 @@ public class OPEN extends PCEPObject{
 				return false;
 		} else if (!pce_id_tlv.equals(other.pce_id_tlv))
 			return false;
-
 		if (redundancy_indetifier_tlv == null) {
 			if (other.redundancy_indetifier_tlv != null)
 				return false;
-		} else if (!redundancy_indetifier_tlv
-				.equals(other.redundancy_indetifier_tlv))
+		} else if (!redundancy_indetifier_tlv.equals(other.redundancy_indetifier_tlv))
 			return false;
 		if (stateful_capability_tlv == null) {
 			if (other.stateful_capability_tlv != null)
 				return false;
-		} else if (!stateful_capability_tlv
-				.equals(other.stateful_capability_tlv))
+		} else if (!stateful_capability_tlv.equals(other.stateful_capability_tlv))
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }
