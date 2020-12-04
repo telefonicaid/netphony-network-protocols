@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
+ * IPv4 ASSOCIATION Object
  * Association groups and their memberships are defined using a new
    ASSOCIATION object.
 
