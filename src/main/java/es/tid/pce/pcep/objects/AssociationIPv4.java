@@ -3,6 +3,19 @@ package es.tid.pce.pcep.objects;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
+import es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV;
+import es.tid.pce.pcep.objects.tlvs.DomainIDTLV;
+import es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV;
+import es.tid.pce.pcep.objects.tlvs.GMPLSCapabilityTLV;
+import es.tid.pce.pcep.objects.tlvs.GlobalAssociationSourceTLV;
+import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
+import es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
+import es.tid.pce.pcep.objects.tlvs.OpConfAssocRangeTLV;
+import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
+import es.tid.pce.pcep.objects.tlvs.PCE_ID_TLV;
+import es.tid.pce.pcep.objects.tlvs.PCE_Redundancy_Group_Identifier_TLV;
+import es.tid.pce.pcep.objects.tlvs.SRCapabilityTLV;
+import es.tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
@@ -131,7 +144,12 @@ public class AssociationIPv4 extends PCEPObject {
 	private int assocID=0;
 	
 	private Inet4Address associationSource;
+	
+	private GlobalAssociationSourceTLV global_association_source_tlv=null;
 
+	private ExtendedAssociationIDTLV extended_ssociation_id_tlv=null;
+
+	
 	public AssociationIPv4() {
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ASSOCIATION);
@@ -146,6 +164,14 @@ public class AssociationIPv4 extends PCEPObject {
 	@Override
 	public void encode() {
 		this.ObjectLength=16;
+		if (global_association_source_tlv!=null){
+			global_association_source_tlv.encode();
+			ObjectLength=ObjectLength+global_association_source_tlv.getTotalTLVLength();
+		}
+		if (extended_ssociation_id_tlv!=null){
+			extended_ssociation_id_tlv.encode();
+			ObjectLength=ObjectLength+extended_ssociation_id_tlv.getTotalTLVLength();
+		}
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();
 		object_bytes[4]=0;
@@ -159,6 +185,17 @@ public class AssociationIPv4 extends PCEPObject {
 	    this.object_bytes[offset+3]=(byte)(assocID & 0xff);
 	    offset=12;
 		System.arraycopy(associationSource.getAddress(),0, this.object_bytes, 12, 4);
+		offset+=4;
+		if (global_association_source_tlv!=null) {
+			System.arraycopy(global_association_source_tlv.getTlv_bytes(),0,this.object_bytes,offset,global_association_source_tlv.getTotalTLVLength());
+			offset=offset+global_association_source_tlv.getTotalTLVLength();
+			
+		}
+		if (extended_ssociation_id_tlv!=null) {
+			System.arraycopy(extended_ssociation_id_tlv.getTlv_bytes(),0,this.object_bytes,offset,extended_ssociation_id_tlv.getTotalTLVLength());
+			offset=offset+extended_ssociation_id_tlv.getTotalTLVLength();
+			
+		}
 	}
 
 	@Override
@@ -174,6 +211,30 @@ public class AssociationIPv4 extends PCEPObject {
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		boolean fin=false;
+		if (ObjectLength==16){
+			fin=true;
+		}
+		offset=16;
+		while (!fin) {
+			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
+			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
+			switch (tlvtype){
+			case ObjectParameters.PCEP_TLV_GLOBAL_ASSOCIATION_SOURCE:
+				global_association_source_tlv=new GlobalAssociationSourceTLV(this.getObject_bytes(), offset);
+				break;
+			case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
+				extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
+				break;
+			default:
+				log.debug("UNKNOWN TLV found");
+				break;
+			}
+			offset=offset+tlvlength;
+			if (offset>=ObjectLength){
+				fin=true;
+			}
 		}
 	}
 
@@ -209,6 +270,22 @@ public class AssociationIPv4 extends PCEPObject {
 		this.associationSource = associationSource;
 	}
 
+	public GlobalAssociationSourceTLV getGlobal_association_source_tlv() {
+		return global_association_source_tlv;
+	}
+
+	public void setGlobal_association_source_tlv(GlobalAssociationSourceTLV global_association_source_tlv) {
+		this.global_association_source_tlv = global_association_source_tlv;
+	}
+
+	public ExtendedAssociationIDTLV getExtended_ssociation_id_tlv() {
+		return extended_ssociation_id_tlv;
+	}
+
+	public void setExtended_ssociation_id_tlv(ExtendedAssociationIDTLV extended_ssociation_id_tlv) {
+		this.extended_ssociation_id_tlv = extended_ssociation_id_tlv;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -216,6 +293,9 @@ public class AssociationIPv4 extends PCEPObject {
 		result = prime * result + assocID;
 		result = prime * result + assocType;
 		result = prime * result + ((associationSource == null) ? 0 : associationSource.hashCode());
+		result = prime * result + ((extended_ssociation_id_tlv == null) ? 0 : extended_ssociation_id_tlv.hashCode());
+		result = prime * result
+				+ ((global_association_source_tlv == null) ? 0 : global_association_source_tlv.hashCode());
 		result = prime * result + (removal ? 1231 : 1237);
 		return result;
 	}
@@ -238,6 +318,16 @@ public class AssociationIPv4 extends PCEPObject {
 				return false;
 		} else if (!associationSource.equals(other.associationSource))
 			return false;
+		if (extended_ssociation_id_tlv == null) {
+			if (other.extended_ssociation_id_tlv != null)
+				return false;
+		} else if (!extended_ssociation_id_tlv.equals(other.extended_ssociation_id_tlv))
+			return false;
+		if (global_association_source_tlv == null) {
+			if (other.global_association_source_tlv != null)
+				return false;
+		} else if (!global_association_source_tlv.equals(other.global_association_source_tlv))
+			return false;
 		if (removal != other.removal)
 			return false;
 		return true;
@@ -246,8 +336,11 @@ public class AssociationIPv4 extends PCEPObject {
 	@Override
 	public String toString() {
 		return "AssociationIPv4 [removal=" + removal + ", assocType=" + assocType + ", assocID=" + assocID
-				+ ", associationSource=" + associationSource + "]";
+				+ ", associationSource=" + associationSource + ", global_association_source_tlv="
+				+ global_association_source_tlv + ", extended_ssociation_id_tlv=" + extended_ssociation_id_tlv + "]";
 	}
+
+	
 	
 	
 	

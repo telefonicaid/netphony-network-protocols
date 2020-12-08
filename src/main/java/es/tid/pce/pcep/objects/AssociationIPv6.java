@@ -4,6 +4,9 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 
+import es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV;
+import es.tid.pce.pcep.objects.tlvs.GlobalAssociationSourceTLV;
+import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
@@ -132,6 +135,10 @@ public class AssociationIPv6 extends PCEPObject {
 	private int assocID=0;
 	
 	private Inet6Address associationSource;
+	
+	private GlobalAssociationSourceTLV global_association_source_tlv=null;
+
+	private ExtendedAssociationIDTLV extended_ssociation_id_tlv=null;
 
 
 	public AssociationIPv6() {
@@ -149,6 +156,14 @@ public class AssociationIPv6 extends PCEPObject {
 	@Override
 	public void encode() {
 		this.ObjectLength=28;
+		if (global_association_source_tlv!=null){
+			global_association_source_tlv.encode();
+			ObjectLength=ObjectLength+global_association_source_tlv.getTotalTLVLength();
+		}
+		if (extended_ssociation_id_tlv!=null){
+			extended_ssociation_id_tlv.encode();
+			ObjectLength=ObjectLength+extended_ssociation_id_tlv.getTotalTLVLength();
+		}
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();
 		object_bytes[4]=0;
@@ -162,6 +177,17 @@ public class AssociationIPv6 extends PCEPObject {
 	    this.object_bytes[offset+3]=(byte)(assocID & 0xff);
 	    offset=12;
 		System.arraycopy(associationSource.getAddress(),0, this.object_bytes, 12, 16);
+		offset+=16;
+		if (global_association_source_tlv!=null) {
+			System.arraycopy(global_association_source_tlv.getTlv_bytes(),0,this.object_bytes,offset,global_association_source_tlv.getTotalTLVLength());
+			offset=offset+global_association_source_tlv.getTotalTLVLength();
+			
+		}
+		if (extended_ssociation_id_tlv!=null) {
+			System.arraycopy(extended_ssociation_id_tlv.getTlv_bytes(),0,this.object_bytes,offset,extended_ssociation_id_tlv.getTotalTLVLength());
+			offset=offset+extended_ssociation_id_tlv.getTotalTLVLength();
+			
+		}
 
 	}
 
@@ -179,41 +205,32 @@ public class AssociationIPv6 extends PCEPObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		boolean fin=false;
+		if (ObjectLength==16){
+			fin=true;
+		}
+		offset=28;
+		while (!fin) {
+			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
+			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
+			switch (tlvtype){
+			case ObjectParameters.PCEP_TLV_GLOBAL_ASSOCIATION_SOURCE:
+				global_association_source_tlv=new GlobalAssociationSourceTLV(this.getObject_bytes(), offset);
+				break;
+			case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
+				extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
+				break;
+			default:
+				log.debug("UNKNOWN TLV found");
+				break;
+			}
+			offset=offset+tlvlength;
+			if (offset>=ObjectLength){
+				fin=true;
+			}
+		}
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + assocID;
-		result = prime * result + assocType;
-		result = prime * result + ((associationSource == null) ? 0 : associationSource.hashCode());
-		result = prime * result + (removal ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AssociationIPv6 other = (AssociationIPv6) obj;
-		if (assocID != other.assocID)
-			return false;
-		if (assocType != other.assocType)
-			return false;
-		if (associationSource == null) {
-			if (other.associationSource != null)
-				return false;
-		} else if (!associationSource.equals(other.associationSource))
-			return false;
-		if (removal != other.removal)
-			return false;
-		return true;
-	}
 
 	public boolean isRemoval() {
 		return removal;
@@ -247,11 +264,79 @@ public class AssociationIPv6 extends PCEPObject {
 		this.associationSource = associationSource;
 	}
 
+	public GlobalAssociationSourceTLV getGlobal_association_source_tlv() {
+		return global_association_source_tlv;
+	}
+
+	public void setGlobal_association_source_tlv(GlobalAssociationSourceTLV global_association_source_tlv) {
+		this.global_association_source_tlv = global_association_source_tlv;
+	}
+
+	public ExtendedAssociationIDTLV getExtended_ssociation_id_tlv() {
+		return extended_ssociation_id_tlv;
+	}
+
+	public void setExtended_ssociation_id_tlv(ExtendedAssociationIDTLV extended_ssociation_id_tlv) {
+		this.extended_ssociation_id_tlv = extended_ssociation_id_tlv;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + assocID;
+		result = prime * result + assocType;
+		result = prime * result + ((associationSource == null) ? 0 : associationSource.hashCode());
+		result = prime * result + ((extended_ssociation_id_tlv == null) ? 0 : extended_ssociation_id_tlv.hashCode());
+		result = prime * result
+				+ ((global_association_source_tlv == null) ? 0 : global_association_source_tlv.hashCode());
+		result = prime * result + (removal ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AssociationIPv6 other = (AssociationIPv6) obj;
+		if (assocID != other.assocID)
+			return false;
+		if (assocType != other.assocType)
+			return false;
+		if (associationSource == null) {
+			if (other.associationSource != null)
+				return false;
+		} else if (!associationSource.equals(other.associationSource))
+			return false;
+		if (extended_ssociation_id_tlv == null) {
+			if (other.extended_ssociation_id_tlv != null)
+				return false;
+		} else if (!extended_ssociation_id_tlv.equals(other.extended_ssociation_id_tlv))
+			return false;
+		if (global_association_source_tlv == null) {
+			if (other.global_association_source_tlv != null)
+				return false;
+		} else if (!global_association_source_tlv.equals(other.global_association_source_tlv))
+			return false;
+		if (removal != other.removal)
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "AssociationIPv6 [removal=" + removal + ", assocType=" + assocType + ", assocID=" + assocID
-				+ ", associationSource=" + associationSource + "]";
+				+ ", associationSource=" + associationSource + ", global_association_source_tlv="
+				+ global_association_source_tlv + ", extended_ssociation_id_tlv=" + extended_ssociation_id_tlv + "]";
 	}
+	
+	
+
+
 	
 	
 

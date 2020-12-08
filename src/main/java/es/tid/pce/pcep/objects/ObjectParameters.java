@@ -869,7 +869,6 @@ public class ObjectParameters {
     
     /**
     * 29	Operator-configured Association Range	[RFC8697] 
-    * TODO: NOT IMPLEMENTED
     */	
 	public static final int PCEP_TLV_OPERATOR_CONF_ASSOCIATION_RANGE=29;	
 	
