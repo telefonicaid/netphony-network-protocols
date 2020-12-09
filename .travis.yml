@@ -4,3 +4,5 @@ jdk:
 script:
   - mvn package -X -f ./pom.xml
   - mvn install -X -f ./pom.xml
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report

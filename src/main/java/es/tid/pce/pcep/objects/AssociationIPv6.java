@@ -17,7 +17,7 @@ import es.tid.protocol.commons.ByteHandler;
  * @author ogondio
  *
  */
-public class AssociationIPv6 extends PCEPObject {
+public class AssociationIPv6 extends Association {
 	
 	/*
 	 *  The ASSOCIATION Object-Class value is 40.
