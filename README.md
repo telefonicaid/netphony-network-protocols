@@ -11,6 +11,10 @@ Latest Maven Central Release:
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
 
+Coverage status
+
+[![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master)
+
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) [RFC 5440](https://tools.ietf.org/html/rfc5440). 
 * **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://tools.ietf.org/html/rfc7752. Support of  BGP-LS Traffic Engineering (TE) Metric Extensions 

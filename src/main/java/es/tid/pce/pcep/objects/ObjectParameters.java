@@ -308,11 +308,12 @@ public class ObjectParameters {
     
 	/**
 	 * ASSOCIATION Object Class
-	 * TODO: NOT IMPLEMENTED
+	 * TODO: IMPLEMENT IPv6
 	 * @see <a href="https://www.iana.org/go/rfc8697">RFC 8697</a>
 	 */ 
-    public static final int PCEP_OBJECT_CLASS_SERVER_ASSOCIATION=40;
-    public static final int PCEP_OBJECT_TYPE_SERVER_ASSOCIATION=1;
+    public static final int PCEP_OBJECT_CLASS_ASSOCIATION=40;
+    public static final int PCEP_OBJECT_TYPE__ASSOCIATION_IPV4=1;
+    public static final int PCEP_OBJECT_TYPE__ASSOCIATION_IPV6=2;
     
 	/**
 	 * S2LS Object Class
@@ -868,7 +869,6 @@ public class ObjectParameters {
     
     /**
     * 29	Operator-configured Association Range	[RFC8697] 
-    * TODO: NOT IMPLEMENTED
     */	
 	public static final int PCEP_TLV_OPERATOR_CONF_ASSOCIATION_RANGE=29;	
 	

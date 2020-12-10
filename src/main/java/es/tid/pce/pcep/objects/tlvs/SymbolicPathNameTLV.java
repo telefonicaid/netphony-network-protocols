@@ -7,48 +7,33 @@ import es.tid.protocol.commons.ByteHandler;
 
 
 /**
-  *  Each LSP (path) MUST have a symbolic name that is unique in the PCC.
-   This symbolic path name MUST remain constant throughout a path's
-   lifetime, which may span across multiple consecutive PCEP sessions
-   and/or PCC restarts.  The symbolic path name MAY be specified by an
-   operator in a PCC's CLI configuration.  If the operator does not
-   specify a symbolic name for a path, the PCC MUST auto-generate one.
-
-   The SYMBOLIC-PATH-NAME TLV MUST be included in the LSP State Report
-   when during a given PCEP session an LSP is first reported to a PCE.
-   A PCC sends to a PCE the first LSP State Report either during State
-   Synchronization, or when a new LSP is configured at the PCC.  The
-   symbolic path name MAY be included in subsequent LSP State Reports
-   for the LSP.
-
-   The SYMBOLIC-PATH-NAME TLV MAY appear as a TLV in both the LSP Object
-   and the LSPA Object.
-
-   The format of the SYMBOLIC-PATH-NAME TLV is shown in the following
-   figure:
-
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |           Type=[TBD]          |       Length (variable)       |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                                                               |
-     //                      Symbolic Path Name                     //
-     |                                                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-                 Figure 18: SYMBOLIC-PATH-NAME TLV format
-
-   The type of the TLV is [TBD] and it has a variable length, which MUST
-   be greater than 0.
-
- 
- * @author smta fixed by ogondio
+ * Extended Association ID TLV
+ * @author Oscar Gonzalez de Dios
  *
  */
 public class SymbolicPathNameTLV extends PCEPTLV 
 {
-	
+	/*
+	 *  The Extended Association ID TLV is an optional TLV for use in the
+   ASSOCIATION object.  The meaning and usage of the Extended
+   Association ID TLV are as per Section 4 of [RFC6780].
+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |         Type                  |            Length             |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     //                Extended Association ID                      //
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+              Figure 6: The Extended Association ID TLV Format
+
+   Type:  31
+
+   Length:  Variable.
+
+   Extended Association ID:  As defined in Section 4 of [RFC6780].
+	 */
 	
 	private byte[] SymbolicPathNameID;
 	

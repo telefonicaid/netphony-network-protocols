@@ -24,6 +24,8 @@ public class TestPCEPObjects {
     public static Collection configs() {
     	Object[][] objects={
     			//{"es.tid.pce.pcep.objects.AdvanceReservationObject"},
+    			{"es.tid.pce.pcep.objects.AssociationIPv4"},
+    			{"es.tid.pce.pcep.objects.AssociationIPv6"},
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSP"},
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth"},
     			{"es.tid.pce.pcep.objects.BandwidthRequested"},

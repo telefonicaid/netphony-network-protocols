@@ -360,4 +360,18 @@ public class ByteHandler {
 		number=( (((long)bytes[offset]&(long)0xFF)<<24) | (((long)bytes[offset+1]&(long)0xFF)<<16) |( ((long)bytes[offset+2]&(long)0xFF)<<8) |  ((long)bytes[offset+3]& (long)0xFF) );
 		return number;
 	}
+	
+	/**
+	 * Get an Integer value from 2 bytes of a byte array
+	 * @param bytes bytes to examine
+	 * @param offset starting position of the 2 byte integer
+	 * @return the integer value
+	 */
+	public static int decode2bytesInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=( ( ((int)bytes[offset]&(int)0xFF)<<8) |  ((int)bytes[offset+1]& (int)0xFF) );
+		return number;
+	}
+	
+	
 }
