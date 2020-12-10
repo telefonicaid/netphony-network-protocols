@@ -34,6 +34,8 @@ import java.util.Arrays;
  * Usage of this attribute is defined in 5.1.2.
  *
  * @author Jose-Juan Pedreno-Manresa
+ * @author ogondio
+ * @author andrea
  */
 public class AS_Path_Segment implements BGP4Element {
 	private int type;

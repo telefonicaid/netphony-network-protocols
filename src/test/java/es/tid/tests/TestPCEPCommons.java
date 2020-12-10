@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import es.tid.bgp.bgp4.open.BGP4CapabilitiesOptionalParameter;
+import es.tid.bgp.bgp4.open.BGP4Capability;
+import es.tid.bgp.bgp4.open.BGP4OctetsASByteCapabilityAdvertisement;
+import es.tid.bgp.bgp4.open.BGP4OptionalParameter;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
@@ -193,6 +197,23 @@ public class TestPCEPCommons {
 									method2.invoke(object,ll);
 									
 								}
+								else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.open.BGP4OptionalParameter")) {
+									LinkedList<BGP4OptionalParameter> ll=new LinkedList<BGP4OptionalParameter>();
+									Object o = new BGP4CapabilitiesOptionalParameter();
+									createAllFields(o);
+									ll.add((BGP4OptionalParameter)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.open.BGP4Capability")) {
+									LinkedList<BGP4Capability> ll=new LinkedList<BGP4Capability>();
+									Object o = new BGP4OctetsASByteCapabilityAdvertisement();
+									createAllFields(o);
+									ll.add((BGP4Capability)o);
+									method2.invoke(object,ll);
+									
+								}
+								
 								else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
 

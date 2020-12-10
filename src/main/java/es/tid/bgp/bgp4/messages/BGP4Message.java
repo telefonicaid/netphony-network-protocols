@@ -1,5 +1,7 @@
 package es.tid.bgp.bgp4.messages;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 
 import es.tid.bgp.bgp4.BGP4Element;
@@ -167,6 +169,34 @@ public abstract class BGP4Message  implements BGP4Element {
 
 	public static int getBGPHeaderLength() {
 		return BGPHeaderLength;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(messageBytes);
+		result = prime * result + messageLength;
+		result = prime * result + messageType;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BGP4Message other = (BGP4Message) obj;
+		if (!Arrays.equals(messageBytes, other.messageBytes))
+			return false;
+		if (messageLength != other.messageLength)
+			return false;
+		if (messageType != other.messageType)
+			return false;
+		return true;
 	}
 
 	
