@@ -294,6 +294,53 @@ public class BGP4Open extends BGP4Message {
 		BGPOpenMessageMandatoryFileds = bGPOpenMessageMandatoryFileds;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((BGPIdentifier == null) ? 0 : BGPIdentifier.hashCode());
+		result = prime * result + BGPOpenMessageMandatoryFileds;
+		result = prime * result + holdTime;
+		result = prime * result + myAutonomousSystem;
+		result = prime * result + optionalParameterLength;
+		result = prime * result + ((parametersList == null) ? 0 : parametersList.hashCode());
+		result = prime * result + version;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BGP4Open other = (BGP4Open) obj;
+		if (BGPIdentifier == null) {
+			if (other.BGPIdentifier != null)
+				return false;
+		} else if (!BGPIdentifier.equals(other.BGPIdentifier))
+			return false;
+		if (BGPOpenMessageMandatoryFileds != other.BGPOpenMessageMandatoryFileds)
+			return false;
+		if (holdTime != other.holdTime)
+			return false;
+		if (myAutonomousSystem != other.myAutonomousSystem)
+			return false;
+		if (optionalParameterLength != other.optionalParameterLength)
+			return false;
+		if (parametersList == null) {
+			if (other.parametersList != null)
+				return false;
+		} else if (!parametersList.equals(other.parametersList))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb=new StringBuffer((BGPOpenMessageMandatoryFileds+optionalParameterLength)*400);
