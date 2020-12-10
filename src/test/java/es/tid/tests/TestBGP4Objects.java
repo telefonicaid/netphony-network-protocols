@@ -28,6 +28,14 @@ public class TestBGP4Objects {
     			//{" es.tid.bgp.bgp4.update.fields.WithdrawnRoutes"},
     			{"es.tid.bgp.bgp4.update.fields.NodeNLRI"},
     			//{"es.tid.bgp.bgp4.update.fields.LinkNLRI"},
+    			{"es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Attribute"},
+    			//{"es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute"},
+    			//{"es.tid.bgp.bgp4.update.fields.pathAttributes.LinkStateAttribute"},
+    			{"es.tid.bgp.bgp4.update.fields.pathAttributes.LOCAL_PREF_Attribute"},
+    			{"es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Reach_Attribute"},
+    			{"es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute"},
+    			//{"es.tid.bgp.bgp4.update.fields.pathAttributes.Next_Hop_Attribute"},
+    			{"es.tid.bgp.bgp4.update.fields.pathAttributes.OriginAttribute"},    			
 				};
 		return Arrays.asList(objects);
     }

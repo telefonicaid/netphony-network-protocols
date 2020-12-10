@@ -56,6 +56,14 @@ public class LOCAL_PREF_Attribute extends PathAttribute{
 		this.preference_value = value;
 	}
 	
+	
+	
+	public int getPreference_value() {
+		return preference_value;
+	}
+	public void setPreference_value(int preference_value) {
+		this.preference_value = preference_value;
+	}
 	@Override
 	public String toString() {
 		//String sb = super.toString();
