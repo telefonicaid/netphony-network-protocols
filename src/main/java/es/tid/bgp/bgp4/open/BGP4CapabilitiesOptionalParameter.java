@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * BGP4CapabilitiesOptionalParameter.
+ * 
+ * 
  * <a href="http://tools.ietf.org/html/rfc3392">RFC 3392</a>.
  * 
  *  This is an Optional Parameter that is used by a BGP speaker to convey
@@ -89,10 +91,16 @@ public class BGP4CapabilitiesOptionalParameter extends BGP4OptionalParameter{
 			{
 				MultiprotocolExtensionCapabilityAdvertisement meca = new  MultiprotocolExtensionCapabilityAdvertisement(this.bytes, offset);
 				capabilityList.add(meca);
-				log.debug("Length "+meca.getLength());
 				offset=offset+meca.getLength();
-			}else {
-				log.debug("Length "+BGP4Capability.getCapabilityLength(this.bytes, offset));
+			} else if (capabilityCode == BGP4OptionalParametersTypes.CAPABILITY_CODE_AS_4_BYTES)
+			{
+				BGP4OctetsASByteCapabilityAdvertisement meca = new  BGP4OctetsASByteCapabilityAdvertisement(this.bytes, offset);
+				capabilityList.add(meca);
+				offset=offset+meca.getLength();
+			}
+			
+			else {
+				log.debug("Unknown capability "+BGP4Capability.getCapabilityLength(this.bytes, offset));
 				offset= offset+BGP4Capability.getCapabilityLength(this.bytes, offset)+2;
 			}
 		}

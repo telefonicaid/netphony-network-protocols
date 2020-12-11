@@ -16,6 +16,7 @@ import es.tid.bgp.bgp4.open.BGP4CapabilitiesOptionalParameter;
 import es.tid.bgp.bgp4.open.BGP4Capability;
 import es.tid.bgp.bgp4.open.BGP4OctetsASByteCapabilityAdvertisement;
 import es.tid.bgp.bgp4.open.BGP4OptionalParameter;
+import es.tid.bgp.bgp4.open.MultiprotocolExtensionCapabilityAdvertisement;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
@@ -210,6 +211,8 @@ public class TestPCEPCommons {
 									Object o = new BGP4OctetsASByteCapabilityAdvertisement();
 									createAllFields(o);
 									ll.add((BGP4Capability)o);
+									Object o2 = new MultiprotocolExtensionCapabilityAdvertisement();
+									ll.add((BGP4Capability)o2);
 									method2.invoke(object,ll);
 									
 								}
