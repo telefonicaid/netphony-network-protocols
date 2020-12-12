@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 /**
  * Base class for OSPFv2 Packet.
@@ -77,7 +78,7 @@ A.3.1 The OSPF packet header
  * 
  */
 
-public abstract class OSPFv2Packet {
+public abstract class OSPFv2Packet implements OSPFv2Element{
 	
 	protected static final Logger log = LoggerFactory.getLogger("OSPFParser");
 	
@@ -136,6 +137,12 @@ public abstract class OSPFv2Packet {
 			this.bytes[5]=0;
 			this.bytes[6]=0;
 			this.bytes[7]=0;
+			try {
+				this.routerID=(Inet4Address) Inet4Address.getByName("0.0.0.0");
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (this.areaID!=null){
 			System.arraycopy(this.areaID.getAddress(),0,this.bytes, 8, 4);	
@@ -144,6 +151,13 @@ public abstract class OSPFv2Packet {
 			this.bytes[9]=0;
 			this.bytes[10]=0;
 			this.bytes[11]=0;
+			try {
+				this.areaID=(Inet4Address) Inet4Address.getByName("0.0.0.0");
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		
 		this.bytes[12]=0;
@@ -219,6 +233,49 @@ public abstract class OSPFv2Packet {
 
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((areaID == null) ? 0 : areaID.hashCode());
+		result = prime * result + Arrays.hashCode(bytes);
+		result = prime * result + length;
+		result = prime * result + ((routerID == null) ? 0 : routerID.hashCode());
+		result = prime * result + type;
+		result = prime * result + version;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OSPFv2Packet other = (OSPFv2Packet) obj;
+		if (areaID == null) {
+			if (other.areaID != null)
+				return false;
+		} else if (!areaID.equals(other.areaID))
+			return false;
+		if (!Arrays.equals(bytes, other.bytes))
+			return false;
+		if (length != other.length)
+			return false;
+		if (routerID == null) {
+			if (other.routerID != null)
+				return false;
+		} else if (!routerID.equals(other.routerID))
+			return false;
+		if (type != other.type)
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
 	}
 	
 	

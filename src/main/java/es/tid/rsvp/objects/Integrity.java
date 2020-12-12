@@ -14,7 +14,7 @@ public class Integrity extends RSVPObject{
 	public Integrity(){
 		
 		classNum = 4;
-		cType = 0;
+		cType = 1;
 		length = 4;
 		bytes = new byte[length];
 		

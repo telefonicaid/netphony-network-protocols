@@ -61,7 +61,7 @@ public class RouterAddressTLV extends OSPFTLV {
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
 		if (this.routerAddress!=null){
-			System.arraycopy(this.routerAddress,0, this.tlv_bytes, 4, 4);
+			System.arraycopy(this.routerAddress.getAddress(),0, this.tlv_bytes, 4, 4);
 		}
 		else {
 			this.tlv_bytes[4]=0;

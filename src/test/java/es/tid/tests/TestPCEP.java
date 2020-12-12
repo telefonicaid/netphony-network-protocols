@@ -63,7 +63,7 @@ public class TestPCEP {
 	public void testPCEPInitiate(){
 		System.out.println("Testing PCEPInitiate Message");
 		PCEPInitiate message= new PCEPInitiate();
-		TestPCEPCommons.createAllFields(message);
+		TestCommons.createAllFields(message);
 		testPCEPMessage(message,PCEPInitiate.class,"Test PCEPInitiate with ALL fields");
 
 	}

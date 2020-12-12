@@ -8,6 +8,7 @@ import es.tid.rsvp.objects.IntservADSPEC;
 import es.tid.rsvp.objects.IntservSenderTSpec;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.RSVPObjectParameters;
+import es.tid.rsvp.objects.SSONSenderTSpec;
 import es.tid.rsvp.objects.SenderTSpec;
 import es.tid.rsvp.objects.SenderTemplate;
 import es.tid.rsvp.objects.SenderTemplateIPv4;
@@ -124,23 +125,51 @@ public class SenderDescriptor extends RSVPConstruct {
 	 */
 			
 	public void encode() throws RSVPProtocolViolationException{
-		
+		length=0;
 		log.debug("Starting Sender Descriptor Encode");
-		
+		if(senderTemplate != null){
+			senderTemplate.encode();
+			this.length = this.length + senderTemplate.getLength();
+			
+		}else{	
+			
+			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
+			log.error("Sender Template not found, It is mandatory");
+			throw new RSVPProtocolViolationException();
+			
+		}
+		if(senderTSPEC != null){
+			senderTSPEC.encode();
+			this.length = this.length + senderTSPEC.getLength();
+			log.debug("Intserv Sender TSpec found");
+			
+		}else{
+			
+			// Campo obligatorio, por lo tanto se lanza excepcion si no existe
+			log.error("Intserv Sender TSpec not found, It is mandatory");
+			throw new RSVPProtocolViolationException();
+			
+		}
+		if(adspec != null){
+			adspec.encode();
+			this.length = this.length + adspec.getLength();
+			log.debug("Intserv ADSPEC found");
+			
+		}
 		this.bytes = new byte[length];
 		
 		int offset=0;
 		// Campo Obligatorio
-		senderTemplate.encode();
+		
 		System.arraycopy(senderTemplate.getBytes(), 0, bytes, offset, senderTemplate.getLength());
 		offset = offset + senderTemplate.getLength();
 		// Campo Obligatorio
-		senderTSPEC.encode();
+		
 		System.arraycopy(senderTSPEC.getBytes(), 0, bytes, offset, senderTSPEC.getLength());
 		offset = offset + senderTSPEC.getLength();
 		if(adspec != null){
 			// Campo Opcional
-			adspec.encode();
+			
 			System.arraycopy(adspec.getBytes(), 0, bytes, offset, adspec.getLength());
 		}
 		
@@ -215,7 +244,14 @@ public class SenderDescriptor extends RSVPConstruct {
 				
 				senderTSPEC = new IntservSenderTSpec();
 				
-			}else{
+			} else if (cType == 8){		// cType adecuado
+				
+				senderTSPEC = new SSONSenderTSpec();
+				
+				
+			}
+			
+			else{
 				
 				// No se ha formado correctamente el objeto sender template
 				log.error("Malformed Sender TSPEC cType field");

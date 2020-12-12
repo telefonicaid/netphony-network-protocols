@@ -35,11 +35,8 @@ public class SenderTemplateIPv4 extends SenderTemplate{
 		
 		classNum = 11;
 		cType = 1;
-		length = 4;
-		bytes = new byte[length];
-
-		
 	}
+	
 	
 	/**	
     0             1              2             3
@@ -52,16 +49,18 @@ public class SenderTemplateIPv4 extends SenderTemplate{
     +-------------+-------------+-------------+-------------+	
     
     */
-	
+	//TODO
 	@Override
 	public void encode() {
+		this.length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		bytes = new byte[length];
 		encodeHeader();
 		
 	}
-
+	//TODO
 	@Override
 	public void decode(byte[] bytes, int offset) {
-		// FIXME: decode
+		this.decodeHeader(bytes,offset);
 		
 	}
 

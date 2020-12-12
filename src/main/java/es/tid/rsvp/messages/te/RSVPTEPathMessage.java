@@ -113,10 +113,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		length = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();
-			
-		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
-		
+		senderDescriptors = new LinkedList<SenderDescriptor>();		
 		
 		log.debug("RSVP-TE Path Message Created");
 				
@@ -134,10 +131,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		this.length = length;
 		
 		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();
-		
-		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
-	
+		senderDescriptors = new LinkedList<SenderDescriptor>();	
 		
 		log.debug("RSVP-TE Path Message Created");
 	}
@@ -267,17 +261,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		}
 		
 		
-		int iSenderTSpecSize = intservSenderTSpec.size();
-
-		for(int i = 0; i < iSenderTSpecSize; i++){
-					
-			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
-			length = length + isTSpec.getLength();
-			log.debug("IntServSenderTSpec Descriptor RSVP Construct found");
-			System.out.println("rub IntServSenderTSpec Descriptor RSVP Construct found (RSVPTEPathMessage.java line 336)");
-		}
-		
-		
 		if(this.suggestedLabel != null){
 			
 			// Campo Opcional
@@ -374,19 +357,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 						
 		}
 		
-		
-	
-		// Lista de Sender Descriptors
-		for(int i = 0; i < iSenderTSpecSize; i++){
-							
-			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
-			
-				isTSpec.encode();
-				System.arraycopy(isTSpec.getBytes(), 0, bytes, currentIndex, isTSpec.getLength());
-				currentIndex = currentIndex + isTSpec.getLength();
-
-										
-		}
 			
 		
 		
@@ -609,23 +579,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 				}				
 			}			
-			else if(classNum == 12){
 				
-				//Sender TSPEC 
-				int cType = RSVPObject.getcType(bytes,offset);
-				
-				if(cType == 2){
-					IntservSenderTSpec isTSpec = new IntservSenderTSpec();
-					isTSpec.decode(bytes, offset);
-					offset = offset + isTSpec.getLength();
-					this.addIntservSenderTSpecDescriptor(isTSpec);
-				
-			}else{
-				// Fallo en cType
-					throw new RSVPProtocolViolationException();
-				}
-			}
-			
 		}
 		log.debug("RSVP-TE Path Message decoding accomplished");
 	}
@@ -640,15 +594,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		
 		senderDescriptors.add(senderDescriptor);
 
-	}
-
-	/**
-	 * 
-	 * @param senderTSpec Sender TSPec
-	 */
-	
-	public void addIntservSenderTSpecDescriptor(IntservSenderTSpec senderTSpec){	
-		intservSenderTSpec.add(senderTSpec);
 	}
 	
 	
