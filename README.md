@@ -12,8 +12,9 @@ Latest Maven Central Release:
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
 
 Coverage status
-
-[![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master)
+| **Master**  | **Develop**   |
+|:---:|:---:|
+| [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master) | [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=develop)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=develop) |
 
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) [RFC 5440](https://tools.ietf.org/html/rfc5440). 
