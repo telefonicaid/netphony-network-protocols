@@ -11,6 +11,7 @@ import es.tid.rsvp.objects.RSVPHop;
 import es.tid.rsvp.objects.RSVPHopIPv4;
 import es.tid.rsvp.objects.RSVPHopIPv6;
 import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.RSVPObjectParameters;
 import es.tid.rsvp.objects.Session;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.SessionIPv6;
@@ -209,16 +210,19 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	public void encode() throws RSVPProtocolViolationException {
 
 		log.debug("Starting RSVP Path TearDown Message encode");
-		
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		length=commonHeaderSize;
 		// Obtencion del tama�o completo del mensaje
 		if(integrity != null){
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 		}
 		if(session != null){
+			session.encode();
 			length = length + session.getLength();
 			log.debug("Session RSVP Object found");
 			
@@ -228,6 +232,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 			throw new RSVPProtocolViolationException();
 		}
 		if(rsvpHop != null){
+			rsvpHop.encode();
 			length = length + rsvpHop.getLength();
 			log.debug("Hop RSVP Object found");
 		}else{
@@ -239,8 +244,13 @@ public class RSVPPathTearMessage extends RSVPMessage {
 
 		for(int i = 0; i < sdSize; i++){
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
+			try{
+			sd.encode();
 			length = length + sd.getLength();
 			log.debug("Sender Descriptor RSVP Construct found");
+		}catch(RSVPProtocolViolationException e){
+			log.error("Errors during Sender Descriptor number " + i + " encoding");
+		}
 		}
 		
 		bytes = new byte[length];
@@ -249,31 +259,29 @@ public class RSVPPathTearMessage extends RSVPMessage {
 		
 		if(integrity != null){
 			//Campo Opcional
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 		}
 		
 		// Campo Obligatorio
-		session.encode();
+		
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
 		// Campo Obligatorio
-		rsvpHop.encode();
+		
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
 	
 		// Lista de Sender Descriptors
 		for(int i = 0; i < sdSize; i++){
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
-			try{
-				sd.encode();
+
+				
 				System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
 				currentIndex = currentIndex + sd.getLength();
 
-			}catch(RSVPProtocolViolationException e){
-				log.error("Errors during Sender Descriptor number " + i + " encoding");
-			}
+
 		}
 		log.debug("RSVP Path TearDown Message encoding accomplished");
 	}
@@ -348,12 +356,18 @@ public class RSVPPathTearMessage extends RSVPMessage {
 					throw new RSVPProtocolViolationException();
 				}
 			}
-			else if(classNum == 11){
+			else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TEMPLATE){
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);
 				if((cType == 7)||(cType == 8)){
 					
 					SenderDescriptorTE sd = new SenderDescriptorTE();
+					sd.decode(bytes, offset);
+					offset = offset + sd.getLength();
+					this.addSenderDescriptor(sd);
+				}else if((cType == 1)||(cType == 2)||(cType == 3)){
+					
+					SenderDescriptor sd = new SenderDescriptor();
 					sd.decode(bytes, offset);
 					offset = offset + sd.getLength();
 					this.addSenderDescriptor(sd);

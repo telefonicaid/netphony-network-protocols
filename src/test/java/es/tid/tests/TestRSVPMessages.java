@@ -29,7 +29,14 @@ public class TestRSVPMessages {
     public static Collection configs() {
     	Object[][] objects={
     			{"es.tid.rsvp.messages.RSVPPathMessage"},
-    			//{"es.tid.rsvp.messages.RSVPPathTearMessage"},
+    			{"es.tid.rsvp.messages.RSVPPathTearMessage"},
+    			{"es.tid.rsvp.messages.RSVPPathErrMessage"},
+    			{"es.tid.rsvp.messages.RSVPResvConfMessage"},
+    			{"es.tid.rsvp.messages.RSVPResvErrMessage"},
+    			{"es.tid.rsvp.messages.RSVPResvMessage"},
+    			{"es.tid.rsvp.messages.RSVPResvTearMessage"},
+
+    			
 				};
 		return Arrays.asList(objects);
     }
@@ -47,12 +54,13 @@ public class TestRSVPMessages {
     	RSVPMessage object = (RSVPMessage)objectClass.newInstance();
 		TestCommons.createAllFields(object);
 		object.encode();
-		Constructor ctor = objectClass.getConstructor(byte[].class);
-		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes());
+		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
+		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);
+		object2.decode();
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
-
+		//System.out.println(object2.toString());
 		//Check if the fields are the same
 		assertTrue("asserting RSVP message "+objectClass,object.equals(object2));
     	} catch(Exception e){

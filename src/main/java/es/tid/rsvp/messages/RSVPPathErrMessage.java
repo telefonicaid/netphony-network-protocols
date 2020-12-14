@@ -11,6 +11,7 @@ import es.tid.rsvp.objects.ErrorSpecIPv6;
 import es.tid.rsvp.objects.Integrity;
 import es.tid.rsvp.objects.PolicyData;
 import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.RSVPObjectParameters;
 import es.tid.rsvp.objects.Session;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.SessionIPv6;
@@ -179,20 +180,21 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	public void encode() throws RSVPProtocolViolationException{
 		
 		log.debug("Starting RSVP Path Error Message encode");
-		
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
-		
+		length=commonHeaderSize;
 		// Obtencion del tama�o completo del mensaje
 		
 		if(integrity != null){
-			
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
-			
+			session.encode();
 			length = length + session.getLength();
 			log.debug("Session RSVP Object found");
 			
@@ -203,7 +205,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 			throw new RSVPProtocolViolationException();
 			
 		}if(errorSpec != null){
-			
+			errorSpec.encode();
 			length = length + errorSpec.getLength();
 			log.debug("ErrorSpec RSVP Object found");
 			
@@ -219,6 +221,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
+			pd.encode();
 			length = length + pd.getLength();
 			log.debug("Policy Data RSVP Object found");
 				
@@ -229,8 +232,15 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		for(int i = 0; i < sdSize; i++){
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
+			try{
+			sd.encode();
 			length = length + sd.getLength();
 			log.debug("Sender Descriptor RSVP Construct found");
+		}catch(RSVPProtocolViolationException e){
+			
+			log.error("Errors during Sender Descriptor number " + i + " encoding");
+			
+		}
 			
 		}
 		
@@ -241,19 +251,19 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		if(integrity != null){
 			
 			//Campo Opcional
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
 		// Campo Obligatorio
-		session.encode();
+		
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
 
 		// Campo Obligatorio
-		errorSpec.encode();
+		
 		System.arraycopy(errorSpec.getBytes(), 0, bytes, currentIndex, errorSpec.getLength());
 		currentIndex = currentIndex + errorSpec.getLength();
 		
@@ -261,7 +271,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
-			pd.encode();
+			
 			System.arraycopy(pd.getBytes(), 0, bytes, currentIndex, pd.getLength());
 			currentIndex = currentIndex + pd.getLength();
 							
@@ -271,16 +281,13 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		for(int i = 0; i < sdSize; i++){
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
-			try{
-				sd.encode();
-				System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
+			System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
+
+				
+ 
 				currentIndex = currentIndex + sd.getLength();
 
-			}catch(RSVPProtocolViolationException e){
-				
-				log.error("Errors during Sender Descriptor number " + i + " encoding");
-				
-			}
+			
 						
 		}
 	
@@ -295,8 +302,9 @@ public class RSVPPathErrMessage extends RSVPMessage {
 		
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
-			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
+			//System.out.println(" classnum "+classNum+" offset "+offset +"length "+length);
+
 			if(classNum == 1){
 				
 				// Session Object
@@ -365,7 +373,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 					
 				}
 				
-			}else if(classNum == 13){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_POLICY_DATA){
 				
 				// Policy Object
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -375,6 +383,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 					pd.decode(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
+					System.out.println(" LEEENGO "+pd.getLength()+" offset "+offset +"length "+length);
 					
 				}else{
 					
@@ -382,7 +391,7 @@ public class RSVPPathErrMessage extends RSVPMessage {
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}else if(classNum == 11){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TEMPLATE){
 				
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);

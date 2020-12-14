@@ -48,7 +48,6 @@ public class ScopeIPv4 extends Scope{
 	public void addSourceIpAddress(Inet4Address addr){
 		
 		sourceIpAddresses.add(addr);
-		length = length + 4;
 		
 	}
 	
@@ -87,10 +86,12 @@ public class ScopeIPv4 extends Scope{
 	 */
 	
 	public void encode() {
+		int size = sourceIpAddresses.size();
+		length=4+size*4;
 		bytes = new byte[length];
 		encodeHeader();
 		
-		int size = sourceIpAddresses.size();
+		
 		int currentIndex = 4;
 		
 		for(int i = 0; i < size; i++){
@@ -104,27 +105,20 @@ public class ScopeIPv4 extends Scope{
 	}
 
 
-	public void decodeHeader() {
-
-			
-	}
-
 	public void decode(byte[] bytes, int offset) {
-
-		length = (int)(bytes[offset]|bytes[offset+1]);
+        decodeHeader(bytes,offset);
 		int headerSize = 4;
 		int unprocessedBytes = length - headerSize;
 		int currentIndex = offset+headerSize;
 		
 		while(unprocessedBytes > 0){
-			
 			byte[] readAddress = new byte[4];
 			System.arraycopy(bytes,currentIndex,readAddress,0,4);
 			try{
 				Inet4Address newAddress = (Inet4Address) Inet4Address.getByAddress(readAddress);
 				addSourceIpAddress(newAddress);
 				currentIndex = currentIndex + 4;
-				unprocessedBytes = unprocessedBytes - 4;				
+				unprocessedBytes = unprocessedBytes - 4;		
 			}catch(UnknownHostException e){
 				// FIXME: Poner logs con respecto a excepcion
 			}
@@ -141,6 +135,14 @@ public class ScopeIPv4 extends Scope{
 
 	public void setSourceIpAddresses(LinkedList<Inet4Address> sourceIpAddresses) {
 		this.sourceIpAddresses = sourceIpAddresses;
+	}
+
+
+
+	@Override
+	public void decodeHeader() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

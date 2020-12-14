@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /*
  * 
 

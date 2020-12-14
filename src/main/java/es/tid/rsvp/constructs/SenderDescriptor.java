@@ -2,6 +2,7 @@ package es.tid.rsvp.constructs;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.FlowLabelSenderTemplateIPv6;
 import es.tid.rsvp.objects.IntservADSPEC;
@@ -174,7 +175,6 @@ public class SenderDescriptor extends RSVPConstruct {
 		}
 		
 		log.debug("Encoding Sender Descriptor Accomplished");
-		
 	}
 
 	/**

@@ -31,6 +31,8 @@ public class Integrity extends RSVPObject{
 	
 	@Override
 	public void encode() {
+		length = 4;
+		bytes = new byte[length];
 		// TODO Auto-generated method stub
 		encodeHeader();
 	}

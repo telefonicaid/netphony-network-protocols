@@ -37,13 +37,19 @@ import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PceIdIPv4;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.rsvp.constructs.SenderDescriptor;
+import es.tid.rsvp.constructs.WFFlowDescriptor;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
+import es.tid.rsvp.objects.ErrorSpecIPv4;
+import es.tid.rsvp.objects.FlowSpec;
 import es.tid.rsvp.objects.IntservSenderTSpec;
 import es.tid.rsvp.objects.PolicyData;
 import es.tid.rsvp.objects.RSVPHopIPv4;
+import es.tid.rsvp.objects.ResvConfirmIPv4;
 import es.tid.rsvp.objects.SSONSenderTSpec;
+import es.tid.rsvp.objects.ScopeIPv4;
 import es.tid.rsvp.objects.SenderTemplateIPv4;
 import es.tid.rsvp.objects.SessionIPv4;
+import es.tid.rsvp.objects.Style;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
@@ -157,13 +163,33 @@ public class TestCommons {
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTSpec")){
 								 o= new SSONSenderTSpec();
 								 createAllFields(o);
+							 }else if (c.getName().equals("es.tid.rsvp.objects.ErrorSpec")){
+								 o= new ErrorSpecIPv4();
+								 createAllFields(o);
+							 }else if (c.getName().equals("es.tid.rsvp.objects.Scope")){
+								 o= new ScopeIPv4();
+								 createAllFields(o);
+							 }else if (c.getName().equals("es.tid.rsvp.objects.ResvConfirm")){
+								 o= new ResvConfirmIPv4();
+								 createAllFields(o);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.IntservADSPEC")){
 								 o= null;
 								 //FIXME: Implement IntservADSPEC
 							 }
+							 else if (c.getName().equals("es.tid.rsvp.constructs.ErrorFlowDescriptor")){
+								 o= null;
+								 //FIXME: Implement ErrorFlowDescriptor
+							 }
+							 else if (c.getName().equals("es.tid.rsvp.objects.Style")){
+								 Style st =  new Style();
+								 st.setFlags(1);
+								 st.setOptionVector(1);
+								 o=st;
+								 //FIXME: Test Style better
+							 }
 							 else {
-								 //System.out.println("yyyy "+c.getName());
+								//System.out.println("Generic "+c.getName());
 									o = ((Class)ty).newInstance();	
 									createAllFields(o);
 							 }
@@ -329,6 +355,12 @@ public class TestCommons {
 										IntservSenderTSpec os = new IntservSenderTSpec();
 										createAllFields(os);									
 										ll.add(os);
+										method2.invoke(object,ll);
+									}else if  (((Class)at).getName().equals("es.tid.rsvp.constructs.FlowDescriptor")) {
+										LinkedList<es.tid.rsvp.constructs.FlowDescriptor> ll=new LinkedList<es.tid.rsvp.constructs.FlowDescriptor>();
+										//FlowSpec fs =new FlowSpec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+										//WFFlowDescriptor wwf=new WFFlowDescriptor(fs);								
+										//ll.add(wwf);
 										method2.invoke(object,ll);
 									}
 									else {

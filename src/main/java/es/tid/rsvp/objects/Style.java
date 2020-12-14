@@ -69,8 +69,6 @@ public class Style extends RSVPObject{
 		
 		classNum = 8;
 		cType = 1;
-		length = 8;
-		bytes = new byte[length];
 		flags = 0;
 		optionVector = 0;
 	}
@@ -78,8 +76,6 @@ public class Style extends RSVPObject{
 	public Style(int flags, int optionVector){
 		classNum = 8;  
 		cType = 1;
-		length = 8;
-		bytes = new byte[length];
 		this.flags = flags;
 		this.optionVector = optionVector;
 	}
@@ -93,6 +89,8 @@ public class Style extends RSVPObject{
 	
 	@Override
 	public void encode() {
+		length = 8;
+		bytes = new byte[length];
 		encodeHeader();
 		bytes[4] = (byte) flags;
 		bytes[5] = (byte)((optionVector >>16) & 0xFF);

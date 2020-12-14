@@ -3,6 +3,7 @@ package es.tid.rsvp.messages;
 import java.util.LinkedList;
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.constructs.FFFlowDescriptor;
 import es.tid.rsvp.constructs.FlowDescriptor;
@@ -13,6 +14,7 @@ import es.tid.rsvp.objects.RSVPHop;
 import es.tid.rsvp.objects.RSVPHopIPv4;
 import es.tid.rsvp.objects.RSVPHopIPv6;
 import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.RSVPObjectParameters;
 import es.tid.rsvp.objects.Scope;
 import es.tid.rsvp.objects.ScopeIPv4;
 import es.tid.rsvp.objects.ScopeIPv6;
@@ -214,20 +216,21 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	public void encode() throws RSVPProtocolViolationException{
 
 		log.debug("Starting RSVP Resv TearDown Message encode");
-		
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
-		
+		length=commonHeaderSize;
 		// Obtencion del tama�o completo del mensaje
 		
 		if(integrity != null){
-			
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
-			
+			session.encode();
 			length = length + session.getLength();
 			log.debug("Session RSVP Object found");
 			
@@ -239,7 +242,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 			
 		}
 		if(rsvpHop != null){
-			
+			rsvpHop.encode();
 			length = length + rsvpHop.getLength();
 			log.debug("Hop RSVP Object found");
 			
@@ -251,13 +254,13 @@ public class RSVPResvTearMessage extends RSVPMessage {
 			
 		}
 		if(scope != null){
-			
+			scope.encode();
 			length = length + scope.getLength();
 			log.debug("Scope RSVP Object found");
 			
 		}
 		if(style != null){
-			
+			style.encode();
 			length = length + style.getLength();
 			log.debug("Style RSVP Object found");
 			
@@ -274,6 +277,13 @@ public class RSVPResvTearMessage extends RSVPMessage {
 		for(int i = 0; i < fdSize; i++){
 			
 			FlowDescriptor fd = (FlowDescriptor) flowDescriptors.get(i);
+			try{
+				fd.encode();
+}catch(RSVPProtocolViolationException e){
+				
+				log.error("Errors during Flow Descriptor number " + i + " encoding");
+				
+			}
 			length = length + fd.getLength();
 			log.debug("Sender Descriptor RSVP Construct found");
 			
@@ -287,30 +297,30 @@ public class RSVPResvTearMessage extends RSVPMessage {
 		if(integrity != null){
 			
 			//Campo Opcional
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
 		// Campo Obligatorio
-		session.encode();
+		
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
 		// Campo Obligatorio
-		rsvpHop.encode();
+		
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
 		if(scope != null){
 			
 			//Campo Opcional
-			scope.encode();
+			
 			System.arraycopy(scope.getBytes(), 0, bytes, currentIndex, scope.getLength());
 			currentIndex = currentIndex + scope.getLength();
 			
 		}
 		// Campo Obligatorio
-		style.encode();
+		
 		System.arraycopy(style.getBytes(), 0, bytes, currentIndex, style.getLength());
 		currentIndex = currentIndex + style.getLength();
 		
@@ -318,16 +328,11 @@ public class RSVPResvTearMessage extends RSVPMessage {
 		for(int i = 0; i < fdSize; i++){
 			
 			FlowDescriptor fd = (FlowDescriptor) flowDescriptors.get(i);
-			try{
-				fd.encode();
+			
 				System.arraycopy(fd.getBytes(), 0, bytes, currentIndex, fd.getLength());
 				currentIndex = currentIndex + fd.getLength();
 
-			}catch(RSVPProtocolViolationException e){
-				
-				log.error("Errors during Flow Descriptor number " + i + " encoding");
-				
-			}
+			
 						
 		}
 	
@@ -346,7 +351,8 @@ public class RSVPResvTearMessage extends RSVPMessage {
 		while(offset < length){		// Mientras quede mensaje
 			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
-			if(classNum == 1){
+
+			if(classNum == RSVPObjectParameters. RSVP_OBJECT_CLASS_SESSION ){
 				
 				// Session Object
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -372,7 +378,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 					
 				}
 			}
-			else if(classNum == 3){
+			else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_RSVP_HOP){
 				
 				// RSVPHop Object
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -397,7 +403,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 					
 				}				
 			}
-			else if(classNum == 4){
+			else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_INTEGRITY){
 				
 				// Integrity Object
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -413,7 +419,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 					throw new RSVPProtocolViolationException();
 					
 				}
-			}else if(classNum == 7){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SCOPE){
 				
 				// Scope Object
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -438,8 +444,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 					
 				}
 			}
-			else if(classNum == 8){
-				
+			else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_STYLE){
 				// Style Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
@@ -454,8 +459,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}else if(classNum == 9){
-				
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_FLOW_SPEC){
 				// Flow Descriptor Construct
 				if(style != null){	// Style debe haberse decodificado porque en caso
 									// contrario el mensaje no se habra construido bien

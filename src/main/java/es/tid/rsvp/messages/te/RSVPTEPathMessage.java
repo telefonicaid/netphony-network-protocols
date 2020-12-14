@@ -159,7 +159,8 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	public void encode() throws RSVPProtocolViolationException{
 
 		log.debug("Starting RSVP-TE Path Message encode");
-		
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
 		// Obtengo el tama�o de la cabecera comun
 		int commonHeaderSize = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
