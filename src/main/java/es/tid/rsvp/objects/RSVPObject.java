@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 
 import es.tid.rsvp.*;
@@ -249,4 +251,37 @@ public abstract class RSVPObject implements RSVPElement{
 		return ((int)((bytes[offset] << 8) & 0xFF00)) | ((int)(bytes[offset+1] & 0x00FF));
 		
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(bytes);
+		result = prime * result + cType;
+		result = prime * result + classNum;
+		result = prime * result + length;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RSVPObject other = (RSVPObject) obj;
+		if (!Arrays.equals(bytes, other.bytes))
+			return false;
+		if (cType != other.cType)
+			return false;
+		if (classNum != other.classNum)
+			return false;
+		if (length != other.length)
+			return false;
+		return true;
+	}
+	
+	
 }

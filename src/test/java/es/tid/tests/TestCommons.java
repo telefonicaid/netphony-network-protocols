@@ -28,6 +28,7 @@ import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.constructs.MetricPCE;
 import es.tid.pce.pcep.constructs.NCF;
 import es.tid.pce.pcep.constructs.Path;
+import es.tid.pce.pcep.constructs.SVECConstruct;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
@@ -362,7 +363,19 @@ public class TestCommons {
 										//WFFlowDescriptor wwf=new WFFlowDescriptor(fs);								
 										//ll.add(wwf);
 										method2.invoke(object,ll);
-									}
+									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.SVECConstruct")) {
+										LinkedList<SVECConstruct> ll=new LinkedList<SVECConstruct>();
+										SVECConstruct os = new SVECConstruct();		
+										createAllFields(os);	
+										ll.add(os);
+										method2.invoke(object,ll);
+									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Request")) {
+										LinkedList<es.tid.pce.pcep.constructs.Request> ll=new LinkedList<es.tid.pce.pcep.constructs.Request>();
+										es.tid.pce.pcep.constructs.Request os = new es.tid.pce.pcep.constructs.Request();		
+										createAllFields(os);	
+										ll.add(os);
+										method2.invoke(object,ll);
+									} 
 									else {
 										
 										//Object ll= pt.getRawType(). .newInstance();
