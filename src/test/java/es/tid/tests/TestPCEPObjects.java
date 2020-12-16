@@ -23,7 +23,6 @@ public class TestPCEPObjects {
 	@Parameters(name="{0}")
     public static Collection configs() {
     	Object[][] objects={
-    			//{"es.tid.pce.pcep.objects.AdvanceReservationObject"},
     			{"es.tid.pce.pcep.objects.AssociationIPv4"},
     			{"es.tid.pce.pcep.objects.AssociationIPv6"},
     			{"es.tid.pce.pcep.objects.BandwidthExistingLSP"},
@@ -47,14 +46,10 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.LoadBalancing"},
     			{"es.tid.pce.pcep.objects.Metric"},
     			{"es.tid.pce.pcep.objects.Monitoring"},
-				//"es.tid.pce.pcep.objects.NetQuotationIPv4",
-				//"es.tid.pce.pcep.objects.NetQuotationIPv6",
-				//"es.tid.pce.pcep.objects.NetQuotationNSAP",
     			{"es.tid.pce.pcep.objects.NoPath"},
-				//"es.tid.pce.pcep.objects.Notification",
+    			//{"es.tid.pce.pcep.objects.Notification"},
     			{"es.tid.pce.pcep.objects.OPEN"},
     			{"es.tid.pce.pcep.objects.ObjectiveFunction"},
-				//"es.tid.pce.pcep.objects.P2MPEndPointsDataPathID",
     			{"es.tid.pce.pcep.objects.P2MPEndPointsIPv4"},
     			{"es.tid.pce.pcep.objects.PCEPErrorObject"},
     			{"es.tid.pce.pcep.objects.PccReqId"},
@@ -71,8 +66,6 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.Svec"},
     			{"es.tid.pce.pcep.objects.SwitchLayer"},
     			{"es.tid.pce.pcep.objects.WavelengthAssignementObject"},
-				//"es.tid.pce.pcep.objects.XifiEndPoints",
-				//"es.tid.pce.pcep.objects.XifiUniCastEndPoints"
 				};
 		return Arrays.asList(objects);
     }
@@ -90,14 +83,15 @@ public class TestPCEPObjects {
 		PCEPObject object = (PCEPObject)objectClass.newInstance();
 		TestCommons.createAllFields(object);
 		object.encode();
+		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PCEPObject object2 = (PCEPObject) ctor.newInstance(object.getBytes(),0);
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
-
+		object.toString();
 		//Check if the fields are the same
-		assertTrue("testing object "+objectClass,object.equals(object2));
+		assertTrue("testing PCEP object "+objectClass,object.equals(object2));
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in object "+object,false);

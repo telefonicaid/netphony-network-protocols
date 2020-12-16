@@ -87,18 +87,19 @@ public class LocationSubTLV extends PCEPSubTLV {
 	
 	public void decode() {
 		LaRes= (int)( ( this.subtlv_bytes[4]>>2) & 0x3F);
+		Latitude = new byte[5];
 		Latitude[0]= (byte)( ( (this.subtlv_bytes[4]<<6) & 0xC0) | (this.subtlv_bytes[5]>>2) & 0x3F);
 		Latitude[1]= (byte)( ( (this.subtlv_bytes[5]<<6) & 0xC0) | (this.subtlv_bytes[6]>>2) & 0x3F);
 		Latitude[2]= (byte)( ( (this.subtlv_bytes[6]<<6) & 0xC0) | (this.subtlv_bytes[7]>>2) & 0x3F);
 		Latitude[3]= (byte)( ( (this.subtlv_bytes[7]<<6) & 0xC0) | (this.subtlv_bytes[8]>>2) & 0x3F);
 		Latitude[4]= (byte)( (this.subtlv_bytes[8]<<6) & 0xC0);
-		
+		Longitude= new byte[5];
 		LoRes= (int)( ( this.subtlv_bytes[10]>>2) & 0x3F);
-		Latitude[0]= (byte)( ( (this.subtlv_bytes[10]<<6) & 0xC0) | (this.subtlv_bytes[11]>>2) & 0x3F);
-		Latitude[1]= (byte)( ( (this.subtlv_bytes[11]<<6) & 0xC0) | (this.subtlv_bytes[12]>>2) & 0x3F);
-		Latitude[2]= (byte)( ( (this.subtlv_bytes[12]<<6) & 0xC0) | (this.subtlv_bytes[13]>>2) & 0x3F);
-		Latitude[3]= (byte)( ( (this.subtlv_bytes[13]<<6) & 0xC0) | (this.subtlv_bytes[14]>>2) & 0x3F);
-		Latitude[4]= (byte)( (this.subtlv_bytes[14]<<6) & 0xC0);
+		Longitude[0]= (byte)( ( (this.subtlv_bytes[10]<<6) & 0xC0) | (this.subtlv_bytes[11]>>2) & 0x3F);
+		Longitude[1]= (byte)( ( (this.subtlv_bytes[11]<<6) & 0xC0) | (this.subtlv_bytes[12]>>2) & 0x3F);
+		Longitude[2]= (byte)( ( (this.subtlv_bytes[12]<<6) & 0xC0) | (this.subtlv_bytes[13]>>2) & 0x3F);
+		Longitude[3]= (byte)( ( (this.subtlv_bytes[13]<<6) & 0xC0) | (this.subtlv_bytes[14]>>2) & 0x3F);
+		Longitude[4]= (byte)( (this.subtlv_bytes[14]<<6) & 0xC0);
 		
 	}
 

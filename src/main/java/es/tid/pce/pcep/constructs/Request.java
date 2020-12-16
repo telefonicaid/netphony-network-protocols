@@ -259,13 +259,6 @@ public class Request extends PCEPConstruct{
 					log.warn("Malformed ENDPOINTS DataPathID Object found");
 					throw new PCEPProtocolViolationException();
 				}
-			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
-				try {
-					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed P2MP ENDPOINTS DataPathID Object found");
-					throw new PCEPProtocolViolationException();
-				}
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
 				try {
 					endPoints=new P2MPEndPointsIPv4(bytes,offset);
@@ -290,14 +283,7 @@ public class Request extends PCEPConstruct{
 					throw new PCEPProtocolViolationException();
 				}
 			}
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC){
-				try {
-					endPoints=new XifiUniCastEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed EndPointsMAC Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
+
 			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV6){
 				try {
 					endPoints=new EndPointsIPv6(bytes,offset);

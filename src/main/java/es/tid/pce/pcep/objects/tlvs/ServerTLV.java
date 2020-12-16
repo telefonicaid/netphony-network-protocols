@@ -62,6 +62,9 @@ public class ServerTLV extends PCEPTLV {
 	
 	public ServerTLV(){
 		this.setTLVType(ObjectParameters.PCEP_TLV_TYPE_SERVER);
+		costList=new LinkedList <CostSubTLV> ();
+		processorList = new LinkedList <ProcessorSubTLV> ();
+		applicationList = new LinkedList <ApplicationSubTLV> ();
 		
 	}
 	

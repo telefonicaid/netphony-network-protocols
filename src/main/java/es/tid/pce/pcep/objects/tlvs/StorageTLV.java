@@ -4,12 +4,14 @@ import java.util.LinkedList;
 
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.LocationSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.NetworkSpecSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.PCEPSubTLVTypes;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.PowerSubTLV;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.ResourceIDSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.StorageInfoSubTLV;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.StorageSizeSubTLV;
@@ -54,6 +56,8 @@ public class StorageTLV extends PCEPTLV {
 	
 	public StorageTLV(){
 		this.setTLVType(ObjectParameters.PCEP_TLV_TYPE_STORAGE);
+		costList=new LinkedList <CostSubTLV> ();
+		volumeList = new LinkedList <VolumeSubTLV> ();
 		
 	}
 	

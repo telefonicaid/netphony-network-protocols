@@ -195,7 +195,7 @@ public abstract class RSVPObject implements RSVPElement{
 	public void decodeHeader(byte[] bytes, int offset){
 		
 		length = ((int)((bytes[offset] << 8) & 0xFF00)) | ((int)(bytes[offset+1] & 0x00FF));
-		classNum = (int) bytes[offset+2];
+		classNum = (int) (bytes[offset+2]&0xFF);
 		cType = (int) bytes[offset+3];
 		
 	}
@@ -210,7 +210,7 @@ public abstract class RSVPObject implements RSVPElement{
 		return length;
 	}
 
-	public void setLength(int length) {
+	protected void setLength(int length) {
 		this.length = length;
 	}
 

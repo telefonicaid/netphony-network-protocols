@@ -194,6 +194,12 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public SessionAttributeWResourceAffinities() {
+	  classNum = 207;
+		cType = 1;
+		
+  }
+  
 	/**
 	 * Constructor to be used when a new Session Attribute With Resource Affinities Object 
 	 * wanted to be attached to a new message.
@@ -219,14 +225,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		this.flags = flags;
 		this.sessionName = sessionName;
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 16;
 		
-		double sessionNameLength = sessionName.getBytes().length;
-		
-		this.nameLength = (int) sessionNameLength;
-		
-		int sessionName4BytesAlignLength = ((int) Math.ceil(sessionNameLength/4))*4; // Redondeo a 4 bytes
-		length = length + sessionName4BytesAlignLength;
 		
 		log.debug("Session Attribute With Resource Affinities Object Created");
 
@@ -239,12 +238,11 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	 * @param offset offset
 	 */
 	
-	public SessionAttributeWResourceAffinities(byte[] bytes, int offset){
+	public SessionAttributeWResourceAffinities(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		
 		this.decodeHeader(bytes,offset);
 		this.bytes = new byte[this.getLength()];
-		
-
+		decode(bytes, offset);
 		log.debug("Session Attribute With Resource Affinities Object Created");
 		
 	}
@@ -272,7 +270,15 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	public void encode() throws RSVPProtocolViolationException{
 		
 		log.debug("Starting Session Attribute With Resource Affinities encode");
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 16;
 		
+		double sessionNameLength = sessionName.getBytes().length;
+		
+		this.nameLength = (int) sessionNameLength;
+		
+		int sessionName4BytesAlignLength = ((int) Math.ceil(sessionNameLength/4))*4; // Redondeo a 4 bytes
+		length = length + sessionName4BytesAlignLength;
+		this.bytes = new byte[this.getLength()];
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -433,7 +439,6 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	public void setIncludeAll(int includeAll) {
 		this.includeAll = includeAll;
 	}
-	
 
 
 }

@@ -168,7 +168,11 @@ public class FlowSpec extends RSVPObject{
 		
 	}
 	
-	
+	public FlowSpec () {
+		super();
+		this.setClassNum(RSVPObjectParameters.RSVP_OBJECT_CLASS_FLOW_SPEC);
+		this.setcType(2);
+	}
 	
 	/*
 	
@@ -206,14 +210,15 @@ public class FlowSpec extends RSVPObject{
 		this.peakDataRate = peakDataRate;
 		this.minimumPoliciedUnit = minimumPoliciedUnit;
 		this.maximumPacketSize = maximumPacketSize;
-		this.length=36;
-		bytes = new byte[length];
+
 	}
 
 
 
 	@Override
 	public void encode() {
+		this.setLength(36);
+		bytes = new byte[this.getLength()];
 		encodeHeader();
 		
 		int offset = 4;

@@ -37,6 +37,10 @@ import es.tid.pce.pcep.objects.Metric;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PceIdIPv4;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV;
+import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
 import es.tid.rsvp.constructs.SenderDescriptor;
 import es.tid.rsvp.constructs.WFFlowDescriptor;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
@@ -52,12 +56,13 @@ import es.tid.rsvp.objects.SenderTemplateIPv4;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.Style;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
+import es.tid.rsvp.objects.subobjects.IPv4AddressRROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
 public class TestCommons {
 	public static void createAllFields(Object object){
 		try {
-			//System.out.println("Creating fields of "+object.getClass().getName() );
+			System.out.println("Creating fields of "+object.getClass().getName() );
 			List<Field> fieldListNS = new ArrayList<Field>();
 			List<Field> fieldList= Arrays.asList(object.getClass().getDeclaredFields());
 			//System.out.println("XXXX "+fieldList.size());
@@ -211,14 +216,15 @@ public class TestCommons {
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								String name2="set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								
-								//System.out.println("name "+name);
-								//System.out.println("name2 "+name2);
+								System.out.println("name "+name);
+								System.out.println("name2 "+name2);
 								//Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Method method = object.getClass().getMethod(name);
 								Method method2 = object.getClass().getMethod(name2,ca);
-								
 								Object res=method.invoke(object);
-								
+								if (res==null) {
+									System.out.println("MAAAAAL "+name);
+								}
 								Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									LinkedList<EROSubobject> llero = new LinkedList<EROSubobject>();
@@ -301,6 +307,7 @@ public class TestCommons {
 									method2.invoke(object,ll);
 									
 								}
+
 								
 								else if (((Class) at).isPrimitive()){
 									System.out.println("FIXME: PRIMITIVE "+ ((Class)at).getName());
@@ -376,6 +383,41 @@ public class TestCommons {
 										ll.add(os);
 										method2.invoke(object,ll);
 									} 
+									else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.ReachabilityTLV")) {
+										LinkedList<es.tid.pce.pcep.objects.tlvs.ReachabilityTLV> ll=new LinkedList<es.tid.pce.pcep.objects.tlvs.ReachabilityTLV>();
+										es.tid.pce.pcep.objects.tlvs.ReachabilityTLV os = new es.tid.pce.pcep.objects.tlvs.ReachabilityTLV();		
+										createAllFields(os);	
+										ll.add(os);
+										method2.invoke(object,ll);
+									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV")) {
+										LinkedList< es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV>();
+										 es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV os = new  es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV();		
+										createAllFields(os);	
+										ll.add(os);
+										method2.invoke(object,ll);
+									}else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
+										LinkedList< es.tid.rsvp.objects.subobjects.RROSubobject> ll=new LinkedList< es.tid.rsvp.objects.subobjects.RROSubobject>();
+										IPv4AddressRROSubobject os = new  IPv4AddressRROSubobject();		
+										createAllFields(os);	
+										ll.add(os);
+										method2.invoke(object,ll);
+									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV")) {
+										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV>();
+										method2.invoke(object,ll);
+										//FIXME: VACIAS POR AHORA
+									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV")) {
+										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV>();
+										method2.invoke(object,ll);
+										//FIXME: VACIAS POR AHORA
+									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV")) {
+										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV>();
+										method2.invoke(object,ll);
+										//FIXME: VACIAS POR AHORA
+									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV")) {
+										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV>();
+										method2.invoke(object,ll);
+										//FIXME: VACIAS POR AHORA
+									}
 									else {
 										
 										//Object ll= pt.getRawType(). .newInstance();

@@ -25,6 +25,9 @@ public class TestRSVPObjects {
     public static Collection configs() {
     	Object[][] objects={
     			{"es.tid.rsvp.objects.ERO"},
+    			{"es.tid.rsvp.objects.FlowSpec"},
+    			//{"es.tid.rsvp.objects.IntservSenderTSpec"}, Decode Not implemented!!
+    			{"es.tid.rsvp.objects.SessionAttributeWResourceAffinities"}, 
     			//{"es.tid.rsvp.objects.ErrorSpecIPv4"},
     			//{"es.tid.rsvp.objects.ErrorSpecIPv6"},
     			//{"es.tid.rsvp.objects.FilterSpecIPv4"},
@@ -55,7 +58,7 @@ public class TestRSVPObjects {
 		System.out.println(object.toString());
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
-
+		System.out.println("ok");
 		//Check if the fields are the same
 		assertTrue("testing RSVP object "+objectClass,object.equals(object2));
     	} catch(Exception e){
