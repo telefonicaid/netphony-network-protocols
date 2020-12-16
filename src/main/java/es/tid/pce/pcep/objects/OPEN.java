@@ -437,14 +437,6 @@ public class OPEN extends PCEPObject{
 	    Deadtimer=(byte)dt;
 	}
 
-	//FIXME: REMOVE
-	/**
-	 * 
-	 * @param ka Keepalive timer
-	 */
-	public void setKeeealive(int ka){
-		Keepalive=(byte)ka;
-	}
 	
 	public void setKeepalive(int keepalive) {
 		Keepalive = keepalive;

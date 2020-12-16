@@ -71,15 +71,15 @@ public class TestBGPLSPathAttributes {
 				nodeNLRI.setRoutingUniverseIdentifier(1);
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				nodeNLRI.setLocalNodeDescriptors(ln);
-				TestCommons.createAllFields(ln);
+				TestCommons.createAllFields(ln,true);
 			}else {
 				LinkNLRI linkNLRI=(LinkNLRI)ls;
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				linkNLRI.setLocalNodeDescriptors(ln);
-				TestCommons.createAllFields(ln);
+				TestCommons.createAllFields(ln,true);
 				RemoteNodeDescriptorsTLV lnr= new RemoteNodeDescriptorsTLV();
 				linkNLRI.setRemoteNodeDescriptorsTLV(lnr);
-				TestCommons.createAllFields(lnr);
+				TestCommons.createAllFields(lnr,true);
 				
 				LinkLocalRemoteIdentifiersLinkDescriptorSubTLV llrIdSTLV = new LinkLocalRemoteIdentifiersLinkDescriptorSubTLV();
 				llrIdSTLV.setLinkLocalIdentifier(1);
@@ -87,11 +87,11 @@ public class TestBGPLSPathAttributes {
 				linkNLRI.setLinkIdentifiersTLV(llrIdSTLV);
 				
 				IPv4InterfaceAddressLinkDescriptorsSubTLV ipInteSTLV= new IPv4InterfaceAddressLinkDescriptorsSubTLV();
-				TestCommons.createAllFields(ipInteSTLV);
+				TestCommons.createAllFields(ipInteSTLV,true);
 				linkNLRI.setIpv4InterfaceAddressTLV(ipInteSTLV);
 				
 				IPv4NeighborAddressLinkDescriptorSubTLV ipNeiAddSTLV = new IPv4NeighborAddressLinkDescriptorSubTLV();
-				TestCommons.createAllFields(ipNeiAddSTLV);
+				TestCommons.createAllFields(ipNeiAddSTLV,true);
 				linkNLRI.setIpv4NeighborAddressTLV(ipNeiAddSTLV);
 				
 				UndirectionalLinkDelayDescriptorSubTLV uldSTLV = new UndirectionalLinkDelayDescriptorSubTLV();

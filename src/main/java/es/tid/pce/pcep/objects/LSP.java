@@ -403,30 +403,7 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 	{
 		this.lspId = lspId;
 	}
-	public boolean iscFlag() 
-	{
-		return createFlag;
-	}
-	public void setCFlag(boolean cFlag) 
-	{
-		this.createFlag = cFlag;
-	}
-	public boolean isdFlag() 
-	{
-		return delegateFlag;
-	}
-	public void setDFlag(boolean dFlag) 
-	{
-		this.delegateFlag = dFlag;
-	}
-	public boolean issFlag() 
-	{
-		return syncFlag;
-	}
-	public void setSFlag(boolean sFlag) 
-	{
-		this.syncFlag = sFlag;
-	}
+
 	public int getOpFlags() 
 	{
 		return opFlags;
@@ -437,22 +414,6 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 		this.opFlags = opFlags;
 	}
 
-	public boolean isrFlag() 
-	{
-		return removeFlag;
-	}
-	public void setRFlag(boolean rFlag) 
-	{
-		this.removeFlag = rFlag;
-	}
-	public boolean isaFlag() 
-	{
-		return administrativeFlag;
-	}
-	public void setAFlag(boolean aFlag) 
-	{
-		this.administrativeFlag = aFlag;
-	}
 	public LSPDatabaseVersionTLV getLspDBVersion_tlv() 
 	{
 		return lspDBVersion_tlv;

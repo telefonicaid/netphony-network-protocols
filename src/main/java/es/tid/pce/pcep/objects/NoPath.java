@@ -245,17 +245,14 @@ public class NoPath  extends PCEPObject{
 		this.natureOfIssue = natureOfIssue;
 	}
 
-	public boolean iscFlag() {
+	public boolean isCFlag() {
 		return cFlag;
 	}
 
-	public void setcFlag(boolean cFlag) {
-		this.cFlag = cFlag;
-	}
-	
 	public void setCFlag(boolean cFlag) {
 		this.cFlag = cFlag;
 	}
+	
 	public NoPathTLV getNoPathTLV() {
 		return noPathTLV;
 	}

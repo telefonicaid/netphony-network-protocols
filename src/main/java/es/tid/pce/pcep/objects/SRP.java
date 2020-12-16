@@ -253,7 +253,7 @@ public class SRP extends PCEPObject
 		this.symPathName = symPathName;
 	}
 
-	public boolean isrFlag() 
+	public boolean isRFlag() 
 	{
 		return rFlag;
 	}
@@ -272,7 +272,7 @@ public class SRP extends PCEPObject
 	}
 	
 
-	public boolean iscFlag() {
+	public boolean isCFlag() {
 		return cFlag;
 	}
 

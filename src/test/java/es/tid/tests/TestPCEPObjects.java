@@ -3,8 +3,14 @@ package es.tid.tests;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 //import static org.junit.runners.Parameterized;
@@ -81,7 +87,7 @@ public class TestPCEPObjects {
     	System.out.println("Testing PCEP Object "+object);
     	Class objectClass=Class.forName(object);
 		PCEPObject object = (PCEPObject)objectClass.newInstance();
-		TestCommons.createAllFields(object);
+		TestCommons.createAllFields(object,true);
 		object.encode();
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
@@ -89,15 +95,29 @@ public class TestPCEPObjects {
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
+		//Check toString output
 		object.toString();
+		//Check all the gets
+		TestCommons.testGets(object);
 		//Check if the fields are the same
 		assertTrue("testing PCEP object "+objectClass,object.equals(object2));
+		//Check equals against differnt class object
+		Integer test1=new Integer(2);
+		test1.equals(object);
+		object2 = (PCEPObject) ctor.newInstance(object.getBytes(),0);
+		object2.encode();
+		assertTrue("testing PCEP object "+objectClass,object.equals(object2));
+		//Test with boolean false
+		TestCommons.createAllFields(object,false);
+		object.encode();
+		
+		
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in object "+object,false);
     		
     	}
     }
- 
+
     
 }

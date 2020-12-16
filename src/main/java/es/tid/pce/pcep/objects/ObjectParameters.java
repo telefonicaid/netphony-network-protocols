@@ -13,7 +13,7 @@ package es.tid.pce.pcep.objects;
  * @see <a href="https://www.iana.org/assignments/pcep/pcep.xhtml#pcep-tlv-type-indicators">IANA PCEP TLVs Registry</a> 
  */
 
-public class ObjectParameters {
+public final class ObjectParameters {
 	
 	/*
 	 * PCEP Standard Object Classes & Types
@@ -1196,9 +1196,7 @@ public class ObjectParameters {
 
     
    
-    
-    public static final byte[] redundancyID= new byte[]{1,2,3,4}; 
-    
+        
     /*******************************************************************/
     
     public static final int LSP_OPERATIONAL_DOWN = 0;

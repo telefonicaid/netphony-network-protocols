@@ -264,19 +264,19 @@ public class Svec extends PCEPObject{
 		}		
 		
 	}
-	public boolean islDiverseBit() {
+	public boolean isLDiverseBit() {
 		return lDiverseBit;
 	}
 	public void setLDiverseBit(boolean lDiverseBit) {
 		this.lDiverseBit = lDiverseBit;
 	}
-	public boolean isnDiverseBit() {
+	public boolean isNDiverseBit() {
 		return nDiverseBit;
 	}
 	public void setNDiverseBit(boolean nDiverseBit) {
 		this.nDiverseBit = nDiverseBit;
 	}
-	public boolean issRLGDiverseBit() {
+	public boolean isSRLGDiverseBit() {
 		return sRLGDiverseBit;
 	}
 	public void setSRLGDiverseBit(boolean sRLGDiverseBit) {

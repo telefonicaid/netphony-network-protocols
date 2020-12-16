@@ -60,7 +60,8 @@ import es.tid.rsvp.objects.subobjects.IPv4AddressRROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 
 public class TestCommons {
-	public static void createAllFields(Object object){
+	
+	public static void createAllFields(Object object, boolean choice_boolean){
 		try {
 			System.out.println("Creating fields of "+object.getClass().getName() );
 			List<Field> fieldListNS = new ArrayList<Field>();
@@ -80,7 +81,7 @@ public class TestCommons {
 						Method method = object.getClass().getMethod("set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()),field.getType());
 						//System.out.println("mi "+method.getName());
 						if (c.isPrimitive()){
-								fillPrimitive(object,method,ty);
+								fillPrimitive(object,method,ty,choice_boolean);
 						} else if (c.isArray()){
 							
 							Class c2=c.getComponentType();
@@ -103,21 +104,21 @@ public class TestCommons {
 							 }
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
 									o = new EndPointsIPv4();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
 								 o= new BandwidthRequested();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 								}else if  (c.getName().equals("es.tid.pce.pcep.constructs.GeneralizedBandwidth")) {
 									 o= new GeneralizedBandwidthSSON();
-									 createAllFields(o);
+									 createAllFields(o,choice_boolean);
 									}
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.LabelSet")) {
 								 o= new BitmapLabelSet();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 								}
 							 else if (c.getName().equals("es.tid.pce.pcep.objects.PceId")){
 								 o= new PceIdIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }else if (c.getName().equals("es.tid.of.DataPathID")){
 								 o= new DataPathID();
 								 ((DataPathID)o).setDataPathID("11:22:00:AA:33:BB:11:11");
@@ -128,11 +129,11 @@ public class TestCommons {
 								((IGPRouterIDNodeDescriptorSubTLV)o).setIpv4Address_ospf(in);
 							 } else if (c.getName().equals("es.tid.bgp.bgp4.update.fields.NLRI")){
 								 o= new LinkNLRI();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecificInformation")){
 								 o= new SwitchingCapabilitySpecificInformationPSC();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.LabelSetField")){
 								
@@ -144,7 +145,7 @@ public class TestCommons {
 								 a.setDwdmWavelengthLabel(dwdmWavelengthLabel);
 								 a.setBytesBitmap(new byte[5]);
 								 o= (Object)a;
-								 //createAllFields(o);
+								 //createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalDelayVariationDescriptorSubTLV")){
 								 System.out.println("FIX UndirectionalDelayVariationDescriptorSubTLV ");
@@ -156,28 +157,28 @@ public class TestCommons {
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.Session")){
 								 o= new SessionIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.RSVPHop")){
 								 o= new RSVPHopIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTemplate")){
 								 o= new SenderTemplateIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTSpec")){
 								 o= new SSONSenderTSpec();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }else if (c.getName().equals("es.tid.rsvp.objects.ErrorSpec")){
 								 o= new ErrorSpecIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }else if (c.getName().equals("es.tid.rsvp.objects.Scope")){
 								 o= new ScopeIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }else if (c.getName().equals("es.tid.rsvp.objects.ResvConfirm")){
 								 o= new ResvConfirmIPv4();
-								 createAllFields(o);
+								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.IntservADSPEC")){
 								 o= null;
@@ -197,7 +198,7 @@ public class TestCommons {
 							 else {
 								//System.out.println("Generic "+c.getName());
 									o = ((Class)ty).newInstance();	
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 							 }
 							
 							method.invoke(object, o);
@@ -244,7 +245,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.Metric")) {
 									LinkedList<Metric> ll=new LinkedList<Metric>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((Metric)o);
 									method2.invoke(object,ll);
 									
@@ -252,7 +253,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.ObjectiveFunction")) {
 									LinkedList<ObjectiveFunction> ll2=new LinkedList<ObjectiveFunction>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll2.add((ObjectiveFunction)o);
 									method2.invoke(object,ll2);
 									
@@ -260,7 +261,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.SwitchEncodingType")) {
 									LinkedList<SwitchEncodingType> ll=new LinkedList<SwitchEncodingType>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((SwitchEncodingType)o);
 									method2.invoke(object,ll);
 									
@@ -268,7 +269,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Path")) {
 									LinkedList<Path> ll=new LinkedList<Path>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((Path)o);
 									method2.invoke(object,ll);
 									
@@ -276,7 +277,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.NCF")) {
 									LinkedList<NCF> ll=new LinkedList<NCF>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((NCF)o);
 									method2.invoke(object,ll);
 									
@@ -284,7 +285,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.MetricPCE")) {
 									LinkedList<MetricPCE> ll=new LinkedList<MetricPCE>();
 									Object o = ((Class)at).newInstance();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((MetricPCE)o);
 									method2.invoke(object,ll);
 									
@@ -292,7 +293,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.open.BGP4OptionalParameter")) {
 									LinkedList<BGP4OptionalParameter> ll=new LinkedList<BGP4OptionalParameter>();
 									Object o = new BGP4CapabilitiesOptionalParameter();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((BGP4OptionalParameter)o);
 									method2.invoke(object,ll);
 									
@@ -300,7 +301,7 @@ public class TestCommons {
 								else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.open.BGP4Capability")) {
 									LinkedList<BGP4Capability> ll=new LinkedList<BGP4Capability>();
 									Object o = new BGP4OctetsASByteCapabilityAdvertisement();
-									createAllFields(o);
+									createAllFields(o,choice_boolean);
 									ll.add((BGP4Capability)o);
 									Object o2 = new MultiprotocolExtensionCapabilityAdvertisement();
 									ll.add((BGP4Capability)o2);
@@ -339,14 +340,14 @@ public class TestCommons {
 									} else if  (((Class)at).getName().equals("es.tid.ospf.ospfv2.lsa.LSA")) {
 										LinkedList<LSA> ll=new LinkedList<LSA>();
 										OSPFTEv2LSA os = new OSPFTEv2LSA();
-										createAllFields(os);									
+										createAllFields(os,choice_boolean);									
 										ll.add(os);
 										method2.invoke(object,ll);
 									}
 									else if  (((Class)at).getName().equals("es.tid.rsvp.constructs.SenderDescriptor")) {
 										LinkedList<SenderDescriptor> ll=new LinkedList<SenderDescriptor>();
 										SenderDescriptor os = new SenderDescriptor();
-										createAllFields(os);									
+										createAllFields(os,choice_boolean);									
 										ll.add(os);
 										method2.invoke(object,ll);
 									}
@@ -361,7 +362,7 @@ public class TestCommons {
 									else if  (((Class)at).getName().equals("es.tid.rsvp.objects.IntservSenderTSpec")) {
 										LinkedList<IntservSenderTSpec> ll=new LinkedList<IntservSenderTSpec>();
 										IntservSenderTSpec os = new IntservSenderTSpec();
-										createAllFields(os);									
+										createAllFields(os,choice_boolean);									
 										ll.add(os);
 										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("es.tid.rsvp.constructs.FlowDescriptor")) {
@@ -373,32 +374,32 @@ public class TestCommons {
 									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.SVECConstruct")) {
 										LinkedList<SVECConstruct> ll=new LinkedList<SVECConstruct>();
 										SVECConstruct os = new SVECConstruct();		
-										createAllFields(os);	
+										createAllFields(os,choice_boolean);	
 										ll.add(os);
 										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Request")) {
 										LinkedList<es.tid.pce.pcep.constructs.Request> ll=new LinkedList<es.tid.pce.pcep.constructs.Request>();
 										es.tid.pce.pcep.constructs.Request os = new es.tid.pce.pcep.constructs.Request();		
-										createAllFields(os);	
+										createAllFields(os,choice_boolean);	
 										ll.add(os);
 										method2.invoke(object,ll);
 									} 
 									else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.ReachabilityTLV")) {
 										LinkedList<es.tid.pce.pcep.objects.tlvs.ReachabilityTLV> ll=new LinkedList<es.tid.pce.pcep.objects.tlvs.ReachabilityTLV>();
 										es.tid.pce.pcep.objects.tlvs.ReachabilityTLV os = new es.tid.pce.pcep.objects.tlvs.ReachabilityTLV();		
-										createAllFields(os);	
+										createAllFields(os,choice_boolean);	
 										ll.add(os);
 										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV")) {
 										LinkedList< es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV>();
 										 es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV os = new  es.tid.pce.pcep.objects.tlvs.OSPFTE_LSA_TLV();		
-										createAllFields(os);	
+										createAllFields(os,choice_boolean);	
 										ll.add(os);
 										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
 										LinkedList< es.tid.rsvp.objects.subobjects.RROSubobject> ll=new LinkedList< es.tid.rsvp.objects.subobjects.RROSubobject>();
 										IPv4AddressRROSubobject os = new  IPv4AddressRROSubobject();		
-										createAllFields(os);	
+										  	
 										ll.add(os);
 										method2.invoke(object,ll);
 									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV")) {
@@ -424,7 +425,7 @@ public class TestCommons {
 										Object ll= ca.newInstance();
 										System.out.println("FIXME AND IMPLEMENT IT: "+((Class)at).getName());
 										Object o = ((Class)at).newInstance();
-										createAllFields(o);
+										createAllFields(o,choice_boolean);
 										//Method method3 = ll.getClass().getMethod("add");
 										//method3.invoke(ll, o);
 										Method[] methodss =ll.getClass().getDeclaredMethods();
@@ -449,7 +450,7 @@ public class TestCommons {
 		} 			
 	}
 
-	public static void fillPrimitive(Object object, Method method,Type tyy) {
+	public static void fillPrimitive(Object object, Method method,Type tyy, boolean choice_boolean) {
 		try {
 			Class ty=(Class)tyy;
 			if (ty.getName().equals("int")){
@@ -458,11 +459,41 @@ public class TestCommons {
 
 			}else if (ty.getName().equals("boolean")){
 
-				method.invoke(object,true);
+				method.invoke(object,choice_boolean);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+    public static void testGets(Object object) throws Exception{
+    	System.out.println("Testing gets of "+object.getClass().getName() );
+		List<Field> fieldListNS = new ArrayList<Field>();
+		List<Field> fieldList= Arrays.asList(object.getClass().getDeclaredFields());
+		for (Field field : fieldList) {
+			fieldListNS.add(field);
+			Type ty=field.getGenericType();
+			if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+				if (ty instanceof Class){
+					Class c =(Class)ty;
+					System.out.println("Class name: "+c.getName()); 
+					Method method;
+					try {
+						if (c.getName().equals("boolean")) {
+							method = object.getClass().getMethod("is"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));	
+						}else {
+							method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+						}
+						
+						method.invoke(object,null);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+    }
+
 }

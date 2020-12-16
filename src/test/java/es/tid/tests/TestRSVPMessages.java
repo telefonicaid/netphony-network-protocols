@@ -52,7 +52,7 @@ public class TestRSVPMessages {
     	System.out.println("Testing RSVP Message "+object);
     	Class objectClass=Class.forName(object);
     	RSVPMessage object = (RSVPMessage)objectClass.newInstance();
-		TestCommons.createAllFields(object);
+		TestCommons.createAllFields(object,true);
 		object.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);

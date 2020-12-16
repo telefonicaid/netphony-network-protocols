@@ -318,7 +318,7 @@ public class ExcludeRouteObject extends PCEPObject {
 		return true;
 	}
 
-	public boolean isfail() {
+	public boolean isFail() {
 		return fail;
 	}
 
