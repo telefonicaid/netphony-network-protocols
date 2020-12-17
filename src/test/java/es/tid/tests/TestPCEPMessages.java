@@ -27,16 +27,19 @@ public class TestPCEPMessages {
 	//@Parameters
 	@Parameters(name="{0}")
     public static Collection configs() {
-    	Object[][] objects={
-    			{"es.tid.pce.pcep.messages.PCEPKeepalive"},
+    	Object[][] objects={    			
     			{"es.tid.pce.pcep.messages.PCEPClose"},
-    			{"es.tid.pce.pcep.messages.PCEPOpen"},
     			//{"es.tid.pce.pcep.messages.PCEPError"},
+    			{"es.tid.pce.pcep.messages.PCEPInitiate"},
+    			{"es.tid.pce.pcep.messages.PCEPKeepalive"},
+    			//{"es.tid.pce.pcep.messages.PCEPMonRep"},//TODO
+    			{"es.tid.pce.pcep.messages.PCEPMonReq"},
+    			//{"es.tid.pce.pcep.messages.PCEPNotification"},
+    			{"es.tid.pce.pcep.messages.PCEPOpen"},
+    			{"es.tid.pce.pcep.messages.PCEPReport"},
     			{"es.tid.pce.pcep.messages.PCEPRequest"},
-    			//{"es.tid.pce.pcep.messages.PCEPResponse"},
-    			//{"es.tid.pce.pcep.messages.PCEPInitiate"},
-
-    			
+    			{"es.tid.pce.pcep.messages.PCEPResponse"},
+    			{"es.tid.pce.pcep.messages.PCEPUpdate"},
 				};
 		return Arrays.asList(objects);
     }

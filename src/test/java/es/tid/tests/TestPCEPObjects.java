@@ -74,6 +74,7 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.Svec"},
     			{"es.tid.pce.pcep.objects.SwitchLayer"},
     			{"es.tid.pce.pcep.objects.WavelengthAssignementObject"},
+    			{"es.tid.pce.pcep.objects.UnknownObject"},
 				};
 		return Arrays.asList(objects);
     }

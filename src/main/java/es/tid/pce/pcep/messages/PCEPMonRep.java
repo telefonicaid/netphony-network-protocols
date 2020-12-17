@@ -1,8 +1,13 @@
 package es.tid.pce.pcep.messages;
 
+import java.util.LinkedList;
+
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.constructs.Request;
+import es.tid.pce.pcep.constructs.SVECConstruct;
 import es.tid.pce.pcep.objects.Monitoring;
 import es.tid.pce.pcep.objects.PccReqId;
+import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.RequestParameters;
 
 /**
@@ -52,6 +57,15 @@ public class PCEPMonRep  extends PCEPMessage {
 		monitoring=new Monitoring();
 		pccReqId=new PccReqId();
 	}
+	
+	public PCEPMonRep(byte [] bytes)  throws PCEPProtocolViolationException
+	{
+		super(bytes);
+		//TODO: Complete decode!!!!
+		//decode();
+
+	}
+	
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
 		monitoring.encode();

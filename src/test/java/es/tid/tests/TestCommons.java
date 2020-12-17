@@ -27,14 +27,19 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecif
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.constructs.MetricPCE;
 import es.tid.pce.pcep.constructs.NCF;
+import es.tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import es.tid.pce.pcep.constructs.Path;
+import es.tid.pce.pcep.constructs.Response;
 import es.tid.pce.pcep.constructs.SVECConstruct;
+import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
+import es.tid.pce.pcep.constructs.UpdateRequest;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.Metric;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
+import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.PceIdIPv4;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV;
@@ -275,6 +280,46 @@ public class TestCommons {
 									method2.invoke(object,ll);
 									
 								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.PCEPIntiatedLSP")) {
+									LinkedList<PCEPIntiatedLSP> ll=new LinkedList<PCEPIntiatedLSP>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((PCEPIntiatedLSP)o);
+									method2.invoke(object,ll);
+									
+								} 
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.UpdateRequest")) {
+									LinkedList<UpdateRequest> ll=new LinkedList<UpdateRequest>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((UpdateRequest)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.StateReport")) {
+									LinkedList<StateReport> ll=new LinkedList<StateReport>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((StateReport)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Response")) {
+									LinkedList<Response> ll=new LinkedList<Response>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((Response)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.PceId")) {
+									LinkedList<PceId> ll=new LinkedList<PceId>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((PceId)o);
+									method2.invoke(object,ll);
+									
+								}
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.NCF")) {
 									LinkedList<NCF> ll=new LinkedList<NCF>();
 									Object o = ((Class)at).newInstance();
@@ -317,13 +362,15 @@ public class TestCommons {
 								}
 								else {
 									if  (((Class)at).getName().equals("java.lang.Integer")) {
-										LinkedList<Integer> ll=new LinkedList<Integer>();
-										method2.invoke(object,ll);										
+										LinkedList<Integer> ll=new LinkedList<Integer>();																				
 										Integer in=new Integer(3);
 										ll.add(in);
+										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("java.lang.Long")) {
+										LinkedList<Long> ll=new LinkedList<Long>();
 										Long in=new Long(5);
-										methods[0].invoke(res, in);
+										ll.add(in);
+										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("java.net.Inet4Address")) {
 										LinkedList<Inet4Address> ll=new LinkedList<Inet4Address>();
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
@@ -429,8 +476,8 @@ public class TestCommons {
 										createAllFields(o,choice_boolean);
 										//Method method3 = ll.getClass().getMethod("add");
 										//method3.invoke(ll, o);
-										Method[] methodss =ll.getClass().getDeclaredMethods();
-										methodss[0].invoke(ll, o);
+										//Method[] methodss =ll.getClass().getDeclaredMethods();
+										//methodss[0].invoke(ll, o);
 										method2.invoke(object,ll);	
 									}
 								}

@@ -19,6 +19,9 @@ public class UnknownObject extends PCEPObject{
 	}
 
 	public void encode(){
+		this.ObjectLength=4;
+		object_bytes=new byte[ObjectLength];
+		encode_header();
 	}
 
 	@Override

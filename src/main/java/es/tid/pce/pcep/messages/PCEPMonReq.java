@@ -79,7 +79,7 @@ public class PCEPMonReq  extends PCEPMessage {
 	private LinkedList<PceId> pceList;
 	private LinkedList<SVECConstruct> svecList;
 	private LinkedList<Request> requestList;
-	private LinkedList<Metric> metricList;
+
 	/**
 	 * Construct new PCEP PCMonReq
 	 */
@@ -89,12 +89,23 @@ public class PCEPMonReq  extends PCEPMessage {
 		this.setMessageType(PCEPMessageTypes.MESSAGE_PCMONREQ);
 		monitoring=new Monitoring();
 		pccReqId=new PccReqId();
-		svecList=new LinkedList<SVECConstruct>();
-		requestList=new LinkedList<Request>();
 		pceList = new LinkedList<PceId>();
-		metricList = new LinkedList<Metric>();
+		svecList = new LinkedList<SVECConstruct>();
+		requestList = new LinkedList<Request>();
 		
 	}
+	
+	public PCEPMonReq(byte [] bytes)  throws PCEPProtocolViolationException
+	{
+		super(bytes);
+		pceList = new LinkedList<PceId>();
+		svecList = new LinkedList<SVECConstruct>();
+		requestList = new LinkedList<Request>();
+		
+		decode();
+
+	}
+	
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
 		//Encoding PCEP Monitoring Request Message
@@ -154,10 +165,9 @@ public class PCEPMonReq  extends PCEPMessage {
 	 * @param bytes bytes
 	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
-	public void decode(byte[] bytes) throws PCEPProtocolViolationException{
+	public void decode() throws PCEPProtocolViolationException{
 		//Current implementation is strict, does not accept unknown objects 
-		this.messageBytes=new byte[bytes.length];
-		System.arraycopy(bytes, 0, this.messageBytes, 0, bytes.length);
+		byte[] bytes=this.messageBytes;
 		int offset=4;//We start after the object header
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_MONITORING){
@@ -266,18 +276,11 @@ public class PCEPMonReq  extends PCEPMessage {
 	public void setRequestList(LinkedList<Request> requestList) {
 		this.requestList = requestList;
 	}
-	public LinkedList<Metric> getMetricList() {
-		return metricList;
-	}
-	public void setMetricList(LinkedList<Metric> metricList) {
-		this.metricList = metricList;
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((metricList == null) ? 0 : metricList.hashCode());
 		result = prime * result
 				+ ((monitoring == null) ? 0 : monitoring.hashCode());
 		result = prime * result
@@ -298,11 +301,6 @@ public class PCEPMonReq  extends PCEPMessage {
 		if (getClass() != obj.getClass())
 			return false;
 		PCEPMonReq other = (PCEPMonReq) obj;
-		if (metricList == null) {
-			if (other.metricList != null)
-				return false;
-		} else if (!metricList.equals(other.metricList))
-			return false;
 		if (monitoring == null) {
 			if (other.monitoring != null)
 				return false;
