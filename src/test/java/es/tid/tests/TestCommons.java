@@ -79,7 +79,7 @@ public class TestCommons {
 						Class c =(Class)ty;
 						//System.out.println("Class name: "+c.getName()); 
 						Method method = object.getClass().getMethod("set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()),field.getType());
-						//System.out.println("mi "+method.getName());
+						//System.out.println("Method name: "+method.getName());
 						if (c.isPrimitive()){
 								fillPrimitive(object,method,ty,choice_boolean);
 						} else if (c.isArray()){
@@ -114,6 +114,7 @@ public class TestCommons {
 									}
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.LabelSet")) {
 								 o= new BitmapLabelSet();
+								 
 								 createAllFields(o,choice_boolean);
 								}
 							 else if (c.getName().equals("es.tid.pce.pcep.objects.PceId")){
@@ -454,10 +455,30 @@ public class TestCommons {
 		try {
 			Class ty=(Class)tyy;
 			if (ty.getName().equals("int")){
+				if (choice_boolean==false) {
+					method.invoke(object, 0);
+				} else {
+				    method.invoke(object, 1);
+				}
 
-				method.invoke(object, 0);
+			}else if (ty.getName().equals("long")){
 
-			}else if (ty.getName().equals("boolean")){
+				if (choice_boolean==false) {
+					method.invoke(object, 0L);
+				} else {
+				    method.invoke(object, 100L);
+				}
+
+			}else if (ty.getName().equals("float")){
+
+				if (choice_boolean==false) {
+					method.invoke(object, 0F);
+				} else {
+				    method.invoke(object, 3.14F);
+				}
+
+			}
+			else if (ty.getName().equals("boolean")){
 
 				method.invoke(object,choice_boolean);
 			}

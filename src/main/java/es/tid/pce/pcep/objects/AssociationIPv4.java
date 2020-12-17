@@ -27,7 +27,7 @@ import es.tid.protocol.commons.ByteHandler;
  *
  */
 public class AssociationIPv4 extends Association {
-	
+
 	/*
 	 *  The ASSOCIATION Object-Class value is 40.
 
@@ -127,29 +127,29 @@ public class AssociationIPv4 extends Association {
    Global Association Source:  As defined in Section 4 of [RFC6780].
 
 	 */
-	
+
 	/**
 	 * R (Removal - 1 bit):
 	 */
 	private boolean removal=false;
-	
+
 	/**
 	 *  Association Type
 	 */
 	private int assocType=0;
-	
+
 	/**
 	 * Association ID 
 	 */
 	private int assocID=0;
-	
+
 	private Inet4Address associationSource;
-	
+
 	private GlobalAssociationSourceTLV global_association_source_tlv=null;
 
 	private ExtendedAssociationIDTLV extended_ssociation_id_tlv=null;
 
-	
+
 	public AssociationIPv4() {
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ASSOCIATION);
@@ -179,62 +179,65 @@ public class AssociationIPv4 extends Association {
 		object_bytes[6]=0;
 		object_bytes[7]=(byte)(removal?1:0);
 		int offset=8;
-	    this.object_bytes[offset]=(byte)(assocType >> 8 & 0xff);
-	    this.object_bytes[offset+1]=(byte)(assocType & 0xff);
-	    this.object_bytes[offset+2]=(byte)(assocID >> 8 & 0xff);
-	    this.object_bytes[offset+3]=(byte)(assocID & 0xff);
-	    offset=12;
+		this.object_bytes[offset]=(byte)(assocType >> 8 & 0xff);
+		this.object_bytes[offset+1]=(byte)(assocType & 0xff);
+		this.object_bytes[offset+2]=(byte)(assocID >> 8 & 0xff);
+		this.object_bytes[offset+3]=(byte)(assocID & 0xff);
+		offset=12;
 		System.arraycopy(associationSource.getAddress(),0, this.object_bytes, 12, 4);
 		offset+=4;
 		if (global_association_source_tlv!=null) {
 			System.arraycopy(global_association_source_tlv.getTlv_bytes(),0,this.object_bytes,offset,global_association_source_tlv.getTotalTLVLength());
 			offset=offset+global_association_source_tlv.getTotalTLVLength();
-			
+
 		}
 		if (extended_ssociation_id_tlv!=null) {
 			System.arraycopy(extended_ssociation_id_tlv.getTlv_bytes(),0,this.object_bytes,offset,extended_ssociation_id_tlv.getTotalTLVLength());
 			offset=offset+extended_ssociation_id_tlv.getTotalTLVLength();
-			
+
 		}
 	}
 
 	@Override
 	public void decode() throws MalformedPCEPObjectException {
-		removal=(object_bytes[7]&0x01)==0x01;
-		int offset=8;
-		assocType=ByteHandler.decode2bytesInteger(this.object_bytes,offset);
-		assocID=ByteHandler.decode2bytesInteger(this.object_bytes,offset+2);
-		byte[] ip=new byte[4]; 
-		System.arraycopy(this.object_bytes,12, ip, 0, 4);
 		try {
+			removal=(object_bytes[7]&0x01)==0x01;
+			int offset=8;
+			assocType=ByteHandler.decode2bytesInteger(this.object_bytes,offset);
+			assocID=ByteHandler.decode2bytesInteger(this.object_bytes,offset+2);
+			byte[] ip=new byte[4]; 
+			System.arraycopy(this.object_bytes,12, ip, 0, 4);
+
 			associationSource=(Inet4Address)Inet4Address.getByAddress(ip);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		boolean fin=false;
-		if (ObjectLength==16){
-			fin=true;
-		}
-		offset=16;
-		while (!fin) {
-			int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
-			int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
-			switch (tlvtype){
-			case ObjectParameters.PCEP_TLV_GLOBAL_ASSOCIATION_SOURCE:
-				global_association_source_tlv=new GlobalAssociationSourceTLV(this.getObject_bytes(), offset);
-				break;
-			case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
-				extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
-				break;
-			default:
-				log.debug("UNKNOWN TLV found");
-				break;
-			}
-			offset=offset+tlvlength;
-			if (offset>=ObjectLength){
+
+			boolean fin=false;
+			if (ObjectLength==16){
 				fin=true;
 			}
+			offset=16;
+			while (!fin) {
+				int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
+				int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
+				switch (tlvtype){
+				case ObjectParameters.PCEP_TLV_GLOBAL_ASSOCIATION_SOURCE:
+					global_association_source_tlv=new GlobalAssociationSourceTLV(this.getObject_bytes(), offset);
+					break;
+				case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
+					extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
+					break;
+				default:
+					log.debug("UNKNOWN TLV found");
+					break;
+				}
+				offset=offset+tlvlength;
+				if (offset>=ObjectLength){
+					fin=true;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.debug(e.getMessage());
+			throw new MalformedPCEPObjectException();
 		}
 	}
 

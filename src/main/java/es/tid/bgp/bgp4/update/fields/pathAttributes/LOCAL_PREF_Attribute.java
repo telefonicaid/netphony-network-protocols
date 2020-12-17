@@ -27,7 +27,7 @@ public class LOCAL_PREF_Attribute extends PathAttribute{
 	}
 	public LOCAL_PREF_Attribute(byte []bytes, int offset){
 		super(bytes, offset);
-		decode(bytes,offset+mandatoryLength);		
+		decode(bytes,offset);		
 	}
 	@Override
 	public void encode() {
@@ -35,14 +35,15 @@ public class LOCAL_PREF_Attribute extends PathAttribute{
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];
 		encodeHeader();
-		this.bytes[3]=(byte)(preference_value>>>24 & 0xFF);
-		this.bytes[4]=(byte)(preference_value >>> 16 & 0xFF);
-		this.bytes[5]=(byte)(preference_value >>>8 & 0xFF);
+		this.bytes[3]=(byte)((preference_value>>>24) & 0xFF);
+		this.bytes[4]=(byte)((preference_value >>> 16) & 0xFF);
+		this.bytes[5]=(byte)((preference_value >>>8) & 0xFF);
 		this.bytes[6]=(byte)(preference_value & 0xFF);
 
 	}
 	public void decode(byte []bytes, int offset){
-		preference_value=((bytes[offset]&0xFF)<<0) |  ((bytes[offset+1]&0xFF)<<8) |  ((bytes[offset+2]&0xFF)<<16)|  ((bytes[offset+3]&0xFF)<<24);
+		offset+=mandatoryLength;
+		preference_value=((bytes[offset+3]&0xFF)<<0) |  ((bytes[offset+2]&0xFF)<<8) |  ((bytes[offset+1]&0xFF)<<16)|  ((bytes[offset]&0xFF)<<24);
 
 
 	}
