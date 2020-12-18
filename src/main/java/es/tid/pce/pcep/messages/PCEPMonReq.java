@@ -73,7 +73,7 @@ import es.tid.pce.pcep.objects.*;
  *
  */
 
-public class PCEPMonReq  extends PCEPMessage {
+public class PCEPMonReq  extends  PCEPMessage{
 	private Monitoring monitoring;
 	private PccReqId pccReqId;
 	private LinkedList<PceId> pceList;
@@ -162,7 +162,6 @@ public class PCEPMonReq  extends PCEPMessage {
 	
 	/**
 	 * Decodes a PCEP Mon Request following RFC 5440, RFC 5541, RFC 5886 and RFC 5521 
-	 * @param bytes bytes
 	 * @throws PCEPProtocolViolationException Exception when the message is malformed 
 	 */
 	public void decode() throws PCEPProtocolViolationException{

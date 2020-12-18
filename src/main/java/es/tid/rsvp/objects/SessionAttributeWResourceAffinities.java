@@ -236,6 +236,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	 * Object wanted to be decoded from a received message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
 	
 	public SessionAttributeWResourceAffinities(byte[] bytes, int offset) throws RSVPProtocolViolationException{

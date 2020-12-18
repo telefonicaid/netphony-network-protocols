@@ -4,6 +4,8 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
  * RFC 2205                          RSVP                    September 1997
 
@@ -38,9 +40,13 @@ public class ScopeIPv4 extends Scope{
 		
 		classNum = 7;
 		cType = 1;
-		length = 4;
 		sourceIpAddresses = new LinkedList<Inet4Address>();
 		
+	}
+	
+	public ScopeIPv4(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes, offset);
+		this.decode();
 	}
 	
 	
@@ -51,26 +57,6 @@ public class ScopeIPv4 extends Scope{
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-		
-	}
 
 	/*
 
@@ -105,8 +91,9 @@ public class ScopeIPv4 extends Scope{
 	}
 
 
-	public void decode(byte[] bytes, int offset) {
-        decodeHeader(bytes,offset);
+	public void decode() {
+	    sourceIpAddresses = new LinkedList<Inet4Address>();
+       int offset=0;
 		int headerSize = 4;
 		int unprocessedBytes = length - headerSize;
 		int currentIndex = offset+headerSize;
@@ -139,16 +126,4 @@ public class ScopeIPv4 extends Scope{
 
 
 
-	@Override
-	public void decodeHeader() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-
-	
-	
 }

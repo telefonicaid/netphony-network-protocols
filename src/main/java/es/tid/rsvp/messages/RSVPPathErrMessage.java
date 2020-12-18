@@ -148,9 +148,8 @@ public class RSVPPathErrMessage extends RSVPMessage {
 	 * Constructor to be used in case of creating a new Path Error message to be decoded
 	 * @param bytes bytes
 	 * @param length length 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
-	
 	public RSVPPathErrMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
 		super(bytes);	

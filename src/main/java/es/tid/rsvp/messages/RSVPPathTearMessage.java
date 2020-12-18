@@ -178,7 +178,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	 * Constructor to be used in case of creating a new Path TearDown message to be decoded
 	 * @param bytes bytes 
 	 * @param length length 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message 
 	 */
 	
 	public RSVPPathTearMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{

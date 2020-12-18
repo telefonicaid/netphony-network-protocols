@@ -381,7 +381,12 @@ public class TestCommons {
 										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
 										ll.add(in);
 										method2.invoke(object,ll);
-									} else if (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.OperatorAssociation")) {
+									} else if  (((Class)at).getName().equals("java.net.Inet6Address")) {
+										LinkedList<Inet6Address> ll=new LinkedList<Inet6Address>();
+										Inet6Address in=(Inet6Address) Inet6Address.getByName("2345:0425:2CA1:0000:0000:0567:5673:23b5");
+										ll.add(in);
+										method2.invoke(object,ll);
+									}else if (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.OperatorAssociation")) {
 										LinkedList<OperatorAssociation> operator_associations=new LinkedList<OperatorAssociation>();
 										OperatorAssociation oa= new OperatorAssociation();
 										oa.setAssocType(0x05);

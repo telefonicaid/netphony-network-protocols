@@ -39,6 +39,8 @@ public class TestRSVPObjects {
     			{"es.tid.rsvp.objects.HelloRequest"},
     			//{"es.tid.rsvp.objects.Integrity"},
     			{"es.tid.rsvp.objects.RRO"},
+    			{"es.tid.rsvp.objects.ScopeIPv4"},
+    			{"es.tid.rsvp.objects.ScopeIPv6"},
     			{"es.tid.rsvp.objects.SessionIPv6"},
 				};
 		return Arrays.asList(objects);

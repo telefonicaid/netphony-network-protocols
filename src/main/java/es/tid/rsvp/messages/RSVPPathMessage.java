@@ -213,7 +213,7 @@ public class RSVPPathMessage extends RSVPMessage{
 	 * 
 	 * @param bytes bytes 
 	 * @param length length
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
 	
 	public RSVPPathMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
@@ -445,7 +445,6 @@ public class RSVPPathMessage extends RSVPMessage{
 					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
-					System.out.println("maaaaas policy dataaaaa");
 				}else{
 					
 					// Fallo en cType
@@ -461,7 +460,6 @@ public class RSVPPathMessage extends RSVPMessage{
 					sd.decode(bytes, offset);
 					offset = offset + sd.getLength();
 					this.addSenderDescriptor(sd);
-					System.out.println("añado sender descriptor offset "+offset+ "legnth "+integrity.getLength());
 				}else{
 					
 					// Fallo en cType

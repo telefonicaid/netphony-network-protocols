@@ -182,7 +182,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	 * 
 	 * @param bytes bytes 
 	 * @param length length 
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
 	
 	public RSVPResvTearMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
@@ -409,15 +409,13 @@ public class RSVPResvTearMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Scope IPv4
-					scope = new ScopeIPv4();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv4(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else if(cType == 2){
 					
 					// Scope IPv6
-					scope = new ScopeIPv6();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv6(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else{

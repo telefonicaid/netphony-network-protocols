@@ -79,9 +79,8 @@ public class RRO extends RSVPObject{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
-	
 	public RRO(byte[] bytes, int offset) throws RSVPProtocolViolationException{	
 		super(bytes,offset);
 		decode();
@@ -118,9 +117,6 @@ public class RRO extends RSVPObject{
 		// Encontramos la longitud del objeto RRO
 		
 		this.length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;	// Cabecera 
-		if (rroSubobjects==null) {
-			System.out.println("NUUUUUUULO");
-		}
 		int subObjectsNumber = rroSubobjects.size();
 		for(int i = 0; i < subObjectsNumber; i++){
 			
@@ -155,11 +151,10 @@ public class RRO extends RSVPObject{
 		int unprocessedBytes = this.getLength() - RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		int offset= RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		while (unprocessedBytes > 0) {
-			System.out.println("quedaaaaan "+unprocessedBytes);
 			int subojectclass=EROSubobject.getType(this.getBytes(), offset);
 			int subojectlength=EROSubobject.getLength(this.getBytes(), offset);
-			System.out.println("subojectclass "+subojectclass);
-			System.out.println("subojectlength "+subojectlength);
+			//System.out.println("subojectclass "+subojectclass);
+			//System.out.println("subojectlength "+subojectlength);
 			switch(subojectclass) {
 				case SubObjectValues.RRO_SUBOBJECT_IPV4ADDRESS:
 					IPv4AddressRROSubobject sobjt4=new IPv4AddressRROSubobject(this.getBytes(), offset);
@@ -193,10 +188,6 @@ public class RRO extends RSVPObject{
 	}
 
 	public void setRroSubobjects(LinkedList<RROSubobject> rro) {
-		System.out.println("ME LLAAAAMAN");
-		if (rro==null) {
-			System.out.println("ME LLAAAAMAN CON NULL");
-		}
 		this.rroSubobjects = rro;
 	}
 

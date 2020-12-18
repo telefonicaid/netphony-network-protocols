@@ -104,9 +104,8 @@ public class HelloRequest extends Hello{
 	 * from a received message.
 	 * @param bytes bytes
 	 * @param offset offset
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
-	
 	public HelloRequest(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		super(bytes,offset);
 		this.decodeHeader(bytes,offset);

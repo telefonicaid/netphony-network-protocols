@@ -108,17 +108,16 @@ public class HelloACK extends Hello{
 	 * from a received message.
 	 * @param bytes bytes 
 	 * @param offset offset
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
-	
-	public HelloACK(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		public HelloACK(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		super(bytes, offset);
 		this.decode(bytes,offset);
 		log.debug("Hello ACK Object Created");
 		
 	}
 	
-	/**
+	/*
 	<p>
 	0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -156,7 +155,7 @@ public class HelloACK extends Hello{
 		
 	}
 	
-	/**
+	/*
 	<p>
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
