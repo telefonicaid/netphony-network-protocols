@@ -314,7 +314,7 @@ public class TestCommons {
 								}
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.PceId")) {
 									LinkedList<PceId> ll=new LinkedList<PceId>();
-									Object o = ((Class)at).newInstance();
+									Object o = new PceIdIPv4();
 									createAllFields(o,choice_boolean);
 									ll.add((PceId)o);
 									method2.invoke(object,ll);

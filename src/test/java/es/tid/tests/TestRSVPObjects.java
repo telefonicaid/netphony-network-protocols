@@ -35,6 +35,7 @@ public class TestRSVPObjects {
     			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4"},
     			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv6"},
     			//{"es.tid.rsvp.objects.FlowLabelFilterSpecIPv6"},
+    			{"es.tid.rsvp.objects.HelloACK"},
 				};
 		return Arrays.asList(objects);
     }

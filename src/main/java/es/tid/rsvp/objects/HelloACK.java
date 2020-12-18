@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ public class HelloACK extends Hello{
       (0).</p>
 	 */
 	
-	private int srcInstance;
+	private long srcInstance;
 	
 	/**
 	 *<p>The most recently received Src_Instance value received from the
@@ -65,7 +66,7 @@ public class HelloACK extends Hello{
       ever been seen from the neighbor.</p>
 	 */
 		
-	private int dstInstance;
+	private long dstInstance;
 	
 	/**
 	 * Log
@@ -73,6 +74,13 @@ public class HelloACK extends Hello{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  
+  
+  public HelloACK() {
+	  classNum = 22;
+		cType = 2;
+  }
+  
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
 	 * to a new message.
@@ -80,7 +88,7 @@ public class HelloACK extends Hello{
 	 * @param dstInstance destination instance
 	 */
 	
-	public HelloACK(int srcInstance, int dstInstance){
+	public HelloACK(long srcInstance, long dstInstance){
 		
 		classNum = 22;
 		cType = 2;
@@ -126,7 +134,8 @@ public class HelloACK extends Hello{
 	public void encode() throws RSVPProtocolViolationException{
 		
 		log.debug("Starting Hello ACK encode");
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
+		this.bytes = new byte[this.getLength()];
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -166,11 +175,11 @@ public class HelloACK extends Hello{
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
-		srcInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
+		srcInstance = ByteHandler.decode4bytesLong(bytes,currentIndex);
 		
 		currentIndex = currentIndex + 4;
 		
-		dstInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
+		dstInstance = ByteHandler.decode4bytesLong(bytes,currentIndex);
 		
 		log.debug("Decoding Hello ACK accomplished");
 		
@@ -178,7 +187,7 @@ public class HelloACK extends Hello{
 	
 	// Getters & Setters
 
-	public int getSrcInstance() {
+	public long getSrcInstance() {
 		return srcInstance;
 	}
 
@@ -186,7 +195,7 @@ public class HelloACK extends Hello{
 		this.srcInstance = srcInstance;
 	}
 
-	public int getDstInstance() {
+	public long getDstInstance() {
 		return dstInstance;
 	}
 
