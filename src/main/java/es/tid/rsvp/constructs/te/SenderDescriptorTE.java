@@ -216,7 +216,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 			
 			if(cType == 2){		// cType adecuado
 				
-				senderTSPEC = new IntservSenderTSpec();
+				senderTSPEC = new IntservSenderTSpec(bytes,offset);
 				
 			}else{
 				
@@ -225,7 +225,6 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			senderTSPEC.decode(bytes,offset);
 			offset = offset + senderTSPEC.getLength();
 			length = length + senderTSPEC.getLength();
 			bytesLeft = bytesLeft - senderTSPEC.getLength();
@@ -248,7 +247,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				
 				if(cType == 2){		// cType adecuado
 					
-					adspec = new IntservADSPEC();
+					adspec = new IntservADSPEC(bytes,offset);
 					
 				}else{
 					
@@ -257,7 +256,6 @@ public class SenderDescriptorTE extends SenderDescriptor {
 					throw new RSVPProtocolViolationException();
 					
 				}
-				adspec.decode(bytes,offset);
 				offset = offset + adspec.getLength();
 				length = length + adspec.getLength();
 				log.debug("ADSPEC decoded");
@@ -275,7 +273,7 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				
 				if(cType == 1){		// cType adecuado
 					
-					rro = new RRO();
+					rro = new RRO(bytes,offset);
 					
 				}else{
 					
@@ -284,7 +282,6 @@ public class SenderDescriptorTE extends SenderDescriptor {
 					throw new RSVPProtocolViolationException();
 					
 				}
-				rro.decode(bytes,offset);
 				offset = offset + rro.getLength();
 				length = length + rro.getLength();
 				log.debug("RRO decoded");

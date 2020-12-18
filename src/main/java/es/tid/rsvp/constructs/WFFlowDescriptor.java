@@ -148,7 +148,6 @@ public class WFFlowDescriptor extends FlowDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			flowSpec.decode(bytes,offset);
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();

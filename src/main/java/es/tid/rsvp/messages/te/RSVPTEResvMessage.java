@@ -354,7 +354,6 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 					
 					// LSPTunnelSession IPv4
 					session = new SessionLSPTunnelIPv4(bytes,offset);
-					session.decode(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
@@ -362,7 +361,6 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 					
 					// LSPTunnelSession IPv6
 					session = new SessionLSPTunnelIPv6(bytes,offset);
-					session.decode(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -402,8 +400,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -419,8 +416,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -482,8 +478,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					

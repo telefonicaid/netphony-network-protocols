@@ -199,7 +199,6 @@ public class FFErrorFlowDescriptor extends ErrorFlowDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			flowSpec.decode(bytes,offset);
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();

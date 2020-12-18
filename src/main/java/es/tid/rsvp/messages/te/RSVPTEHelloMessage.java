@@ -250,8 +250,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{

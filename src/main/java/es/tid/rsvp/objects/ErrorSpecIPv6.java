@@ -74,12 +74,7 @@ public class ErrorSpecIPv6 extends ErrorSpec{
 		classNum = 6;
 		cType = 2;
 		length = 24;
-		bytes = new byte[length];
-		try{
-			errorNodeAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+
 		flags = 0;
 		errorCode = 0;
 		errorValue = 0;
@@ -90,8 +85,7 @@ public class ErrorSpecIPv6 extends ErrorSpec{
 		
 		classNum = 6;
 		cType = 2;
-		length = 24;
-		bytes = new byte[length];
+
 		this.errorNodeAddress = errorNodeAddress;
 		this.flags = flags;
 		this.errorCode = errorCode;
@@ -99,27 +93,12 @@ public class ErrorSpecIPv6 extends ErrorSpec{
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	
-	@Override
-	public void encodeHeader() {
-
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
+	public ErrorSpecIPv6(byte[] bytes, int offset){
+		super(bytes, offset);
+		this.decode(bytes,offset);
 	}
+	
+	
 
 	/*
 
@@ -139,6 +118,8 @@ public class ErrorSpecIPv6 extends ErrorSpec{
 	
 	@Override
 	public void encode() {
+		length = 24;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = errorNodeAddress.getAddress();
@@ -151,11 +132,6 @@ public class ErrorSpecIPv6 extends ErrorSpec{
 		bytes[23] = (byte)(errorValue & 0xFF);
 	}
 
-	@Override
-	public void decodeHeader() {
-
-		
-	}
 
 	@Override
 	public void decode(byte[] bytes, int offset) {

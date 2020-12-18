@@ -361,7 +361,7 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 				
 				if(cType == 1){		// cType adecuado
 					
-					rro = new RRO();
+					rro = new RRO(bytes,offset);
 					
 				}else{
 					
@@ -370,7 +370,6 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 					throw new RSVPProtocolViolationException();
 					
 				}
-				rro.decode(bytes,offset);
 				offset = offset + rro.getLength();
 				length = length + rro.getLength();
 				log.debug("RRO decoded");

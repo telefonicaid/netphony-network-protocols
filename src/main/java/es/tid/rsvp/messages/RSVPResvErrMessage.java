@@ -231,32 +231,19 @@ public class RSVPResvErrMessage extends RSVPMessage {
 	 * Constructor to be used in case of creating a new Resv Error message to be decoded
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPResvErrMessage(byte[] bytes, int length){
+	public RSVPResvErrMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		this.length = length;
-		policyData = new LinkedList<PolicyData>();
+		super(bytes);	
+		decode();
+		
 		
 		log.debug("RSVP Resv Error Message Created");
 	}
 	
 	
-	@Override
-	public void encodeHeader() {
-
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		
-	}
-
 	@Override
 	public void encode() throws RSVPProtocolViolationException{
 		log.debug("Starting RSVP Resv Error Message encode");
@@ -407,8 +394,7 @@ public class RSVPResvErrMessage extends RSVPMessage {
 	@Override
 	public void decode() throws RSVPProtocolViolationException {
 
-		decodeHeader();
-		
+		policyData = new LinkedList<PolicyData>();
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			
@@ -420,16 +406,14 @@ public class RSVPResvErrMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -470,8 +454,7 @@ public class RSVPResvErrMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -488,15 +471,15 @@ public class RSVPResvErrMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Error Spec IPv4
-					errorSpec = new ErrorSpecIPv4();
-					errorSpec.decode(bytes, offset);
+					errorSpec = new ErrorSpecIPv4(bytes, offset);
+
 					offset = offset + errorSpec.getLength();
 					
 				}else if(cType == 2){
 					
 					// Error Spec IPv6
-					errorSpec = new ErrorSpecIPv6();
-					errorSpec.decode(bytes, offset);
+					errorSpec = new ErrorSpecIPv6(bytes, offset);
+
 					offset = offset + errorSpec.getLength();
 					
 				}else{
@@ -535,8 +518,7 @@ public class RSVPResvErrMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					

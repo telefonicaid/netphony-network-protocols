@@ -202,7 +202,7 @@ public abstract class RSVPObject implements RSVPElement{
 	
 	public abstract void encode() throws RSVPProtocolViolationException;
 	
-	public abstract void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException;
+	//public abstract void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException;
 
 	// Getters & Setters
 	

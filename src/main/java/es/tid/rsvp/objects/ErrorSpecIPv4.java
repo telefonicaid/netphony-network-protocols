@@ -66,16 +66,10 @@ public class ErrorSpecIPv4 extends ErrorSpec{
 	public static final int ERROR_SPEC_FLAG_GUILTY = 0x02;
 	
 	public ErrorSpecIPv4(){
-		
+		super();
 		classNum = 6;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
-		try{
-			errorNodeAddress = (Inet4Address) Inet4Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+		
 		flags = 0;
 		errorCode = 0;
 		errorValue = 0;
@@ -83,7 +77,7 @@ public class ErrorSpecIPv4 extends ErrorSpec{
 	}
 	
 	public ErrorSpecIPv4(Inet4Address errorNodeAddress, int flags, int errorCode, int errorValue){
-		
+		super();
 		classNum = 6;
 		cType = 1;
 		length = 12;
@@ -95,27 +89,11 @@ public class ErrorSpecIPv4 extends ErrorSpec{
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-		
+	public ErrorSpecIPv4(byte[] bytes, int offset){
+		super(bytes, offset);
+		this.decode(bytes,offset);
 	}
+
 
 	/*
 
@@ -128,11 +106,21 @@ public class ErrorSpecIPv4 extends ErrorSpec{
 	 */
 	
 	public void encode() {
+		
+		length = 12;
+		bytes = new byte[length];
 
 		encodeHeader();
 		
-		byte[] addr = errorNodeAddress.getAddress();
 		
+		if (errorNodeAddress==null) {
+			try{
+				errorNodeAddress = (Inet4Address) Inet4Address.getLocalHost();
+			}catch(UnknownHostException e){
+				
+			}
+		}
+		byte[] addr = errorNodeAddress.getAddress();
 		System.arraycopy(addr,0, getBytes(), 4, addr.length);
 		
 		bytes[8] = (byte)(flags & 0xFF);

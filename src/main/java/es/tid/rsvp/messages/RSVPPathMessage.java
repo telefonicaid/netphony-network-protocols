@@ -213,40 +213,23 @@ public class RSVPPathMessage extends RSVPMessage{
 	 * 
 	 * @param bytes bytes 
 	 * @param length length
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPPathMessage(byte[] bytes, int length){
+	public RSVPPathMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		
-		this.length = length;
-		
-		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();		
-		
+		super(bytes);		
 		log.debug("RSVP Path Message Created");
+		decode();
 	}
 	
 		public RSVPPathMessage(byte[] bytes) throws RSVPProtocolViolationException{
 		super(bytes);		
-		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();	
 		log.debug("RSVP Path Message Created");
 			decode();
 	}
 	
-	@Override
-	public void encodeHeader() {
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		log.debug("RSVP Path Message Header encoded");
-	}
+	
 	
 	/**
 	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
@@ -261,6 +244,7 @@ public class RSVPPathMessage extends RSVPMessage{
 		// Obtengo el tamaï¿½o de la cabecera comun
 		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		length+=commonHeaderSize;
+		
 		// Obtencion del tamaï¿½o completo del mensaje
 		
 		if(integrity != null){
@@ -313,7 +297,6 @@ public class RSVPPathMessage extends RSVPMessage{
 				
 		}
 						
-		
 		int sdSize = senderDescriptors.size();
 
 		for(int i = 0; i < sdSize; i++){
@@ -325,61 +308,44 @@ public class RSVPPathMessage extends RSVPMessage{
 			
 		}
 		
-		
 		bytes = new byte[length];
 		encodeHeader();
 		int currentIndex = commonHeaderSize;
 		
 		if(integrity != null){
-			
+			System.out.println("codo");
 			//Campo Opcional
-			integrity.encode();
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
 		// Campo Obligatorio
-		session.encode();
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
 		// Campo Obligatorio
-		rsvpHop.encode();
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
 		// Campo Obligatorio
-		timeValues.encode();
 		System.arraycopy(timeValues.getBytes(), 0, bytes, currentIndex, timeValues.getLength());
 		currentIndex = currentIndex + timeValues.getLength();
 		
 		// Campos Opcionales
 		for(int i = 0; i < pdSize; i++){
-				
+			System.out.println("codo");	
 			PolicyData pd = (PolicyData) policyData.get(i);
-			pd.encode();
 			System.arraycopy(pd.getBytes(), 0, bytes, currentIndex, pd.getLength());
 			currentIndex = currentIndex + pd.getLength();
 		}
-	
 		// Lista de Sender Descriptors
 		for(int i = 0; i < sdSize; i++){
-			
+			System.out.println("codo");
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
-			try{
-				sd.encode();
 				System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
 				currentIndex = currentIndex + sd.getLength();
-
-			}catch(RSVPProtocolViolationException e){
-				
-				log.error("Errors during Sender Descriptor number " + i + " encoding");
-				
-			}
 						
 		}
-
-				
-				
+		
 		log.debug("RSVP Path Message encoding accomplished");
 		
 	}
@@ -391,11 +357,14 @@ public class RSVPPathMessage extends RSVPMessage{
 	public void decode() throws RSVPProtocolViolationException {
 
 		decodeHeader();
-		
+		policyData = new LinkedList<PolicyData>();
+		senderDescriptors = new LinkedList<SenderDescriptor>();	
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
-			//System.out.println("offset "+offset+ "legnth "+length);
+			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
+			System.out.println("offset "+offset+ "legnth "+length);
+			System.out.println("classum "+classNum);
 			if(classNum == 1){
 				
 				// Session Object
@@ -403,16 +372,14 @@ public class RSVPPathMessage extends RSVPMessage{
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
-					
+					session = new SessionIPv4(bytes, offset);
+			
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -449,8 +416,8 @@ public class RSVPPathMessage extends RSVPMessage{
 				// FIXME: Integrity Object
 				int cType = RSVPObject.getcType(bytes,offset);
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
+					System.out.println("offset "+offset+ "legnth "+integrity.getLength());
 					offset = offset + integrity.getLength();
 					
 			}
@@ -460,8 +427,7 @@ public class RSVPPathMessage extends RSVPMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -476,11 +442,10 @@ public class RSVPPathMessage extends RSVPMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
-					
+					System.out.println("maaaaas policy dataaaaa");
 				}else{
 					
 					// Fallo en cType
@@ -496,7 +461,7 @@ public class RSVPPathMessage extends RSVPMessage{
 					sd.decode(bytes, offset);
 					offset = offset + sd.getLength();
 					this.addSenderDescriptor(sd);
-					
+					System.out.println("añado sender descriptor offset "+offset+ "legnth "+integrity.getLength());
 				}else{
 					
 					// Fallo en cType
@@ -505,7 +470,7 @@ public class RSVPPathMessage extends RSVPMessage{
 				}				
 			}  
 			else {
-				//System.out.println("class "+	classNum					);
+				System.out.println("class "+	classNum					);
 				throw new RSVPProtocolViolationException();
 			}
 		}

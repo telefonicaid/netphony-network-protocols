@@ -244,11 +244,9 @@ public class RSVPResvMessage extends RSVPMessage {
 		rsvpChecksum = 0xFF;
 		sendTTL = 0x00;
 		reserved = 0x00;
-		length = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		policyData = new LinkedList<PolicyData>();
 		flowDescriptors = new LinkedList<FlowDescriptor>();
-		
 		log.debug("RSVP Resv Message Created");
 	}
 	
@@ -256,41 +254,28 @@ public class RSVPResvMessage extends RSVPMessage {
 	 * 
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPResvMessage(byte[] bytes, int length){
+	public RSVPResvMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		this.length = length;
-		policyData = new LinkedList<PolicyData>();
-		flowDescriptors = new LinkedList<FlowDescriptor>();
+		super(bytes);	
+		decode();
 		
 		log.debug("RSVP Resv Message Created");
 	}
 	
-	@Override
-	public void encodeHeader() {
-
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		
-	}
 
 	@Override
 	public void encode() throws RSVPProtocolViolationException {
 
 		log.debug("Starting RSVP Resv Message encode");
+		length = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
+		
+
 		
 		//FIXME: COMPUTE CHECKSUM!!
 		rsvpChecksum = 0xFF;
-		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
-		length=commonHeaderSize;
 		
 		if(integrity != null){
 			integrity.encode();
@@ -386,7 +371,7 @@ public class RSVPResvMessage extends RSVPMessage {
 		
 		bytes = new byte[length];
 		encodeHeader();
-		int currentIndex = commonHeaderSize;
+		int currentIndex = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;;
 		
 		if(integrity != null){
 			
@@ -449,8 +434,8 @@ public class RSVPResvMessage extends RSVPMessage {
 	@Override
 	public void decode() throws RSVPProtocolViolationException {
 	
-		decodeHeader();
-		
+		policyData = new LinkedList<PolicyData>();
+		flowDescriptors = new LinkedList<FlowDescriptor>();
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			int classNum = RSVPObject.getClassNum(bytes,offset);
@@ -463,15 +448,13 @@ public class RSVPResvMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 				}else{
 					// Fallo en cType
@@ -505,8 +488,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -521,8 +503,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -584,8 +565,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					

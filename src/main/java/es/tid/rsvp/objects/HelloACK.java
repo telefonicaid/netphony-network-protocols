@@ -77,6 +77,7 @@ public class HelloACK extends Hello{
   
   
   public HelloACK() {
+	  super();
 	  classNum = 22;
 		cType = 2;
   }
@@ -89,7 +90,7 @@ public class HelloACK extends Hello{
 	 */
 	
 	public HelloACK(long srcInstance, long dstInstance){
-		
+		super();
 		classNum = 22;
 		cType = 2;
 		
@@ -107,13 +108,12 @@ public class HelloACK extends Hello{
 	 * from a received message.
 	 * @param bytes bytes 
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public HelloACK(byte[] bytes, int offset){
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+	public HelloACK(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes, offset);
+		this.decode(bytes,offset);
 		log.debug("Hello ACK Object Created");
 		
 	}
@@ -191,7 +191,7 @@ public class HelloACK extends Hello{
 		return srcInstance;
 	}
 
-	public void setSrcInstance(int srcInstance) {
+	public void setSrcInstance(long srcInstance) {
 		this.srcInstance = srcInstance;
 	}
 
@@ -199,7 +199,7 @@ public class HelloACK extends Hello{
 		return dstInstance;
 	}
 
-	public void setDstInstance(int dstInstance) {
+	public void setDstInstance(long dstInstance) {
 		this.dstInstance = dstInstance;
 	}
 	

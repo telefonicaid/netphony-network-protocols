@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +57,7 @@ public class HelloRequest extends Hello{
       (0).</p>
 	 */
 	
-	private int srcInstance;
+	private long srcInstance;
 	
 	/**
 	 *<p>The most recently received Src_Instance value received from the
@@ -64,7 +65,7 @@ public class HelloRequest extends Hello{
       ever been seen from the neighbor.</p>
 	 */
 		
-	private int dstInstance;
+	private long dstInstance;
 	
 	/**
 	 * Log
@@ -72,6 +73,11 @@ public class HelloRequest extends Hello{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public HelloRequest() {
+	  classNum = 22;
+		cType = 1;
+  }
+  
 	/**
 	 * Constructor to be used when a new Hello Request Object wanted to be attached 
 	 * to a new message.
@@ -79,7 +85,7 @@ public class HelloRequest extends Hello{
 	 * @param dstInstance destination instance
 	 */
 	
-	public HelloRequest(int srcInstance, int dstInstance){
+	public HelloRequest(long srcInstance, long dstInstance){
 		
 		classNum = 22;
 		cType = 1;
@@ -98,13 +104,13 @@ public class HelloRequest extends Hello{
 	 * from a received message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public HelloRequest(byte[] bytes, int offset){
-		
+	public HelloRequest(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
 		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+		this.decode(bytes,offset);		
 		log.debug("Hello Request Object Created");
 		
 	}
@@ -125,7 +131,8 @@ public class HelloRequest extends Hello{
 	public void encode() throws RSVPProtocolViolationException{
 		
 		log.debug("Starting Hello Request encode");
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
+		this.bytes = new byte[this.getLength()];
 		encodeHeader();
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
@@ -165,11 +172,11 @@ public class HelloRequest extends Hello{
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
-		srcInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
+		srcInstance = ByteHandler.decode4bytesLong(bytes,currentIndex);
 		
 		currentIndex = currentIndex + 4;
 		
-		dstInstance = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3]);
+		dstInstance = ByteHandler.decode4bytesLong(bytes,currentIndex);
 		
 		log.debug("Decoding Hello Request accomplished");
 		
@@ -177,19 +184,19 @@ public class HelloRequest extends Hello{
 	
 	// Getters & Setters
 
-	public int getSrcInstance() {
+	public long getSrcInstance() {
 		return srcInstance;
 	}
 
-	public void setSrcInstance(int srcInstance) {
+	public void setSrcInstance(long srcInstance) {
 		this.srcInstance = srcInstance;
 	}
 
-	public int getDstInstance() {
+	public long getDstInstance() {
 		return dstInstance;
 	}
 
-	public void setDstInstance(int dstInstance) {
+	public void setDstInstance(long dstInstance) {
 		this.dstInstance = dstInstance;
 	}
 	

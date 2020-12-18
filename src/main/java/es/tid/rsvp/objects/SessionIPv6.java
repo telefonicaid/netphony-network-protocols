@@ -3,6 +3,8 @@ package es.tid.rsvp.objects;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /*
 *
 
@@ -79,13 +81,7 @@ public class SessionIPv6 extends Session{
 		
 		classNum = 1;
 		cType = 2;
-		length = 24;
-		bytes = new byte[length];
-		try{
-			destAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+
 		protocolId = 0;
 		flags = 0;
 		destPort = 0;
@@ -109,28 +105,11 @@ public class SessionIPv6 extends Session{
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		// TODO Auto-generated method stub
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-
-		
+	public SessionIPv6(byte[] bytes, int offset){
+		super(bytes, offset);
+		this.decode();
 	}
+	
 
 	/*
 	 *     +-------------+-------------+-------------+-------------+
@@ -149,26 +128,47 @@ public class SessionIPv6 extends Session{
 	
 	@Override
 	public void encode() {
+		length = 24;
+		bytes = new byte[length];
+		
 		// TODO Auto-generated method stub
 		encodeHeader();
-		
-		byte[] addr = destAddress.getAddress();
-		
-		System.arraycopy(getBytes(),4, addr, 0, addr.length);
-		
-		bytes[16] = (byte) protocolId;
-		bytes[17] = (byte) flags;
-		bytes[18] = (byte)((destPort>>8) & 0xFF);
-		bytes[19] = (byte)(destPort & 0xFF);
+		int offset = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		if (destAddress!=null)  {
+			byte[] addr = destAddress.getAddress();
+			System.arraycopy(getBytes(),4, addr, 0, addr.length);
+		}else {
+			bytes[offset]=0;
+			bytes[offset+1]=0;
+			bytes[offset+2]=0;
+			bytes[offset+3]=0;
+			bytes[offset+4]=0;
+			bytes[offset+5]=0;
+			bytes[offset+6]=0;
+			bytes[offset+7]=0;
+			bytes[offset+8]=0;
+			bytes[offset+9]=0;
+			bytes[offset+10]=0;
+			bytes[offset+11]=0;
+			bytes[offset+12]=0;
+			bytes[offset+13]=0;
+			bytes[offset+14]=0;
+			bytes[offset+15]=0;
+		}
+		offset+=16;
+		bytes[offset] = (byte) protocolId;
+		bytes[offset+1] = (byte) flags;
+		bytes[offset+2] = (byte)((destPort>>8) & 0xFF);
+		bytes[offset+3] = (byte)(destPort & 0xFF);
 				
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
+	
+	public void decode() {
 		
 		byte[] receivedAddress = new byte[16];
 		
-		offset = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		int offset= RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
 		System.arraycopy(bytes,offset,receivedAddress,0,16);
 		try{
@@ -178,8 +178,8 @@ public class SessionIPv6 extends Session{
 		}
 		offset = offset + 16;
 		protocolId = bytes[offset];
-		flags = bytes[offset+1];
-		destPort = bytes[offset+2] | bytes[offset+3];
+		flags = bytes[offset+1]&0xFF;
+		destPort = ByteHandler.decode2bytesInteger(bytes,offset+2);
 		
 	}
 	

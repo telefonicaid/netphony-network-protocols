@@ -182,39 +182,24 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	 * 
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPResvTearMessage(byte[] bytes, int length){
+	public RSVPResvTearMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		this.length = length;
-		flowDescriptors = new LinkedList<FlowDescriptor>();
+		super(bytes);
+		decode();
+		
 		
 		log.debug("RSVP Path Message Created");
 	}
 	
-	/**
-	 * 
-	 */
-		
-	public void encodeHeader() {
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		
-	}
 
 	/**
 	 * 
 	 */
 	
 	public void encode() throws RSVPProtocolViolationException{
-
 		log.debug("Starting RSVP Resv TearDown Message encode");
 		//FIXME: COMPUTE CHECKSUM!!
 		rsvpChecksum = 0xFF;
@@ -346,7 +331,8 @@ public class RSVPResvTearMessage extends RSVPMessage {
 	public void decode() throws RSVPProtocolViolationException {
 
 		decodeHeader();
-		
+		flowDescriptors = new LinkedList<FlowDescriptor>();
+
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			
@@ -359,16 +345,14 @@ public class RSVPResvTearMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -409,8 +393,7 @@ public class RSVPResvTearMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{

@@ -14,8 +14,7 @@ public abstract class SenderTSpec extends RSVPObject{
 		classNum = 12;
 	}
 	public SenderTSpec(byte[] bytes, int offset){
-		//dar valores de clase 12 y ctype 2
-		//decode()
+		super(bytes,offset);
 	}
 	
 }

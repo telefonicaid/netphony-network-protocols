@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /* RFC 2205                          RSVP                    September 1997
  *    A.3 INTEGRITY Class
 
@@ -14,12 +16,13 @@ public class Integrity extends RSVPObject{
 	public Integrity(){
 		
 		classNum = 4;
-		cType = 1;
-		length = 4;
-		bytes = new byte[length];
-		
+		cType = 1;	
 	}
 	
+	public Integrity(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		decode( );
+	}
 	/*
 	 *    A.3 INTEGRITY Class
 
@@ -37,8 +40,8 @@ public class Integrity extends RSVPObject{
 		encodeHeader();
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
+	
+	public void decode() {
 		// TODO Auto-generated method stub
 		
 	}

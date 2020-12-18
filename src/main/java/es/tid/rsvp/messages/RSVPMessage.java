@@ -128,20 +128,16 @@ public abstract class RSVPMessage implements RSVPElement{
 	}
 	
 
-	public RSVPMessage(byte[] bytes){
-		//
-		this.bytes=bytes;
+	public RSVPMessage(byte[] bytes_input){
+		length = (((int)((bytes_input[6]&0xFF)<<8)& 0xFF00)|  ((int)bytes_input[7] & 0xFF));
+		this.bytes=new byte[length];
+		System.arraycopy(bytes_input, 0, bytes, 0, length);
 		decodeHeader();
 		//FIXME: SACAR Y CREAR OBJETOS
 	}
 
-	//FIXME: Crear metodo para codificar cabecera
-	
-	/**
-	 * 
-	 */
-	
-	public abstract void encodeHeader();
+
+
 	
 
 	/**
@@ -176,6 +172,20 @@ public abstract class RSVPMessage implements RSVPElement{
 		length = (((int)((bytes[6]&0xFF)<<8)& 0xFF00)|  ((int)bytes[7] & 0xFF));
 	}
 	
+	/**
+	 * 
+	 */
+	
+	public void encodeHeader() {
+		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
+		bytes[1]= (byte) msgType;
+		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
+		bytes[3]= (byte)(rsvpChecksum & 0xFF);
+		bytes[4]= (byte) sendTTL;
+		bytes[5]= (byte) reserved;
+		bytes[6]= (byte)((length>>8) & 0xFF);
+		bytes[7]= (byte)(length & 0xFF);
+	}
 	
 	/**
 	 * 

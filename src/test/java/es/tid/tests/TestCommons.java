@@ -63,6 +63,7 @@ import es.tid.rsvp.objects.Style;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4AddressRROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
+import es.tid.rsvp.objects.subobjects.RROSubobject;
 
 public class TestCommons {
 	
@@ -232,7 +233,7 @@ public class TestCommons {
 								if (res==null) {
 									System.out.println("MAAAAAL "+name);
 								}
-								Method[] methods =res.getClass().getDeclaredMethods();	
+								//Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									LinkedList<EROSubobject> llero = new LinkedList<EROSubobject>();
 									IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
@@ -242,7 +243,11 @@ public class TestCommons {
 									llero.add(eroso);
 									method2.invoke(object, llero);									
 								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
-									System.out.println("FIXME: es.tid.rsvp.objects.subobjects.RROSubobject");
+									LinkedList<RROSubobject> ll=new LinkedList<RROSubobject>();
+									IPv4AddressRROSubobject o = new IPv4AddressRROSubobject();
+									createAllFields(o,choice_boolean);
+									ll.add(o);
+									method2.invoke(object,ll);
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
 									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.tlvs.PCEPTLV")) {

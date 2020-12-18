@@ -86,7 +86,6 @@ public class ReportedRouteObject extends PCEPObject{
 	 */
 	public ReportedRouteObject(byte[] bytes, int offset) throws MalformedPCEPObjectException {
 		super(bytes,offset);
-		rroSubObjectList=new LinkedList<RROSubobject>();
 		decode();
 	}
 	
@@ -113,6 +112,7 @@ public class ReportedRouteObject extends PCEPObject{
 	 * Decode Reported Route Object
 	 */
 	public void decode() throws MalformedPCEPObjectException {
+		rroSubObjectList=new LinkedList<RROSubobject>();
 		boolean fin=false;
 		int offset=4;//Position of the next subobject
 		if (ObjectLength==4){

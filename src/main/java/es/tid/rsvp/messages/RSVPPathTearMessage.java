@@ -178,13 +178,12 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	 * Constructor to be used in case of creating a new Path TearDown message to be decoded
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPPathTearMessage(byte[] bytes, int length){
-		this.bytes = bytes;
-		this.length = length;
-		senderDescriptors = new LinkedList<SenderDescriptor>();
-		
+	public RSVPPathTearMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
+		super(bytes);	
+		decode();
 		log.debug("RSVP Path Message Created");
 	}
 	
@@ -293,7 +292,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 	public void decode() throws RSVPProtocolViolationException {
 
 		decodeHeader();
-		
+		senderDescriptors = new LinkedList<SenderDescriptor>();
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			int classNum = RSVPObject.getClassNum(bytes,offset);
@@ -302,20 +301,17 @@ public class RSVPPathTearMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else if(cType == 7){
 					// LSPTunnelSession IPv4
 					session = new SessionLSPTunnelIPv4(bytes,offset);
-					session.decode(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -346,8 +342,7 @@ public class RSVPPathTearMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{

@@ -1,5 +1,8 @@
 package es.tid.rsvp.objects;
 
+import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*RFC 2205                          RSVP                    September 1997
  *    A.4 TIME_VALUES Class
 
@@ -24,7 +27,7 @@ package es.tid.rsvp.objects;
 
 public class TimeValues extends RSVPObject{
 
-	protected int refreshPeriod;
+	protected long refreshPeriod;
 	
 	/*	
     0             1              2             3
@@ -43,17 +46,21 @@ public class TimeValues extends RSVPObject{
 		classNum = 5;
 		cType = 1;
 		length = 8;
-		bytes = new byte[length];
-		refreshPeriod = 0;
+		
 		
 	}
 	
-	public TimeValues(int refreshPeriod){
+	public TimeValues(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		decode( );
+	}
+	
+	public TimeValues(long refreshPeriod){
 		
 		classNum = 5;
 		cType = 1;
 		length = 8;
-		bytes = new byte[length];
+		
 		this.refreshPeriod = refreshPeriod;
 	}
 	
@@ -77,6 +84,8 @@ public class TimeValues extends RSVPObject{
 	
 	@Override
 	public void encode() {
+		bytes = new byte[length];
+		refreshPeriod = 0;
 		// TODO Auto-generated method stub
 		encodeHeader();
 		
@@ -86,20 +95,18 @@ public class TimeValues extends RSVPObject{
 		bytes[7] = (byte)(refreshPeriod & 0xFF);
 	}
 
-	public int getRefreshPeriod() {
+	public long getRefreshPeriod() {
 		return refreshPeriod;
 	}
 
-	public void setRefreshPeriod(int refreshPeriod) {
+	public void setRefreshPeriod(long refreshPeriod) {
 		this.refreshPeriod = refreshPeriod;
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
-		refreshPeriod  = (int) (((int)bytes[offset+4] << 24)  | ((int)bytes[offset+5] << 16)
-	 			  | ((int)bytes[offset+6] << 8)
-	 			  | ((int)bytes[offset+7]));		
-		//refreshPeriod = (int)(bytes[offset+4] | bytes[offset+5] | bytes[offset+6] | bytes[offset+7]);
+	
+	public void decode() {
+		int offset = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		refreshPeriod  = ByteHandler.decode4bytesLong(this.getBytes(),offset);	
 
 	}
 }

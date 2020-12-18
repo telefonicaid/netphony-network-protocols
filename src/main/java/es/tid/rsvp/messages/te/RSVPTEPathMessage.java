@@ -409,7 +409,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 					// LSPTunnelSession IPv4
 					session = new SessionLSPTunnelIPv4(bytes,offset);
-					session.decode(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
@@ -417,7 +416,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 					// LSPTunnelSession IPv6
 					session = new SessionLSPTunnelIPv6(bytes,offset);
-					session.decode(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -458,8 +456,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -475,8 +472,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -506,19 +502,16 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				if(cType == 1){
 					// LabelRequestWOLabelRange
 					labelRequest = new LabelRequestWOLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
 					offset = offset + labelRequest.getLength();
 					
 				}else if(cType == 2){
 					// LabelRequestWATMLabelRange
 					labelRequest = new LabelRequestWATMLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
 					offset = offset + labelRequest.getLength();
 								
 				}else if(cType == 2){
 					// LabelRequestWFrameRelayLabelRange
 					labelRequest = new LabelRequestWFrameRelayLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
 					offset = offset + labelRequest.getLength();
 								
 				}else{
@@ -554,7 +547,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					

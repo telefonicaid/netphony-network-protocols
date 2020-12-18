@@ -198,7 +198,6 @@ public class SEFlowDescriptorTE extends SEFlowDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			flowSpec.decode(bytes,offset);
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();

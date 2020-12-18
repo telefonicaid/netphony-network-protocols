@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
  * 
 
@@ -21,21 +23,28 @@ public class PolicyData extends RSVPObject{
 		
 		classNum = 14;
 		cType = 1;
-		length = 4;
-		bytes = new byte[length];
+		
 		
 	}
+	
+public PolicyData(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	super(bytes,offset);
+	decode( );
+}
+	
 	
 
 	@Override
 	public void encode() {
+		length = 4;
+		bytes = new byte[length];
 		// TODO Auto-generated method stub
 		encodeHeader();
 	}
 
 
-	@Override
-	public void decode(byte[] bytes, int offset){
+	
+	public void decode(){
 		// TODO Auto-generated method stub
 		
 	}

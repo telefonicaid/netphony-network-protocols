@@ -166,14 +166,14 @@ public class RSVPResvConfMessage extends RSVPMessage {
 	 * Constructor to be used in case of creating a new Resv Confirmation message to be decoded
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException 
 	 */
 	
-	public RSVPResvConfMessage(byte[] bytes, int length){
+	public RSVPResvConfMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		this.length = length;
+		super(bytes);	
+		decode();
 		
-		flowDescriptors = new LinkedList<FlowDescriptor>();
 		
 		log.debug("RSVP Resv Confirmation Message Created");
 	}
@@ -323,7 +323,8 @@ public class RSVPResvConfMessage extends RSVPMessage {
 	@Override
 	public void decode() throws RSVPProtocolViolationException {
 		decodeHeader();
-		
+		flowDescriptors = new LinkedList<FlowDescriptor>();
+
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
 			
@@ -335,16 +336,14 @@ public class RSVPResvConfMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -360,15 +359,15 @@ public class RSVPResvConfMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Error Spec IPv4
-					errorSpec = new ErrorSpecIPv4();
-					errorSpec.decode(bytes, offset);
+					errorSpec = new ErrorSpecIPv4(bytes, offset);
+					
 					offset = offset + errorSpec.getLength();
 					
 				}else if(cType == 2){
 					
 					// Error Spec IPv6
-					errorSpec = new ErrorSpecIPv6();
-					errorSpec.decode(bytes, offset);
+					errorSpec = new ErrorSpecIPv6(bytes, offset);
+					
 					offset = offset + errorSpec.getLength();
 					
 				}else{
@@ -384,8 +383,7 @@ public class RSVPResvConfMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{

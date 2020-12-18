@@ -79,8 +79,7 @@ public class FilterSpecIPv4 extends FilterSpec{
 		
 		classNum = 10;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
+
 		try{
 			srcAddress = (Inet4Address) Inet4Address.getLocalHost();
 		}catch(UnknownHostException e){
@@ -94,13 +93,15 @@ public class FilterSpecIPv4 extends FilterSpec{
 		
 		classNum = 10;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
 		this.srcAddress = srcAddress;
 		this.srcPort = srcPort;
 		
 	}
 
+	public FilterSpecIPv4(byte[] bytes, int offset){
+		super(bytes, offset);
+		this.decode(bytes,offset);
+	}
 	/*
 
            +-------------+-------------+-------------+-------------+
@@ -112,6 +113,8 @@ public class FilterSpecIPv4 extends FilterSpec{
 	 */
 
 	public void encode() {
+		length = 12;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = srcAddress.getAddress();

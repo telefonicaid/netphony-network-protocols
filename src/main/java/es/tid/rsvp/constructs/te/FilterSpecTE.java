@@ -242,7 +242,6 @@ public class FilterSpecTE extends RSVPConstruct {
 			if(cType == 1){		// LAbel
 				
 				rro = new RRO(bytes, offset);
-				rro.decode(bytes, offset);
 				offset = offset + rro.getLength();
 				length = length + rro.getLength();
 				bytesLeft = bytesLeft - rro.getLength();

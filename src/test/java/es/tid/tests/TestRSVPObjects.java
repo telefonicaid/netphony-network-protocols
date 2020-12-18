@@ -28,14 +28,18 @@ public class TestRSVPObjects {
     			//{"es.tid.rsvp.objects.FlowSpec"},FIXME: Decode Not implemented!!
     			//{"es.tid.rsvp.objects.IntservSenderTSpec"}, FIXME: Decode Not implemented!!
     			{"es.tid.rsvp.objects.SessionAttributeWResourceAffinities"}, 
-    			//{"es.tid.rsvp.objects.ErrorSpecIPv4"},
-    			//{"es.tid.rsvp.objects.ErrorSpecIPv6"},
+    			{"es.tid.rsvp.objects.ErrorSpecIPv4"},
+    			{"es.tid.rsvp.objects.ErrorSpecIPv6"},
     			//{"es.tid.rsvp.objects.FilterSpecIPv4"},
     			//{"es.tid.rsvp.objects.FilterSpecIPv6"},
     			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4"},
     			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv6"},
     			//{"es.tid.rsvp.objects.FlowLabelFilterSpecIPv6"},
     			{"es.tid.rsvp.objects.HelloACK"},
+    			{"es.tid.rsvp.objects.HelloRequest"},
+    			//{"es.tid.rsvp.objects.Integrity"},
+    			{"es.tid.rsvp.objects.RRO"},
+    			{"es.tid.rsvp.objects.SessionIPv6"},
 				};
 		return Arrays.asList(objects);
     }
@@ -53,6 +57,7 @@ public class TestRSVPObjects {
 		RSVPObject object = (RSVPObject)objectClass.newInstance();
 		TestCommons.createAllFields(object,true);
 		object.encode();
+		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPObject object2 = (RSVPObject) ctor.newInstance(object.getBytes(),0);
 		object2.encode();

@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
  * 
 
@@ -136,15 +138,19 @@ public class IntservSenderTSpec extends SenderTSpec{
 	
 	
 	public IntservSenderTSpec(){
-		//super();
+		super();
 		cType = 2;
-		length = 36;
-		bytes = new byte[length];
+
 		
 	}
 	
+	public IntservSenderTSpec(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		decode( );
+	}
+	
 	public IntservSenderTSpec(float tokenBucketRate, float tokenBucketSize, float peakDataRate, long minimumPoliciedUnit, long maximumPacketSize){
-		
+		super();
     	this.formatVersionNumber = 0;
     	this.overallLength = 7;
     	this.serviceHeader = 1;
@@ -161,8 +167,7 @@ public class IntservSenderTSpec extends SenderTSpec{
 
 		classNum = 12;
 		cType = 2;
-		length = 36;
-		bytes = new byte[length];
+		
 		
 	}
 	
@@ -197,6 +202,8 @@ public class IntservSenderTSpec extends SenderTSpec{
 	
 	@Override
 	public void encode() {
+		length = 36;
+		bytes = new byte[length];
 		// TODO Auto-generated method stub
 		encodeHeader();
 		
@@ -265,11 +272,10 @@ public class IntservSenderTSpec extends SenderTSpec{
 	}
 
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
+	
+	public void decode() {
 		//FIXME: Codificar el decode si investigamos en la RFC de intserv
-		decodeHeader(bytes, offset);
-		
+				
 	}
 
 	public int getFormatVersionNumber() {

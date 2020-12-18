@@ -165,6 +165,7 @@ public class FlowSpec extends RSVPObject{
 //	}
 	public FlowSpec(byte [] bytes, int offset) {
 		super(bytes,offset);
+		decode();
 		
 	}
 	
@@ -285,9 +286,8 @@ public class FlowSpec extends RSVPObject{
 		
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
-		this.decodeHeader(bytes, offset);
+	
+	public void decode() {
 		//FALTA POR IMPLEMENTAR		
 	}
 

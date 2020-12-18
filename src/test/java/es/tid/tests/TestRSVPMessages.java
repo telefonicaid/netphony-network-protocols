@@ -56,7 +56,6 @@ public class TestRSVPMessages {
 		object.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);
-		object2.decode();
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
