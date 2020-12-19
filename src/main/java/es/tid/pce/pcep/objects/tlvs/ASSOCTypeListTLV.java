@@ -7,11 +7,13 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
- *  ASSOC-Type-List TLV
+ *  ASSOC-Type-List TLV (35) 
 
    The PCEP ASSOC-Type-List TLV is OPTIONAL.  It MAY be carried within
    an OPEN object sent by a PCEP speaker in an Open message to a PCEP
    peer so as to indicate the list of supported Association Types.
+   
+   @see <a href="https://tools.ietf.org/html/rfc8697">RFC 8697</a>
 
  * @author ogondio
  *

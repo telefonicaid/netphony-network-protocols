@@ -4,9 +4,20 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
- * The STATEFUL-PCE-CAPABILITY TLV is an optional TLV for use in the
-   OPEN Object for stateful PCE capability negotiation.  Its format is
+/**
+ * STATEFUL-PCE-CAPABILITY (Type 16)
+   
+   @author jimbo, ayk
+   
+ */
+
+
+public class StatefulCapabilityTLV extends PCEPTLV 
+{
+	/*
+	 *  * The STATEFUL-PCE-CAPABILITY TLV is an optional TLV for use in the
+   OPEN Object for stateful PCE capability negotiation.  
+   Its format is
    shown in the following figure:
 
       0                   1                   2                   3
@@ -54,15 +65,8 @@ import es.tid.protocol.commons.ByteHandler;
 
    Unassigned bits are considered reserved.  They MUST be set to 0 on
    transmission and MUST be ignored on receipt.
-   
-   @author jimbo, ayk
-   
- */
 
-
-public class StatefulCapabilityTLV extends PCEPTLV 
-{
-	
+	 */
 	protected boolean uFlag;
 	protected boolean sFlag;
 	protected boolean iFlag;
