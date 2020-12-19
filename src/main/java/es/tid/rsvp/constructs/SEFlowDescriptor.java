@@ -242,8 +242,7 @@ public class SEFlowDescriptor extends FlowDescriptor {
 			
 			if(cType == 1){		// FilterSpecIPv4
 				
-				FilterSpec filterSpec = new FilterSpecIPv4();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FilterSpecIPv4(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
@@ -251,17 +250,15 @@ public class SEFlowDescriptor extends FlowDescriptor {
 				
 			}else if(cType == 2){		// FilterSpecIPv6
 				
-				FilterSpec filterSpec = new FilterSpecIPv6();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FilterSpecIPv6(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
-				bytesLeft = bytesLeft - filterSpec.getLength();
+				bytesLeft = bytesLeft - filterSpec.getLength(bytes,offset);
 			
 			}else if(cType == 3){		// FilterSpecIPv6
 				
-				FilterSpec filterSpec = new FlowLabelFilterSpecIPv6();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FlowLabelFilterSpecIPv6(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
@@ -288,8 +285,7 @@ public class SEFlowDescriptor extends FlowDescriptor {
 				// Hay un nuevo Filter Spec
 				if(cType == 1){		// FilterSpecIPv4
 					
-					FilterSpec filterSpec = new FilterSpecIPv4();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FilterSpecIPv4(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
@@ -297,8 +293,7 @@ public class SEFlowDescriptor extends FlowDescriptor {
 					
 				}else if(cType == 2){		// FilterSpecIPv6
 					
-					FilterSpec filterSpec = new FilterSpecIPv6();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FilterSpecIPv6(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
@@ -306,8 +301,7 @@ public class SEFlowDescriptor extends FlowDescriptor {
 				
 				}else if(cType == 3){		// FilterSpecIPv6
 					
-					FilterSpec filterSpec = new FlowLabelFilterSpecIPv6();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FlowLabelFilterSpecIPv6(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();

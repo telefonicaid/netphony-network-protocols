@@ -1,6 +1,6 @@
 package es.tid.rsvp.objects;
 
-/*
+/* FIXME: TODO
  * 
 
 -
@@ -35,11 +35,15 @@ public class SenderTemplateIPv6 extends SenderTemplate{
 		
 		classNum = 11;
 		cType = 2;
-		length = 4;
-		bytes = new byte[length];
+		
 		
 	}
 	
+	public SenderTemplateIPv6(byte[] bytes, int offset){
+		
+		super();
+		decode();
+	}
 	/*	
     0             1              2             3
     +-------------+-------------+-------------+-------------+
@@ -56,12 +60,14 @@ public class SenderTemplateIPv6 extends SenderTemplate{
 
 	@Override
 	public void encode() {
+		length = 4;
+		bytes = new byte[length];
 		encodeHeader();
 	}
 
 
 	@Override
-	public void decode(byte[] bytes, int offset) {
+	public void decode() {
 		// FIXME: modificar cuando se mire la rfc
 		
 	}

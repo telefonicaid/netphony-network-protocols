@@ -187,7 +187,6 @@ public class SenderDescriptorTE extends SenderDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			senderTemplate.decode(bytes,offset);
 			offset = offset + senderTemplate.getLength();
 			length = length + senderTemplate.getLength();
 			bytesLeft = bytesLeft - senderTemplate.getLength();

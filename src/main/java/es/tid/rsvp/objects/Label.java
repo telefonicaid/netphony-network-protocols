@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +119,7 @@ public class Label extends RSVPObject{
 	 * Label 4 bytes length
 	 */
 	
-	protected int label;
+	protected long label;
 	
 	/**
 	 * Log
@@ -146,6 +147,9 @@ public class Label extends RSVPObject{
 	
 	public Label() {
 		super();
+		classNum = 16;
+		cType = 1;
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -154,13 +158,12 @@ public class Label extends RSVPObject{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public Label(byte[] bytes, int offset){
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+	public Label(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		decode();
 		log.debug("Label Object Created");
 		
 	}
@@ -171,7 +174,7 @@ public class Label extends RSVPObject{
 		
 		this.length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;	// Cabecera 
 		this.length = this.length + 4;	// Longitud de la etiqueta
-		
+		this.bytes = new byte[length];
 		encodeHeader();
 		
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -182,21 +185,42 @@ public class Label extends RSVPObject{
 		
 	}
 	
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-
-		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
-		label = (int)(((bytes[currentIndex]&0xFF)<<24) | ((bytes[currentIndex+1]&0xFF)<<16) | ((bytes[currentIndex+2]&0xFF)<<8) | (bytes[currentIndex+3]&0xFF));
+	public void decode() throws RSVPProtocolViolationException{
+		int offset = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		label = ByteHandler.decode4bytesLong(bytes,offset);
 		
 	}
 	
 	// Getters & Setters
 
-	public int getLabel() {
+	public long getLabel() {
 		return label;
 	}
 
-	public void setLabel(int label) {
+	public void setLabel(long label) {
 		this.label = label;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (label ^ (label >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Label other = (Label) obj;
+		if (label != other.label)
+			return false;
+		return true;
 	}
 
 

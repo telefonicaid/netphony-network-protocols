@@ -80,21 +80,19 @@ public class FlowLabelFilterSpecIPv6 extends FilterSpec{
 		classNum = 10;
 		cType = 3;
 		length = 24;
-		bytes = new byte[length];
-		try{
-			srcAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
 		flowLabel = 0;
 	}
+	
+	public FlowLabelFilterSpecIPv6(byte[] bytes, int offset){
+		super(bytes,offset);
+		decode();
+		}
 	
 	public FlowLabelFilterSpecIPv6(Inet6Address srcAddress, int flowLabel){
 		
 		classNum = 10;
 		cType = 3;
-		length = 24;
-		bytes = new byte[length];
+		
 		this.srcAddress = srcAddress;
 		this.flowLabel = flowLabel;
 		
@@ -118,6 +116,8 @@ public class FlowLabelFilterSpecIPv6 extends FilterSpec{
 	
 	@Override
 	public void encode() {
+		length = 24;
+		bytes = new byte[length];
 		// TODO Auto-generated method stub
 		encodeHeader();
 		
@@ -130,11 +130,9 @@ public class FlowLabelFilterSpecIPv6 extends FilterSpec{
 		bytes[23] = (byte)(flowLabel & 0xFF);
 	}
 
-	public void decode(byte[] bytes, int offset) {
-
-		length = (int)(bytes[offset]|bytes[offset+1]);
-		int headerSize = 4;
-		int currentIndex = offset + headerSize;
+	public void decode() {
+		int offset=0;
+		int currentIndex = offset + 4;
 				
 		byte[] readAddress = new byte[16];
 		System.arraycopy(bytes,currentIndex,readAddress,0,16);

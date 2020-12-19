@@ -376,15 +376,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				if(cType == 1){
 					
 					// RSVPHop IPv4
-					rsvpHop = new RSVPHopIPv4();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv4(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else if(cType == 2){
 					
 					// RSVPHop IPv6
-					rsvpHop = new RSVPHopIPv6();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv6(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else{
@@ -432,15 +430,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				if(cType == 1){
 					
 					// ResvConfirm IPv4
-					resvConfirm = new ResvConfirmIPv4();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv4(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else if(cType == 2){
 					
 					// ResvConfirm IPv6
-					resvConfirm = new ResvConfirmIPv6();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv6(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else{
@@ -491,8 +487,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				// Style Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
-					style = new Style();
-					style.decode(bytes, offset);
+					style = new Style(bytes, offset);
 					offset = offset + style.getLength();
 					
 				}else{

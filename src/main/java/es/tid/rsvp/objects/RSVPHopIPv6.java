@@ -3,6 +3,8 @@ package es.tid.rsvp.objects;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
 *
 
@@ -38,17 +40,17 @@ public class RSVPHopIPv6 extends RSVPHop{
 		
 		classNum = 3;
 		cType = 2;
-		length = 24;
-		bytes = new byte[length];
-		try{
-			next_previousHopAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+		
 		logicalInterfaceHandle = 0;
 		
 		
 	}
+	
+	public RSVPHopIPv6(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes, offset);
+		this.decode();
+	}
+	
 	
 	public RSVPHopIPv6(Inet6Address next_previousHopAddress, int logicalInterfaceHandle){
 		
@@ -61,26 +63,6 @@ public class RSVPHopIPv6 extends RSVPHop{
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-		
-	}
 
 	/*
 	*
@@ -104,6 +86,9 @@ public class RSVPHopIPv6 extends RSVPHop{
 	
 	@Override
 	public void encode() {
+		length = 24;
+		bytes = new byte[length];
+		
 		encodeHeader();
 		
 		byte[] addr = next_previousHopAddress.getAddress();
@@ -116,18 +101,11 @@ public class RSVPHopIPv6 extends RSVPHop{
 		bytes[23] = (byte)(logicalInterfaceHandle & 0xFF);
 	}
 
-	@Override
-	public void decodeHeader() {
-		
-	}
 
-	@Override
+
+
 	public void decode() {
-
-		
-	}
-	
-	public void decode(byte[] bytes, int offset) {
+		int offset=0;
 		byte[] receivedAddress = new byte[16];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,16);
 		try{

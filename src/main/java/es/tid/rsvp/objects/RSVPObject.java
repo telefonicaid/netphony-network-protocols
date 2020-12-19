@@ -166,7 +166,7 @@ public abstract class RSVPObject implements RSVPElement{
 		this.length=((bytes[offset]<<8)& 0xFF00) |  (bytes[offset+1] & 0xFF);
 		this.bytes=new byte[this.length];
 		System.arraycopy(bytes, offset, this.bytes, 0, this.length);
-		classNum = (int) bytes[offset+2];
+		classNum = bytes[offset+2]&0xFF;
 		cType = (int) bytes[offset+3];
 	}
 	

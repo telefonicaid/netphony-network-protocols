@@ -3,7 +3,8 @@ package es.tid.rsvp.objects;
 import es.tid.protocol.commons.ByteHandler;
 
 /*
- * 
+ * FIXME: TODO
+
 
 -
 RFC 2205                          RSVP                    September 1997
@@ -39,6 +40,11 @@ public class SenderTemplateIPv4 extends SenderTemplate{
 		cType = 1;
 	}
 	
+public SenderTemplateIPv4(byte[] bytes, int offset){
+	super(bytes, offset);
+	this.decode();
+}
+	
 	
 	/**	
     0             1              2             3
@@ -61,8 +67,7 @@ public class SenderTemplateIPv4 extends SenderTemplate{
 	}
 	//TODO
 	@Override
-	public void decode(byte[] bytes, int offset) {
-		this.decodeHeader(bytes,offset);
+	public void decode() {
 		
 	}
 

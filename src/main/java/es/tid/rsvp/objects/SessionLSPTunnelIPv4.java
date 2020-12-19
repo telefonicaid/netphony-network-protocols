@@ -6,6 +6,8 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 
 
 /*
@@ -63,6 +65,12 @@ public class SessionLSPTunnelIPv4 extends Session{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public SessionLSPTunnelIPv4() {
+	  super();
+	  classNum = 1;
+		cType = 7;
+  }
+  
 	/**
 	 * Constructor to be used when a new Session LSP Tunnel IPv4 Object wanted to be
 	 * attached to a new message
@@ -71,11 +79,10 @@ public class SessionLSPTunnelIPv4 extends Session{
 	 * @param tunnelId tunnelId
 	 */	
 	public SessionLSPTunnelIPv4(Inet4Address egressNodeAddress, long tunnelId, Inet4Address extendedTunnelId){
-		
+		super();
 		classNum = 1;
 		cType = 7;
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 12;
-		bytes = new byte[length];
+		
 
 		this.egressNodeAddress = egressNodeAddress;
 		this.tunnelId = tunnelId;
@@ -90,15 +97,13 @@ public class SessionLSPTunnelIPv4 extends Session{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public SessionLSPTunnelIPv4(byte[] bytes, int offset){
+	public SessionLSPTunnelIPv4(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		
-		this.decodeHeader(bytes,offset);
-		
-		
-		this.bytes = new byte[this.length];
-		this.bytes = bytes;
+		super(bytes, offset);
+		decode();
 		
 		log.debug("Session LSP Tunnel IPv4 Object Created");
 	}
@@ -116,7 +121,8 @@ public class SessionLSPTunnelIPv4 extends Session{
 	 */
 	
 	public void encode(){
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 12;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = egressNodeAddress.getAddress();
@@ -140,18 +146,16 @@ public class SessionLSPTunnelIPv4 extends Session{
 	}
 
 
-	public void decode(byte[] bytes, int offset){
-		
-		offset = offset+4;
+	public void decode() throws RSVPProtocolViolationException{
+		try{
+		int offset = 4;
 		
 		byte[] receivedAddress = new byte[4];
 		System.arraycopy(bytes,offset,receivedAddress,0,4);
 	
-		try{
+		
 			this.egressNodeAddress = (Inet4Address) Inet4Address.getByAddress(receivedAddress);
-		}catch(UnknownHostException e){
-			// FIXME: Poner logs con respecto a excepcion
-		}
+		
 		offset = offset + 4;					
 		this.tunnelId = (long)((bytes[offset+2] & 0xFF00) | bytes[offset+3]);
 		
@@ -160,10 +164,10 @@ public class SessionLSPTunnelIPv4 extends Session{
 		
 		System.arraycopy(bytes,offset,identTun,0,4);
 		
-		try{
+		
 			this.extendedTunnelId = (Inet4Address) Inet4Address.getByAddress(identTun);
-		}catch(UnknownHostException e){
-			// FIXME: Poner logs con respecto a excepcion
+		}catch(Exception e){
+			throw new RSVPProtocolViolationException();
 		}
 	}
 

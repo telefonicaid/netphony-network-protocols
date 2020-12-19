@@ -280,7 +280,6 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 				if(cType == 7){		// FilterSpecLSPTunnelIPv4
 					
 					filterSpec = new FilterSpecLSPTunnelIPv4(bytes,offset);
-					filterSpec.decode(bytes,offset);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
 					bytesLeft = bytesLeft - filterSpec.getLength();
@@ -288,7 +287,6 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 				}else if(cType == 8){		// FilterSpecLSPTunnelIPv6
 					
 					filterSpec = new FilterSpecLSPTunnelIPv6(bytes,offset);
-					filterSpec.decode(bytes,offset);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
 					bytesLeft = bytesLeft - filterSpec.getLength();
@@ -321,14 +319,12 @@ public class FFFlowDescriptorTE extends FFFlowDescriptor {
 				if(cType == 1){		// LABEL
 					
 					label = new Label(bytes,offset);
-					label.decode(bytes,offset);
 					offset = offset + label.getLength();
 					length = length + label.getLength();
 					bytesLeft = bytesLeft - label.getLength();
 					
 				}else if (cType == 2){	//Generalized Label
 					label = new GeneralizedLabel(bytes, offset);
-					label.decode(bytes, offset);
 					offset = offset + label.getLength();
 					length = length + label.getLength();
 					bytesLeft = bytesLeft - label.getLength();

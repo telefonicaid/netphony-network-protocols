@@ -3,6 +3,8 @@ package es.tid.rsvp.objects;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /*
 
 RFC 2205                          RSVP                    September 1997
@@ -100,7 +102,7 @@ public class FilterSpecIPv4 extends FilterSpec{
 
 	public FilterSpecIPv4(byte[] bytes, int offset){
 		super(bytes, offset);
-		this.decode(bytes,offset);
+		this.decode();
 	}
 	/*
 
@@ -130,11 +132,11 @@ public class FilterSpecIPv4 extends FilterSpec{
 	 * 
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
+	public void decode() {
 
-		length = (int)(bytes[offset]|bytes[offset+1]);
+		
 		int headerSize = 4;
-		int currentIndex = offset + headerSize;
+		int currentIndex = headerSize;
 				
 		byte[] readAddress = new byte[4];
 		System.arraycopy(bytes,currentIndex,readAddress,0,4);
@@ -144,7 +146,7 @@ public class FilterSpecIPv4 extends FilterSpec{
 		}catch(UnknownHostException e){
 			// FIXME: Poner logs con respecto a excepcion
 		}
-		srcPort = (int)(bytes[currentIndex+2]|bytes[currentIndex+3]);
+		srcPort = ByteHandler.decode2bytesInteger(bytes,currentIndex+2);
 		
 	}
 	

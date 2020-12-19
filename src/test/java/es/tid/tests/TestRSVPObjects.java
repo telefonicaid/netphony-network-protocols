@@ -26,22 +26,42 @@ public class TestRSVPObjects {
     	Object[][] objects={
     			{"es.tid.rsvp.objects.ERO"},
     			//{"es.tid.rsvp.objects.FlowSpec"},FIXME: Decode Not implemented!!
-    			//{"es.tid.rsvp.objects.IntservSenderTSpec"}, FIXME: Decode Not implemented!!
-    			{"es.tid.rsvp.objects.SessionAttributeWResourceAffinities"}, 
+    			//{"es.tid.rsvp.objects.IntservSenderTSpec"}, FIXME: Decode Not implemented!!    			
     			{"es.tid.rsvp.objects.ErrorSpecIPv4"},
     			{"es.tid.rsvp.objects.ErrorSpecIPv6"},
-    			//{"es.tid.rsvp.objects.FilterSpecIPv4"},
-    			//{"es.tid.rsvp.objects.FilterSpecIPv6"},
-    			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4"},
-    			//{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv6"},
-    			//{"es.tid.rsvp.objects.FlowLabelFilterSpecIPv6"},
+    			{"es.tid.rsvp.objects.FilterSpecIPv4"},
+    			{"es.tid.rsvp.objects.FilterSpecIPv6"},
+    			{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4"},
+    			{"es.tid.rsvp.objects.FilterSpecLSPTunnelIPv6"},
+    			{"es.tid.rsvp.objects.FlowLabelFilterSpecIPv6"},
+    			//{"es.tid.rsvp.objects.FlowLabelSenderTemplateIPv6"}, FIXME: Not implemented
+    			//{"es.tid.rsvp.objects.FlowSpec"},FIXME: Decode Not implemented!! 
     			{"es.tid.rsvp.objects.HelloACK"},
     			{"es.tid.rsvp.objects.HelloRequest"},
     			//{"es.tid.rsvp.objects.Integrity"},
+    			//{"es.tid.rsvp.objects.IntservADSPEC"},FIXME: Decode Not implemented!! 
+    			//{"es.tid.rsvp.objects.IntservSenderTSpec"},FIXME: Decode Not implemented!! 
+    			{"es.tid.rsvp.objects.Label"},
+    			//{"es.tid.rsvp.objects.LabelRequest"},FIXME: NOT IMPLEMENTED
+    			//LabelRequestWATMLabelRange FIXME: Decode Not implemented!! 
+    			//LabelRequestWFrameRelayLabelRange FIXME: Decode Not implemented!! 
+    			//{"es.tid.rsvp.objects.PolicyData"}, FIXME: NOT IMPLEMENTED
+    			{"es.tid.rsvp.objects.ResvConfirmIPv4"},
+    			{"es.tid.rsvp.objects.ResvConfirmIPv6"},
     			{"es.tid.rsvp.objects.RRO"},
+    			{"es.tid.rsvp.objects.RSVPHopIPv4"},
+    			{"es.tid.rsvp.objects.RSVPHopIPv6"},
     			{"es.tid.rsvp.objects.ScopeIPv4"},
     			{"es.tid.rsvp.objects.ScopeIPv6"},
+    			{"es.tid.rsvp.objects.SessionAttributeWResourceAffinities"}, 
     			{"es.tid.rsvp.objects.SessionIPv6"},
+    			{"es.tid.rsvp.objects.SessionLSPTunnelIPv4"},
+    			{"es.tid.rsvp.objects.SessionLSPTunnelIPv6"},
+    			{"es.tid.rsvp.objects.SSONSenderTSpec"},
+    			{"es.tid.rsvp.objects.Style"},
+    			{"es.tid.rsvp.objects.SuggestedLabel"},
+    			{"es.tid.rsvp.objects.TimeValues"},
+    			{"es.tid.rsvp.objects.UpstreamLabel"},
 				};
 		return Arrays.asList(objects);
     }
@@ -56,19 +76,40 @@ public class TestRSVPObjects {
     	try {
     	System.out.println("Testing RSVP Object "+object);
     	Class objectClass=Class.forName(object);
-		RSVPObject object = (RSVPObject)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
-		object.encode();
-		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+		RSVPObject object1 = (RSVPObject)objectClass.newInstance();
+		TestCommons.createAllFields(object1,true);
+		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
-		RSVPObject object2 = (RSVPObject) ctor.newInstance(object.getBytes(),0);
+		RSVPObject object2 = (RSVPObject) ctor.newInstance(object1.getBytes(),0);
 		object2.encode();
-		System.out.println(object.toString());
-		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+		System.out.println(object1.toString());
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
-		System.out.println("ok");
+		assertTrue("testing RSVP object "+objectClass,object1.equals(object2));
+		System.out.println("RSVP Object "+object+" Bytes match!");
+		//Check toString output
+		object1.toString();
+		//Check all the gets
+		TestCommons.testGets(object1);
 		//Check if the fields are the same
-		assertTrue("testing RSVP object "+objectClass,object.equals(object2));
+		//Check bad objects
+		try {
+			byte[] bitos = new byte[4];
+			bitos[3]=0x04;
+			RSVPObject object3 = (RSVPObject) ctor.newInstance(bitos,0);
+			
+		} catch (Exception e) {
+			System.out.println("Testing malformed object ok");
+		}
+		//Check empty object
+		try {
+			
+			RSVPObject object4 = (RSVPObject)objectClass.newInstance();
+			object4.encode();
+			
+		} catch (Exception e) {
+			System.out.println("Testing empty object");
+		}
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in object "+object,false);

@@ -63,7 +63,15 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 	 * <p>Log
 	 */
 	private static final Logger log = LoggerFactory.getLogger("ROADM");
+	
+	public SenderTemplateLSPTunnelIPv6() {
+		super();
+		classNum = 11;
+		cType = 8;
+	}
+	
 	/**
+	 * 
 	 * <p>Parameters constructor to encode this kind of object. </p>
 	 * @param senderNodeAddress The sender IPv6 Sender node address
 	 * @param LSPId	The LSP identifier
@@ -77,8 +85,7 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 		this.senderNodeAddress = senderNodeAddress;
 		this.LSPId = LSPId;
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 20;
-		bytes = new byte[length];
+		
 		
 		log.debug("Sender Template LSP Tunnel IPv6 Object Created");
 			
@@ -93,8 +100,8 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 	
 	public SenderTemplateLSPTunnelIPv6(byte[] bytes, int offset){
 		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
+		super();
+		decode();
 		
 		log.debug("Sender Template LSP Tunnel IPv6 Object Created");
 		
@@ -121,7 +128,8 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 	 */
 
 	public void encode() {
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 20;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = senderNodeAddress.getAddress();
@@ -158,8 +166,8 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
    </p>
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
-
+	public void decode() {
+		int offset=0;
 		byte[] receivedAddress = new byte[16];
 		
 		offset = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;

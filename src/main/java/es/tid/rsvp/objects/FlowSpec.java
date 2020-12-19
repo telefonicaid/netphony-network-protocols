@@ -155,14 +155,7 @@ public class FlowSpec extends RSVPObject{
 	private long maximumPacketSize;
 	
 	
-//	public FlowSpec(){
-//		
-//		classNum = 9;
-//		cType = 2;
-//		length = 4;
-//		bytes = new byte[length];
-//		
-//	}
+
 	public FlowSpec(byte [] bytes, int offset) {
 		super(bytes,offset);
 		decode();

@@ -197,7 +197,6 @@ public class FilterSpecTE extends RSVPConstruct {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			filterSpec.decode(bytes,offset);
 			offset = offset + filterSpec.getLength();
 			length = length + filterSpec.getLength();
 			bytesLeft = bytesLeft - filterSpec.getLength();
@@ -217,7 +216,6 @@ public class FilterSpecTE extends RSVPConstruct {
 			if(cType == 1){		// LAbel
 				
 				label = new Label(bytes, offset);
-				label.decode(bytes, offset);
 				offset = offset + label.getLength();
 				length = length + label.getLength();
 				bytesLeft = bytesLeft - label.getLength();

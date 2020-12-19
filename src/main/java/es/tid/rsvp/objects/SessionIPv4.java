@@ -54,6 +54,7 @@ RFC 2205                          RSVP                    September 1997
 
  */
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 
 public class SessionIPv4 extends Session{
@@ -139,9 +140,9 @@ public SessionIPv4(byte[] bytes, int offset) throws RSVPProtocolViolationExcepti
 		}catch(UnknownHostException e){
 			// FIXME: Poner logs con respecto a excepcion
 		}
-		protocolId = bytes[offset+8];
-		flags = bytes[offset+9];
-		destPort = bytes[offset+10] | bytes[offset+11];
+		protocolId = bytes[offset+8]&0xFF;
+		flags = bytes[offset+9]&0xFF;
+		destPort = ByteHandler.decode2bytesInteger(bytes,offset+10);;
 		
 		
 	}

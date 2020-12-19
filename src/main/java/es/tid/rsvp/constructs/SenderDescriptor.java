@@ -197,15 +197,15 @@ public class SenderDescriptor extends RSVPConstruct {
 			
 			if(cType == 1){		// Tipo IPv4
 				
-				senderTemplate = new SenderTemplateIPv4();
+				senderTemplate = new SenderTemplateIPv4(bytes,offset);
 				
 			}else if(cType == 2){
 				
-				senderTemplate = new SenderTemplateIPv6();
+				senderTemplate = new SenderTemplateIPv6(bytes,offset);
 				
 			}else if(cType == 3){
 				
-				senderTemplate = new FlowLabelSenderTemplateIPv6();
+				senderTemplate = new FlowLabelSenderTemplateIPv6(bytes,offset);
 				
 			}else{
 				
@@ -214,7 +214,6 @@ public class SenderDescriptor extends RSVPConstruct {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			senderTemplate.decode(bytes,offset);
 			offset = offset + senderTemplate.getLength();
 			length = length + senderTemplate.getLength();
 			bytesLeft = bytesLeft - senderTemplate.getLength();

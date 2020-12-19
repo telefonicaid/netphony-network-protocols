@@ -3,6 +3,9 @@ package es.tid.rsvp.objects;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
+import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
  *
 
@@ -34,29 +37,27 @@ RFC 2205                          RSVP                    September 1997
 public class RSVPHopIPv4 extends RSVPHop{
 
 	protected Inet4Address next_previousHopAddress;
-	protected double logicalInterfaceHandle;
+	protected long logicalInterfaceHandle;
 	
 	public RSVPHopIPv4(){
 		
 		classNum = 3;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
-		try{
-			next_previousHopAddress = (Inet4Address) Inet4Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+		
 		logicalInterfaceHandle = 0;
 		
 	}
+	
+public RSVPHopIPv4(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	super(bytes, offset);
+	this.decode();
+}
 	
 	public RSVPHopIPv4(Inet4Address next_previousHopAddress, int logicalInterfaceHandle){
 		
 		classNum = 3;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
+		
 		this.next_previousHopAddress = next_previousHopAddress;
 		this.logicalInterfaceHandle = logicalInterfaceHandle;
 		
@@ -74,27 +75,13 @@ public class RSVPHopIPv4 extends RSVPHop{
     
     */
 	
-	@Override
-	public void encodeHeader() {
-		// TODO Auto-generated method stub
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-	}
 
-	/*
-	 *       o    IPv4 RSVP_HOP object: Class = 3, C-Type = 1
-
-           +-------------+-------------+-------------+-------------+
-           |             IPv4 Next/Previous Hop Address            |
-           +-------------+-------------+-------------+-------------+
-           |                 Logical Interface Handle              |
-           +-------------+-------------+-------------+-------------+
-	 */
 	
 	@Override
 	public void encode() {
+		length = 12;
+		bytes = new byte[length];
+		
 		// TODO Auto-generated method stub
 		encodeHeader();
 		
@@ -111,32 +98,22 @@ public class RSVPHopIPv4 extends RSVPHop{
 	
 	}
 
-	@Override
-	public void decodeHeader() {
-		
-	}
 
-	@Override
-	public void decode() {
-		
-	}
-
-	/**
-	 * 
-	 */
 	
-	@Override
-	public void decode(byte[] bytes, int offset) {
-
+	
+	
+	public void decode() throws RSVPProtocolViolationException {
+		try{
+		int offset=0;
 		byte[] receivedAddress = new byte[4];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,4);
-		try{
+		
 			next_previousHopAddress = (Inet4Address) Inet4Address.getByAddress(receivedAddress);
-		}catch(UnknownHostException e){
-			// FIXME: Poner logs con respecto a excepcion
-		}
-		logicalInterfaceHandle = (double)(bytes[offset+8]|bytes[offset+9]|bytes[offset+10]|bytes[offset+11]);
-			
+		
+		logicalInterfaceHandle = ByteHandler.decode4bytesLong(bytes,offset+8);
+		}catch(Exception e){
+			throw new RSVPProtocolViolationException();
+		}	
 	}
 	
 	
@@ -155,7 +132,7 @@ public class RSVPHopIPv4 extends RSVPHop{
 		return logicalInterfaceHandle;
 	}
 
-	public void setLogicalInterfaceHandle(double logicalInterfaceHandle) {
+	public void setLogicalInterfaceHandle(long logicalInterfaceHandle) {
 		this.logicalInterfaceHandle = logicalInterfaceHandle;
 	}
 	

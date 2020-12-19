@@ -4,7 +4,6 @@ public abstract class FilterSpec extends RSVPObject{
 
 	public FilterSpec(byte[] bytes, int offset){
 		super(bytes, offset);
-		this.decode(bytes,offset);
 	}
 	
 	public FilterSpec(){
@@ -13,6 +12,6 @@ public abstract class FilterSpec extends RSVPObject{
 	
 	public abstract void encode();
 
-	public abstract void decode(byte[] bytes, int offset);
+	public abstract void decode();
 
 }

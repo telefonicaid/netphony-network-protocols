@@ -46,43 +46,25 @@ public class ResvConfirmIPv6 extends ResvConfirm{
 		cType = 2;
 		length = 20;
 		bytes = new byte[length];
-		try{
-			receiverAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
+
 		
+	}
+	
+	public ResvConfirmIPv6(byte[] bytes, int offset){
+		super(bytes, offset);
+		this.decode();
 	}
 	
 	public ResvConfirmIPv6(Inet6Address receiverAddress){
 		
 		classNum = 15;
 		cType = 2;
-		length = 20;
-		bytes = new byte[length];
+
 		this.receiverAddress = receiverAddress;
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-	}
+
 
 	/*
 	       +-------------+-------------+-------------+-------------+
@@ -98,24 +80,29 @@ public class ResvConfirmIPv6 extends ResvConfirm{
 	
 
 	public void encode() {
-
+		length = 20;
+		bytes = new byte[length];
 		encodeHeader();
+		if (receiverAddress!=null) {
+			byte[] addr = receiverAddress.getAddress();
+			
+			System.arraycopy(addr,0, getBytes(), 4, addr.length);
+		}else {
+			bytes[4]=0x00;
+			bytes[5]=0x00;
+			bytes[6]=0x00;
+			bytes[7]=0x00;
+		}
 		
-		byte[] addr = receiverAddress.getAddress();
-		
-		System.arraycopy(addr,0, getBytes(), 4, addr.length);
 	}
 
-
-	public void decodeHeader() {
-		
-	}
 
 	/**
 	 * 
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
+	public void decode() {
+		int offset=0;
 		byte[] receivedAddress = new byte[16];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,16);
 		try{

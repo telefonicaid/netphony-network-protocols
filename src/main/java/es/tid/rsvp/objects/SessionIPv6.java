@@ -4,6 +4,7 @@ import java.net.Inet6Address;
 import java.net.UnknownHostException;
 
 import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.RSVPProtocolViolationException;
 
 /*
 *
@@ -105,7 +106,7 @@ public class SessionIPv6 extends Session{
 		
 	}
 	
-	public SessionIPv6(byte[] bytes, int offset){
+	public SessionIPv6(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		super(bytes, offset);
 		this.decode();
 	}
@@ -164,23 +165,23 @@ public class SessionIPv6 extends Session{
 	}
 
 	
-	public void decode() {
-		
+	public void decode() throws RSVPProtocolViolationException {
+		try{
 		byte[] receivedAddress = new byte[16];
 		
 		int offset= RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
 		System.arraycopy(bytes,offset,receivedAddress,0,16);
-		try{
+		
 			destAddress = (Inet6Address) Inet6Address.getByAddress(receivedAddress);
-		}catch(UnknownHostException e){
-			// FIXME: Poner logs con respecto a excepcion
-		}
+		
 		offset = offset + 16;
 		protocolId = bytes[offset];
 		flags = bytes[offset+1]&0xFF;
 		destPort = ByteHandler.decode2bytesInteger(bytes,offset+2);
-		
+		}catch(Exception e){
+			throw new RSVPProtocolViolationException();
+		}	
 	}
 	
 	
