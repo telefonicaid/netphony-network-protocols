@@ -7,32 +7,14 @@ import es.tid.protocol.commons.ByteHandler;
 
 
 /**
- * Extended Association ID TLV
+ * SYMBOLIC-PATH-NAME TLV (Type 17)	
  * @author Oscar Gonzalez de Dios
  *
  */
 public class SymbolicPathNameTLV extends PCEPTLV 
 {
 	/*
-	 *  The Extended Association ID TLV is an optional TLV for use in the
-   ASSOCIATION object.  The meaning and usage of the Extended
-   Association ID TLV are as per Section 4 of [RFC6780].
 
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |         Type                  |            Length             |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     //                Extended Association ID                      //
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-              Figure 6: The Extended Association ID TLV Format
-
-   Type:  31
-
-   Length:  Variable.
-
-   Extended Association ID:  As defined in Section 4 of [RFC6780].
 	 */
 	
 	private byte[] SymbolicPathNameID;

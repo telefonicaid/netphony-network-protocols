@@ -6,7 +6,7 @@ import es.tid.rsvp.objects.ErrorSpecIPv4;
 import es.tid.rsvp.objects.RSVPObject;
 
 /**
- * RSVP-ERROR-SPEC TLV
+ * RSVP-ERROR-SPEC TLV (Type 21) [RFC8231] 
  * 
  * 
  * The RSVP-ERROR-SPEC TLV is an optional TLV for use in the LSP object

@@ -7,7 +7,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
- *  ASSOC-Type-List TLV
+ * Operator-configured Association Range TLV (Type: 29)	[RFC8697]
 
     A new PCEP OP-CONF-ASSOC-RANGE (Operator-configured Association
    Range) TLV is defined.  The PCEP OP-CONF-ASSOC-RANGE TLV is carried

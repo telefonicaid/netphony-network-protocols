@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- *  Global Association Source TLV
+ *  Global Association Source TLV (Type: 30)	[RFC8697]
  *  
  *  The Global Association Source TLV is an optional TLV for use in the
    ASSOCIATION object.  The meaning and usage of the Global Association
