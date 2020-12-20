@@ -150,7 +150,7 @@ public abstract class OSPFSubTLV {
 			this.TotalTLVLength=TLVValueLength+4;
 			if ((this.TotalTLVLength%4)!=0){
 				//Padding must be done!!
-				this.TotalTLVLength=this.TotalTLVLength+(this.TotalTLVLength%4);
+				this.TotalTLVLength=this.TotalTLVLength+4-(this.TotalTLVLength%4);
 			}	
 			
 		}

@@ -1,10 +1,19 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 /**
- * 1.1.  Link Local/Remote Identifiers
-
-
-   Link Local/Remote Identifiers is a sub-TLV of the Link TLV.  The type
+ *  Link Local/Remote Identifiers SubTLV (Type 11) 	RFC4203
+ *
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ * 
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc4203"> RFC 4203</a>
+ * @author ogondio
+ *
+ */
+public class LinkLocalRemoteIdentifiers extends OSPFSubTLV {
+	
+	/*
+	 *    Link Local/Remote Identifiers is a sub-TLV of the Link TLV.  The type
    of this sub-TLV is 11, and length is eight octets.  The value field
    of this sub-TLV contains four octets of Link Local Identifier
    followed by four octets of Link Remote Identifier (see Section
@@ -23,10 +32,7 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
    using a link local Opaque LSA, as described in Section "Exchanging
    Link Local TE Information".
 
- * @author ogondio
- *
- */
-public class LinkLocalRemoteIdentifiers extends OSPFSubTLV {
+	 */
 	
 	private long linkLocalIdentifier;
 	

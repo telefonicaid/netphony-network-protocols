@@ -4,10 +4,18 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.*;
 
 
 /**
- * Interface Switching Capability Descriptor, 
- * see <a href="http://www.ietf.org/rfc/rfc4203.txt">RFC 4203</a> (OSPF Extensions for GMPLS).
+ * Interface Switching Capability Descriptor Sub TLV (Type 15) [RFC4203]
+ * 
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6  * 
+ * see <a href="http://www.ietf.org/rfc/rfc4203.txt">RFC 4203 (OSPF Extensions for GMPLS)</a>
+ * see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @author Oscar Gonzalez de Dios
+ */
 
- 1.4. Interface Switching Capability Descriptor
+public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
+
+	/*
+	 * 1.4. Interface Switching Capability Descriptor
 
    <p>The Interface Switching Capability Descriptor is a sub-TLV (of type
    15) of the Link TLV.  The length is the length of value field in
@@ -111,11 +119,8 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.*;
    Capability Descriptor (see Section "Interface Switching Capability
    Descriptor" of [GMPLS-ROUTING]) the Interface Switching Capability
    Descriptor sub-TLV may occur more than once within the Link TLV.
-
- */
-
-public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
-
+	 */
+	
 	/**
 	 * Switching Capability
 	 */

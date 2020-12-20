@@ -5,19 +5,25 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 /**
- * Local Interface IP Address Sub-TLV.
-
-
-   The Local Interface IP Address sub-TLV specifies the IP address(es)
-   of the interface corresponding to this link.  If there are multiple
-   local addresses on the link, they are all listed in this sub-TLV.
-
-   The Local Interface IP Address sub-TLV is TLV type 3, and is 4N
-   octets in length, where N is the number of local addresses.
+ * Local Interface IP Address Sub-TLV (Type 3)
+ *
+ * The Local Interface IP Address sub-TLV specifies the IP address(es)
+ *  of the interface corresponding to this link.  If there are multiple
+ *  local addresses on the link, they are all listed in this sub-TLV.
+ *
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ *
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>
  * @author ogondio
  *
  */
 public class LocalInterfaceIPAddress extends OSPFSubTLV {
+	
+	/*
+	 *    The Local Interface IP Address sub-TLV is TLV type 3, and is 4N
+     * octets in length, where N is the number of local addresses.
+	 */
 	
 	/**
 	 * List of Local Interface IP Addresses of the interface corresponding to this link

@@ -33,9 +33,21 @@ public class TestOSPFv2SubTLVs {
 	@Parameters(name="{0}")
     public static Collection configs() {
     	Object[][] objects={
-    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkID"},//Type 2
-    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AdministrativeGroup"},//Type 9
-  
+    			// Open Shortest Path First (OSPF) Traffic Engineering TLVs
+    			//https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml
+    			//Types for sub-TLVs of TE Link TLV (Value 2)
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkType"},//Type 1 	Link Type (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkID"},//Type 2 	Link ID (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LocalInterfaceIPAddress"},//Type 3 	Local interface IP address (4 octets) (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteInterfaceIPAddress"},//Type 4 Remote interface IP address (4 octets) (4 octets)	[RFC3630]
+    			//LinkProtectionType FIXME: NOT implemented
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AdministrativeGroup"},//Type 9 Administrative group (4 octets)	[RFC3630]
+    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor"},//Type 15	Interface Switching Capability Descriptor (variable)	[RFC4203]
+    			//FIXME: Need to add test with max_LSP_BW
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteASNumber"},// Type 21	Remote AS Number sub-TLV	[RFC5392]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.IPv4RemoteASBRID"},//Type 22	IPv4 Remote ASBR ID sub-TLV	[RFC5392]    			
+    			//Types for sub-TLVs of WSON-LSC SCSI (Switching Capability Specific Information)
+    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels"},//Type 1200 FIXME: Non-standard value used   FIXME: Add specific test			
 
 				};
 		return Arrays.asList(objects);

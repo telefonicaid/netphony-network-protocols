@@ -1,20 +1,27 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 /**
- * Link Type OSPF Sub-TLV (<a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>).
- * 
+ * Link Type OSPF Sub-TLV (Type 1) RFC 3630
+ *
  * The Link Type sub-TLV defines the type of the link:
-
-      1 - Point-to-point
-      2 - Multi-access
-
-   The Link Type sub-TLV is TLV type 1, and is one octet in length.
+ *
+ *     1 - Point-to-point
+ *     2 - Multi-access
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ *
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>
  * 
  * @author ogondio
  *
  */
 public class LinkType extends OSPFSubTLV {
 
+	/*
+	 *    The Link Type sub-TLV is TLV type 1, and is one octet in length.
+     * 
+	 */
+	
 	/**
 	 * Type of the link
 	 */
@@ -45,6 +52,7 @@ public class LinkType extends OSPFSubTLV {
 	public void encode() {
 		this.setTLVValueLength(1);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
 		this.tlv_bytes[4]=(byte)(linkType & 0xFF);
 	}
 
