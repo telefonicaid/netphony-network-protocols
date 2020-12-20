@@ -46,7 +46,6 @@ public class TestPCEPConstructs {
     			{"es.tid.pce.pcep.constructs.StateReport"},
   			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
     			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
-    			{"es.tid.pce.pcep.constructs.TNA"},
     			{"es.tid.pce.pcep.constructs.UpdateRequest"}
     			
     	};

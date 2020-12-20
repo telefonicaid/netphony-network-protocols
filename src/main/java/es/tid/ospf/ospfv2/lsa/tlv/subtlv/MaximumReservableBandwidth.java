@@ -1,17 +1,20 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 /**
- * 2.5.7. Maximum Reservable Bandwidth
-
-
-   The Maximum Reservable Bandwidth sub-TLV specifies the maximum
-   bandwidth that may be reserved on this link, in this direction, in
-   IEEE floating point format.  Note that this may be greater than the
-   maximum bandwidth (in which case the link may be oversubscribed).
-   This SHOULD be user-configurable; the default value should be the
-   Maximum Bandwidth.  The units are bytes per second.
-
-   The Maximum Reservable B
+ * Maximum Reservable Bandwidth (Type 7) RFC 3630
+ *
+ * The Maximum Reservable Bandwidth sub-TLV specifies the maximum
+ * bandwidth that may be reserved on this link, in this direction, in
+ * IEEE floating point format.  Note that this may be greater than the
+ * maximum bandwidth (in which case the link may be oversubscribed).
+ * This SHOULD be user-configurable; the default value should be the
+ * Maximum Bandwidth.  The units are bytes per second.
+ * 
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ *
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>
+ * 
  * @author ogondio
  *
  */
@@ -33,6 +36,7 @@ public class MaximumReservableBandwidth extends OSPFSubTLV {
 	public void encode() {
 		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
 		int bwi=Float.floatToIntBits(maximumReservableBandwidth);
 		this.tlv_bytes[4]=(byte)(bwi >>> 24);
 		this.tlv_bytes[5]=(byte)(bwi >> 16 & 0xff);

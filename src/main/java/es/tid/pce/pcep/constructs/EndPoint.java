@@ -3,12 +3,9 @@ package es.tid.pce.pcep.constructs;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
-import es.tid.pce.pcep.objects.tlvs.EndPointApplicationTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointDataPathTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointUnnumberedDataPathTLV;
 import es.tid.pce.pcep.objects.tlvs.EndPointIPv4TLV;
-import es.tid.pce.pcep.objects.tlvs.EndPointServerTLV;
-import es.tid.pce.pcep.objects.tlvs.EndPointStorageTLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.pce.pcep.objects.tlvs.UnnumberedEndpointTLV;
 import es.tid.pce.pcep.objects.tlvs.XifiEndPointTLV;
@@ -22,12 +19,6 @@ public class EndPoint extends PCEPConstruct {
 	private EndPointUnnumberedDataPathTLV endPointUnnumberedDataPathID;
 	
 	private UnnumberedEndpointTLV unnumberedEndpoint;
-
-	private EndPointStorageTLV endPointStorage;
-
-	private EndPointServerTLV endPointServer;
-
-	private EndPointApplicationTLV endPointApplication;
 
 	private XifiEndPointTLV xifiEndPointTLV;
 
@@ -52,21 +43,6 @@ public class EndPoint extends PCEPConstruct {
 		else if (unnumberedEndpoint!=null){
 			unnumberedEndpoint.encode();
 			length=length+unnumberedEndpoint.getTotalTLVLength();
-		}
-
-		else if (endPointStorage!=null){
-			endPointStorage.encode();
-			length=length+endPointStorage.getTotalTLVLength();
-		}
-
-		else if (endPointServer!=null){
-			endPointServer.encode();
-			length=length+endPointServer.getTotalTLVLength();
-		}
-
-		else if (endPointApplication!=null){
-			endPointApplication.encode();
-			length=length+endPointApplication.getTotalTLVLength();
 		}
 
 		else if (xifiEndPointTLV != null)
@@ -104,21 +80,6 @@ public class EndPoint extends PCEPConstruct {
 			offset=offset+unnumberedEndpoint.getTotalTLVLength();
 		}
 
-		else if (endPointStorage!=null){
-			System.arraycopy(endPointStorage.getTlv_bytes(),0,this.bytes,offset,endPointStorage.getTotalTLVLength());
-			offset=offset+endPointStorage.getTotalTLVLength();
-		}
-
-		else if (endPointServer!=null){
-			System.arraycopy(endPointServer.getTlv_bytes(),0,this.bytes,offset,endPointServer.getTotalTLVLength());
-			offset=offset+endPointServer.getTotalTLVLength();
-		}
-
-		else if (endPointApplication!=null){
-			System.arraycopy(endPointApplication.getTlv_bytes(),0,this.bytes,offset,endPointApplication.getTotalTLVLength());
-			offset=offset+endPointApplication.getTotalTLVLength();
-		}
-
 		else if (xifiEndPointTLV != null)
 		{
 			System.arraycopy(xifiEndPointTLV.getTlv_bytes(),0,this.bytes,offset,xifiEndPointTLV.getTotalTLVLength());
@@ -148,18 +109,6 @@ public class EndPoint extends PCEPConstruct {
 			unnumberedEndpoint=new UnnumberedEndpointTLV(bytes, offset);
 		}
 
-		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_STORAGE){
-			endPointStorage=new EndPointStorageTLV(bytes, offset);
-		}
-
-		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_SERVER){
-			endPointServer=new EndPointServerTLV(bytes, offset);
-		}
-
-		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_ENDPOINTS_APPLICATION){
-			endPointApplication=new EndPointApplicationTLV(bytes, offset);
-		}
-
 		else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_XIFI){
 			xifiEndPointTLV = new XifiEndPointTLV(bytes, offset);
 		}
@@ -181,31 +130,6 @@ public class EndPoint extends PCEPConstruct {
 	public void setEndPointIPv4TLV(EndPointIPv4TLV EndPointIPv4TLV) {
 		this.endPointIPv4 = EndPointIPv4TLV;
 	}
-
-	public EndPointStorageTLV getEndPointStorageTLV() {
-		return endPointStorage;
-	}
-
-	public void setEndPointStorageTLV(EndPointStorageTLV EndPointStorageTLV) {
-		this.endPointStorage = EndPointStorageTLV;
-	}
-
-	public EndPointServerTLV getEndPointServerTLV() {
-		return endPointServer;
-	}
-
-	public void setEndPointServerTLV(EndPointServerTLV EndPointServerTLV) {
-		this.endPointServer = EndPointServerTLV;
-	}
-
-	public EndPointApplicationTLV getEndPointApplicationTLV() {
-		return endPointApplication;
-	}
-
-	public void setEndPointApplicationTLV(EndPointApplicationTLV EndPointApplicationTLV) {
-		this.endPointApplication = EndPointApplicationTLV;
-	}
-
 
 	public XifiEndPointTLV getXifiEndPointTLV() 
 	{
@@ -296,35 +220,6 @@ public class EndPoint extends PCEPConstruct {
 	}
 
 
-	public EndPointStorageTLV getEndPointStorage() {
-		return endPointStorage;
-	}
-
-
-	public void setEndPointStorage(EndPointStorageTLV endPointStorage) {
-		this.endPointStorage = endPointStorage;
-	}
-
-
-	public EndPointServerTLV getEndPointServer() {
-		return endPointServer;
-	}
-
-
-	public void setEndPointServer(EndPointServerTLV endPointServer) {
-		this.endPointServer = endPointServer;
-	}
-
-
-	public EndPointApplicationTLV getEndPointApplication() {
-		return endPointApplication;
-	}
-
-
-	public void setEndPointApplication(EndPointApplicationTLV endPointApplication) {
-		this.endPointApplication = endPointApplication;
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -332,18 +227,10 @@ public class EndPoint extends PCEPConstruct {
 		int result = super.hashCode();
 		result = prime
 				* result
-				+ ((endPointApplication == null) ? 0 : endPointApplication
-						.hashCode());
-		result = prime
-				* result
 				+ ((endPointDataPathID == null) ? 0 : endPointDataPathID
 						.hashCode());
 		result = prime * result
 				+ ((endPointIPv4 == null) ? 0 : endPointIPv4.hashCode());
-		result = prime * result
-				+ ((endPointServer == null) ? 0 : endPointServer.hashCode());
-		result = prime * result
-				+ ((endPointStorage == null) ? 0 : endPointStorage.hashCode());
 		result = prime
 				* result
 				+ ((endPointUnnumberedDataPathID == null) ? 0
@@ -367,11 +254,6 @@ public class EndPoint extends PCEPConstruct {
 		if (getClass() != obj.getClass())
 			return false;
 		EndPoint other = (EndPoint) obj;
-		if (endPointApplication == null) {
-			if (other.endPointApplication != null)
-				return false;
-		} else if (!endPointApplication.equals(other.endPointApplication))
-			return false;
 		if (endPointDataPathID == null) {
 			if (other.endPointDataPathID != null)
 				return false;
@@ -381,16 +263,6 @@ public class EndPoint extends PCEPConstruct {
 			if (other.endPointIPv4 != null)
 				return false;
 		} else if (!endPointIPv4.equals(other.endPointIPv4))
-			return false;
-		if (endPointServer == null) {
-			if (other.endPointServer != null)
-				return false;
-		} else if (!endPointServer.equals(other.endPointServer))
-			return false;
-		if (endPointStorage == null) {
-			if (other.endPointStorage != null)
-				return false;
-		} else if (!endPointStorage.equals(other.endPointStorage))
 			return false;
 		if (endPointUnnumberedDataPathID == null) {
 			if (other.endPointUnnumberedDataPathID != null)

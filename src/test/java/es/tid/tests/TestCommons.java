@@ -42,10 +42,6 @@ import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.PceIdIPv4;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
-import es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV;
-import es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV;
-import es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV;
-import es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV;
 import es.tid.rsvp.constructs.SenderDescriptor;
 import es.tid.rsvp.constructs.WFFlowDescriptor;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
@@ -460,23 +456,7 @@ public class TestCommons {
 										  	
 										ll.add(os);
 										method2.invoke(object,ll);
-									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV")) {
-										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.CostSubTLV>();
-										method2.invoke(object,ll);
-										//FIXME: VACIAS POR AHORA
-									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV")) {
-										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ProcessorSubTLV>();
-										method2.invoke(object,ll);
-										//FIXME: VACIAS POR AHORA
-									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV")) {
-										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.ApplicationSubTLV>();
-										method2.invoke(object,ll);
-										//FIXME: VACIAS POR AHORA
-									}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV")) {
-										LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV> ll=new LinkedList< es.tid.pce.pcep.objects.tlvs.subtlvs.VolumeSubTLV>();
-										method2.invoke(object,ll);
-										//FIXME: VACIAS POR AHORA
-									}
+									} 
 									else {
 										
 										//Object ll= pt.getRawType(). .newInstance();

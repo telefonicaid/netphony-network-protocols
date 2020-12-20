@@ -195,20 +195,6 @@ public class Notification extends PCEPObject{
 	  */
 	 private LinkedList<OSPFTE_LSA_TLV> LSATLVList;
 	 
-	 /**
-	  * GEYSERS: Optional IT_advertisement TLV;
-	  */
-	 private ITAdvertisementTLV ITadvTLV;
-	 
-	 /**
-	  * GEYSERS: Optional Storage TLV;
-	  */
-	 private StorageTLV StorageTLV;
-	 
-	 /**
-	  * GEYSERS: Optional Server TLV;
-	  */
-	 private ServerTLV ServerTLV;
 	 
 	 private ReservationIDTLV reservationIDTLV;
 	 
@@ -266,23 +252,7 @@ public class Notification extends PCEPObject{
 			}
 		}
 		
-		// Aqu� hay q a�adir las TLVs del GEYSERS
-		
-		if (ITadvTLV!=null){
-			ITadvTLV.encode();
-			len=len+ITadvTLV.getTotalTLVLength();
-			
-			if (StorageTLV!=null){
-				StorageTLV.encode();
-				len=len+StorageTLV.getTotalTLVLength();
-			}
-			
-			if (ServerTLV!=null){
-				ServerTLV.encode();
-				len=len+ServerTLV.getTotalTLVLength();
-			}
-			
-		}
+
 		if (reservationIDTLV!=null){
 			reservationIDTLV.encode();
 			len=len+reservationIDTLV.getTotalTLVLength();
@@ -318,24 +288,7 @@ public class Notification extends PCEPObject{
 				offset=offset+LSATLVList.get(i).getTotalTLVLength();
 			}
 		}
-		
-// Aqu� hay q a�adir las TLVs del GEYSERS
-		
-		if (ITadvTLV!=null){
-			System.arraycopy(ITadvTLV.getTlv_bytes(), 0, this.object_bytes, offset, ITadvTLV.getTotalTLVLength());
-			offset=offset+ITadvTLV.getTotalTLVLength();
-			
-			if (StorageTLV!=null){
-				System.arraycopy(StorageTLV.getTlv_bytes(), 0, this.object_bytes, offset, StorageTLV.getTotalTLVLength());
-				offset=offset+StorageTLV.getTotalTLVLength();
-			}
-			
-			if (ServerTLV!=null){
-				System.arraycopy(ServerTLV.getTlv_bytes(), 0, this.object_bytes, offset, ServerTLV.getTotalTLVLength());
-				offset=offset+ServerTLV.getTotalTLVLength();
-			}
-			
-		}
+
 		if (reservationIDTLV!=null){
 			System.arraycopy(reservationIDTLV.getTlv_bytes(), 0, this.object_bytes, offset, reservationIDTLV.getTotalTLVLength());
 			offset=offset+reservationIDTLV.getTotalTLVLength();
@@ -401,15 +354,6 @@ public class Notification extends PCEPObject{
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
 				//pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
-				break;
-			case ObjectParameters.PCEP_TLV_TYPE_IT_ADV:
-				ITadvTLV=new ITAdvertisementTLV(this.getObject_bytes(), offset);				
-				break;
-			case ObjectParameters.PCEP_TLV_TYPE_STORAGE:
-				StorageTLV=new StorageTLV(this.getObject_bytes(), offset);				
-				break;
-			case ObjectParameters.PCEP_TLV_TYPE_SERVER:
-				ServerTLV=new ServerTLV(this.getObject_bytes(), offset);				
 				break;
 			case ObjectParameters.PCEP_TLV_TYPE_RESERVATION_ID:
 				reservationIDTLV=new ReservationIDTLV(this.getObject_bytes(), offset);				
@@ -509,31 +453,6 @@ public class Notification extends PCEPObject{
 		reachabilityTLVList.add(reachabilityTLV);
 	}
 
-	public ITAdvertisementTLV getITadvtlv() {
-		return ITadvTLV;
-	}
-
-	public void setITadvtlv(ITAdvertisementTLV ITadvtlv) {
-		this.ITadvTLV = ITadvtlv;
-	}
-	
-	public StorageTLV getStoragetlv() {
-		return StorageTLV;
-	}
-
-	public void setStoragetlv(StorageTLV Storagetlv) {
-		this.StorageTLV = Storagetlv;
-	}
-
-	
-	public ServerTLV getServertlv() {
-		return ServerTLV;
-	}
-
-	public void setServertlv(ServerTLV Servertlv) {
-		this.ServerTLV = Servertlv;
-	}
-
 
 
 	public ReservationIDTLV getReservationIDTLV() {
@@ -558,54 +477,12 @@ public class Notification extends PCEPObject{
 
 
 
-	public ITAdvertisementTLV getITadvTLV() {
-		return ITadvTLV;
-	}
-
-
-
-	public void setITadvTLV(ITAdvertisementTLV iTadvTLV) {
-		ITadvTLV = iTadvTLV;
-	}
-
-
-
-	public StorageTLV getStorageTLV() {
-		return StorageTLV;
-	}
-
-
-
-	public void setStorageTLV(StorageTLV storageTLV) {
-		StorageTLV = storageTLV;
-	}
-
-
-
-	public ServerTLV getServerTLV() {
-		return ServerTLV;
-	}
-
-
-
-	public void setServerTLV(ServerTLV serverTLV) {
-		ServerTLV = serverTLV;
-	}
-
 
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((ITadvTLV == null) ? 0 : ITadvTLV.hashCode());
-		result = prime * result
-				+ ((LSATLVList == null) ? 0 : LSATLVList.hashCode());
-		result = prime * result
-				+ ((ServerTLV == null) ? 0 : ServerTLV.hashCode());
-		result = prime * result
-				+ ((StorageTLV == null) ? 0 : StorageTLV.hashCode());
 		result = prime * result
 				+ ((notificationTLV == null) ? 0 : notificationTLV.hashCode());
 		result = prime * result + notificationType;
@@ -631,25 +508,10 @@ public class Notification extends PCEPObject{
 		if (getClass() != obj.getClass())
 			return false;
 		Notification other = (Notification) obj;
-		if (ITadvTLV == null) {
-			if (other.ITadvTLV != null)
-				return false;
-		} else if (!ITadvTLV.equals(other.ITadvTLV))
-			return false;
 		if (LSATLVList == null) {
 			if (other.LSATLVList != null)
 				return false;
 		} else if (!LSATLVList.equals(other.LSATLVList))
-			return false;
-		if (ServerTLV == null) {
-			if (other.ServerTLV != null)
-				return false;
-		} else if (!ServerTLV.equals(other.ServerTLV))
-			return false;
-		if (StorageTLV == null) {
-			if (other.StorageTLV != null)
-				return false;
-		} else if (!StorageTLV.equals(other.StorageTLV))
 			return false;
 		if (notificationTLV == null) {
 			if (other.notificationTLV != null)

@@ -40,8 +40,14 @@ public class TestOSPFv2SubTLVs {
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkID"},//Type 2 	Link ID (4 octets)	[RFC3630]
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LocalInterfaceIPAddress"},//Type 3 	Local interface IP address (4 octets) (4 octets)	[RFC3630]
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteInterfaceIPAddress"},//Type 4 Remote interface IP address (4 octets) (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.TrafficEngineeringMetric"},//5	Traffic engineering metric (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumBandwidth"},//6	Maximum bandwidth (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumReservableBandwidth"},//7	Maximum reservable bandwidth (4 octets)	[RFC3630]
+    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.UnreservedBandwidth"},//8	Unreserved bandwidth (32 octets)	[RFC3630]
+    			//FIXME: Need to add test with float[]
     			//LinkProtectionType FIXME: NOT implemented
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AdministrativeGroup"},//Type 9 Administrative group (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.SharedRiskLinkGroup"},//Type 16	Shared Risk Link Group (variable)	[RFC4203]
     			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor"},//Type 15	Interface Switching Capability Descriptor (variable)	[RFC4203]
     			//FIXME: Need to add test with max_LSP_BW
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteASNumber"},// Type 21	Remote AS Number sub-TLV	[RFC5392]
