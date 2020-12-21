@@ -35,8 +35,7 @@ public class SenderTemplateIPv4 extends SenderTemplate{
 	//FIXME: Buscar IPv4/UDP FILTER_SPEC object.
 	
 	public SenderTemplateIPv4(){
-		
-		classNum = 11;
+		super();
 		cType = 1;
 	}
 	

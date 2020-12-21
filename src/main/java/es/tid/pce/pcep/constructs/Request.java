@@ -545,7 +545,7 @@ public class Request extends PCEPConstruct{
 		this.endPoints = endPoints;
 	}
 
-	public LSPA getlSPA() {
+	public LSPA getLSPA() {
 		return lSPA;
 	}
 
@@ -573,7 +573,7 @@ public class Request extends PCEPConstruct{
 		this.metricList = metricList;
 	}
 
-	public RROBandwidth getrROBandwidth() {
+	public RROBandwidth getRROBandwidth() {
 		return rROBandwidth;
 	}
 
@@ -585,7 +585,7 @@ public class Request extends PCEPConstruct{
 		this.rROBandwidth = rROBandwidth;
 	}
 
-	public IncludeRouteObject getiRO() {
+	public IncludeRouteObject getIRO() {
 		return iRO;
 	}
 

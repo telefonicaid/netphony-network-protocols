@@ -239,11 +239,11 @@ public abstract class RSVPObject implements RSVPElement{
 	}	
 
 	public static int getClassNum(byte[] bytes, int offset) {
-		return (int) bytes[offset+2];
+		return (int) bytes[offset+2]&0xFF;
 	}
 	
 	public static int getcType(byte[] bytes, int offset){
-		return (int) bytes[offset+3];		
+		return (int) bytes[offset+3]&0xFF;		
 	}
 	
 	public static int getLength(byte[] bytes, int offset){

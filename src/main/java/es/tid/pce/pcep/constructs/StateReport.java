@@ -195,30 +195,23 @@ public class StateReport extends PCEPConstruct
 		this.setLength(len);
 	}
 
-	public SRP getSRP() {
+	public SRP getSrp() {
 		return srp;
 	}
 
-	public void setSRP(SRP srp) {
-		this.srp = srp;
-	}
-	
 	public void setSrp(SRP srp) {
 		this.srp = srp;
 	}
-
-	public LSP getLSP() {
+	
+	public LSP getLsp() {
 		return lsp;
 	}
 
-	public void setLSP(LSP lsp) {
-		this.lsp = lsp;
-	}
-	
 	public void setLsp(LSP lsp) {
 		this.lsp = lsp;
 	}
-
+	
+	
 	public Path getPath() {
 		return path;
 	}

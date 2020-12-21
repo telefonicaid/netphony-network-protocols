@@ -63,7 +63,6 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	
   public SenderTemplateLSPTunnelIPv4() {
 	  super();
-	  classNum = 11;
 		cType = 7;
   }
   
@@ -96,7 +95,7 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	
 	public SenderTemplateLSPTunnelIPv4(byte[] bytes, int offset){
 		
-		super();
+		super(bytes,offset);
 		decode();
 		log.debug("Sender Template LSP Tunnel IPv4 Object Created");
 		

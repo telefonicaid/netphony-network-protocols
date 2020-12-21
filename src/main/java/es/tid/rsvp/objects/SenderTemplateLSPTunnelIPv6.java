@@ -66,7 +66,6 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 	
 	public SenderTemplateLSPTunnelIPv6() {
 		super();
-		classNum = 11;
 		cType = 8;
 	}
 	

@@ -4,7 +4,8 @@ public abstract class SenderTemplate extends RSVPObject{
 	
 	public SenderTemplate(){
 		super();
-				}
+		classNum = 11;
+		}
 
 	
 	public SenderTemplate(byte[] bytes, int offset){

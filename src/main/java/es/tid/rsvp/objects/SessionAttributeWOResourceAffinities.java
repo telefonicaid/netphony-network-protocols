@@ -170,7 +170,7 @@ public class SessionAttributeWOResourceAffinities extends SessionAttribute{
 	 * Object wanted to be decoded from a received message.
 	 * @param bytes bytes
 	 * @param offset offset
-	 * @throws RSVPProtocolViolationException 
+	 * @throws RSVPProtocolViolationException RSVPProtocolViolationException
 	 */
 	
 	public SessionAttributeWOResourceAffinities(byte[] bytes, int offset) throws RSVPProtocolViolationException{
@@ -181,7 +181,7 @@ public class SessionAttributeWOResourceAffinities extends SessionAttribute{
 		
 	}
 	
-	/**
+	/*
 	<p> 0                   1                   2                   3
 	    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 	   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -229,7 +229,7 @@ length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 4;
 		
 	}
 	
-	/**
+	/*
 	<p> 0                   1                   2                   3
 	    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 	   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

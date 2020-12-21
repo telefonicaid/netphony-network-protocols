@@ -32,8 +32,7 @@ public class SenderTemplateIPv6 extends SenderTemplate{
 	//FIXME: Buscar IPv6/UDP FILTER_SPEC object.
 	
 	public SenderTemplateIPv6(){
-		
-		classNum = 11;
+		super();
 		cType = 2;
 		
 		

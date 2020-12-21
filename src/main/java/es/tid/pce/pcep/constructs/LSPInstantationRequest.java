@@ -250,7 +250,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		this.endPoints = endPoints;
 	}
 
-	public LSPA getlSPA() {
+	public LSPA getLSPA() {
 		return lSPA;
 	}
 
@@ -258,7 +258,9 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		this.lSPA = lSPA;
 	}
 	
-	public ExplicitRouteObject geteRO() {
+
+
+	public ExplicitRouteObject getERO() {
 		return eRO;
 	}
 

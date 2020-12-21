@@ -117,12 +117,12 @@ public class StatefulCapabilityTLV extends PCEPTLV
 	
 	//GETTERS & SETTERS
 	
-	public boolean issFlag() 
+	public boolean isSFlag() 
 	{
 		return sFlag;
 	}
 	
-	public boolean isuFlag() 
+	public boolean isUFlag() 
 	{
 		return uFlag;
 	}
@@ -137,7 +137,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		this.uFlag = uFlag;
 	}
 
-	public boolean isiFlag() {
+	public boolean isIFlag() {
 		return iFlag;
 	}
 
@@ -145,7 +145,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		this.iFlag = iFlag;
 	}
 
-	public boolean istFlag() {
+	public boolean isTFlag() {
 		return tFlag;
 	}
 
@@ -153,7 +153,7 @@ public class StatefulCapabilityTLV extends PCEPTLV
 		this.tFlag = tFlag;
 	}
 
-	public boolean isdFlag() {
+	public boolean isDFlag() {
 		return dFlag;
 	}
 

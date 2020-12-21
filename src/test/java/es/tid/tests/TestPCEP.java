@@ -59,14 +59,6 @@ public class TestPCEP {
 
 
 	}
-	//@org.junit.Test
-	public void testPCEPInitiate(){
-		System.out.println("Testing PCEPInitiate Message");
-		PCEPInitiate message= new PCEPInitiate();
-		TestCommons.createAllFields(message,true);
-		testPCEPMessage(message,PCEPInitiate.class,"Test PCEPInitiate with ALL fields");
-
-	}
 
 	/**
 	 * encode-decode-encode test.

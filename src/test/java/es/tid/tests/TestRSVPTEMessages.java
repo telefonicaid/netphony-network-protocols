@@ -46,19 +46,20 @@ public class TestRSVPTEMessages {
     	try {
     	System.out.println("Testing RSVP TE Message "+object);
     	Class objectClass=Class.forName(object);
-    	RSVPMessage object = (RSVPMessage)objectClass.newInstance();
-    	TestCommons.createAllFields(object,true);
+    	RSVPMessage object1 = (RSVPMessage)objectClass.newInstance();
+    	TestCommons.createAllFields(object1,true,false,true);
     	//Fill parent's fields
-		TestCommons.createAllFields(object,true,true,true);
-		object.encode();
+		TestCommons.createAllFields(object1,true,true,true);
+		object1.encode();
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
-		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);
+		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
 		object2.encode();
-		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 		//System.out.println(object2.toString());
 		//Check if the fields are the same
-		assertTrue("asserting RSVP message "+objectClass,object.equals(object2));
+		assertTrue("asserting RSVP message "+objectClass,object1.equals(object2));
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in message "+object,false);

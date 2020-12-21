@@ -91,7 +91,7 @@ public class SuggestedLabel extends Label{
 	
 	public SuggestedLabel(byte[] bytes, int offset) throws RSVPProtocolViolationException{	
 		super(bytes, offset);
-			
+		decode();	
 		log.debug("Label Object Created");
 		
 	}

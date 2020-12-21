@@ -45,6 +45,7 @@ import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.rsvp.constructs.SenderDescriptor;
 import es.tid.rsvp.constructs.WFFlowDescriptor;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
+import es.tid.rsvp.constructs.te.SenderDescriptorTE;
 import es.tid.rsvp.objects.ErrorSpecIPv4;
 import es.tid.rsvp.objects.FlowSpec;
 import es.tid.rsvp.objects.IntservSenderTSpec;
@@ -54,6 +55,9 @@ import es.tid.rsvp.objects.ResvConfirmIPv4;
 import es.tid.rsvp.objects.SSONSenderTSpec;
 import es.tid.rsvp.objects.ScopeIPv4;
 import es.tid.rsvp.objects.SenderTemplateIPv4;
+import es.tid.rsvp.objects.SenderTemplateIPv6;
+import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
+import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv6;
 import es.tid.rsvp.objects.SessionAttributeWOResourceAffinities;
 import es.tid.rsvp.objects.SessionIPv4;
 import es.tid.rsvp.objects.SessionIPv6;
@@ -67,11 +71,11 @@ import es.tid.rsvp.objects.subobjects.RROSubobject;
 
 public class TestCommons {
 	
-	public static void createAllFields(Object object, boolean choice_boolean) {
+	public static void createAllFields(Object object, boolean choice_boolean) throws Exception {
 		TestCommons.createAllFields(object,  choice_boolean,false, false);
 	}
 	
-	public static void createAllFields(Object object, boolean choice_boolean, boolean fill_parent, boolean te){
+	public static void createAllFields(Object object, boolean choice_boolean, boolean fill_parent, boolean te) throws Exception{
 		try {
 			System.out.println("Creating fields of "+object.getClass().getName() );
 			List<Field> fieldListNS = new ArrayList<Field>();
@@ -197,7 +201,19 @@ public class TestCommons {
 								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTemplate")){
-								 o= new SenderTemplateIPv4();
+								 if (te) {
+									 if (choice_boolean) {
+										 o= new SenderTemplateLSPTunnelIPv4();
+									 }else {
+										 o= new SenderTemplateLSPTunnelIPv6();
+									 }
+								 }else {
+									 if (choice_boolean) {
+										 o= new SenderTemplateIPv4();										 
+									 }else {
+										 o= new SenderTemplateIPv6();
+									 }
+								 }								 								 
 								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTSpec")){
@@ -430,8 +446,16 @@ public class TestCommons {
 									}
 									else if  (((Class)at).getName().equals("es.tid.rsvp.constructs.SenderDescriptor")) {
 										LinkedList<SenderDescriptor> ll=new LinkedList<SenderDescriptor>();
-										SenderDescriptor os = new SenderDescriptor();
-										createAllFields(os,choice_boolean);									
+										SenderDescriptor os;
+										if (te) {
+											os = new SenderDescriptorTE();	
+											createAllFields(os,choice_boolean,true,te);
+											createAllFields(os,choice_boolean,false,te);
+										}else {
+											os = new SenderDescriptor();
+											createAllFields(os,choice_boolean,false,false);
+										}										
+																			
 										ll.add(os);
 										method2.invoke(object,ll);
 									}

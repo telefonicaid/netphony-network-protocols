@@ -396,7 +396,7 @@ public class Path extends PCEPConstruct {
 		this.bandwidth = bandwidth;
 	}
 	
-	public IncludeRouteObject getiRO() {
+	public IncludeRouteObject getIro() {
 		return iro;
 	}
 
@@ -408,11 +408,11 @@ public class Path extends PCEPConstruct {
 		return metricList;
 	}
 	
-	public LSPA getlSPA() {
+	public LSPA getLspa() {
 		return lspa;
 	}
 
-	public ExplicitRouteObject geteRO() {
+	public ExplicitRouteObject getEro() {
 		return ero;
 	}
 	
