@@ -18,7 +18,7 @@ import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.messages.RSVPMessage;
 
 @RunWith(org.junit.runners.Parameterized.class)
-public class TestRSVPMessages {
+public class TestRSVPTEMessages {
 
 	String object;
 	//private String[] objects;
@@ -28,15 +28,8 @@ public class TestRSVPMessages {
 	@Parameters(name="{0}")
     public static Collection configs() {
     	Object[][] objects={
-    			{"es.tid.rsvp.messages.RSVPPathMessage"},
-    			{"es.tid.rsvp.messages.RSVPPathTearMessage"},
-    			{"es.tid.rsvp.messages.RSVPPathErrMessage"},
-    			{"es.tid.rsvp.messages.RSVPResvConfMessage"},
-    			{"es.tid.rsvp.messages.RSVPResvErrMessage"},
-    			{"es.tid.rsvp.messages.RSVPResvMessage"},
-    			{"es.tid.rsvp.messages.RSVPResvTearMessage"},
     			//Traffic Engineering
-    			//{"es.tid.rsvp.messages.te.RSVPTEPathMessage"},//FIXME: RSVPTE extendes RSVP, check to use parent's requests...
+    			{"es.tid.rsvp.messages.te.RSVPTEPathMessage"},//FIXME: RSVPTE extendes RSVP, check to use parent's requests...
 
     			
 				};
@@ -44,17 +37,19 @@ public class TestRSVPMessages {
     }
 	
     
-    public TestRSVPMessages (String object) {
+    public TestRSVPTEMessages (String object) {
     	this.object=object;
     }
     
     @Test
     public void test (){
     	try {
-    	System.out.println("Testing RSVP Message "+object);
+    	System.out.println("Testing RSVP TE Message "+object);
     	Class objectClass=Class.forName(object);
     	RSVPMessage object = (RSVPMessage)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
+    	TestCommons.createAllFields(object,true);
+    	//Fill parent's fields
+		TestCommons.createAllFields(object,true,true,true);
 		object.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);

@@ -253,10 +253,13 @@ public class Request extends PCEPConstruct{
 			log.debug("Request: ot = "+ot);
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
-					log.info("PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS");
-					endPoints=new GeneralizedEndPoints(bytes,offset);
+					int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
+					if (endPointType==1) {
+						endPoints=new P2PGeneralizedEndPoints(bytes,offset);	
+					}
+					
 				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed ENDPOINTS DataPathID Object found");
+					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
@@ -289,14 +292,6 @@ public class Request extends PCEPConstruct{
 					endPoints=new EndPointsIPv6(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warn("Malformed ENDPOINTSIPV6 Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
-				try {
-					endPoints=new GeneralizedEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}

@@ -54,7 +54,11 @@ import es.tid.rsvp.objects.ResvConfirmIPv4;
 import es.tid.rsvp.objects.SSONSenderTSpec;
 import es.tid.rsvp.objects.ScopeIPv4;
 import es.tid.rsvp.objects.SenderTemplateIPv4;
+import es.tid.rsvp.objects.SessionAttributeWOResourceAffinities;
 import es.tid.rsvp.objects.SessionIPv4;
+import es.tid.rsvp.objects.SessionIPv6;
+import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
+import es.tid.rsvp.objects.SessionLSPTunnelIPv6;
 import es.tid.rsvp.objects.Style;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4AddressRROSubobject;
@@ -63,12 +67,21 @@ import es.tid.rsvp.objects.subobjects.RROSubobject;
 
 public class TestCommons {
 	
-	public static void createAllFields(Object object, boolean choice_boolean){
+	public static void createAllFields(Object object, boolean choice_boolean) {
+		TestCommons.createAllFields(object,  choice_boolean,false, false);
+	}
+	
+	public static void createAllFields(Object object, boolean choice_boolean, boolean fill_parent, boolean te){
 		try {
 			System.out.println("Creating fields of "+object.getClass().getName() );
 			List<Field> fieldListNS = new ArrayList<Field>();
 			List<Field> fieldList= Arrays.asList(object.getClass().getDeclaredFields());
 			//System.out.println("XXXX "+fieldList.size());
+			if (fill_parent==true) {
+				Class parentClass=object.getClass().getSuperclass();
+				fieldList= Arrays.asList(parentClass.getDeclaredFields());
+				System.out.println("XXXX "+fieldList.size());
+			}
 			for (Field field : fieldList) {
 				
 				if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
@@ -159,11 +172,28 @@ public class TestCommons {
 								 ((UnreservedBandwidth)o).getUnreservedBandwidth()[3]=(float) 4.7;
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.Session")){
-								 o= new SessionIPv4();
+								 if (te) {
+									 if (choice_boolean) {
+										 o= new SessionLSPTunnelIPv4();
+									 }else {
+										 o= new SessionLSPTunnelIPv6();
+									 }
+								 }else {
+									 if (choice_boolean) {
+										 o= new SessionIPv4();										 
+									 }else {
+										 o= new SessionIPv6();
+									 }
+								 }
+								 
 								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.RSVPHop")){
 								 o= new RSVPHopIPv4();
+								 createAllFields(o,choice_boolean);
+							 }
+							 else if (c.getName().equals("es.tid.rsvp.objects.SessionAttribute")){
+								 o= new SessionAttributeWOResourceAffinities();
 								 createAllFields(o,choice_boolean);
 							 }
 							 else if (c.getName().equals("es.tid.rsvp.objects.SenderTemplate")){

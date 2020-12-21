@@ -16,6 +16,7 @@ import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.P2MPEndPointsIPv4;
+import es.tid.pce.pcep.objects.P2PGeneralizedEndPoints;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.SRP;
 
@@ -226,7 +227,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				}
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 					try {
-						endPoint=new GeneralizedEndPoints(bytes,offset);
+						int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
+						if (endPointType==1) {
+							endPoint=new P2PGeneralizedEndPoints(bytes,offset);	
+						}
+						
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed GENERALIZED END POINTS Object found");
 						throw new PCEPProtocolViolationException();

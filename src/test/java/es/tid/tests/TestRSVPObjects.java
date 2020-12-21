@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized.Parameters;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.SessionAttributeWOResourceAffinities;
 
 @RunWith(org.junit.runners.Parameterized.class)
 public class TestRSVPObjects {
@@ -23,7 +24,7 @@ public class TestRSVPObjects {
 	//@Parameters
 	@Parameters(name="{0}")
     public static Collection configs() {
-    	Object[][] objects={
+    	Object[][] objects={    			
     			{"es.tid.rsvp.objects.ERO"},
     			//{"es.tid.rsvp.objects.FlowSpec"},FIXME: Decode Not implemented!!
     			//{"es.tid.rsvp.objects.IntservSenderTSpec"}, FIXME: Decode Not implemented!!    			
@@ -51,11 +52,13 @@ public class TestRSVPObjects {
     			{"es.tid.rsvp.objects.RRO"},
     			{"es.tid.rsvp.objects.RSVPHopIPv4"},
     			{"es.tid.rsvp.objects.RSVPHopIPv6"},
-    			{"es.tid.rsvp.objects.ScopeIPv4"},
+    			{"es.tid.rsvp.objects.ScopeIPv4"}, 
     			{"es.tid.rsvp.objects.ScopeIPv6"},
+    			{"es.tid.rsvp.objects.SessionAttributeWOResourceAffinities"},
     			{"es.tid.rsvp.objects.SessionAttributeWResourceAffinities"}, 
-    			{"es.tid.rsvp.objects.SessionIPv6"},
-    			{"es.tid.rsvp.objects.SessionLSPTunnelIPv4"},
+    			{"es.tid.rsvp.objects.SessionIPv4"}, //ClassNum 1 Ctype 1
+    			{"es.tid.rsvp.objects.SessionIPv6"}, //ClassNum 1 Ctype 2
+    			{"es.tid.rsvp.objects.SessionLSPTunnelIPv4"}, //ClassNum 1 Ctype 7
     			{"es.tid.rsvp.objects.SessionLSPTunnelIPv6"},
     			{"es.tid.rsvp.objects.SSONSenderTSpec"},
     			{"es.tid.rsvp.objects.Style"},

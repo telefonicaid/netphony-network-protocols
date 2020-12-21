@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +114,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
          
      */
 	
-	private int excludeAny;
+	private long excludeAny;
 	
 	/**
 	  <p>A 32-bit vector representing a set of attribute filters
@@ -123,7 +124,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
          
      */
 	
-	private int includeAny;
+	private long includeAny;
 	
 	/**
 	 *<p>A 32-bit vector representing a set of attribute filters
@@ -132,7 +133,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
          (all bits set to zero) automatically passes. </p>
 	 */
 	
-	private int includeAll;
+	private long includeAll;
 	
 	/**
 	 *<p>The priority of the session with respect to taking resources,
@@ -195,7 +196,7 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
   public SessionAttributeWResourceAffinities() {
-	  classNum = 207;
+	  super();
 		cType = 1;
 		
   }
@@ -240,10 +241,8 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 	 */
 	
 	public SessionAttributeWResourceAffinities(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		decode(bytes, offset);
+		super(bytes,offset);
+		decode();
 		log.debug("Session Attribute With Resource Affinities Object Created");
 		
 	}
@@ -342,21 +341,22 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</p>
 	 */
 	
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-
+	public void decode() throws RSVPProtocolViolationException{
+		int offset=0;
 		log.debug("Starting Session Attribute With Resource Affinities decode");
 
 		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		
-		excludeAny = bytes[currentIndex] | bytes[currentIndex+1] | bytes[currentIndex+2] | bytes[currentIndex+3];
+		excludeAny = ByteHandler.decode4bytesLong(bytes, currentIndex);
+				
 
 		currentIndex = currentIndex + 4;
 		
-		includeAny = bytes[currentIndex] | bytes[currentIndex+1] | bytes[currentIndex+2] | bytes[currentIndex+3];
+		includeAny = ByteHandler.decode4bytesLong(bytes, currentIndex);
 
 		currentIndex = currentIndex + 4;
 		
-		includeAll = bytes[currentIndex] | bytes[currentIndex+1] | bytes[currentIndex+2] | bytes[currentIndex+3];
+		includeAll = ByteHandler.decode4bytesLong(bytes, currentIndex);
 
 		currentIndex = currentIndex + 4;
 		
@@ -417,27 +417,27 @@ public class SessionAttributeWResourceAffinities extends SessionAttribute{
 		this.sessionName = sessionName;
 	}
 
-	public int getExcludeAny() {
+	public long getExcludeAny() {
 		return excludeAny;
 	}
 
-	public void setExcludeAny(int excludeAny) {
+	public void setExcludeAny(long excludeAny) {
 		this.excludeAny = excludeAny;
 	}
 
-	public int getIncludeAny() {
+	public long getIncludeAny() {
 		return includeAny;
 	}
 
-	public void setIncludeAny(int includeAny) {
+	public void setIncludeAny(long includeAny) {
 		this.includeAny = includeAny;
 	}
 
-	public int getIncludeAll() {
+	public long getIncludeAll() {
 		return includeAll;
 	}
 
-	public void setIncludeAll(int includeAll) {
+	public void setIncludeAll(long includeAll) {
 		this.includeAll = includeAll;
 	}
 

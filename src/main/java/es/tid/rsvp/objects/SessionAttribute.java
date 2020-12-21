@@ -78,8 +78,18 @@ public abstract class SessionAttribute extends RSVPObject{
 
 	public abstract void encode() throws RSVPProtocolViolationException;
 			
-	public abstract void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException;
-
+	public SessionAttribute() {
+		super();
+		classNum = 207;
+		
+	}
+	
+	public SessionAttribute(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		return super.hashCode();
