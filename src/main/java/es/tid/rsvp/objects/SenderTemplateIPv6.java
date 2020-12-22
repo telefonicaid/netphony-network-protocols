@@ -40,7 +40,7 @@ public class SenderTemplateIPv6 extends SenderTemplate{
 	
 	public SenderTemplateIPv6(byte[] bytes, int offset){
 		
-		super();
+		super(bytes,offset);
 		decode();
 	}
 	/*	

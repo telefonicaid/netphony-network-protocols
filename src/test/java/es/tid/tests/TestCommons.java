@@ -48,6 +48,8 @@ import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 import es.tid.rsvp.constructs.te.SenderDescriptorTE;
 import es.tid.rsvp.objects.ErrorSpecIPv4;
 import es.tid.rsvp.objects.FlowSpec;
+import es.tid.rsvp.objects.HelloACK;
+import es.tid.rsvp.objects.HelloRequest;
 import es.tid.rsvp.objects.IntservSenderTSpec;
 import es.tid.rsvp.objects.PolicyData;
 import es.tid.rsvp.objects.RSVPHopIPv4;
@@ -84,7 +86,7 @@ public class TestCommons {
 			if (fill_parent==true) {
 				Class parentClass=object.getClass().getSuperclass();
 				fieldList= Arrays.asList(parentClass.getDeclaredFields());
-				System.out.println("XXXX "+fieldList.size());
+				//System.out.println("XXXX "+fieldList.size());
 			}
 			for (Field field : fieldList) {
 				
@@ -225,6 +227,14 @@ public class TestCommons {
 							 }else if (c.getName().equals("es.tid.rsvp.objects.Scope")){
 								 o= new ScopeIPv4();
 								 createAllFields(o,choice_boolean);
+							 }else if (c.getName().equals("es.tid.rsvp.objects.Hello")){
+								 if (choice_boolean) {
+									 o= new HelloRequest();
+								 }else {
+									 o= new HelloACK();
+								 }
+									 
+								 createAllFields(o,choice_boolean);
 							 }else if (c.getName().equals("es.tid.rsvp.objects.ResvConfirm")){
 								 o= new ResvConfirmIPv4();
 								 createAllFields(o,choice_boolean);
@@ -266,14 +276,14 @@ public class TestCommons {
 								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								String name2="set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
 								
-								System.out.println("name "+name);
-								System.out.println("name2 "+name2);
+								//System.out.println("name "+name);
+								//System.out.println("name2 "+name2);
 								//Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
 								Method method = object.getClass().getMethod(name);
 								Method method2 = object.getClass().getMethod(name2,ca);
 								Object res=method.invoke(object);
 								if (res==null) {
-									System.out.println("MAAAAAL "+name);
+									System.out.println("FIXME: Check linkedlikst "+name);
 								}
 								//Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {

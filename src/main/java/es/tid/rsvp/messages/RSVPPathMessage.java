@@ -313,7 +313,6 @@ public class RSVPPathMessage extends RSVPMessage{
 		int currentIndex = commonHeaderSize;
 		
 		if(integrity != null){
-			System.out.println("codo");
 			//Campo Opcional
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
@@ -332,7 +331,6 @@ public class RSVPPathMessage extends RSVPMessage{
 		
 		// Campos Opcionales
 		for(int i = 0; i < pdSize; i++){
-			System.out.println("codo");	
 			PolicyData pd = (PolicyData) policyData.get(i);
 			System.arraycopy(pd.getBytes(), 0, bytes, currentIndex, pd.getLength());
 			currentIndex = currentIndex + pd.getLength();

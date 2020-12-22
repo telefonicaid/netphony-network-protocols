@@ -29,8 +29,8 @@ public class TestRSVPTEMessages {
     public static Collection configs() {
     	Object[][] objects={
     			//Traffic Engineering
-    			{"es.tid.rsvp.messages.te.RSVPTEPathMessage"},//FIXME: RSVPTE extendes RSVP, check to use parent's requests...
-
+    			{"es.tid.rsvp.messages.te.RSVPTEPathMessage"},
+    			{"es.tid.rsvp.messages.te.RSVPTEHelloMessage"},
     			
 				};
 		return Arrays.asList(objects);

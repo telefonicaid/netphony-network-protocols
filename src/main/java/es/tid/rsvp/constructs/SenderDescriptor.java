@@ -192,7 +192,7 @@ public class SenderDescriptor extends RSVPConstruct {
 		int cType = RSVPObject.getcType(bytes, offset);
 		int length = 0;
 		int bytesLeft = bytes.length - offset; 
-		
+		System.out.println("Comenzamos con classNum es... "+classNum);
 		if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TEMPLATE){
 			
 			if(cType == 1){		// Tipo IPv4
@@ -236,9 +236,9 @@ public class SenderDescriptor extends RSVPConstruct {
 		
 		classNum = RSVPObject.getClassNum(bytes,offset);
 		cType = RSVPObject.getcType(bytes, offset);
-		
+		System.out.println("El classNum es... "+classNum);
 		if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TSPEC){
-			
+			System.out.println("El cType es... "+cType);
 			if(cType == 2){		// cType adecuado
 				
 				senderTSPEC = new IntservSenderTSpec();

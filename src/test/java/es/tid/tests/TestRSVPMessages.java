@@ -53,17 +53,27 @@ public class TestRSVPMessages {
     	try {
     	System.out.println("Testing RSVP Message "+object);
     	Class objectClass=Class.forName(object);
-    	RSVPMessage object = (RSVPMessage)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
-		object.encode();
+    	RSVPMessage object1 = (RSVPMessage)objectClass.newInstance();
+		TestCommons.createAllFields(object1,true);
+		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
-		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object.getBytes(),object.getBytes().length);
+		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
 		object2.encode();
-		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 		//System.out.println(object2.toString());
 		//Check if the fields are the same
-		assertTrue("asserting RSVP message "+objectClass,object.equals(object2));
+		assertTrue("asserting RSVP message "+objectClass,object1.equals(object2));
+		
+		//Check all the gets
+		TestCommons.testGets(object1);
+		//Test with boolean false
+		TestCommons.createAllFields(object1,false);
+		object1.encode();
+		object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
+		object2.encode();
+		assertTrue("asserting RSVP message (second round changing objects) "+objectClass,object1.equals(object2));
+
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in message "+object,false);
