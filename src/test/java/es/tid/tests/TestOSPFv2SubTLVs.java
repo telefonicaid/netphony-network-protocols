@@ -47,13 +47,18 @@ public class TestOSPFv2SubTLVs {
     			//FIXME: Need to add test with float[]
     			//LinkProtectionType FIXME: NOT implemented
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AdministrativeGroup"},//Type 9 Administrative group (4 octets)	[RFC3630]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkLocalRemoteIdentifiers"},//Type 11 Link Local/Remote Identifiers (8 octets)	[RFC4203]
+    			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor"},//Type 15 Interface Switching Capability Descriptor (variable)	[RFC4203]
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.SharedRiskLinkGroup"},//Type 16	Shared Risk Link Group (variable)	[RFC4203]
     			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor"},//Type 15	Interface Switching Capability Descriptor (variable)	[RFC4203]
     			//FIXME: Need to add test with max_LSP_BW
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteASNumber"},// Type 21	Remote AS Number sub-TLV	[RFC5392]
     			{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.IPv4RemoteASBRID"},//Type 22	IPv4 Remote ASBR ID sub-TLV	[RFC5392]    			
     			//Types for sub-TLVs of WSON-LSC SCSI (Switching Capability Specific Information)
-    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels"},//Type 1200 FIXME: Non-standard value used   FIXME: Add specific test			
+    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels"},//Type 1200 FIXME: Non-standard value used   FIXME: Add specific test
+    			//Experimental
+    			//{"es.tid.ospf.ospfv2.lsa.tlv.subtlv.MF_OTPAttribSubTLV"},
+    			
 
 				};
 		return Arrays.asList(objects);
@@ -78,13 +83,14 @@ public class TestOSPFv2SubTLVs {
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
+		
 		//Check toString output
 		object1.toString();
 		//Check all the gets
 		TestCommons.testGets(object1);
 		//Check if the fields are the same
 		assertTrue("testing PCEP TLV  "+objectClass,object1.equals(object2));
-		
+		System.out.println("Check OK");
 		//Check equals 
 		//testEquals(object1, object2);
 		//Check hashcode
@@ -94,7 +100,10 @@ public class TestOSPFv2SubTLVs {
 		object1.encode();
 		object2 = (OSPFSubTLV) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
 		assertTrue("testing OSPF SubTLV changing values"+objectClass,object1.equals(object2));
+		System.out.println("Check 2 OK");
 //		//Check equals with false boolean
 //		testEquals(object1, object2);
 		//Test Bad object

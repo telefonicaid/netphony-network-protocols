@@ -92,7 +92,7 @@ public class TestPCEPObjects {
 		PCEPObject object1 = (PCEPObject)objectClass.newInstance();
 		TestCommons.createAllFields(object1,true);
 		object1.encode();
-		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
+		//System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PCEPObject object2 = (PCEPObject) ctor.newInstance(object1.getBytes(),0);
 		object2.encode();
@@ -155,7 +155,7 @@ public class TestPCEPObjects {
 			if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 				if (ty instanceof Class){
 					Class c =(Class)ty;
-					System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
+					//System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
 					Method method;
 					Method methods;
 					if (c.isPrimitive()){

@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class AS_Path_Attribute extends PathAttribute
 {
-	private List<AS_Path_Segment> asPathSegments;
+	private LinkedList<AS_Path_Segment> asPathSegments;
 
 	public AS_Path_Attribute()
 	{
@@ -100,7 +100,7 @@ public class AS_Path_Attribute extends PathAttribute
 
 	public List<AS_Path_Segment> getAsPathSegments(){ return asPathSegments; }
 
-	public void setAsPathSegments(List<AS_Path_Segment> asPathSegments)
+	public void setAsPathSegments(LinkedList<AS_Path_Segment> asPathSegments)
 	{
 		this.asPathSegments = asPathSegments;
 	}

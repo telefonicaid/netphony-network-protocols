@@ -18,10 +18,16 @@ import es.tid.bgp.bgp4.open.BGP4OctetsASByteCapabilityAdvertisement;
 import es.tid.bgp.bgp4.open.BGP4OptionalParameter;
 import es.tid.bgp.bgp4.open.MultiprotocolExtensionCapabilityAdvertisement;
 import es.tid.bgp.bgp4.update.fields.LinkNLRI;
+import es.tid.bgp.bgp4.update.fields.PathAttribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Attribute;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Segment;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.OriginAttribute;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
+import es.tid.ospf.ospfv2.lsa.InterASTEv2LSA;
 import es.tid.ospf.ospfv2.lsa.LSA;
 import es.tid.ospf.ospfv2.lsa.OSPFTEv2LSA;
+import es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.UnreservedBandwidth;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecificInformationPSC;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
@@ -89,8 +95,9 @@ public class TestCommons {
 				//System.out.println("XXXX "+fieldList.size());
 			}
 			for (Field field : fieldList) {
-				
+				//System.out.println("Field name: "+field.getName());
 				if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+					//System.out.println("non static Field name: "+field.getName());
 					fieldListNS.add(field);
 					Type ty=field.getGenericType();
 					//System.out.println("Type of the field to fill: "+ty);
@@ -107,10 +114,24 @@ public class TestCommons {
 							
 							Class c2=c.getComponentType();
 							//System.out.println("c2: "+c2.getName()); 
-							o = Array.newInstance(c2, 5);
+							if (object.getClass().getName().equals("es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor")) {
+								long[] max_LSP_BW=new long[8];
+								 max_LSP_BW[0]=0;
+								 max_LSP_BW[1]=1;
+								 max_LSP_BW[2]=2;
+								 max_LSP_BW[3]=3;
+								 max_LSP_BW[4]=4;
+								 max_LSP_BW[5]=5;
+								 max_LSP_BW[6]=6;
+								 max_LSP_BW[7]=7;
+								 o= max_LSP_BW;
+							} else {
+								o = Array.newInstance(c2, 5);
+							}
+							
 							
 							method.invoke(object, o);
-							//System.out.println("FIXME:  ES UN ARRAY OJO ");
+							System.out.println("FIXME:  ES UN ARRAY OJO ");
 						}
 						
 						else {
@@ -156,7 +177,8 @@ public class TestCommons {
 							 else if (c.getName().equals("es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecificInformation")){
 								 o= new SwitchingCapabilitySpecificInformationPSC();
 								 createAllFields(o,choice_boolean);
-							 }
+							 } 
+							 
 							 else if (c.getName().equals("es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.LabelSetField")){
 								
 								 es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.BitmapLabelSet a = new es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.BitmapLabelSet();
@@ -449,9 +471,16 @@ public class TestCommons {
 										
 									} else if  (((Class)at).getName().equals("es.tid.ospf.ospfv2.lsa.LSA")) {
 										LinkedList<LSA> ll=new LinkedList<LSA>();
-										OSPFTEv2LSA os = new OSPFTEv2LSA();
-										createAllFields(os,choice_boolean);									
-										ll.add(os);
+										if (choice_boolean) {
+											OSPFTEv2LSA os = new OSPFTEv2LSA();
+											createAllFields(os,choice_boolean);									
+											ll.add(os);
+											
+										}else {
+											InterASTEv2LSA os = new InterASTEv2LSA();
+											createAllFields(os,choice_boolean);									
+											ll.add(os);
+										}
 										method2.invoke(object,ll);
 									}
 									else if  (((Class)at).getName().equals("es.tid.rsvp.constructs.SenderDescriptor")) {
@@ -520,7 +549,15 @@ public class TestCommons {
 										  	
 										ll.add(os);
 										method2.invoke(object,ll);
+									} else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Segment")) {
+										LinkedList<AS_Path_Segment> ll=new LinkedList<AS_Path_Segment>();
+										AS_Path_Segment os = new  AS_Path_Segment();		
+										  	
+										ll.add(os);
+										method2.invoke(object,ll);
 									} 
+									
+									
 									else {
 										
 										//Object ll= pt.getRawType(). .newInstance();
@@ -537,6 +574,28 @@ public class TestCommons {
 								}
 								
 	
+							} else if (ca.getName().equals("java.util.ArrayList")) {
+								//System.out.println("SIIII "+((Class)at).getName());
+								String name="get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
+								String name2="set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase());
+								
+								//System.out.println("name "+name);
+								//System.out.println("name2 "+name2);
+								//Method method = object.getClass().getMethod("get"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()));
+								Method method = object.getClass().getMethod(name);
+								Method method2 = object.getClass().getMethod(name2,ca);
+								Object res=method.invoke(object);
+								if  (((Class)at).getName().equals("es.tid.bgp.bgp4.update.fields.PathAttribute")) {
+									ArrayList< PathAttribute> ll=new ArrayList<PathAttribute>();
+									OriginAttribute os = new  OriginAttribute();		
+									createAllFields(os,choice_boolean);	
+									ll.add(os);
+									AS_Path_Attribute os2= new AS_Path_Attribute();
+									createAllFields(os2,choice_boolean);	
+									ll.add(os2);
+									
+									method2.invoke(object,ll);
+								} 
 							}
 			
 						}

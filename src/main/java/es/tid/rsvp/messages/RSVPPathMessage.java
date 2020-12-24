@@ -337,7 +337,6 @@ public class RSVPPathMessage extends RSVPMessage{
 		}
 		// Lista de Sender Descriptors
 		for(int i = 0; i < sdSize; i++){
-			System.out.println("codo");
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
 				System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
 				currentIndex = currentIndex + sd.getLength();
@@ -361,8 +360,8 @@ public class RSVPPathMessage extends RSVPMessage{
 		while(offset < length){		// Mientras quede mensaje
 			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
-			System.out.println("offset "+offset+ "legnth "+length);
-			System.out.println("classum "+classNum);
+			//System.out.println("offset "+offset+ "legnth "+length);
+			//System.out.println("classum "+classNum);
 			if(classNum == 1){
 				
 				// Session Object
@@ -413,7 +412,7 @@ public class RSVPPathMessage extends RSVPMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 					
 					integrity = new Integrity(bytes, offset);
-					System.out.println("offset "+offset+ "legnth "+integrity.getLength());
+					//System.out.println("offset "+offset+ "legnth "+integrity.getLength());
 					offset = offset + integrity.getLength();
 					
 			}
@@ -464,7 +463,7 @@ public class RSVPPathMessage extends RSVPMessage{
 				}				
 			}  
 			else {
-				System.out.println("class "+	classNum					);
+				//System.out.println("class "+	classNum					);
 				throw new RSVPProtocolViolationException();
 			}
 		}

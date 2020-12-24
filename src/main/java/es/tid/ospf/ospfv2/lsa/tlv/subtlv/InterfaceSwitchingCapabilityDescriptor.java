@@ -1,5 +1,7 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
+import java.util.Arrays;
+
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.*;
 
 
@@ -139,7 +141,7 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 	/**
 	 * Switching Capability-specific information
 	 */
-	private SwitchingCapabilitySpecificInformation switchingCapabilitySpecificInformation;
+	//private SwitchingCapabilitySpecificInformation switchingCapabilitySpecificInformation;
 	
 	/**
 	 * Default Constructor			
@@ -158,10 +160,10 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 	 */
 	public void encode() {
 		int length=36;
-		if (switchingCapabilitySpecificInformation!=null){
-			switchingCapabilitySpecificInformation.encode();
-			length=length+switchingCapabilitySpecificInformation.getLength();
-		}
+//		if (switchingCapabilitySpecificInformation!=null){
+//			switchingCapabilitySpecificInformation.encode();
+//			length=length+switchingCapabilitySpecificInformation.getLength();
+//		}
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
@@ -178,9 +180,9 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 			this.tlv_bytes[offset + 3] = (byte)(max_LSP_BW[i] & 0xff);
 			offset = offset + 4;
 		}
-		if (this.switchingCapabilitySpecificInformation!=null){
-			System.arraycopy(this.tlv_bytes, offset , switchingCapabilitySpecificInformation.getBytes(), 0, switchingCapabilitySpecificInformation.getLength());
-		}		
+//		if (this.switchingCapabilitySpecificInformation!=null){
+//			System.arraycopy(this.tlv_bytes, offset , switchingCapabilitySpecificInformation.getBytes(), 0, switchingCapabilitySpecificInformation.getLength());
+//		}		
 	}
 	
 	/**
@@ -192,17 +194,17 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 		this.switchingCap = this.tlv_bytes[offset]&0xFF;
 		this.encoding = this.tlv_bytes[offset+1]&0xFF;
 		offset = offset + 4;
-		for (int i=0;i<7;++i){
+		for (int i=0;i<8;++i){
 			this.max_LSP_BW[i] = (long) ((((this.tlv_bytes[offset]&0xFF) << 24) & 0xFF000000) | (((tlv_bytes[offset+1]&0xFF)<<16)& 0xFF0000) | (((tlv_bytes[offset+2]&0xFF)<<8)& 0xFF00) |  (tlv_bytes[offset+3]&0xFF) );
 			offset = offset + 4;
 		}
 
-		if((this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_1) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_2) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_3) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_4)){		// PSC 1,2,3 or 4
-			this.switchingCapabilitySpecificInformation = new SwitchingCapabilitySpecificInformationPSC(this.tlv_bytes,offset);		
-		}
-		else if(this.switchingCap == SwitchingCapabilityType.TIME_DIVISION_SWITCH_CAPABLE){	// TDM
-			this.switchingCapabilitySpecificInformation = new SwitchingCapabilitySpecificInformationTDM(this.tlv_bytes,offset);
-		}
+//		if((this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_1) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_2) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_3) || (this.switchingCap == SwitchingCapabilityType.PACKET_SWITCH_CAPABLE_4)){		// PSC 1,2,3 or 4
+//			this.switchingCapabilitySpecificInformation = new SwitchingCapabilitySpecificInformationPSC(this.tlv_bytes,offset);		
+//		}
+//		else if(this.switchingCap == SwitchingCapabilityType.TIME_DIVISION_SWITCH_CAPABLE){	// TDM
+//			this.switchingCapabilitySpecificInformation = new SwitchingCapabilitySpecificInformationTDM(this.tlv_bytes,offset);
+//		}
 
 	}
 	
@@ -241,26 +243,37 @@ public class InterfaceSwitchingCapabilityDescriptor extends OSPFSubTLV {
 		this.max_LSP_BW[i] = maxLSPBW;
 	}
 
-	public SwitchingCapabilitySpecificInformation getSwitchingCapabilitySpecificInformation() {
-		return switchingCapabilitySpecificInformation;
-	}
+//	public SwitchingCapabilitySpecificInformation getSwitchingCapabilitySpecificInformation() {
+//		return switchingCapabilitySpecificInformation;
+//	}
+//
+//	public void setSwitchingCapabilitySpecificInformation(
+//			SwitchingCapabilitySpecificInformation switchingCapabilitySpecificInformation) {
+//		this.switchingCapabilitySpecificInformation = switchingCapabilitySpecificInformation;
+//	}
 
-	public void setSwitchingCapabilitySpecificInformation(
-			SwitchingCapabilitySpecificInformation switchingCapabilitySpecificInformation) {
-		this.switchingCapabilitySpecificInformation = switchingCapabilitySpecificInformation;
-	}
+
+	
+
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		if (switchingCap != ((InterfaceSwitchingCapabilityDescriptor)obj).getSwitchingCap())
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
 			return false;
-		else if (encoding != ((InterfaceSwitchingCapabilityDescriptor)obj).getEncoding())
+		if (getClass() != obj.getClass())
 			return false;
-		
-		return switchingCapabilitySpecificInformation.equals(((InterfaceSwitchingCapabilityDescriptor)obj).getSwitchingCapabilitySpecificInformation());
+		InterfaceSwitchingCapabilityDescriptor other = (InterfaceSwitchingCapabilityDescriptor) obj;
+		if (encoding != other.encoding)
+			return false;
+		if (!Arrays.equals(max_LSP_BW, other.max_LSP_BW))
+			return false;
+		if (switchingCap != other.switchingCap)
+			return false;
+		return true;
 	}
-	
+
 	public String toString(){
 		StringBuffer sb=new StringBuffer(100);
 		sb.append("ISCD: swCap: ");

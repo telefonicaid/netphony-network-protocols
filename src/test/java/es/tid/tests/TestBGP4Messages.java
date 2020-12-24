@@ -29,7 +29,7 @@ public class TestBGP4Messages {
     	Object[][] objects={
     			{"es.tid.bgp.bgp4.messages.BGP4Keepalive"},
     			{"es.tid.bgp.bgp4.messages.BGP4Open"},
-    			//{"es.tid.bgp.bgp4.messages.BGP4Update"},
+    			{"es.tid.bgp.bgp4.messages.BGP4Update"},
     			//{"es.tid.bgp.bgp4.messages.BGP4Notification"},
 				};
 		return Arrays.asList(objects);

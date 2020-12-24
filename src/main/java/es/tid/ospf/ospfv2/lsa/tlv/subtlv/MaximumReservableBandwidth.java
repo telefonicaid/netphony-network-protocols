@@ -25,7 +25,7 @@ public class MaximumReservableBandwidth extends OSPFSubTLV {
 
 
 	public MaximumReservableBandwidth(){
-		this.setTLVType(OSPFSubTLVTypes.MaximumBandwidth);
+		this.setTLVType( OSPFSubTLVTypes.MaximumReservableBandwidth);
 	}
 	
 	public MaximumReservableBandwidth(byte[] bytes, int offset)throws MalformedOSPFSubTLVException{

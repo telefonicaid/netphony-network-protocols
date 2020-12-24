@@ -2,10 +2,12 @@ package es.tid.ospf.ospfv2;
 
 import java.util.LinkedList;
 
+import es.tid.ospf.ospfv2.lsa.InterASTEv2LSA;
 import es.tid.ospf.ospfv2.lsa.LSA;
 import es.tid.ospf.ospfv2.lsa.LSATypes;
 import es.tid.ospf.ospfv2.lsa.MalformedOSPFLSAException;
 import es.tid.ospf.ospfv2.lsa.OSPFTEv2LSA;
+import es.tid.ospf.ospfv2.lsa.OpaqueLSA;
 
 /**
  * A.3.5 The Link State Update packet
@@ -74,9 +76,14 @@ public class OSPFv2LinkStateUpdatePacket extends OSPFv2Packet{
 			type= LSA.getLStype(bytes, offset);
 			length_lsa= LSA.getLSlength(bytes, offset);
 		if (type == LSATypes.TYPE_10_OPAQUE_LSA){
-		
+		    int opaque_type =OpaqueLSA.getOpaqueType(bytes,offset);
 			try {
-				LSAlist.add(new OSPFTEv2LSA(bytes,offset));
+				if (opaque_type==LSATypes.OPAQUE_TYPE_OSPF_TE_V2_LSA) {
+					LSAlist.add(new OSPFTEv2LSA(bytes,offset));	
+				}else if (opaque_type==LSATypes.OPAQUE_TYPE_INTER_AS_TE_V2_LSA) {
+					LSAlist.add(new InterASTEv2LSA(bytes,offset));	
+				}
+				
 			} catch (MalformedOSPFLSAException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -122,17 +129,17 @@ public class OSPFv2LinkStateUpdatePacket extends OSPFv2Packet{
 		LSAlist = lSAlist;
 	}
 	
-	public String printHexString(){
-		String ret="";
-		for (int i=0;i<this.getLength();++i){
-			if ((bytes[i]&0xFF)<=0x0F){
-			ret=ret+"0";		
-			}
-			ret=ret+Integer.toHexString(bytes[i]&0xFF);
-			
-		}
-		return ret;
-	}
+//	public String printHexString(){
+//		String ret="";
+//		for (int i=0;i<this.getLength();++i){
+//			if ((bytes[i]&0xFF)<=0x0F){
+//			ret=ret+"0";		
+//			}
+//			ret=ret+Integer.toHexString(bytes[i]&0xFF);
+//			
+//		}
+//		return ret;
+//	}
 
 	@Override
 	public String toString() {

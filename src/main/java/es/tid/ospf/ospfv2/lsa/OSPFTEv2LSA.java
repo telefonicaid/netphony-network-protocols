@@ -176,7 +176,7 @@ public class OSPFTEv2LSA extends OpaqueLSA {
 		if (routerAddressTLV!=null){
 			ret=routerAddressTLV.toString();
 		}
-		else if (linkTLV!=null){
+		if (linkTLV!=null){
 			ret=linkTLV.toString();
 		}else {
 			ret="";

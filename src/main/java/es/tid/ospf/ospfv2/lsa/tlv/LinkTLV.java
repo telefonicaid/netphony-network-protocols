@@ -92,7 +92,7 @@ public class LinkTLV extends OSPFTLV {
 	
 	private LinkProtectionType linkProtectionType;
 	
-	private InterfaceSwitchingCapabilityDescriptor interfaceSwitchingCapabilityDescriptor;
+	//private InterfaceSwitchingCapabilityDescriptor interfaceSwitchingCapabilityDescriptor;
 	
 	private SharedRiskLinkGroup sharedRiskLinkGroup;	
 	
@@ -299,9 +299,9 @@ public class LinkTLV extends OSPFTLV {
 					this.linkProtectionType=new LinkProtectionType(this.getTlv_bytes(), offset);
 					break;
 
-				case OSPFSubTLVTypes.InterfaceSwitchingCapabilityDescriptor:
-					this.interfaceSwitchingCapabilityDescriptor=new InterfaceSwitchingCapabilityDescriptor(this.getTlv_bytes(), offset);
-					break;
+//				case OSPFSubTLVTypes.InterfaceSwitchingCapabilityDescriptor:
+//					this.interfaceSwitchingCapabilityDescriptor=new InterfaceSwitchingCapabilityDescriptor(this.getTlv_bytes(), offset);
+//					break;
 
 				case OSPFSubTLVTypes.SharedRiskLinkGroup:
 					this.sharedRiskLinkGroup=new SharedRiskLinkGroup(this.getTlv_bytes(), offset);
@@ -399,7 +399,7 @@ public class LinkTLV extends OSPFTLV {
 	}
 
 	public void setAvailableLabels(AvailableLabels availableLabels) {
-		this.availableLabels = availableLabels;
+		//this.availableLabels = availableLabels;//FIXME
 	}
 
 	public AdministrativeGroup getAdministrativeGroup() {
@@ -439,21 +439,21 @@ public class LinkTLV extends OSPFTLV {
 		this.linkProtectionType = linkProtectionType;
 	}
 
-	public InterfaceSwitchingCapabilityDescriptor getInterfaceSwitchingCapabilityDescriptor() {
-		return interfaceSwitchingCapabilityDescriptor;
-	}
-
-	public void setInterfaceSwitchingCapabilityDescriptor(
-			InterfaceSwitchingCapabilityDescriptor interfaceSwitchingCapabilityDescriptor) {
-		this.interfaceSwitchingCapabilityDescriptor = interfaceSwitchingCapabilityDescriptor;
-	}
+//	public InterfaceSwitchingCapabilityDescriptor getInterfaceSwitchingCapabilityDescriptor() {
+//		return interfaceSwitchingCapabilityDescriptor;
+//	}
+//
+//	public void setInterfaceSwitchingCapabilityDescriptor(
+//			InterfaceSwitchingCapabilityDescriptor interfaceSwitchingCapabilityDescriptor) {
+//		this.interfaceSwitchingCapabilityDescriptor = interfaceSwitchingCapabilityDescriptor;
+//	}
 
 	public SharedRiskLinkGroup getSharedRiskLinkGroup() {
 		return sharedRiskLinkGroup;
 	}
 
 	public void setSharedRiskLinkGroup(SharedRiskLinkGroup sharedRiskLinkGroup) {
-		this.sharedRiskLinkGroup = sharedRiskLinkGroup;
+		//this.sharedRiskLinkGroup = sharedRiskLinkGroup;
 	}
 
 	public RemoteASNumber getRemoteASNumber() {
@@ -461,7 +461,7 @@ public class LinkTLV extends OSPFTLV {
 	}
 
 	public void setRemoteASNumber(RemoteASNumber remoteASNumber) {
-		this.remoteASNumber = remoteASNumber;
+		//this.remoteASNumber = remoteASNumber;
 	}
 
 	public IPv4RemoteASBRID getiPv4RemoteASBRID() {
@@ -469,7 +469,7 @@ public class LinkTLV extends OSPFTLV {
 	}
 
 	public void setIPv4RemoteASBRID(IPv4RemoteASBRID iPv4RemoteASBRID) {
-		this.iPv4RemoteASBRID = iPv4RemoteASBRID;
+		//this.iPv4RemoteASBRID = iPv4RemoteASBRID;
 	}
 
 	public String toString(){
@@ -525,10 +525,10 @@ public class LinkTLV extends OSPFTLV {
 			sb.append("\r\n");
 		}
 		
-		if (interfaceSwitchingCapabilityDescriptor!=null){
-			sb.append(interfaceSwitchingCapabilityDescriptor.toString());
-			sb.append("\r\n");
-		}
+//		if (interfaceSwitchingCapabilityDescriptor!=null){
+//			sb.append(interfaceSwitchingCapabilityDescriptor.toString());
+//			sb.append("\r\n");
+//		}
 		if (linkLocalRemoteIdentifiers!=null){
 			sb.append(linkLocalRemoteIdentifiers.toString());
 			sb.append("\r\n");
