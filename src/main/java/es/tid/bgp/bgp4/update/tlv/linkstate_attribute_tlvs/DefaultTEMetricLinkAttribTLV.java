@@ -4,9 +4,20 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 
 /**
- * 3.7 Traffic Engineering Metric
-
-
+ * TE Default Metric TLV (Type 1092) (IS-IS Sub-TLV 22/18)	[RFC7752, Section 3.3.2.3]
+ * 
+ * This metric is
+ *  administratively assigned and can be used to present a differently
+ *  weighted topology to traffic engineering SPF calculations.
+ *
+ *  
+ * @author Oscar Gonzalez de Dios
+ * @author Fernando Munoz del Nuevo
+ *
+ */
+public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
+	/*
+	 *  * 3.7 Traffic Engineering Metric
       This sub-TLV contains a 24-bit unsigned integer.  This metric is
    administratively assigned and can be used to present a differently
    weighted topology to traffic engineering SPF calculations.
@@ -24,13 +35,8 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    this sub-TLV, traffic engineering SPF calculations MUST use the
    normal default metric of this link, which is advertised in the fixed
    part of the extended IS reachability TLV.
-   
- * @author Oscar Gonzalez de Dios
- * @author Fernando Munoz del Nuevo
- *
- */
-public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
-
+	 */
+	
 	private long linkMetric;
 	
 	public DefaultTEMetricLinkAttribTLV(){

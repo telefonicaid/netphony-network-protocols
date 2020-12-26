@@ -2,6 +2,12 @@ package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
+/**
+ * Maximum link bandwidth TLV (Type 1089)	[RFC5305, Section 3.4]
+ * 
+ * @author ogondio
+ *
+ */
 
 public class MaximumLinkBandwidthLinkAttribTLV extends BGP4TLVFormat{
 public float maximumBandwidth;

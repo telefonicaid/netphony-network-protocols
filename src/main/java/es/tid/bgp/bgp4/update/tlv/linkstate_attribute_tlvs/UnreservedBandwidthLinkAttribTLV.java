@@ -2,7 +2,11 @@ package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
-public class UnreservedBandwidthLinkAttribTLV extends BGP4TLVFormat{
+/**
+ * Unreserved bandwidth TLV	(Type 1091)	[RFC5305, Section 3.6]
+ */
+
+public class UnreservedBandwidthLinkAttribTLV  extends BGP4TLVFormat{
 public float[] unreservedBandwidth;
 	
 	public UnreservedBandwidthLinkAttribTLV(){

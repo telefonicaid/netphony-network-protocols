@@ -33,12 +33,42 @@ public class TestBGP_LS_TLVs {
 	@Parameters(name="{0}")
     public static Collection configs() {
     	Object[][] objects={
-    			//https://www.iana.org/assignments/bgp-ls-parameters/bgp-ls-parameters.xhtml#node-descriptor-link-descriptor-prefix-descriptor-attribute-tlv
-    			
+    			//https://www.iana.org/assignments/bgp-ls-parameters/bgp-ls-parameters.xhtml#node-descriptor-link-descriptor-prefix-descriptor-attribute-tlv    			
     			{"es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV"},//Type 256 Local Node Descriptors
     			{"es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV"},// Type 257 Remote Node Descriptors
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeLinkAttribTLV"}, //Type 1028	IPv4 Router-ID of Local Node	[RFC5305, Section 4.3]
-
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeNodeAttribTLV"}, //FIXME: Now it is duplicated for node and link
+    			//1029	IPv6 Router-ID of Local Node	140/---	[RFC6119, Section 4.1] //TODO: Not implemented
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDRemoteNodeLinkAttribTLV"}, //Type 1030 IPv4 Router-ID of Remote Node	[RFC5305, Section 4.3]	[RFC5305, Section 4.3]
+    			//1031	IPv6 Router-ID of Remote Node	140/---	[RFC6119, Section 4.1] //TODO: Not implmented
+    			//1032	S-BFD Discriminators TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-30, expires 2021-08-06)		[draft-ietf-idr-bgp-ls-sbfd-extensions] //TODO: Not implemented
+    			//1034	SR Capabilities		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.1.2]
+    			//	1035	SR Algorithm		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.1.3]
+    			//	1036	SR Local Block		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.1.4]
+    			//	1037	SRMS Preference		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.1.5]
+    			//		1038	SRv6 Capabilities TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-25, expires 2021-08-06)		[draft-ietf-idr-bgpls-srv6-ext] //TODO: Not implemented
+    			//		1039	Flex Algorithm Definition TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-25, expires 2021-08-06)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented
+    			//		1040	Flex Algo Exclude Any Affinity sub-TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-25, expires 2021-08-06)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented
+    			//		1041	Flex Algo Include Any Affinity sub-TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-25, expires 2021-08-06)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented
+    			//		1042	Flex Algo Include All Affinity sub-TLV (TEMPORARY - registered 2019-08-06, extension registered 2020-06-25, expires 2021-08-06)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented
+    			//		1043	Flex Algo Definition Flags sub-TLV (TEMPORARY - registered 2019-08-19, extension registered 2020-06-25, expires 2021-08-19)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented
+    			//		1044	Flex Algorithm Prefix Metric TLV (TEMPORARY - registered 2019-08-19, extension registered 2020-06-25, expires 2021-08-19)		[draft-ietf-idr-bgp-ls-flex-algo] //TODO: Not implemented    			
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.AdministrativeGroupLinkAttribTLV"},// Type 1088	Administrative group (color)	22/3	[RFC5305, Section 3.1]
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MaximumLinkBandwidthLinkAttribTLV"},// Type 1089	Maximum link bandwidth	[RFC5305, Section 3.4]
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MaxReservableBandwidthLinkAttribTLV"},// Type 1090	Max. reservable link bandwidth	22/10	[RFC5305, Section 3.5]
+//    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV"},// Type 1091	Unreserved bandwidth	[RFC5305, Section 3.6]//FIXME: Rellenar el array
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.DefaultTEMetricLinkAttribTLV"},// Type 1092	TE Default Metric	22/18	[RFC7752, Section 3.3.2.3]
+//    					1093	Link Protection Type	22/20	[RFC5307, Section 1.2]
+//    					1094	MPLS Protocol Mask		[RFC7752, Section 3.3.2.2]
+//    					1095	IGP Metric		[RFC7752, Section 3.3.2.4]
+//    					1096	Shared Risk Link Group		[RFC7752, Section 3.3.2.5]
+//    					1097	Opaque Link Attribute		[RFC7752, Section 3.3.2.6]
+//    					1098	Link Name		[RFC7752, Section 3.3.2.7]
+//    					1099	Adjacency SID		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.2.1]
+//    					1100	LAN Adjacency SID		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.2.2]
+//    					1101	PeerNode SID		[RFC-ietf-idr-bgpls-segment-routing-epe-19]
+//    					1102	PeerAdj SID		[RFC-ietf-idr-bgpls-segment-routing-epe-19]
+//    					1103	PeerSet SID		[RFC-ietf-idr-bgpls-segment-routing-epe-19]
 				};
 		return Arrays.asList(objects);
     }
