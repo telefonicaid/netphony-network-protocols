@@ -45,17 +45,22 @@ public class TestBGP4Messages {
     	try {
     	System.out.println("oscar Testing BGP4 Message "+object);
     	Class objectClass=Class.forName(object);
-    	BGP4Message object = (BGP4Message)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
-		object.encode();
+    	BGP4Message object1 = (BGP4Message)objectClass.newInstance();
+		TestCommons.createAllFields(object1,true);
+		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class);
-		BGP4Message object2 = (BGP4Message) ctor.newInstance(object.getBytes());
+		BGP4Message object2 = (BGP4Message) ctor.newInstance(object1.getBytes());
 		object2.encode();
-		System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 
 		//Check if the fields are the same
-		assertTrue("testing message "+objectClass,object.equals(object2));
+		assertTrue("testing message "+objectClass,object1.equals(object2));
+		
+		//Check all the gets
+		TestCommons.testGets(object1);
+		//Check toStrings
+		System.out.println(object1.toString());
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in message "+object,false);

@@ -1,47 +1,41 @@
 package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-/*
- *The first octet is a bit vector describing the protection capabilities
-   of the link (see Section 2.2, "Link Protection Type", of
-   [GMPLS-ROUTING]).  They are:
 
-      0x01  Extra Traffic
-
-      0x02  Unprotected
-
-      0x04  Shared
-
-      0x08  Dedicated 1:1
-
-      0x10  Dedicated 1+1
-
-      0x20  Enhanced
-
-      0x40  Reserved
-
-      0x80  Reserved
-
-
-
-
-Kompella & Rekhter          Standards Track                     [Page 3]
- 
-RFC 5307               IS-IS Extensions for GMPLS           October 2008
-
-
-   The second octet SHOULD be set to zero by the sender, and SHOULD be
-   ignored by the receiver.
-   
- */
 /**
- * 
+ * Link Protection Type	TLV (Type 1093) [RFC5307, Section 1.2]
  * 
  * @author pac
  *
  */
 
 public class LinkProtectionTypeLinkAttribTLV extends BGP4TLVFormat {
+	
+	/*
+	 *The first octet is a bit vector describing the protection capabilities
+	   of the link (see Section 2.2, "Link Protection Type", of
+	   [GMPLS-ROUTING]).  They are:
+
+	      0x01  Extra Traffic
+
+	      0x02  Unprotected
+
+	      0x04  Shared
+
+	      0x08  Dedicated 1:1
+
+	      0x10  Dedicated 1+1
+
+	      0x20  Enhanced
+
+	      0x40  Reserved
+
+	      0x80  Reserved
+
+	   The second octet SHOULD be set to zero by the sender, and SHOULD be
+	   ignored by the receiver.
+	   
+	 */
 	
 	private int protection_type;
 	

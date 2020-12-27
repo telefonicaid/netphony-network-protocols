@@ -58,10 +58,10 @@ public class TestBGP_LS_TLVs {
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MaxReservableBandwidthLinkAttribTLV"},// Type 1090	Max. reservable link bandwidth	22/10	[RFC5305, Section 3.5]
 //    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV"},// Type 1091	Unreserved bandwidth	[RFC5305, Section 3.6]//FIXME: Rellenar el array
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.DefaultTEMetricLinkAttribTLV"},// Type 1092	TE Default Metric	22/18	[RFC7752, Section 3.3.2.3]
-//    					1093	Link Protection Type	22/20	[RFC5307, Section 1.2]
-//    					1094	MPLS Protocol Mask		[RFC7752, Section 3.3.2.2]
-//    					1095	IGP Metric		[RFC7752, Section 3.3.2.4]
-//    					1096	Shared Risk Link Group		[RFC7752, Section 3.3.2.5]
+//     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkProtectionTypeLinkAttribTLV"}, 1093	Link Protection Type	22/20	[RFC5307, Section 1.2] //TODO: Not implemented
+//    					1094	MPLS Protocol Mask		[RFC7752, Section 3.3.2.2] //TODO: Not implemented
+//    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MetricLinkAttribTLV"},// 1095	IGP Metric		[RFC7752, Section 3.3.2.4] //TODO: Encode Not implemented
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SharedRiskLinkGroupAttribTLV"},// Type 1096	Shared Risk Link Group		[RFC7752, Section 3.3.2.5]
 //    					1097	Opaque Link Attribute		[RFC7752, Section 3.3.2.6]
 //    					1098	Link Name		[RFC7752, Section 3.3.2.7]
 //    					1099	Adjacency SID		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.2.1]

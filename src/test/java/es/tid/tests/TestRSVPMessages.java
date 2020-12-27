@@ -72,6 +72,8 @@ public class TestRSVPMessages {
 		object1.encode();
 		object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
 		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 		assertTrue("asserting RSVP message (second round changing objects) "+objectClass,object1.equals(object2));
 
     	} catch(Exception e){
