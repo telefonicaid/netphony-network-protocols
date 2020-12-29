@@ -36,6 +36,7 @@ public class TestBGP_LS_TLVs {
     			//https://www.iana.org/assignments/bgp-ls-parameters/bgp-ls-parameters.xhtml#node-descriptor-link-descriptor-prefix-descriptor-attribute-tlv    			
     			{"es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV"},//Type 256 Local Node Descriptors
     			{"es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV"},// Type 257 Remote Node Descriptors
+    			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IS_IS_AreaIdentifierNodeAttribTLV"},//Type 1027 IS-IS Area Identifier [RFC7752, Section 3.3.1.2]
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeLinkAttribTLV"}, //Type 1028	IPv4 Router-ID of Local Node	[RFC5305, Section 4.3]
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeNodeAttribTLV"}, //FIXME: Now it is duplicated for node and link
     			//1029	IPv6 Router-ID of Local Node	140/---	[RFC6119, Section 4.1] //TODO: Not implemented
