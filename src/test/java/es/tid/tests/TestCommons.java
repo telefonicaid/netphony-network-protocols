@@ -30,9 +30,11 @@ import es.tid.ospf.ospfv2.lsa.OSPFTEv2LSA;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.UnreservedBandwidth;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecificInformationPSC;
+import es.tid.pce.pcep.constructs.ErrorConstruct;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.constructs.MetricPCE;
 import es.tid.pce.pcep.constructs.NCF;
+import es.tid.pce.pcep.constructs.Notify;
 import es.tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.constructs.Response;
@@ -44,9 +46,18 @@ import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.Metric;
+import es.tid.pce.pcep.objects.Notification;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
+import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.PceIdIPv4;
+import es.tid.pce.pcep.objects.RequestParameters;
+import es.tid.pce.pcep.objects.subobjects.ASNumberXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.IPv4PrefixXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.IPv6prefixXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.SRLGXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.UnnumberIfIDXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.XROSubobject;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.rsvp.constructs.SenderDescriptor;
 import es.tid.rsvp.constructs.WFFlowDescriptor;
@@ -322,8 +333,6 @@ public class TestCommons {
 									createAllFields(o,choice_boolean);
 									ll.add(o);
 									method2.invoke(object,ll);
-								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
-									System.out.println("FIXME: es.tid.pce.pcep.objects.subobjects.XROSubobject");
 								}else if  (((Class)at).getName().equals("es.tid.pce.pcep.tlvs.PCEPTLV")) {
 									System.out.println("FIXME: es.tid.pce.pcep.tlvs.PCEPTLV");
 								}
@@ -555,7 +564,61 @@ public class TestCommons {
 										  	
 										ll.add(os);
 										method2.invoke(object,ll);
+									} else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Notify")) {
+										LinkedList<Notify> ll=new LinkedList<Notify>();
+										Notify os = new  Notify();		
+										createAllFields(os,choice_boolean);	  	
+										ll.add(os);
+										method2.invoke(object,ll);
 									} 
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.Notification")) {
+											LinkedList<Notification> ll=new LinkedList<Notification>();
+											Notification os = new  Notification();		
+											createAllFields(os,choice_boolean);	  	
+											ll.add(os);
+											method2.invoke(object,ll);
+										} 
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.RequestParameters")) {
+											LinkedList<RequestParameters> ll=new LinkedList<RequestParameters>();
+											RequestParameters os = new  RequestParameters();		
+											createAllFields(os,choice_boolean);	  	
+											ll.add(os);
+											method2.invoke(object,ll);
+										}
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.PCEPErrorObject")) {
+											LinkedList<PCEPErrorObject> ll=new LinkedList<PCEPErrorObject>();
+											PCEPErrorObject os = new  PCEPErrorObject();		
+											createAllFields(os,choice_boolean);	  	
+											ll.add(os);
+											method2.invoke(object,ll);
+										} 
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.PCEPErrorObject")) {
+											LinkedList<PCEPErrorObject> ll=new LinkedList<PCEPErrorObject>();
+											PCEPErrorObject os = new  PCEPErrorObject();		
+											createAllFields(os,choice_boolean);	  	
+											ll.add(os);
+											method2.invoke(object,ll);
+										} 
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.subobjects.XROSubobject")) {
+											LinkedList<XROSubobject> ll=new LinkedList<XROSubobject>();
+											XROSubobject os1 = new  ASNumberXROSubobject();		
+											createAllFields(os1,choice_boolean);	  	
+											ll.add(os1);
+											XROSubobject os2 = new  IPv4PrefixXROSubobject();		
+											createAllFields(os2,choice_boolean);	  	
+											ll.add(os2);
+											XROSubobject os3 = new  IPv6prefixXROSubobject();		
+											createAllFields(os3,choice_boolean);	  	
+											ll.add(os3);
+											XROSubobject os4 = new  SRLGXROSubobject();		
+											createAllFields(os4,choice_boolean);	  	
+											ll.add(os4);
+											XROSubobject os5 = new  UnnumberIfIDXROSubobject();		
+											createAllFields(os5,choice_boolean);	  	
+											ll.add(os5);
+											
+											method2.invoke(object,ll);
+										} 
 									
 									
 									else {

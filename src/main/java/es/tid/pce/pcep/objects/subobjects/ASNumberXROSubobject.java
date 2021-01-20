@@ -32,9 +32,9 @@ public class ASNumberXROSubobject extends XROSubobject{
 	 * Decode ASNumber XRO Subobject
 	 */
 	public void decode(){
-		int ASNumber = 0;		
-		for (int k = 0; k < 4; k++) {
-			ASNumber = (ASNumber << 8) | (subobject_bytes[k+4] & 0xff);
+		this.ASNumber = 0;		
+		for (int k = 0; k < 2; k++) {
+			ASNumber = (ASNumber << 8) | (subobject_bytes[k+2] & 0xff);
 		}		
 	}
 
@@ -42,10 +42,11 @@ public class ASNumberXROSubobject extends XROSubobject{
 	 * Decode Encode ERO Subobject
 	 */
 	public void encode(){
-		this.subobject_bytes[4]=(byte)(ASNumber >>> 24);
-		this.subobject_bytes[5]=(byte)(ASNumber >>> 16 & 0xff);
-		this.subobject_bytes[6]=(byte)(ASNumber >>> 8 & 0xff);
-		this.subobject_bytes[7]=(byte)(ASNumber & 0xff);	
+		this.erosolength=4;
+		this.subobject_bytes=new byte[this.erosolength];
+		encodeSoHeader();
+		this.subobject_bytes[2]=(byte)(ASNumber >>> 8 & 0xff);
+		this.subobject_bytes[3]=(byte)(ASNumber & 0xff);	
 	}
 	
 	public long getASNumber() {

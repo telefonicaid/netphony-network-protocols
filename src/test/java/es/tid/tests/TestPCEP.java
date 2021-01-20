@@ -3,6 +3,7 @@ package es.tid.tests;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
+import java.util.LinkedList;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.ErrorConstruct;
@@ -16,19 +17,13 @@ import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
- * Tests PCEP Protocol
+ * Tests PCEP Protocol messages that can't be tested with the generic method
  * Tests all messages by doing enconding-decoding-encoding tests
  * @author ogondio
  *
  */
 public class TestPCEP {
 
-	@org.junit.Test
-	public void testPCEPKeepAlive() {
-		System.out.println("Testing Keepalive Message");
-		PCEPKeepalive message = new PCEPKeepalive();
-		testPCEPMessage(message,PCEPKeepalive.class,"Test KeepAlive" );
-	}
 
 	@org.junit.Test
 	public void testClose(){
@@ -49,14 +44,30 @@ public class TestPCEP {
 
 	@org.junit.Test
 	public void testPCEPError(){
+		try {
 		System.out.println("Testing PCEPError Message");
 		PCEPError message = new PCEPError();
 		//Test with an Error
 		System.out.println("Test #1 of PCEPError with a single Error");
 		ErrorConstruct error= new ErrorConstruct();
-		PCEPErrorObject e = new PCEPErrorObject();
-		error.getErrorObjList().add(e);
-
+		LinkedList<ErrorConstruct> errorList= new LinkedList<ErrorConstruct>();
+		//PCEPErrorObject e = new PCEPErrorObject();
+		TestCommons.createAllFields(error,true);
+		errorList.add(error);
+		message.setErrorList(errorList);
+		message.encode();
+		PCEPMessage object2 = new PCEPError(message.getBytes());
+		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(message.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
+		System.out.println(message.toString());
+		//Check if the fields are the same
+		assertTrue("asserting Error message with single error object ",message.equals(object2));
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		assertTrue("Exception in message error",false);
+    		
+    	}
 
 	}
 

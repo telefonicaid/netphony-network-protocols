@@ -34,7 +34,7 @@ public class TestPCEPMessages {
     			{"es.tid.pce.pcep.messages.PCEPKeepalive"},
     			//{"es.tid.pce.pcep.messages.PCEPMonRep"},//TODO
     			{"es.tid.pce.pcep.messages.PCEPMonReq"},
-    			//{"es.tid.pce.pcep.messages.PCEPNotification"},
+    			{"es.tid.pce.pcep.messages.PCEPNotification"},
     			{"es.tid.pce.pcep.messages.PCEPOpen"},
     			{"es.tid.pce.pcep.messages.PCEPReport"},
     			{"es.tid.pce.pcep.messages.PCEPRequest"},

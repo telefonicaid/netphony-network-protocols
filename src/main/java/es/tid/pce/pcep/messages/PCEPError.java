@@ -63,7 +63,7 @@ public class PCEPError extends PCEPMessage {
 	/*
 	 * 
 	 */
-	private ErrorConstruct error;
+	//private ErrorConstruct error;
 	/**
 	 * 
 	 */
@@ -89,7 +89,7 @@ public class PCEPError extends PCEPMessage {
 	 * Encode the PCEP Message
 	 */
 	public void encode() throws PCEPProtocolViolationException {
-		if  ((errorObjList.size()==0)&&(error==null)){
+		if  ((errorObjList.size()==0)&&(errorList.size()==0)){
 			/*
 			 * <PCErr Message> ::= <Common Header>
                        ( <error-obj-list> [<Open>] ) | <error>
@@ -99,21 +99,16 @@ public class PCEPError extends PCEPMessage {
 			throw new PCEPProtocolViolationException();
 		}
 		int len=4;
-		if (error!=null){
-			error.encode();
-			len=len+error.getLength();
-		}
-		else {
-			//Either error... or the errorobjlist and an open. BOTH is not possible
-			for (int i=0;i<errorObjList.size();++i){
+		//Either error... or the errorobjlist and an open. BOTH is not possible
+		for (int i=0;i<errorObjList.size();++i){
 				(errorObjList.get(i)).encode();
 				len=len+(errorObjList.get(i)).getLength();
 			}
-			if (open!=null){
-				open.encode();
-				len=len+open.getLength();
-			}
+		if (open!=null){
+			open.encode();
+			len=len+open.getLength();
 		}
+
 		
 		for (int i=0;i<errorList.size();++i){
 			(errorList.get(i)).encode();
@@ -123,9 +118,10 @@ public class PCEPError extends PCEPMessage {
 		this.messageBytes=new byte[this.getLength()];
 		encodeHeader();
 		int offset=4;
-		if (error!=null){
-			System.arraycopy(error.getBytes(), 0, this.messageBytes, offset, error.getLength());
-			offset=offset+error.getLength();
+		for (int i=0;i<errorList.size();++i){
+			System.arraycopy(errorList.get(i).getBytes(), 0, this.messageBytes, offset, errorList.get(i).getLength());
+			offset=offset+errorList.get(i).getLength();
+			len=len+(errorList.get(i)).getLength();
 		}
 		for (int i=0;i<errorObjList.size();++i){
 			System.arraycopy(errorObjList.get(i).getBytes(), 0, this.messageBytes, offset, errorObjList.get(i).getLength());
@@ -239,19 +235,12 @@ public class PCEPError extends PCEPMessage {
 		this.errorList = errorList;
 	}
 
-	public ErrorConstruct getError() {
-		return error;
-	}
 
-	public void setError(ErrorConstruct error) {
-		this.error = error;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((error == null) ? 0 : error.hashCode());
 		result = prime * result
 				+ ((errorList == null) ? 0 : errorList.hashCode());
 		result = prime * result
@@ -269,11 +258,6 @@ public class PCEPError extends PCEPMessage {
 		if (getClass() != obj.getClass())
 			return false;
 		PCEPError other = (PCEPError) obj;
-		if (error == null) {
-			if (other.error != null)
-				return false;
-		} else if (!error.equals(other.error))
-			return false;
 		if (errorList == null) {
 			if (other.errorList != null)
 				return false;

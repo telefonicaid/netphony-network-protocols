@@ -1,10 +1,12 @@
 package es.tid.pce.pcep.objects.subobjects;
 
+import java.util.Arrays;
+
 public abstract class XROSubobject {
 
 	protected int type;
 	protected int erosolength;//ERO Subobject Length
-	protected boolean loosehop;
+	protected boolean loosehop=false;
 	protected byte [] subobject_bytes;
 	
 	protected int attribute;
@@ -95,4 +97,40 @@ public abstract class XROSubobject {
 	public void setAttribute(int attribute) {
 		this.attribute = attribute;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + attribute;
+		result = prime * result + erosolength;
+		result = prime * result + (loosehop ? 1231 : 1237);
+		result = prime * result + Arrays.hashCode(subobject_bytes);
+		result = prime * result + type;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		XROSubobject other = (XROSubobject) obj;
+		if (attribute != other.attribute)
+			return false;
+		if (erosolength != other.erosolength)
+			return false;
+		if (loosehop != other.loosehop)
+			return false;
+		if (!Arrays.equals(subobject_bytes, other.subobject_bytes))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
+	}
+	
+	
 }
