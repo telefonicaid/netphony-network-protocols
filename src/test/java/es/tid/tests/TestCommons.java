@@ -30,8 +30,11 @@ import es.tid.ospf.ospfv2.lsa.OSPFTEv2LSA;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.InterfaceSwitchingCapabilityDescriptor;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.UnreservedBandwidth;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.SwitchingCapabilitySpecificInformationPSC;
+import es.tid.pce.pcep.constructs.EndPointAndRestrictions;
+import es.tid.pce.pcep.constructs.EndpointRestriction;
 import es.tid.pce.pcep.constructs.ErrorConstruct;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
+import es.tid.pce.pcep.constructs.IPv4AddressEndPoint;
 import es.tid.pce.pcep.constructs.MetricPCE;
 import es.tid.pce.pcep.constructs.NCF;
 import es.tid.pce.pcep.constructs.Notify;
@@ -41,6 +44,7 @@ import es.tid.pce.pcep.constructs.Response;
 import es.tid.pce.pcep.constructs.SVECConstruct;
 import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
+import es.tid.pce.pcep.constructs.UnnumIfEndPoint;
 import es.tid.pce.pcep.constructs.UpdateRequest;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
@@ -287,6 +291,17 @@ public class TestCommons {
 								 o=st;
 								 //FIXME: Test Style better
 							 }
+							 else if (c.getName().equals("es.tid.pce.pcep.constructs.EndPoint")){
+								 if (choice_boolean) {
+									 o= new IPv4AddressEndPoint();
+									 createAllFields(o,choice_boolean);
+								 }else {
+									 o= new UnnumIfEndPoint();
+									 createAllFields(o,choice_boolean);
+								 }
+								
+								 
+							 }
 							 else {
 								//System.out.println("Generic "+c.getName());
 									o = ((Class)ty).newInstance();	
@@ -421,6 +436,14 @@ public class TestCommons {
 									Object o = ((Class)at).newInstance();
 									createAllFields(o,choice_boolean);
 									ll.add((MetricPCE)o);
+									method2.invoke(object,ll);
+									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.EndPointAndRestrictions")) {
+									LinkedList<EndPointAndRestrictions> ll=new LinkedList<EndPointAndRestrictions>();
+									Object o = ((Class)at).newInstance();
+									createAllFields(o,choice_boolean);
+									ll.add((EndPointAndRestrictions)o);
 									method2.invoke(object,ll);
 									
 								}
@@ -617,6 +640,13 @@ public class TestCommons {
 											createAllFields(os5,choice_boolean);	  	
 											ll.add(os5);
 											
+											method2.invoke(object,ll);
+										} 
+									 else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.EndpointRestriction")) {
+											LinkedList<EndpointRestriction> ll=new LinkedList<EndpointRestriction>();
+//											EndpointRestriction os = new  EndpointRestriction();		
+//											createAllFields(os,choice_boolean);	  	
+//											ll.add(os);
 											method2.invoke(object,ll);
 										} 
 									

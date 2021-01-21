@@ -549,10 +549,6 @@ public class Request extends PCEPConstruct{
 		return lSPA;
 	}
 
-	public void setlSPA(LSPA lSPA) {
-		this.lSPA = lSPA;
-	}
-	
 	public void setLSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
@@ -577,9 +573,6 @@ public class Request extends PCEPConstruct{
 		return rROBandwidth;
 	}
 
-	public void setrROBandwidth(RROBandwidth rROBandwidth) {
-		this.rROBandwidth = rROBandwidth;
-	}
 	
 	public void setRROBandwidth(RROBandwidth rROBandwidth) {
 		this.rROBandwidth = rROBandwidth;
@@ -589,10 +582,6 @@ public class Request extends PCEPConstruct{
 		return iRO;
 	}
 
-	public void setiRO(IncludeRouteObject iRO) {
-		this.iRO = iRO;
-	}
-	
 	public void setIRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}
@@ -706,11 +695,11 @@ public class Request extends PCEPConstruct{
 		Request req=new Request();
 		req.setRequestParameters(this.requestParameters);
 		req.setEndPoints(this.endPoints);
-		req.setlSPA(this.lSPA);
+		req.setLSPA(this.lSPA);
 		req.setBandwidth(this.bandwidth);
 		req.setMetricList(this.metricList);
-		req.setrROBandwidth(this.rROBandwidth);
-		req.setiRO(this.iRO);
+		req.setRROBandwidth(this.rROBandwidth);
+		req.setIRO(this.iRO);
 		req.setLoadBalancing(this.loadBalancing);
 		req.setObjectiveFunction(this.objectiveFunction);
 		req.setXro(this.xro);

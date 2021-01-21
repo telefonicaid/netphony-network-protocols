@@ -20,7 +20,7 @@ public abstract class GeneralizedEndPoints extends EndPoints{
 	}
 	public GeneralizedEndPoints(byte[] bytes, int offset) throws MalformedPCEPObjectException, PCEPProtocolViolationException{
 		super(bytes, offset);
-		decode();
+		generalizedendpointType=bytes[offset+7]&0xFF;
 	}
 	/**
 	 * Encode Generalized EndPoint Object
@@ -50,5 +50,27 @@ public abstract class GeneralizedEndPoints extends EndPoints{
 		int type =bytes[offset+7]&0xFF;
 		return type;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + generalizedendpointType;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GeneralizedEndPoints other = (GeneralizedEndPoints) obj;
+		if (generalizedendpointType != other.generalizedendpointType)
+			return false;
+		return true;
+	}
+	
+	
 
 }

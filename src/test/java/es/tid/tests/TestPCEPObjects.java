@@ -44,8 +44,7 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.EndPointsIPv6"},
     			{"es.tid.pce.pcep.objects.EndPointsUnnumberedIntf"},
     			{"es.tid.pce.pcep.objects.ExcludeRouteObject"},
-    			{"es.tid.pce.pcep.objects.ExplicitRouteObject"},
-				//"es.tid.pce.pcep.objects.GeneralizedEndPoints",
+    			{"es.tid.pce.pcep.objects.ExplicitRouteObject"},    			
     			{"es.tid.pce.pcep.objects.IncludeRouteObject"},
     			{"es.tid.pce.pcep.objects.InterLayer"},
     			{"es.tid.pce.pcep.objects.LSP"},
@@ -59,6 +58,8 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.OPEN"},
     			{"es.tid.pce.pcep.objects.ObjectiveFunction"},
     			{"es.tid.pce.pcep.objects.P2MPEndPointsIPv4"},
+    			{"es.tid.pce.pcep.objects.P2MPGeneralizedEndPoints"},
+    			{"es.tid.pce.pcep.objects.P2PGeneralizedEndPoints"},
     			{"es.tid.pce.pcep.objects.PCEPErrorObject"},
     			{"es.tid.pce.pcep.objects.PccReqId"},
     			{"es.tid.pce.pcep.objects.PceIdIPv4"},
@@ -92,7 +93,7 @@ public class TestPCEPObjects {
 		PCEPObject object1 = (PCEPObject)objectClass.newInstance();
 		TestCommons.createAllFields(object1,true);
 		object1.encode();
-		//System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PCEPObject object2 = (PCEPObject) ctor.newInstance(object1.getBytes(),0);
 		object2.encode();
