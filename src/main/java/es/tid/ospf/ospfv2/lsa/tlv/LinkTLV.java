@@ -464,12 +464,14 @@ public class LinkTLV extends OSPFTLV {
 		//this.remoteASNumber = remoteASNumber;
 	}
 
-	public IPv4RemoteASBRID getiPv4RemoteASBRID() {
+
+	public IPv4RemoteASBRID getIPv4RemoteASBRID() {
 		return iPv4RemoteASBRID;
 	}
 
+
 	public void setIPv4RemoteASBRID(IPv4RemoteASBRID iPv4RemoteASBRID) {
-		//this.iPv4RemoteASBRID = iPv4RemoteASBRID;
+		this.iPv4RemoteASBRID = iPv4RemoteASBRID;
 	}
 
 	public String toString(){
@@ -571,4 +573,6 @@ public class LinkTLV extends OSPFTLV {
 		
 		return sb.toString();
 	}
+	
+	
 }
