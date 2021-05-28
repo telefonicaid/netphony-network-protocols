@@ -77,11 +77,7 @@ public class ERO extends RSVPObject{
 	 */
 	
 	public ERO(byte[] bytes, int offset){
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		System.arraycopy(bytes, offset, this.bytes, 0, this.getLength());
-		eroSubobjects = new LinkedList<EROSubobject>();
-		
+		super(bytes,offset);
 
 		log.debug("ERO Object Created");
 		try {
@@ -142,15 +138,15 @@ public class ERO extends RSVPObject{
 	}
 		
 	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-
+		eroSubobjects = new LinkedList<EROSubobject>();
 		int unprocessedBytes = length - RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		offset = offset + 4;  //Aumentar 4 bytes de cabecera
 		while (unprocessedBytes > 0) {
 			int subojectclass=EROSubobject.getType(bytes, offset);
 			int subojectlength=EROSubobject.getLength(bytes, offset);
-			
 			switch(subojectclass) {
 				case SubObjectValues.ERO_SUBOBJECT_IPV4PREFIX:
+
 					IPv4prefixEROSubobject sobjt4=new IPv4prefixEROSubobject(bytes, offset);
 					this.addEROSubobject(sobjt4);
 					break;
@@ -202,5 +198,6 @@ public class ERO extends RSVPObject{
 	public void setEroSubobjects(LinkedList<EROSubobject> eroSubobjects) {
 		this.eroSubobjects = eroSubobjects;
 	}
+	
 	
 }

@@ -1,14 +1,20 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 public abstract class Scope extends RSVPObject{
 
-
-	public abstract void encodeHeader();
-
+	public Scope () {
+		super();
+	}
+	
+	public Scope (byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes, offset);
+	}
+	
 	public abstract void encode();
 
-	public abstract void decodeHeader();
 
-	public abstract void decode(byte[] bytes, int offset);
+
 
 }

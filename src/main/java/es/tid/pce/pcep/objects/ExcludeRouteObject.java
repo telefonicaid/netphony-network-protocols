@@ -3,7 +3,6 @@ package es.tid.pce.pcep.objects;
 import java.util.LinkedList;
 
 import es.tid.pce.pcep.objects.subobjects.ASNumberXROSubobject;
-import es.tid.pce.pcep.objects.subobjects.DataPathIDXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.IPv4PrefixXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.IPv6prefixXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.SRLGXROSubobject;
@@ -236,12 +235,7 @@ public class ExcludeRouteObject extends PCEPObject {
 					UnnumberIfIDXROSubobject subun=new UnnumberIfIDXROSubobject(this.getObject_bytes(), offset);
 					addXROSubobject(subun);
 					break;
-					
-				case XROSubObjectValues.XRO_SUBOBJECT_DATAPATH_ID:
-					DataPathIDXROSubobject subundpid=new DataPathIDXROSubobject(this.getObject_bytes(), offset);
-					addXROSubobject(subundpid);
-					break;	
-					
+								
 				case XROSubObjectValues.XRO_SUBOBJECT_SRLG:
 					SRLGXROSubobject subsrlg=new SRLGXROSubobject(this.getObject_bytes(), offset);
 					addXROSubobject(subsrlg);
@@ -318,7 +312,7 @@ public class ExcludeRouteObject extends PCEPObject {
 		return true;
 	}
 
-	public boolean isfail() {
+	public boolean isFail() {
 		return fail;
 	}
 

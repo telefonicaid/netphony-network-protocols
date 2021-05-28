@@ -32,6 +32,10 @@ public class SwitchingCapabilitySpecificInformationPSC extends SwitchingCapabili
 	 * Interface MTU
 	 */
 	private int interfaceMTU;
+	
+	public SwitchingCapabilitySpecificInformationPSC() {
+		super();
+	}
 
 	public SwitchingCapabilitySpecificInformationPSC(byte[] bytes,int offset) {
 		this.length=8;

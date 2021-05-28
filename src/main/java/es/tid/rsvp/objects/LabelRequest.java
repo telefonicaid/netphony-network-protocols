@@ -229,8 +229,8 @@ public class LabelRequest extends RSVPObject{
 		
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException {
+	
+	public void decode() throws RSVPProtocolViolationException {
 		
 	}
 

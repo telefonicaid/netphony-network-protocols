@@ -5,9 +5,9 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
- * LSP-DB-VERSION TLV draft-ietf-pce-stateful-sync-optimizations-00.
+ * LSP-DB-VERSION TLV (Type 23)	[RFC8232]
+ * 
  * Encoding: follows draft-ietf-pce-stateful-sync-optimizations-00
- * TLV Type: 5556 (non-standard) 
  * 
  * LSP-DB-VERSION is an optional TLV that MAY be included in the OPEN
    Object when a PCEP Speaker wishes to determine if State

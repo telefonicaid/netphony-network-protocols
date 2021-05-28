@@ -129,7 +129,8 @@ public class PCEPResponse extends PCEPMessage {
 		return ResponseList;
 	}
 
-	public void setResponsetList(LinkedList<Response> responseList) {
+
+	public void setResponseList(LinkedList<Response> responseList) {
 		ResponseList = responseList;
 	}
 

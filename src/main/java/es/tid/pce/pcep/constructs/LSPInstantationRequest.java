@@ -144,7 +144,11 @@ public class LSPInstantationRequest extends PCEPConstruct{
 			}
 			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
-					endPoints=new GeneralizedEndPoints(bytes,offset);
+					int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
+					if (endPointType==1) {
+						endPoints=new P2PGeneralizedEndPoints(bytes,offset);	
+					}
+					
 				} catch (MalformedPCEPObjectException e) {
 					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
@@ -246,7 +250,7 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		this.endPoints = endPoints;
 	}
 
-	public LSPA getlSPA() {
+	public LSPA getLSPA() {
 		return lSPA;
 	}
 
@@ -254,7 +258,9 @@ public class LSPInstantationRequest extends PCEPConstruct{
 		this.lSPA = lSPA;
 	}
 	
-	public ExplicitRouteObject geteRO() {
+
+
+	public ExplicitRouteObject getERO() {
 		return eRO;
 	}
 

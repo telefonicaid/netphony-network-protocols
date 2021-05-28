@@ -5,13 +5,22 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
- * LSP-ERROR-CODE TLV draft-ietf-pce-stateful-pce-09.
+ * LSP-ERROR-CODE (Type 20)	[RFC8231]
+ * 
  * Encoding: follows draft-ietf-pce-stateful-pce-09
- * TLV Type: 5559 (non-standard)
  * If an LSP Update Request failed, an LSP State Report MUST be sent to
    all connected stateful PCEs.  LSP State Report MUST contain the LSP
    Error Code TLV, indicating the cause of the failure.
+   
+   @author jaume
+   @author Oscar Gonzalez de Dios
+ */
 
+public class LSPErrorCodeTLV extends PCEPTLV 
+{
+	
+	/*
+	 * 
    The format of the LSP-ERROR-CODE TLV is shown in the following
 
 Crabbe, et al.          Expires November 9, 2013               [Page 41]
@@ -32,12 +41,7 @@ Internet-Draft      PCEP Extensions for Stateful PCE            May 2013
    The type of the TLV is [TBD] and it has a fixed length of 4 octets.
    The value contains the error code that indicates the cause of the
    failure.  Error codes will be defined in a later revision of this
-   
-   @author jaume
- */
-
-public class LSPErrorCodeTLV extends PCEPTLV 
-{
+	 */
 	protected int errorCode;
 	
 	public LSPErrorCodeTLV(){

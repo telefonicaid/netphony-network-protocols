@@ -111,9 +111,9 @@ public class LinkNLRI extends LinkStateNLRI {
 	private LinkLocalRemoteIdentifiersLinkDescriptorSubTLV linkIdentifiersTLV;
 	private IPv4InterfaceAddressLinkDescriptorsSubTLV ipv4InterfaceAddressTLV;
 	private IPv4NeighborAddressLinkDescriptorSubTLV ipv4NeighborAddressTLV;
-	private IPv6InterfaceAddressLinkDescriptorSubTLV ipv6InterfaceAddressTLV;
-	private IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV;
-	private MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV;
+	//private IPv6InterfaceAddressLinkDescriptorSubTLV ipv6InterfaceAddressTLV; FIMXE: IMPLEMENTE
+	//private IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV;FIMXE: IMPLEMENTE
+	//private MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV;FIMXE: IMPLEMENTE
 	
 	private UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV;
 	private MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV;
@@ -159,18 +159,18 @@ public class LinkNLRI extends LinkStateNLRI {
 			ipv4NeighborAddressTLV.encode();
 			len=len+ipv4NeighborAddressTLV.getTotalTLVLength();
 		}
-		if (ipv6InterfaceAddressTLV!=null){
-			ipv6InterfaceAddressTLV.encode();
-			len=len+ipv6InterfaceAddressTLV.getTotalTLVLength();
-		}
-		if (ipv6NeighborAddressTLV!=null){
-			ipv6NeighborAddressTLV.encode();
-			len=len+ipv6NeighborAddressTLV.getTotalTLVLength();
-		}
-		if (multiTopologyIDTLV!=null){
-			multiTopologyIDTLV.encode();
-			len=len+multiTopologyIDTLV.getTotalTLVLength();
-		}
+//		if (ipv6InterfaceAddressTLV!=null){
+//			ipv6InterfaceAddressTLV.encode();
+//			len=len+ipv6InterfaceAddressTLV.getTotalTLVLength();
+//		}
+//		if (ipv6NeighborAddressTLV!=null){
+//			ipv6NeighborAddressTLV.encode();
+//			len=len+ipv6NeighborAddressTLV.getTotalTLVLength();
+//		}
+//		if (multiTopologyIDTLV!=null){
+//			multiTopologyIDTLV.encode();
+//			len=len+multiTopologyIDTLV.getTotalTLVLength();
+//		}
 		if(undirectionalLinkDelayTLV!=null){
 			undirectionalLinkDelayTLV.encode();
 			len += undirectionalLinkDelayTLV.getTotalTLVLength();
@@ -251,20 +251,20 @@ public class LinkNLRI extends LinkStateNLRI {
 			offset=offset+ipv4NeighborAddressTLV.getTotalTLVLength();
 		}
 		
-		if (ipv6InterfaceAddressTLV!=null){
-			System.arraycopy(ipv6InterfaceAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6InterfaceAddressTLV.getTotalTLVLength());
-			offset=offset+ipv6InterfaceAddressTLV.getTotalTLVLength();
-		}
-		
-		if (ipv6NeighborAddressTLV!=null){
-			System.arraycopy(ipv6NeighborAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6NeighborAddressTLV.getTotalTLVLength());
-			offset=offset+ipv6NeighborAddressTLV.getTotalTLVLength();
-		}
+//		if (ipv6InterfaceAddressTLV!=null){
+//			System.arraycopy(ipv6InterfaceAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6InterfaceAddressTLV.getTotalTLVLength());
+//			offset=offset+ipv6InterfaceAddressTLV.getTotalTLVLength();
+//		}
+//		
+//		if (ipv6NeighborAddressTLV!=null){
+//			System.arraycopy(ipv6NeighborAddressTLV.getTlv_bytes(), 0, this.bytes, offset, ipv6NeighborAddressTLV.getTotalTLVLength());
+//			offset=offset+ipv6NeighborAddressTLV.getTotalTLVLength();
+//		}
 	
-		if (multiTopologyIDTLV!=null){
-			System.arraycopy(multiTopologyIDTLV.getTlv_bytes(), 0, this.bytes, offset, multiTopologyIDTLV.getTotalTLVLength());
-			offset=offset+multiTopologyIDTLV.getTotalTLVLength();
-		}
+//		if (multiTopologyIDTLV!=null){
+//			System.arraycopy(multiTopologyIDTLV.getTlv_bytes(), 0, this.bytes, offset, multiTopologyIDTLV.getTotalTLVLength());
+//			offset=offset+multiTopologyIDTLV.getTotalTLVLength();
+//		}
 		if (undirectionalLinkDelayTLV!=null){
 			System.arraycopy(undirectionalLinkDelayTLV.getTlv_bytes(), 0, this.bytes, offset, undirectionalLinkDelayTLV.getTotalTLVLength());
 			offset=offset+undirectionalLinkDelayTLV.getTotalTLVLength();
@@ -332,15 +332,15 @@ public class LinkNLRI extends LinkStateNLRI {
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv4NEIGHBOR:
 					this.ipv4NeighborAddressTLV=new IPv4NeighborAddressLinkDescriptorSubTLV(bytes, offset);
 					break;
-				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6INTERFACE:
-					this.ipv6InterfaceAddressTLV=new IPv6InterfaceAddressLinkDescriptorSubTLV(bytes, offset);
-					break;
-				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6NEIGHBOR:
-					this.ipv6NeighborAddressTLV=new IPv6NeighborAddressLinkDescriptorSubTLV(bytes, offset);
-					break;
-				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MULTITOPOLOGY_ID:
-					this.multiTopologyIDTLV=new MultiTopologyIDLinkDescriptorSubTLV(bytes, offset);
-					break;
+//				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6INTERFACE:
+//					this.ipv6InterfaceAddressTLV=new IPv6InterfaceAddressLinkDescriptorSubTLV(bytes, offset);
+//					break;
+//				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_IPv6NEIGHBOR:
+//					this.ipv6NeighborAddressTLV=new IPv6NeighborAddressLinkDescriptorSubTLV(bytes, offset);
+//					break;
+//				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MULTITOPOLOGY_ID:
+//					this.multiTopologyIDTLV=new MultiTopologyIDLinkDescriptorSubTLV(bytes, offset);
+//					break;
 					
 				case LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID:
 					this.undirectionalLinkDelayTLV=new UndirectionalLinkDelayDescriptorSubTLV(bytes, offset);
@@ -445,36 +445,36 @@ public class LinkNLRI extends LinkStateNLRI {
 	}
 
 
-	public IPv6InterfaceAddressLinkDescriptorSubTLV getIpv6InterfaceAddressTLV() {
-		return ipv6InterfaceAddressTLV;
-	}
+//	public IPv6InterfaceAddressLinkDescriptorSubTLV getIpv6InterfaceAddressTLV() {
+//		return ipv6InterfaceAddressTLV;
+//	}
+//
+//
+//	public void setIpv6InterfaceAddressTLV(
+//			IPv6InterfaceAddressLinkDescriptorSubTLV ipv6InterfaceAddressTLV) {
+//		this.ipv6InterfaceAddressTLV = ipv6InterfaceAddressTLV;
+//	}
 
 
-	public void setIpv6InterfaceAddressTLV(
-			IPv6InterfaceAddressLinkDescriptorSubTLV ipv6InterfaceAddressTLV) {
-		this.ipv6InterfaceAddressTLV = ipv6InterfaceAddressTLV;
-	}
+//	public IPv6NeighborAddressLinkDescriptorSubTLV getIpv6NeighborAddressTLV() {
+//		return ipv6NeighborAddressTLV;
+//	}
+//
+//
+//	public void setIpv6NeighborAddressTLV(
+//			IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV) {
+//		this.ipv6NeighborAddressTLV = ipv6NeighborAddressTLV;
+//	}
 
 
-	public IPv6NeighborAddressLinkDescriptorSubTLV getIpv6NeighborAddressTLV() {
-		return ipv6NeighborAddressTLV;
-	}
-
-
-	public void setIpv6NeighborAddressTLV(
-			IPv6NeighborAddressLinkDescriptorSubTLV ipv6NeighborAddressTLV) {
-		this.ipv6NeighborAddressTLV = ipv6NeighborAddressTLV;
-	}
-
-
-	public MultiTopologyIDLinkDescriptorSubTLV getMultiTopologyIDTLV() {
-		return multiTopologyIDTLV;
-	}
-
-
-	public void setMultiTopologyIDTLV(MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV) {
-		this.multiTopologyIDTLV = multiTopologyIDTLV;
-	}
+//	public MultiTopologyIDLinkDescriptorSubTLV getMultiTopologyIDTLV() {
+//		return multiTopologyIDTLV;
+//	}
+//
+//
+//	public void setMultiTopologyIDTLV(MultiTopologyIDLinkDescriptorSubTLV multiTopologyIDTLV) {
+//		this.multiTopologyIDTLV = multiTopologyIDTLV;
+//	}
 
 	public UndirectionalLinkDelayDescriptorSubTLV getUndirectionalLinkDelayTLV() {
 		return undirectionalLinkDelayTLV;
@@ -567,23 +567,23 @@ public class LinkNLRI extends LinkStateNLRI {
 			sb.append("> Ipv4 Neighbor Address TLV: ");
 			sb.append("\n\t> "+ipv4NeighborAddressTLV.toString());
 		}
-		if (ipv6InterfaceAddressTLV != null){
-			sb.append(" ");
-			sb.append("> Ipv6 Interface Address TLV: ");
-			sb.append("\n\t> "+ipv6InterfaceAddressTLV.toString());
-		}
+//		if (ipv6InterfaceAddressTLV != null){
+//			sb.append(" ");
+//			sb.append("> Ipv6 Interface Address TLV: ");
+//			sb.append("\n\t> "+ipv6InterfaceAddressTLV.toString());
+//		}
 		
-		if (ipv6NeighborAddressTLV != null){
-			sb.append(" ");
-			sb.append("> Ipv6 Neighbor Address TLV:");
-			sb.append("\n\t> "+ipv6NeighborAddressTLV.toString());
-		}
+//		if (ipv6NeighborAddressTLV != null){
+//			sb.append(" ");
+//			sb.append("> Ipv6 Neighbor Address TLV:");
+//			sb.append("\n\t> "+ipv6NeighborAddressTLV.toString());
+//		}
 		
-		if (multiTopologyIDTLV != null){
-			sb.append(" ");
-			sb.append("> Multi Topology ID TLV:");
-			sb.append("\n\t> "+multiTopologyIDTLV.toString());
-		}
+//		if (multiTopologyIDTLV != null){
+//			sb.append(" ");
+//			sb.append("> Multi Topology ID TLV:");
+//			sb.append("\n\t> "+multiTopologyIDTLV.toString());
+//		}
 		if (undirectionalLinkDelayTLV != null){
 			sb.append(" ");
 			sb.append("> Undirectional Link Delay TLV:");
@@ -629,13 +629,13 @@ public class LinkNLRI extends LinkStateNLRI {
 		result = prime * result + (int) (identifier ^ (identifier >>> 32));
 		result = prime * result + ((ipv4InterfaceAddressTLV == null) ? 0 : ipv4InterfaceAddressTLV.hashCode());
 		result = prime * result + ((ipv4NeighborAddressTLV == null) ? 0 : ipv4NeighborAddressTLV.hashCode());
-		result = prime * result + ((ipv6InterfaceAddressTLV == null) ? 0 : ipv6InterfaceAddressTLV.hashCode());
-		result = prime * result + ((ipv6NeighborAddressTLV == null) ? 0 : ipv6NeighborAddressTLV.hashCode());
+		//result = prime * result + ((ipv6InterfaceAddressTLV == null) ? 0 : ipv6InterfaceAddressTLV.hashCode());
+//		result = prime * result + ((ipv6NeighborAddressTLV == null) ? 0 : ipv6NeighborAddressTLV.hashCode());
 		result = prime * result + ((linkIdentifiersTLV == null) ? 0 : linkIdentifiersTLV.hashCode());
 		result = prime * result + ((localNodeDescriptors == null) ? 0 : localNodeDescriptors.hashCode());
 		result = prime * result
 				+ ((minMaxUndirectionalLinkDelayTLV == null) ? 0 : minMaxUndirectionalLinkDelayTLV.hashCode());
-		result = prime * result + ((multiTopologyIDTLV == null) ? 0 : multiTopologyIDTLV.hashCode());
+		//result = prime * result + ((multiTopologyIDTLV == null) ? 0 : multiTopologyIDTLV.hashCode());
 		result = prime * result + protocolID;
 		result = prime * result + ((remoteNodeDescriptorsTLV == null) ? 0 : remoteNodeDescriptorsTLV.hashCode());
 		result = prime * result + ((undirectionalAvailableBwTLV == null) ? 0 : undirectionalAvailableBwTLV.hashCode());
@@ -669,16 +669,16 @@ public class LinkNLRI extends LinkStateNLRI {
 				return false;
 		} else if (!ipv4NeighborAddressTLV.equals(other.ipv4NeighborAddressTLV))
 			return false;
-		if (ipv6InterfaceAddressTLV == null) {
-			if (other.ipv6InterfaceAddressTLV != null)
-				return false;
-		} else if (!ipv6InterfaceAddressTLV.equals(other.ipv6InterfaceAddressTLV))
-			return false;
-		if (ipv6NeighborAddressTLV == null) {
-			if (other.ipv6NeighborAddressTLV != null)
-				return false;
-		} else if (!ipv6NeighborAddressTLV.equals(other.ipv6NeighborAddressTLV))
-			return false;
+//		if (ipv6InterfaceAddressTLV == null) {
+//			if (other.ipv6InterfaceAddressTLV != null)
+//				return false;
+//		} else if (!ipv6InterfaceAddressTLV.equals(other.ipv6InterfaceAddressTLV))
+//			return false;
+//		if (ipv6NeighborAddressTLV == null) {
+//			if (other.ipv6NeighborAddressTLV != null)
+//				return false;
+//		} else if (!ipv6NeighborAddressTLV.equals(other.ipv6NeighborAddressTLV))
+//			return false;
 		if (linkIdentifiersTLV == null) {
 			if (other.linkIdentifiersTLV != null)
 				return false;
@@ -694,11 +694,11 @@ public class LinkNLRI extends LinkStateNLRI {
 				return false;
 		} else if (!minMaxUndirectionalLinkDelayTLV.equals(other.minMaxUndirectionalLinkDelayTLV))
 			return false;
-		if (multiTopologyIDTLV == null) {
-			if (other.multiTopologyIDTLV != null)
-				return false;
-		} else if (!multiTopologyIDTLV.equals(other.multiTopologyIDTLV))
-			return false;
+//		if (multiTopologyIDTLV == null) {
+//			if (other.multiTopologyIDTLV != null)
+//				return false;
+//		} else if (!multiTopologyIDTLV.equals(other.multiTopologyIDTLV))
+//			return false;
 		if (protocolID != other.protocolID)
 			return false;
 		if (remoteNodeDescriptorsTLV == null) {

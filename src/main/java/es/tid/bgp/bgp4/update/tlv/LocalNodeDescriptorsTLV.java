@@ -12,10 +12,20 @@ import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescri
 
 
 /**
- * 3.2.1.1.  Local Node Descriptors
-
-   The Local Node Descriptors TLV (Type 256) contains Node Descriptors
-   for the node anchoring the local end of the link.  The length of this
+ * Local Node Descriptors TLV Type 256 [RFC7752]
+ * 
+ * IANA assignments in https://www.iana.org/assignments/bgp-ls-parameters/bgp-ls-parameters.xhtml#node-descriptor-link-descriptor-prefix-descriptor-attribute-tlv
+ * 
+ *  The Local Node Descriptors TLV (Type 256) contains Node Descriptors
+ *  for the node anchoring the local end of the link.  
+ *
+ * @author pac porque madre mia mcs...
+ *
+ */
+public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
+	
+	/*
+	 * The length of this
    TLV is variable.  The value contains one or more Node Descriptor Sub-
    TLVs defined in Section 3.2.1.3.
 
@@ -31,11 +41,7 @@ import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.NodeDescri
 
                 Figure 9: Local Node Descriptors TLV format
 
-
- * @author pac porque madre mia mcs...
- *
- */
-public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
+	 */
 	
 	
 	public static final int Local_Node_Descriptors_TLV = 256;
@@ -49,7 +55,6 @@ public class LocalNodeDescriptorsTLV extends BGP4TLVFormat{
 	public LocalNodeDescriptorsTLV(){
 		super();
 		this.setTLVType(LocalNodeDescriptorsTLV.Local_Node_Descriptors_TLV);
-		//nodeDescriptorsSubTLVList=new ArrayList<NodeDescriptorsSubTLV>();
 	}
 	
 	

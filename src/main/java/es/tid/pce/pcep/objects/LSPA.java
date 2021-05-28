@@ -320,9 +320,9 @@ public class LSPA extends PCEPObject {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
 		if (getClass() != obj.getClass())
+			return false;
+		if (!super.equals(obj))
 			return false;
 		LSPA other = (LSPA) obj;
 		if (excludeAny != other.excludeAny)

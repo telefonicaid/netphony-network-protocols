@@ -1,5 +1,6 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.SenderTSpec;
 
 
@@ -44,13 +45,19 @@ public class SSONSenderTSpec extends SenderTSpec {
 	
 	public SSONSenderTSpec(){
 		cType = 8;
-		length = 8;
-		bytes=new byte[length];
+		
+	}
+	
+	public SSONSenderTSpec(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+		decode( );
 	}
 	
 	
 	@Override
 	public void encode(){
+		length = 8;
+		bytes=new byte[length];
 		encodeHeader();
 		// TODO Auto-generated method stub	
 		this.bytes[4]=(byte)(m);
@@ -60,10 +67,9 @@ public class SSONSenderTSpec extends SenderTSpec {
 	}
 
 
-	@Override
-	public void decode(byte[] bytes, int offset){
-		decodeHeader(bytes, offset);
-		offset=offset+4;
+	
+	public void decode(){
+		int offset=4;
 		m=bytes[offset]&0xFF;
 	}
 

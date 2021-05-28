@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /**
  * 
 
@@ -61,24 +63,29 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
 	 * <p>Log
 	 */
 
-  private static final Logger log = LoggerFactory.getLogger("ROADM");
+  	private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  	
+  	
+  	public FilterSpecLSPTunnelIPv4() {
+  		super();
+  		classNum = 10;
+		cType = 7;
+  	}
+  	
 	/**
 	 * <p>Parameters constructor to encode this kind of object. </p>
 	 * @param senderNodeAddress The sender IPv4 Sender node address
 	 * @param LSPId	The LSP identifier
-	 */
-	
+	 */  
 	public FilterSpecLSPTunnelIPv4(Inet4Address senderNodeAddress, int LSPId){
-		
+		super();
 		classNum = 10;
 		cType = 7;
 		
 		this.senderNodeAddress = senderNodeAddress;
 		this.LSPId = LSPId;
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
-		bytes = new byte[length];
 		
 		log.debug("Filter Spec LSP Tunnel IPv4 Object Created");
 			
@@ -92,10 +99,8 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
 	 */
 	
 	public FilterSpecLSPTunnelIPv4(byte[] bytes, int offset){
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+		super(bytes,offset);
+		decode();
 		log.debug("Filter Spec LSP Tunnel IPv4 Object Created");
 		
 	}
@@ -114,6 +119,10 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
 	 */
 
 	public void encode() {
+		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
+		bytes = new byte[length];
+		
 		
 		encodeHeader();
 		
@@ -144,8 +153,8 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
    </p>
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
-
+	public void decode() {
+		int offset=0;
 		byte[] receivedAddress = new byte[4];
 		
 		offset = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -157,7 +166,7 @@ public class FilterSpecLSPTunnelIPv4 extends FilterSpec{
 			log.error("Unknown Host received on Sender Template LSP IPv4 Object");
 		}
 		offset = offset + receivedAddress.length;
-		LSPId = (int)(bytes[offset+2] | bytes[offset+3]);
+		LSPId = ByteHandler.decode2bytesInteger(bytes,offset+2);
 		log.debug("Filter Spec LSP Tunnel IPv4 Object Decoded");
 		
 	}

@@ -198,7 +198,11 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 	@Override
 	public String toString() {
 		String ret= "";
-		ret = ret + "Grid "+this.grid +" n:"+Integer.toString(n) +" m:"+Integer.toString(m);
+		if(grid==DWDMWavelengthLabelValues.ITU_T_FLEX){ 
+			ret = ret + "Grid "+this.grid +" n:"+Integer.toString(n) +" m:"+Integer.toString(m);
+		} else {
+			ret = ret + "Grid "+this.grid +" n:"+Integer.toString(n);
+		}
 		return ret;
 	}
 	
@@ -240,8 +244,10 @@ public class DWDMWavelengthLabel extends RSVPConstruct{
 			return false;
 		if (identifier != other.identifier)
 			return false;
-		if (m != other.m)
-			return false;
+		if(grid==DWDMWavelengthLabelValues.ITU_T_FLEX){
+			if (m != other.m)
+				return false;
+		}
 		if (n != other.n)
 			return false;
 		return true;

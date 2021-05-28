@@ -4,8 +4,20 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * Link ID OSPF Sub-TLV (<a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>).
+ * Link ID OSPF Sub-TLV (Type 2) RFC 3630.
  * 
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ * 
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+*  @see <a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>
+*  
+ * @author ogondio
+ *
+ */
+public class LinkID extends OSPFSubTLV {
+	
+	/*
+	 * 
  * 2.5.2. Link ID
 
 
@@ -17,10 +29,7 @@ import java.net.UnknownHostException;
 
    The Link ID sub-TLV is TLV type 2, and is four octets in length.
  * 
- * @author ogondio
- *
- */
-public class LinkID extends OSPFSubTLV {
+	 */
 
 	/**
 	 * Link ID. The Link ID sub-TLV identifies the other end of the link.

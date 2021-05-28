@@ -3,7 +3,15 @@ package es.tid.pce.pcep.objects.tlvs;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- *  The NO-PATH-VECTOR TLV is compliant with the PCEP TLV format defined
+ * NO-PATH-VECTOR TLV (Type: 1)
+ * 	
+ * @author ogondio
+ *
+ */
+public class NoPathTLV extends PCEPTLV {
+	
+	/*
+	 * *  The NO-PATH-VECTOR TLV is compliant with the PCEP TLV format defined
    in Section 7.1 and is comprised of 2 bytes for the type, 2 bytes
    specifying the TLV length (length of the value portion in bytes)
    followed by a fixed-length 32-bit flags field.
@@ -22,12 +30,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
    o  Bit number: 30 - Unknown destination
 
    o  Bit number: 29 - Unknown source
- * 
- * 
- * @author ogondio
- *
- */
-public class NoPathTLV extends PCEPTLV {
+	 */
 	
 	/**
 	 * Bit number: 31 -PCE currently unavailable

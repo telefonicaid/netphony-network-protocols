@@ -131,7 +131,7 @@ public class PCEPOpen extends PCEPMessage {
 	 * @param ka keepalive timer
 	 */
 	public void setKeepalive(int ka){
-		 open.setKeeealive(ka);
+		 open.setKeepalive(ka);
 	}
 	
 	/**

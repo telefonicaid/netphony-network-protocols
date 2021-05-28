@@ -128,17 +128,12 @@ public class BGP4Open extends BGP4Message {
 	 * IP address that is assigned to that BGP speaker
 	 */
 	private Inet4Address BGPIdentifier;
-	/**
-	 * 
-	 */
-	private int optionalParameterLength = 0;
 	
 	/**
 	 * optional parameters
 	 */
 	private LinkedList<BGP4OptionalParameter> parametersList;
 	
-	private int BGPOpenMessageMandatoryFileds=10;
 	/**
 	 * Construct new PCEP Open message from scratch
 	 */
@@ -159,9 +154,10 @@ public class BGP4Open extends BGP4Message {
 		
 	}
 
-	public void encode(){// throws PCEPProtocolViolationException {	
-		
-		int len=BGPHeaderLength+BGPOpenMessageMandatoryFileds;		
+	public void encode(){// throws PCEPProtocolViolationException {
+		//BGPOpenMessageMandatoryFileds=10;
+		int len=BGPHeaderLength+10;		
+		int optionalParameterLength = 0;
 		int num_parameters = parametersList.size();
 		for (int i=0;i<num_parameters;++i){
 			BGP4OptionalParameter bgp4OptionalParameter = parametersList.get(i); 
@@ -195,6 +191,7 @@ public class BGP4Open extends BGP4Message {
 	
 	public void decode() {
 		int offset = BGPHeaderLength;
+		int optionalParameterLength = 0;
 		version = (int)((messageBytes[offset] & 0xFF));		
 		offset=offset+1;
 		this.myAutonomousSystem=((  ((int)messageBytes[offset]) <<8)& 0xFF00) |  ((int)messageBytes[offset+1] & 0xFF);		
@@ -212,7 +209,6 @@ public class BGP4Open extends BGP4Message {
 		offset=offset+4;
 		optionalParameterLength = (int)(messageBytes[offset] & 0xFF);
 		offset++;
-		
 		if (optionalParameterLength != 0){
 			
 			
@@ -270,14 +266,6 @@ public class BGP4Open extends BGP4Message {
 		BGPIdentifier = bGPIdentifier;
 	}
 
-	public int getOptionalParameterLength() {
-		return optionalParameterLength;
-	}
-
-	public void setOptionalParameterLength(int optionalParameterLength) {
-		this.optionalParameterLength = optionalParameterLength;
-	}
-
 	public LinkedList<BGP4OptionalParameter> getParametersList() {
 		return parametersList;
 	}
@@ -286,17 +274,50 @@ public class BGP4Open extends BGP4Message {
 		this.parametersList = parametersList;
 	}
 
-	public int getBGPOpenMessageMandatoryFileds() {
-		return BGPOpenMessageMandatoryFileds;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((BGPIdentifier == null) ? 0 : BGPIdentifier.hashCode());
+		result = prime * result + holdTime;
+		result = prime * result + myAutonomousSystem;
+		result = prime * result + ((parametersList == null) ? 0 : parametersList.hashCode());
+		result = prime * result + version;
+		return result;
 	}
 
-	public void setBGPOpenMessageMandatoryFileds(int bGPOpenMessageMandatoryFileds) {
-		BGPOpenMessageMandatoryFileds = bGPOpenMessageMandatoryFileds;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BGP4Open other = (BGP4Open) obj;
+		if (BGPIdentifier == null) {
+			if (other.BGPIdentifier != null)
+				return false;
+		} else if (!BGPIdentifier.equals(other.BGPIdentifier))
+			return false;
+		if (holdTime != other.holdTime)
+			return false;
+		if (myAutonomousSystem != other.myAutonomousSystem)
+			return false;
+		if (parametersList == null) {
+			if (other.parametersList != null)
+				return false;
+		} else if (!parametersList.equals(other.parametersList))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		StringBuffer sb=new StringBuffer((BGPOpenMessageMandatoryFileds+optionalParameterLength)*400);
+		StringBuffer sb=new StringBuffer((20)*400);
 		sb.append("BGP Open Message: \n");
 		sb.append("> Version: "+ version+"\n");
 		sb.append("> MyAutonomousSystem: "+ myAutonomousSystem +"\n");

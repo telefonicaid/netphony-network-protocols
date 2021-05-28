@@ -14,6 +14,7 @@ import es.tid.rsvp.objects.RSVPHop;
 import es.tid.rsvp.objects.RSVPHopIPv4;
 import es.tid.rsvp.objects.RSVPHopIPv6;
 import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.RSVPObjectParameters;
 import es.tid.rsvp.objects.ResvConfirm;
 import es.tid.rsvp.objects.ResvConfirmIPv4;
 import es.tid.rsvp.objects.ResvConfirmIPv6;
@@ -243,11 +244,9 @@ public class RSVPResvMessage extends RSVPMessage {
 		rsvpChecksum = 0xFF;
 		sendTTL = 0x00;
 		reserved = 0x00;
-		length = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		policyData = new LinkedList<PolicyData>();
 		flowDescriptors = new LinkedList<FlowDescriptor>();
-		
 		log.debug("RSVP Resv Message Created");
 	}
 	
@@ -255,48 +254,37 @@ public class RSVPResvMessage extends RSVPMessage {
 	 * 
 	 * @param bytes bytes 
 	 * @param length length 
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
 	
-	public RSVPResvMessage(byte[] bytes, int length){
+	public RSVPResvMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
 		
-		this.bytes = bytes;
-		this.length = length;
-		policyData = new LinkedList<PolicyData>();
-		flowDescriptors = new LinkedList<FlowDescriptor>();
+		super(bytes);	
+		decode();
 		
 		log.debug("RSVP Resv Message Created");
 	}
 	
-	@Override
-	public void encodeHeader() {
-
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		
-	}
 
 	@Override
 	public void encode() throws RSVPProtocolViolationException {
 
 		log.debug("Starting RSVP Resv Message encode");
+		length = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
-		int commonHeaderSize = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
+
 		
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
 		
 		if(integrity != null){
-			
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
-			
+			session.encode();
 			length = length + session.getLength();
 			log.debug("Session RSVP Object found");
 			
@@ -307,7 +295,7 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}
 		if(rsvpHop != null){
-			
+			rsvpHop.encode();
 			length = length + rsvpHop.getLength();
 			log.debug("Hop RSVP Object found");
 			
@@ -318,7 +306,7 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}
 		if(timeValues != null){
-			
+			timeValues.encode();
 			length = length + timeValues.getLength();
 			log.debug("Time Values RSVP Object found");
 			
@@ -329,13 +317,13 @@ public class RSVPResvMessage extends RSVPMessage {
 			
 		}
 		if(resvConfirm != null){
-			
+			resvConfirm.encode();
 			length = length + resvConfirm.getLength();
 			log.debug("ResvConfirm RSVP Object found");
 			
 		}
 		if(scope != null){
-			
+			scope.encode();
 			length = length + scope.getLength();
 			log.debug("Scope RSVP Object found");
 			
@@ -346,13 +334,14 @@ public class RSVPResvMessage extends RSVPMessage {
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
+			pd.encode();
 			length = length + pd.getLength();
 			log.debug("Policy Data RSVP Object found");
 				
 		}					
 		
 		if(style != null){
-			
+			style.encode();
 			length = length + style.getLength();
 			log.debug("Style RSVP Object found");
 			
@@ -368,6 +357,13 @@ public class RSVPResvMessage extends RSVPMessage {
 		for(int i = 0; i < fdSize; i++){
 			
 			FlowDescriptor fd = (FlowDescriptor) flowDescriptors.get(i);
+			try{
+				fd.encode();
+}catch(RSVPProtocolViolationException e){
+				
+				log.error("Errors during Flow Descriptor number " + i + " encoding");
+				
+			}
 			length = length + fd.getLength();
 			log.debug("Sender Descriptor RSVP Construct found");
 			
@@ -375,35 +371,35 @@ public class RSVPResvMessage extends RSVPMessage {
 		
 		bytes = new byte[length];
 		encodeHeader();
-		int currentIndex = commonHeaderSize;
+		int currentIndex = es.tid.rsvp.messages.RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;;
 		
 		if(integrity != null){
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
-		session.encode();
+		
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
-		rsvpHop.encode();
+		
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
-		timeValues.encode();
+		
 		System.arraycopy(timeValues.getBytes(), 0, bytes, currentIndex, timeValues.getLength());
 		currentIndex = currentIndex + timeValues.getLength();
 		
 		if(resvConfirm != null){
 			
-			resvConfirm.encode();
+			
 			System.arraycopy(resvConfirm.getBytes(), 0, bytes, currentIndex, resvConfirm.getLength());
 			currentIndex = currentIndex + resvConfirm.getLength();
 			
 		}
 		if(scope != null){
 			
-			scope.encode();
+			
 			System.arraycopy(scope.getBytes(), 0, bytes, currentIndex, scope.getLength());
 			currentIndex = currentIndex + scope.getLength();
 			
@@ -412,13 +408,13 @@ public class RSVPResvMessage extends RSVPMessage {
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
-			pd.encode();
+			
 			System.arraycopy(pd.getBytes(), 0, bytes, currentIndex, pd.getLength());
 			currentIndex = currentIndex + pd.getLength();
 							
 		}
 	
-		style.encode();
+		
 		System.arraycopy(style.getBytes(), 0, bytes, currentIndex, style.getLength());
 		currentIndex = currentIndex + style.getLength();
 		
@@ -426,16 +422,11 @@ public class RSVPResvMessage extends RSVPMessage {
 		for(int i = 0; i < fdSize; i++){
 			
 			FlowDescriptor fd = (FlowDescriptor) flowDescriptors.get(i);
-			try{
-				fd.encode();
+			
 				System.arraycopy(fd.getBytes(), 0, bytes, currentIndex, fd.getLength());
 				currentIndex = currentIndex + fd.getLength();
 
-			}catch(RSVPProtocolViolationException e){
-				
-				log.error("Errors during Flow Descriptor number " + i + " encoding");
-				
-			}
+			
 		}
 		log.debug("RSVP Resv Message encoding accomplished");
 	}
@@ -443,12 +434,13 @@ public class RSVPResvMessage extends RSVPMessage {
 	@Override
 	public void decode() throws RSVPProtocolViolationException {
 	
-		decodeHeader();
-		
+		policyData = new LinkedList<PolicyData>();
+		flowDescriptors = new LinkedList<FlowDescriptor>();
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		while(offset < length){		// Mientras quede mensaje
-			
 			int classNum = RSVPObject.getClassNum(bytes,offset);
+			//System.out.println(" classnum "+classNum+" offset "+offset +"length "+length);
+
 			if(classNum == 1){
 				
 				// Session Object
@@ -456,15 +448,13 @@ public class RSVPResvMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Session IPv4
-					session = new SessionIPv4();
-					session.decode(bytes, offset);
+					session = new SessionIPv4(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else if(cType == 2){
 					
 					// Session IPv6
-					session = new SessionIPv6();
-					session.decode(bytes, offset);
+					session = new SessionIPv6(bytes, offset);
 					offset = offset + session.getLength();
 				}else{
 					// Fallo en cType
@@ -477,14 +467,12 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					// RSVPHop IPv4
-					rsvpHop = new RSVPHopIPv4();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv4(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else if(cType == 2){
 					// RSVPHop IPv6
-					rsvpHop = new RSVPHopIPv6();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv6(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else{
@@ -498,8 +486,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -514,8 +501,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -524,22 +510,20 @@ public class RSVPResvMessage extends RSVPMessage {
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}else if(classNum == 15){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_RESV_CONFIRM){
 				
 				// Resv Confirm Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
 					// ResvConfirm IPv4
-					resvConfirm = new ResvConfirmIPv4();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv4(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else if(cType == 2){
 					
 					// ResvConfirm IPv6
-					resvConfirm = new ResvConfirmIPv6();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv6(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else{
@@ -555,15 +539,13 @@ public class RSVPResvMessage extends RSVPMessage {
 				if(cType == 1){
 					
 					// Scope IPv4
-					scope = new ScopeIPv4();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv4(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else if(cType == 2){
 					
 					// Scope IPv6
-					scope = new ScopeIPv6();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv6(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else{
@@ -571,14 +553,13 @@ public class RSVPResvMessage extends RSVPMessage {
 					// Fallo en cType
 					throw new RSVPProtocolViolationException();
 				}
-			}else if(classNum == 13){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_POLICY_DATA){
 				
 				// Policy Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					
@@ -593,8 +574,7 @@ public class RSVPResvMessage extends RSVPMessage {
 				// Style Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
-					style = new Style();
-					style.decode(bytes, offset);
+					style = new Style(bytes, offset);
 					offset = offset + style.getLength();
 					
 				}else{

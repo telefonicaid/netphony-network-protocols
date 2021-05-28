@@ -5,12 +5,24 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 /**
+ * Shared Risk Link Group (SRLG) (Type 16) RFC 4203
+ * 
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ *
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc4203"> RFC 4203</a>
+ * 
+ *	@author Oscar Gonzalez de Dios
+ *	@author Fernando Munoz del Nuevo
+ *	
+ * 
+ */
+
+public class SharedRiskLinkGroup extends OSPFSubTLV {
+
+	/*
+	 * * *
  
-RFC 4203                OSPF Extensions in MPLS             October 2005
-
-1.3. Shared Risk Link Group (SRLG)
-
-
    The SRLG is a sub-TLV (of type 16) of the Link TLV.  The length is
    the length of the list in octets.  The value is an unordered list of
    32 bit numbers that are the SRLGs that the link belongs to.  The
@@ -30,15 +42,8 @@ RFC 4203                OSPF Extensions in MPLS             October 2005
    Section "Shared Risk Link Group Information" of [GMPLS-ROUTING]).
 
    The SRLG sub-TLV may occur at most once within the Link TLV.
- * 
- *	@author Oscar Gonzalez de Dios
- *	@author Fernando Munoz del Nuevo
- *	
- * 
- */
-
-public class SharedRiskLinkGroup extends OSPFSubTLV {
-
+	 */
+	
 	private LinkedList<Inet4Address> sharedRiskLinkGroupValues;
 	
 	public SharedRiskLinkGroup(){
@@ -62,7 +67,7 @@ public class SharedRiskLinkGroup extends OSPFSubTLV {
 		encodeHeader();
 		int offset=4;
 		for (int i=0;i<sharedRiskLinkGroupValues.size();++i) {
-			System.arraycopy(this.sharedRiskLinkGroupValues.get(i),0, this.tlv_bytes, offset, 4);
+			System.arraycopy(this.sharedRiskLinkGroupValues.get(i).getAddress(),0, this.tlv_bytes, offset, 4);
 			offset=offset+4;
 		}
 	}

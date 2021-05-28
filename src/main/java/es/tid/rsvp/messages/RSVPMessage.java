@@ -1,5 +1,7 @@
 package es.tid.rsvp.messages;
 
+import java.util.Arrays;
+
 import es.tid.rsvp.*;
 
 
@@ -126,20 +128,16 @@ public abstract class RSVPMessage implements RSVPElement{
 	}
 	
 
-	public RSVPMessage(byte[] bytes){
-		//
-		this.bytes=bytes;
-		//FIXME: DECODIFICAR CABECERA
+	public RSVPMessage(byte[] bytes_input){
+		length = (((int)((bytes_input[6]&0xFF)<<8)& 0xFF00)|  ((int)bytes_input[7] & 0xFF));
+		this.bytes=new byte[length];
+		System.arraycopy(bytes_input, 0, bytes, 0, length);
+		decodeHeader();
 		//FIXME: SACAR Y CREAR OBJETOS
 	}
 
-	//FIXME: Crear metodo para codificar cabecera
-	
-	/**
-	 * 
-	 */
-	
-	public abstract void encodeHeader();
+
+
 	
 
 	/**
@@ -161,10 +159,9 @@ public abstract class RSVPMessage implements RSVPElement{
      *    +-------------+-------------+-------------+-------------+
      *    
 	 *
-	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the decoding of the header
 	 */
 	
-	public void decodeHeader() throws RSVPProtocolViolationException{
+	public void decodeHeader() {
 		
 		vers = (bytes[0] >> 4) & 0x0F; 
 		flags = bytes[0] & 0x0F;
@@ -175,6 +172,20 @@ public abstract class RSVPMessage implements RSVPElement{
 		length = (((int)((bytes[6]&0xFF)<<8)& 0xFF00)|  ((int)bytes[7] & 0xFF));
 	}
 	
+	/**
+	 * 
+	 */
+	
+	public void encodeHeader() {
+		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
+		bytes[1]= (byte) msgType;
+		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
+		bytes[3]= (byte)(rsvpChecksum & 0xFF);
+		bytes[4]= (byte) sendTTL;
+		bytes[5]= (byte) reserved;
+		bytes[6]= (byte)((length>>8) & 0xFF);
+		bytes[7]= (byte)(length & 0xFF);
+	}
 	
 	/**
 	 * 
@@ -296,5 +307,52 @@ public abstract class RSVPMessage implements RSVPElement{
 		return //(int)(((bytes[6]&0xFF)<<8)& 0xFF00) | (bytes[7] & 0x00FF));
 		(((int)((bytes[6]&0xFF)<<8)& 0xFF00)|  ((int)bytes[7] & 0xFF));
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(bytes);
+		result = prime * result + flags;
+		result = prime * result + length;
+		result = prime * result + msgType;
+		result = prime * result + reserved;
+		result = prime * result + rsvpChecksum;
+		result = prime * result + sendTTL;
+		result = prime * result + vers;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RSVPMessage other = (RSVPMessage) obj;
+		if (!Arrays.equals(bytes, other.bytes))
+			return false;
+		if (flags != other.flags)
+			return false;
+		if (length != other.length)
+			return false;
+		if (msgType != other.msgType)
+			return false;
+		if (reserved != other.reserved)
+			return false;
+		if (rsvpChecksum != other.rsvpChecksum)
+			return false;
+		if (sendTTL != other.sendTTL)
+			return false;
+		if (vers != other.vers)
+			return false;
+		return true;
+	}
+	
+	
 		
 }

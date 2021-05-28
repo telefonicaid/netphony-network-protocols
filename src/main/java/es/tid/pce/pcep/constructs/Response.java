@@ -145,15 +145,13 @@ public class Response extends PCEPConstruct{
 	public void setNoPath(NoPath noPath) {
 		this.noPath = noPath;
 	}
-	public LSPA getlSPA() {
+	public LSPA getLSPA() {
 		return lSPA;
-	}
-	public void setlSPA(LSPA lSPA) {
-		this.lSPA = lSPA;
 	}
 	public void setLSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
+
 	public Bandwidth getBandwidth() {
 		return bandwidth;
 	}
@@ -166,12 +164,10 @@ public class Response extends PCEPConstruct{
 	public void setMetricList(LinkedList<Metric> metricList) {
 		this.metricList = metricList;
 	}
-	public IncludeRouteObject getiRO() {
+	public IncludeRouteObject getIRO() {
 		return iRO;
 	}
-	public void setiRO(IncludeRouteObject iRO) {
-		this.iRO = iRO;
-	}
+	
 	public void setIRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}

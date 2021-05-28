@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
 
 RFC 2205                          RSVP                    September 1997
@@ -69,17 +71,18 @@ public class Style extends RSVPObject{
 		
 		classNum = 8;
 		cType = 1;
-		length = 8;
-		bytes = new byte[length];
 		flags = 0;
 		optionVector = 0;
 	}
 	
+public Style(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	super(bytes,offset);
+	decode( );
+}
+	
 	public Style(int flags, int optionVector){
 		classNum = 8;  
 		cType = 1;
-		length = 8;
-		bytes = new byte[length];
 		this.flags = flags;
 		this.optionVector = optionVector;
 	}
@@ -93,17 +96,19 @@ public class Style extends RSVPObject{
 	
 	@Override
 	public void encode() {
+		length = 8;
+		bytes = new byte[length];
 		encodeHeader();
-		bytes[4] = (byte) flags;
+		bytes[4] = (byte) (flags&0XFF);
 		bytes[5] = (byte)((optionVector >>16) & 0xFF);
 		bytes[6] = (byte)((optionVector >>8) & 0xFF);
 		bytes[7] = (byte)(optionVector & 0xFF);
 	}
 
-	public void decode(byte[] bytes, int offset) {
-		length = (int)(bytes[offset]|bytes[offset+1]);
-		flags = (int) bytes[offset+4];
+	public void decode() {
+		int offset=0;
 		optionVector = 0;  
+		flags=bytes[4]&0xFF;
 		for (int k = 5; k < 8; k++) {
 			optionVector = (optionVector << 8) | (bytes[offset+k] & 0xff);
 		}

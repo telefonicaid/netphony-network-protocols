@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /**
  * 
 
@@ -59,6 +61,11 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public SenderTemplateLSPTunnelIPv4() {
+	  super();
+		cType = 7;
+  }
+  
 	/**
 	 * <p>Parameters constructor to encode this kind of object. </p>
 	 * @param senderNodeAddress The sender IPv4 Sender node address
@@ -66,16 +73,14 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	 */
 	
 	public SenderTemplateLSPTunnelIPv4(Inet4Address senderNodeAddress, int LSPId){
-		
+		super();
 		classNum = 11;
 		cType = 7;
 		
 		this.senderNodeAddress = senderNodeAddress;
 		this.LSPId = LSPId;
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
-
-		bytes = new byte[length];
+		
 		
 		log.debug("Sender Template LSP Tunnel IPv4 Object Created");
 			
@@ -90,9 +95,8 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	
 	public SenderTemplateLSPTunnelIPv4(byte[] bytes, int offset){
 		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[RSVPObject.getLength(bytes, offset)];
-		
+		super(bytes,offset);
+		decode();
 		log.debug("Sender Template LSP Tunnel IPv4 Object Created");
 		
 	}
@@ -111,7 +115,9 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 	 */
 
 	public void encode() {
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 8;
+
+		bytes = new byte[length];
 		encodeHeader();
 
 		byte[] addr = senderNodeAddress.getAddress();
@@ -141,8 +147,8 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
    </p>
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
-
+	public void decode() {
+		int offset=0;
 		byte[] receivedAddress = new byte[4];
 		
 		offset = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -154,7 +160,7 @@ public class SenderTemplateLSPTunnelIPv4 extends SenderTemplate{
 			log.error("Unknown Host received on Sender Template LSP IPv4 Object");
 		}
 		offset = offset + receivedAddress.length;
-		LSPId = (int)(bytes[offset+2] | bytes[offset+3]);
+		LSPId = ByteHandler.decode2bytesInteger(bytes,offset+2);
 		log.debug("Sender Template LSP Tunnel IPv4 Object Decoded");
 		
 	}

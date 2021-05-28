@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 
 
 /*
@@ -86,7 +89,7 @@ public class SessionLSPTunnelIPv6 extends Session{
          globally unique identifier.
 	 */
 	
-	protected int extendedTunnelId;
+	protected Inet6Address extendedTunnelId;
 	
 	/**
 	 * Log
@@ -103,8 +106,7 @@ public class SessionLSPTunnelIPv6 extends Session{
 		
 		classNum = 1;
 		cType = 8;
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 36;
-		bytes = new byte[length];
+		
 
 		log.debug("Session LSP Tunnel IPv6 Object Created");
 		
@@ -118,12 +120,11 @@ public class SessionLSPTunnelIPv6 extends Session{
 	 * @param tunnelId tunnelID
 	 */	
 	
-	public SessionLSPTunnelIPv6(Inet6Address egressNodeAddress, int tunnelId, int extendedTunnelId){
+	public SessionLSPTunnelIPv6(Inet6Address egressNodeAddress, int tunnelId, Inet6Address extendedTunnelId){
 		
 		classNum = 1;
 		cType = 8;
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 36;
-		bytes = new byte[length];
+		
 
 		this.egressNodeAddress = egressNodeAddress;
 		this.tunnelId = tunnelId;
@@ -138,15 +139,15 @@ public class SessionLSPTunnelIPv6 extends Session{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public SessionLSPTunnelIPv6(byte[] bytes, int offset){
+	public SessionLSPTunnelIPv6(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
+		super(bytes, offset);
+		decode();
 		
 		log.debug("Session LSP Tunnel IPv6 Object Created");
-		
 	}
 
 	/**
@@ -175,7 +176,8 @@ public class SessionLSPTunnelIPv6 extends Session{
 	 */
 	
 	public void encode(){
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 36;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = egressNodeAddress.getAddress();
@@ -189,30 +191,54 @@ public class SessionLSPTunnelIPv6 extends Session{
 		bytes[currentIndex+1] = (byte) 0;
 		bytes[currentIndex+2] = (byte)((tunnelId>>8) & 0xFF);
 		bytes[currentIndex+3] = (byte)(tunnelId & 0xFF);
-		bytes[currentIndex+4] = (byte)((extendedTunnelId>>24) & 0xFF);
-		bytes[currentIndex+5] = (byte)((extendedTunnelId>>16) & 0xFF);
-		bytes[currentIndex+6] = (byte)((extendedTunnelId>>8) & 0xFF);
-		bytes[currentIndex+7] = (byte)(extendedTunnelId & 0xFF);
-
+		currentIndex = currentIndex + 4;
+		addr = extendedTunnelId.getAddress();
+		System.arraycopy(addr,0, getBytes(), currentIndex, addr.length);
 	}
 
 
-	public void decode(byte[] bytes, int offset){
-		
+	public void decode() throws RSVPProtocolViolationException{
+		try{
+		int offset=0;
 		byte[] receivedAddress = new byte[16];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,16);
-		try{
+		
 			egressNodeAddress = (Inet6Address) Inet6Address.getByAddress(receivedAddress);
-		}catch(UnknownHostException e){
-			// FIXME: Poner logs con respecto a excepcion
-		}
-		offset = offset + 16;
-		tunnelId = (int)(bytes[offset+2] | bytes[offset+3]);
+		
+		offset = offset + 20;
+		tunnelId = ByteHandler.decode2bytesInteger(bytes,offset+2);
 		offset = offset + 4;
-		extendedTunnelId = (int)(bytes[offset] | bytes[offset+1] | bytes[offset+2] | bytes[offset+3] | bytes[offset+4] | bytes[offset+5] | bytes[offset+6] | bytes[offset+7] | bytes[offset+8] | bytes[offset+9] | bytes[offset+10] | bytes[offset+11] | bytes[offset+12] | bytes[offset+13] | bytes[offset+14] | bytes[offset+15]);
-
+		System.arraycopy(bytes,offset,receivedAddress,0,16);
+		extendedTunnelId = (Inet6Address) Inet6Address.getByAddress(receivedAddress);
+		}catch(Exception e){
+			throw new RSVPProtocolViolationException();
+		}
 		
 
+	}
+
+	public Inet6Address getEgressNodeAddress() {
+		return egressNodeAddress;
+	}
+
+	public void setEgressNodeAddress(Inet6Address egressNodeAddress) {
+		this.egressNodeAddress = egressNodeAddress;
+	}
+
+	public int getTunnelId() {
+		return tunnelId;
+	}
+
+	public void setTunnelId(int tunnelId) {
+		this.tunnelId = tunnelId;
+	}
+
+	public Inet6Address getExtendedTunnelId() {
+		return extendedTunnelId;
+	}
+
+	public void setExtendedTunnelId(Inet6Address extendedTunnelId) {
+		this.extendedTunnelId = extendedTunnelId;
 	}
 
 

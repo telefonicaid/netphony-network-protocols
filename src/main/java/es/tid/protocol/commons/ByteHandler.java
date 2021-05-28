@@ -229,6 +229,16 @@ public class ByteHandler {
 			dest[i] = intDestSet[i];        
 	}
 
+	/**
+	 * Copies bits from an Integer value (which has 32 bits), starting from begS bit
+	 *  (0 is the most significant), into a byte array, starting at the bit
+	 *  in the position begD (0 is the most significant)
+	 * @param begS Start position (from most significant bit) in the value to copy
+	 * @param begD Start position (from most significant bit) in the destination byte array.
+	 * @param length number of bits to copy
+	 * @param value Integer value from which the bits are copied
+	 * @param dest destination byte array to copy
+	 */
 	public static void IntToBuffer(int begS, int begD, int length,int value , byte[] dest)
 	{
 		bufferToBuffer (begS, ByteBuffer.allocate(4).putInt(value).array(), begD, dest, length);
@@ -350,4 +360,18 @@ public class ByteHandler {
 		number=( (((long)bytes[offset]&(long)0xFF)<<24) | (((long)bytes[offset+1]&(long)0xFF)<<16) |( ((long)bytes[offset+2]&(long)0xFF)<<8) |  ((long)bytes[offset+3]& (long)0xFF) );
 		return number;
 	}
+	
+	/**
+	 * Get an Integer value from 2 bytes of a byte array
+	 * @param bytes bytes to examine
+	 * @param offset starting position of the 2 byte integer
+	 * @return the integer value
+	 */
+	public static int decode2bytesInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=( ( ((int)bytes[offset]&(int)0xFF)<<8) |  ((int)bytes[offset+1]& (int)0xFF) );
+		return number;
+	}
+	
+	
 }

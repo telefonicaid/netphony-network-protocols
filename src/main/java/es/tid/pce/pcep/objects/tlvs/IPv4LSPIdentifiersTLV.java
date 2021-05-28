@@ -92,8 +92,11 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 		System.arraycopy(tunnelSenderIPAddress.getAddress(),0, this.tlv_bytes, offset, 4);
 		
 		offset += 4;
-		ByteHandler.IntToBuffer(0,(offset) * 8 ,16,lspID,tlv_bytes);
-		ByteHandler.IntToBuffer(0,(offset + 2) * 8,16,tunnelID,tlv_bytes);
+		//this.tlv_bytes[offset]=0x01;
+		this.tlv_bytes[offset]=(byte)(lspID>>>8 & 0xFF);
+		this.tlv_bytes[offset+1]=(byte)(lspID & 0xFF);
+		this.tlv_bytes[offset+2]=(byte)(tunnelID>>>8 & 0xFF);
+		this.tlv_bytes[offset+3]=(byte)(tunnelID & 0xFF);
 		
 		offset += 4;
 		

@@ -1,8 +1,11 @@
 package es.tid.rsvp.objects;
 
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
+
+import es.tid.rsvp.RSVPProtocolViolationException;
 
 /*
  * RFC 2205                          RSVP                    September 1997
@@ -51,37 +54,22 @@ public class ScopeIPv6 extends Scope{
 		
 		classNum = 7;
 		cType = 2;
-		length = 4;
 		sourceIpAddresses = new LinkedList<Inet6Address>();
 		
+	}
+	
+	public ScopeIPv6(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes, offset);
+		this.decode();
 	}
 	
 	public void addSourceIpAddress(Inet6Address addr){
 		
 		sourceIpAddresses.add(addr);
-		length = length + 16;
 		
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	@Override
-	public void encodeHeader() {
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-	}
+
 	/*
 
            +-------------+-------------+-------------+-------------+
@@ -107,11 +95,11 @@ public class ScopeIPv6 extends Scope{
 	 */
 	@Override
 	public void encode() {
-
+		int size = sourceIpAddresses.size();
+		length=4+size*16;
 		bytes = new byte[length];
 		encodeHeader();
 		
-		int size = sourceIpAddresses.size();
 		int currentIndex = 4;
 		
 		for(int i = 0; i < size; i++){
@@ -123,13 +111,12 @@ public class ScopeIPv6 extends Scope{
 		}
 	}
 
-	@Override
-	public void decodeHeader() {
-		
-	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
+
+	
+	public void decode() {
+		 sourceIpAddresses = new LinkedList<Inet6Address>();
+		int offset=0;
 		length = (int)(bytes[offset]|bytes[offset+1]);
 		int headerSize = 4;
 		int unprocessedBytes = length - headerSize;

@@ -58,5 +58,33 @@ public class IPv4AddressRROSubobject extends RROSubobject {
 	public String toString(){
 		return ipv4address.getHostAddress();
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ipv4address == null) ? 0 : ipv4address.hashCode());
+		result = prime * result + prefix;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IPv4AddressRROSubobject other = (IPv4AddressRROSubobject) obj;
+		if (ipv4address == null) {
+			if (other.ipv4address != null)
+				return false;
+		} else if (!ipv4address.equals(other.ipv4address))
+			return false;
+		if (prefix != other.prefix)
+			return false;
+		return true;
+	}
+	
+	
 
 }

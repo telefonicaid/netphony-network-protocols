@@ -142,7 +142,9 @@ public abstract class OpaqueLSA extends LSA{
 	}
 	
 	
-
+	public static int getOpaqueType(byte[] bytes, int offset) {
+		return bytes[offset+4]&0xFF;	
+	}
 	
 
 }

@@ -49,7 +49,7 @@ public class TestBGPAsPathAttribute
 		AS_Path_Segment as1 = new AS_Path_Segment();
 		int segments[] = {1, 2, 3};
 		as1.setSegments(segments);
-		List<AS_Path_Segment> asList = new LinkedList<AS_Path_Segment>();
+		LinkedList<AS_Path_Segment> asList = new LinkedList<AS_Path_Segment>();
 		asList.add(as1);
 		ap1.setAsPathSegments(asList);
 		ap1.encode();

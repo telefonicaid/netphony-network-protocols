@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /**
  * 
 
@@ -69,6 +71,12 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public FilterSpecLSPTunnelIPv6() {
+	  super();
+	  classNum = 10;
+		cType = 8;
+  }
+		  
 	/**
 	 * <p>Parameters constructor to encode this kind of object. </p>
 	 * @param senderNodeAddress The sender IPv6 Sender node address
@@ -83,8 +91,7 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 		this.senderNodeAddress = senderNodeAddress;
 		this.LSPId = LSPId;
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 20;
-		bytes = new byte[length];
+		
 		
 		log.debug("Filter Spec LSP Tunnel IPv6 Object Created");
 			
@@ -98,10 +105,8 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 	 */
 	
 	public FilterSpecLSPTunnelIPv6(byte[] bytes, int offset){
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+		super(bytes,offset);
+		decode();
 		log.debug("Filter Spec LSP Tunnel IPv6 Object Created");
 		
 	}
@@ -127,7 +132,8 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 	 */
 
 	public void encode() {
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 20;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = senderNodeAddress.getAddress();
@@ -164,8 +170,8 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
    </p>
 	 */
 	
-	public void decode(byte[] bytes, int offset) {
-
+	public void decode() {
+		int offset=0;
 		byte[] receivedAddress = new byte[16];
 		
 		offset = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -177,7 +183,7 @@ public class FilterSpecLSPTunnelIPv6 extends FilterSpec{
 			log.error("Unknown Host received on Sender Template LSP IPv6 Object");
 		}
 		offset = offset + receivedAddress.length;
-		LSPId = (int)(bytes[offset+2] | bytes[offset+3]);
+		LSPId =  ByteHandler.decode2bytesInteger(bytes,offset+2);
 		log.debug("Filter Spec LSP Tunnel IPv6 Object Decoded");
 		
 	}

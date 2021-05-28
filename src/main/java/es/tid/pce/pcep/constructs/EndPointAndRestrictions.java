@@ -15,6 +15,7 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 	
 	public EndPointAndRestrictions()
 	{
+		EndpointRestrictionList=new LinkedList<EndpointRestriction> ();
 	}
 	
 	public EndPointAndRestrictions(byte[] bytes, int offset)throws MalformedPCEPObjectException {
@@ -52,22 +53,34 @@ public class EndPointAndRestrictions extends PCEPConstruct{
 	
 	public void decode(byte[] bytes, int offset) throws MalformedPCEPObjectException
 	{
-		int len=0;
-		endPoint = new EndPoint(bytes, offset);
-		offset = offset + endPoint.getLength();
-		len += endPoint.getLength();
-		
-		
-		while ((offset < bytes.length) && (PCEPTLV.getType(bytes, offset)==ObjectParameters.PCEP_TLV_TYPE_LABEL_REQUEST))
-		{
-			EndpointRestriction EndpointRestriction = new EndpointRestriction(bytes, offset);
-			EndpointRestrictionList.add(EndpointRestriction);
-			offset = offset + EndpointRestriction.getLength();
-			len += EndpointRestriction.getLength();
+		try {
+			int len=0;
+			int tlvtype=PCEPTLV.getType(bytes, offset);
+			int tlvlength=PCEPTLV.getTotalTLVLength(bytes, offset);
+			if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_IPV4_ADDRESS){
+				
+					endPoint=new IPv4AddressEndPoint(bytes, offset);
+				
+			} else if (tlvtype==ObjectParameters.PCEP_TLV_TYPE_UNNUMBERED_ENDPOINT){
+				endPoint=new UnnumIfEndPoint(bytes, offset);			
+			}
+			offset = offset + endPoint.getLength();
+			len += endPoint.getLength();
+			
+			
+			while ((offset < bytes.length) && (PCEPTLV.getType(bytes, offset)==ObjectParameters.PCEP_TLV_TYPE_LABEL_REQUEST))
+			{
+				EndpointRestriction EndpointRestriction = new EndpointRestriction(bytes, offset);
+				EndpointRestrictionList.add(EndpointRestriction);
+				offset = offset + EndpointRestriction.getLength();
+				len += EndpointRestriction.getLength();
+			}
+			
+			this.setLength(len);
+		} catch (PCEPProtocolViolationException e) {
+			// TODO Auto-generated catch block
+			throw new MalformedPCEPObjectException();
 		}
-		
-		this.setLength(len);
-		
 	}
 
 	public EndPoint getEndPoint() {

@@ -1,7 +1,10 @@
 package es.tid.rsvp.objects;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /*
- * 
+ * FIXME: TODO
+
 
 -
 RFC 2205                          RSVP                    September 1997
@@ -32,14 +35,15 @@ public class SenderTemplateIPv4 extends SenderTemplate{
 	//FIXME: Buscar IPv4/UDP FILTER_SPEC object.
 	
 	public SenderTemplateIPv4(){
-		
-		classNum = 11;
+		super();
 		cType = 1;
-		length = 4;
-		bytes = new byte[length];
-
-		
 	}
+	
+public SenderTemplateIPv4(byte[] bytes, int offset){
+	super(bytes, offset);
+	this.decode();
+}
+	
 	
 	/**	
     0             1              2             3
@@ -52,16 +56,17 @@ public class SenderTemplateIPv4 extends SenderTemplate{
     +-------------+-------------+-------------+-------------+	
     
     */
-	
+	//TODO
 	@Override
 	public void encode() {
+		this.length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		bytes = new byte[length];
 		encodeHeader();
 		
 	}
-
+	//TODO
 	@Override
-	public void decode(byte[] bytes, int offset) {
-		// FIXME: decode
+	public void decode() {
 		
 	}
 

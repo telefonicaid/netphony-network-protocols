@@ -354,7 +354,6 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 					
 					// LSPTunnelSession IPv4
 					session = new SessionLSPTunnelIPv4(bytes,offset);
-					session.decode(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
@@ -362,7 +361,6 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 					
 					// LSPTunnelSession IPv6
 					session = new SessionLSPTunnelIPv6(bytes,offset);
-					session.decode(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -378,15 +376,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				if(cType == 1){
 					
 					// RSVPHop IPv4
-					rsvpHop = new RSVPHopIPv4();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv4(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else if(cType == 2){
 					
 					// RSVPHop IPv6
-					rsvpHop = new RSVPHopIPv6();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv6(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else{
@@ -402,8 +398,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -419,8 +414,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -436,15 +430,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				if(cType == 1){
 					
 					// ResvConfirm IPv4
-					resvConfirm = new ResvConfirmIPv4();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv4(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else if(cType == 2){
 					
 					// ResvConfirm IPv6
-					resvConfirm = new ResvConfirmIPv6();
-					resvConfirm.decode(bytes, offset);
+					resvConfirm = new ResvConfirmIPv6(bytes, offset);
 					offset = offset + resvConfirm.getLength();
 					
 				}else{
@@ -460,15 +452,13 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				if(cType == 1){
 					
 					// Scope IPv4
-					scope = new ScopeIPv4();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv4(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else if(cType == 2){
 					
 					// Scope IPv6
-					scope = new ScopeIPv6();
-					scope.decode(bytes, offset);
+					scope = new ScopeIPv6(bytes, offset);
 					offset = offset + scope.getLength();
 					
 				}else{
@@ -482,8 +472,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes, offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					
@@ -498,8 +487,7 @@ public class RSVPTEResvMessage extends RSVPResvMessage {
 				// Style Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
-					style = new Style();
-					style.decode(bytes, offset);
+					style = new Style(bytes, offset);
 					offset = offset + style.getLength();
 					
 				}else{

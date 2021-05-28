@@ -15,12 +15,10 @@ import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
-import es.tid.pce.pcep.objects.P2MPEndPointsDataPathID;
 import es.tid.pce.pcep.objects.P2MPEndPointsIPv4;
+import es.tid.pce.pcep.objects.P2PGeneralizedEndPoints;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.SRP;
-import es.tid.pce.pcep.objects.XifiEndPoints;
-import es.tid.pce.pcep.objects.XifiUniCastEndPoints;
 
 /**
  * PCEP Initiated LSP.
@@ -194,14 +192,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			{
 				int ot=PCEPObject.getObjectType(bytes, offset);
 
-				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
-					try {
-						endPoint=new P2MPEndPointsDataPathID(bytes,offset);
-					} catch (MalformedPCEPObjectException e) {
-						log.warn("Malformed P2MP ENDPOINTS DataPathID Object found");
-						throw new PCEPProtocolViolationException();
-					}
-				}else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
+				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
 					try {
 						endPoint=new P2MPEndPointsIPv4(bytes,offset);
 					} catch (MalformedPCEPObjectException e) {
@@ -225,22 +216,7 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 						throw new PCEPProtocolViolationException();
 					}
 				}
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC){
-					try {
-						endPoint=new XifiUniCastEndPoints(bytes,offset);
-					} catch (MalformedPCEPObjectException e) {
-						log.warn("Malformed EndPointsMAC Object found");
-						throw new PCEPProtocolViolationException();
-					}
-				}
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC_NOT_UNICAST){
-					try {
-						endPoint=new XifiEndPoints(bytes,offset);
-					} catch (MalformedPCEPObjectException e) {
-						log.warn("Malformed EndPointsMAC Object found");
-						throw new PCEPProtocolViolationException();
-					}
-				}
+				
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV6){
 					try {
 						endPoint=new EndPointsIPv6(bytes,offset);
@@ -251,7 +227,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				}
 				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 					try {
-						endPoint=new GeneralizedEndPoints(bytes,offset);
+						int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
+						if (endPointType==1) {
+							endPoint=new P2PGeneralizedEndPoints(bytes,offset);	
+						}
+						
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed GENERALIZED END POINTS Object found");
 						throw new PCEPProtocolViolationException();

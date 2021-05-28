@@ -85,12 +85,12 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
               
      
 	 */
-	
+
 	private ERO ero;
-	private LabelRequest labelRequest;
+	//private LabelRequest labelRequest; FIXME
 	private SessionAttribute sessionAttribute;
-	private SuggestedLabel suggestedLabel;
-	private UpstreamLabel upstreamLabel;
+	//private SuggestedLabel suggestedLabel;
+	//private UpstreamLabel upstreamLabel;
 
 	/**
 	 * Log
@@ -110,13 +110,10 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		rsvpChecksum = 0xFF;
 		sendTTL = 0x00;
 		reserved = 0x00;
-		length = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
+
 		
 		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();
-			
-		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
-		
+		senderDescriptors = new LinkedList<SenderDescriptor>();		
 		
 		log.debug("RSVP-TE Path Message Created");
 				
@@ -125,38 +122,22 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	/**
 	 * Constructor to be used when an RSVP-TE Path Message wanted to be decoded
 	 * @param bytes bytes
-	 * @param length length 
+	 * @param length length
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation 
 	 */
-	
-	public RSVPTEPathMessage(byte[] bytes, int length){
-		
-		this.bytes = bytes;
-		this.length = length;
-		
-		policyData = new LinkedList<PolicyData>();
-		senderDescriptors = new LinkedList<SenderDescriptor>();
-		
-		intservSenderTSpec = new LinkedList<IntservSenderTSpec>();
-	
-		
-		log.debug("RSVP-TE Path Message Created");
+	public RSVPTEPathMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{
+		super(bytes);
+		decode();
+		log.debug("RSVP TE Path Message Created");
+			decode();
 	}
+		
+		
+		
+		
 	
 	
-	@Override
-	public void encodeHeader() {
-		
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		log.debug("RSVP-TE Path Message Header encoded");
-		
-	}
+	
 
 	/**
 	 * @throws RSVPProtocolViolationException Thrown when there is a problem with the encoding
@@ -165,20 +146,18 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	public void encode() throws RSVPProtocolViolationException{
 
 		log.debug("Starting RSVP-TE Path Message encode");
-		
-		// Obtengo el tama�o de la cabecera comun
-		int commonHeaderSize = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
-		
-		// Obtencion del tama�o completo del mensaje
+		//FIXME: COMPUTE CHECKSUM!!
+		rsvpChecksum = 0xFF;
+		length=RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		
 		if(integrity != null){
-			
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 			
 		}
 		if(session != null){
-			
+			session.encode();
 			length = length + session.getLength();
 			log.debug("Session RSVP Object found");
 			
@@ -191,7 +170,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 		}
 		if(rsvpHop != null){
-			
+			rsvpHop.encode();
 			length = length + rsvpHop.getLength();
 			log.debug("Hop RSVP Object found");
 			
@@ -203,7 +182,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 		}
 		if(timeValues != null){
-			
+			timeValues.encode();
 			length = length + timeValues.getLength();
 			log.debug("Time Values RSVP Object found");
 
@@ -223,12 +202,13 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			log.debug("ERO RSVP Object found");
 			
 		}
-		if(labelRequest != null){
-			
-			length = length + labelRequest.getLength();
-			log.debug("Label RSVP Object found");
-
-		}else{
+//		if(labelRequest != null){
+//			
+//			length = length + labelRequest.getLength();
+//			log.debug("Label RSVP Object found");
+//
+//		}
+		else{
 			
 			// Campo Obligatorio, si no existe hay fallo
 			log.error("Label RSVP Object NOT found");
@@ -236,13 +216,12 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 			
 		}
 		if(sessionAttribute != null){
-			
+			sessionAttribute.encode();
 			// Campo Opcional
 			length = length + sessionAttribute.getLength();
 			log.debug("Session Attribute RSVP Object found");
 
 		}
-		
 		
 		int pdSize = policyData.size();
 		
@@ -250,76 +229,65 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
+			pd.encode();
 			length = length + pd.getLength();
 			log.debug("Policy Data RSVP Object found");
 				
 		}
-						
 		
 		int sdSize = senderDescriptors.size();
 
 		for(int i = 0; i < sdSize; i++){
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
+			sd.encode();
 			length = length + sd.getLength();
 			log.debug("Sender Descriptor RSVP Construct found");
 
 		}
 		
-		
-		int iSenderTSpecSize = intservSenderTSpec.size();
-
-		for(int i = 0; i < iSenderTSpecSize; i++){
-					
-			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
-			length = length + isTSpec.getLength();
-			log.debug("IntServSenderTSpec Descriptor RSVP Construct found");
-			System.out.println("rub IntServSenderTSpec Descriptor RSVP Construct found (RSVPTEPathMessage.java line 336)");
-		}
-		
-		
-		if(this.suggestedLabel != null){
-			
-			// Campo Opcional
-			length = length + this.suggestedLabel.getLength();
-			log.debug("Suggested Label RSVP Object found");
-
-		}
-		
-		if(this.upstreamLabel != null){
-			
-			// Campo Opcional
-			length = length + upstreamLabel.getLength();
-			log.debug("Upstream Label RSVP Object found");
-
-		}
+//		if(this.suggestedLabel != null){
+//			suggestedLabel.encode();
+//			// Campo Opcional
+//			length = length + this.suggestedLabel.getLength();
+//			log.debug("Suggested Label RSVP Object found");
+//			
+//		}
+//		
+//		if(this.upstreamLabel != null){
+//			upstreamLabel.encode();
+//			// Campo Opcional
+//			length = length + upstreamLabel.getLength();
+//			log.debug("Upstream Label RSVP Object found");
+//
+//		}
 				
 		bytes = new byte[length];
 		encodeHeader();
-		int currentIndex = commonHeaderSize;
+		int currentIndex = 8;
 		
 		if(integrity != null){
 			
 			//Campo Opcional
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 
 		// Campo Obligatorio
-		session.encode();
+		
 		System.arraycopy(session.getBytes(), 0, bytes, currentIndex, session.getLength());
 		currentIndex = currentIndex + session.getLength();
 	
 		// Campo Obligatorio
-		rsvpHop.encode();
+		
 		System.arraycopy(rsvpHop.getBytes(), 0, bytes, currentIndex, rsvpHop.getLength());
 		currentIndex = currentIndex + rsvpHop.getLength();
 		
 
 		// Campo Obligatorio
-		timeValues.encode();
+		
 		System.arraycopy(timeValues.getBytes(), 0, bytes, currentIndex, timeValues.getLength());
 		currentIndex = currentIndex + timeValues.getLength();
 
@@ -333,14 +301,14 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		}
 		
 		// Campo Obligatorio
-		labelRequest.encode();
-		System.arraycopy(labelRequest.getBytes(), 0, bytes, currentIndex, labelRequest.getLength());
-		currentIndex = currentIndex + labelRequest.getLength();
+//		labelRequest.encode();
+//		System.arraycopy(labelRequest.getBytes(), 0, bytes, currentIndex, labelRequest.getLength());
+//		currentIndex = currentIndex + labelRequest.getLength();
 		
 		if(sessionAttribute != null){
 			
 			// Campo Opcional
-			sessionAttribute.encode();
+			
 			System.arraycopy(sessionAttribute.getBytes(), 0, bytes, currentIndex, sessionAttribute.getLength());
 			currentIndex = currentIndex + sessionAttribute.getLength();
 			
@@ -351,7 +319,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		for(int i = 0; i < pdSize; i++){
 				
 			PolicyData pd = (PolicyData) policyData.get(i);
-			pd.encode();
+			
 			System.arraycopy(pd.getBytes(), 0, bytes, currentIndex, pd.getLength());
 			currentIndex = currentIndex + pd.getLength();
 							
@@ -361,53 +329,35 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		for(int i = 0; i < sdSize; i++){
 			
 			SenderDescriptor sd = (SenderDescriptor) senderDescriptors.get(i);
-			try{
-				sd.encode();
+				
 				System.arraycopy(sd.getBytes(), 0, bytes, currentIndex, sd.getLength());
 				currentIndex = currentIndex + sd.getLength();
 
-			}catch(RSVPProtocolViolationException e){
-				
-				log.error("Errors during Sender Descriptor number " + i + " encoding");
-				
-			}
+			
 						
 		}
 		
-		
-	
-		// Lista de Sender Descriptors
-		for(int i = 0; i < iSenderTSpecSize; i++){
-							
-			IntservSenderTSpec isTSpec = (IntservSenderTSpec) intservSenderTSpec.get(i);
-			
-				isTSpec.encode();
-				System.arraycopy(isTSpec.getBytes(), 0, bytes, currentIndex, isTSpec.getLength());
-				currentIndex = currentIndex + isTSpec.getLength();
-
-										
-		}
 			
 		
 		
 	
-		if(this.suggestedLabel != null){
-			
-			// Campo Opcional
-			suggestedLabel.encode();
-			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, currentIndex, suggestedLabel.getLength());
-			currentIndex = currentIndex + suggestedLabel.getLength();
-
-		}
-		
-		if(this.upstreamLabel != null){
-			
-			// Campo Opcional
-			upstreamLabel.encode();
-			System.arraycopy(upstreamLabel.getBytes(), 0, bytes, currentIndex, upstreamLabel.getLength());
-			currentIndex = currentIndex + upstreamLabel.getLength();
-
-		}
+//		if(this.suggestedLabel != null){
+//			
+//			// Campo Opcional
+//			
+//			System.arraycopy(suggestedLabel.getBytes(), 0, bytes, currentIndex, suggestedLabel.getLength());
+//			currentIndex = currentIndex + suggestedLabel.getLength();
+//
+//		}
+//		
+//		if(this.upstreamLabel != null){
+//			
+//			// Campo Opcional
+//			
+//			System.arraycopy(upstreamLabel.getBytes(), 0, bytes, currentIndex, upstreamLabel.getLength());
+//			currentIndex = currentIndex + upstreamLabel.getLength();
+//
+//		}
 		
 		
 		calculateChecksum();
@@ -422,14 +372,22 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 	 */
 	
 	public void decode() throws RSVPProtocolViolationException {
+		
 		decodeHeader();
+		policyData = new LinkedList<PolicyData>();
+		senderDescriptors = new LinkedList<SenderDescriptor>();	
+		
 		log.debug("RSVP-TE Path Message Decode started");
 		int offset = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
-		
+		int num=0;
 		while(offset < length){		// Mientras quede mensaje
-			
+			num+=1;
+			if (num>20 ) {
+				throw new RSVPProtocolViolationException();
+			}
 			int classNum = RSVPObject.getClassNum(bytes,offset);
-			
+			//System.out.println("class "+	classNum					);
+
 			if(classNum == 1){
 				
 				// Session Object
@@ -438,7 +396,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 					// LSPTunnelSession IPv4
 					session = new SessionLSPTunnelIPv4(bytes,offset);
-					session.decode(bytes, offset);
 					
 					offset = offset + session.getLength();
 					
@@ -446,7 +403,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					
 					// LSPTunnelSession IPv6
 					session = new SessionLSPTunnelIPv6(bytes,offset);
-					session.decode(bytes, offset);
 					offset = offset + session.getLength();
 					
 				}else{
@@ -463,15 +419,13 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				if(cType == 1){
 					
 					// RSVPHop IPv4
-					rsvpHop = new RSVPHopIPv4();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv4(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else if(cType == 2){
 					
 					// RSVPHop IPv6
-					rsvpHop = new RSVPHopIPv6();
-					rsvpHop.decode(bytes, offset);
+					rsvpHop = new RSVPHopIPv6(bytes, offset);
 					offset = offset + rsvpHop.getLength();
 					
 				}else{
@@ -487,8 +441,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -504,8 +457,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					timeValues = new TimeValues();
-					timeValues.decode(bytes, offset);
+					timeValues = new TimeValues(bytes, offset);
 					offset = offset + timeValues.getLength();
 					
 				}else{
@@ -529,46 +481,42 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					throw new RSVPProtocolViolationException();
 				}				
 			}
-			else if(classNum == 19){
-				// Label Request Object
-				int cType = RSVPObject.getcType(bytes,offset);
-				if(cType == 1){
-					// LabelRequestWOLabelRange
-					labelRequest = new LabelRequestWOLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
-					offset = offset + labelRequest.getLength();
-					
-				}else if(cType == 2){
-					// LabelRequestWATMLabelRange
-					labelRequest = new LabelRequestWATMLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
-					offset = offset + labelRequest.getLength();
-								
-				}else if(cType == 2){
-					// LabelRequestWFrameRelayLabelRange
-					labelRequest = new LabelRequestWFrameRelayLabelRange(bytes,offset);
-					labelRequest.decode(bytes, offset);
-					offset = offset + labelRequest.getLength();
-								
-				}else{
-					// Fallo en cType
-					throw new RSVPProtocolViolationException();
-					
-				}				
-			}else if(classNum == 207){
+//			else if(classNum == 19){
+//				// Label Request Object
+//				int cType = RSVPObject.getcType(bytes,offset);
+//				if(cType == 1){
+//					// LabelRequestWOLabelRange
+//					labelRequest = new LabelRequestWOLabelRange(bytes,offset);
+//					offset = offset + labelRequest.getLength();
+//					
+//				}else if(cType == 2){
+//					// LabelRequestWATMLabelRange
+//					labelRequest = new LabelRequestWATMLabelRange(bytes,offset);
+//					offset = offset + labelRequest.getLength();
+//								
+//				}else if(cType == 2){
+//					// LabelRequestWFrameRelayLabelRange
+//					labelRequest = new LabelRequestWFrameRelayLabelRange(bytes,offset);
+//					offset = offset + labelRequest.getLength();
+//								
+//				}else{
+//					// Fallo en cType
+//					throw new RSVPProtocolViolationException();
+//					
+//				}				
+//			}
+		else if(classNum == 207){
 				
 				// Session Attribute Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 7){
 					// Session Atribute WO Resource Affinities
 					sessionAttribute = new SessionAttributeWOResourceAffinities(bytes,offset);
-					sessionAttribute.decode(bytes, offset);
 					offset = offset + sessionAttribute.getLength();
 					
 				}else if(cType == 1){
 					// Session Atribute With Resource Affinities
 					sessionAttribute = new SessionAttributeWResourceAffinities(bytes,offset);
-					sessionAttribute.decode(bytes, offset);
 					offset = offset + sessionAttribute.getLength();
 								
 				}else{
@@ -577,13 +525,12 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}else if(classNum == 13){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_POLICY_DATA){
 				
 				// Policy Object
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
-					PolicyData pd = new PolicyData();
-					pd.decode(bytes, offset);
+					PolicyData pd = new PolicyData(bytes,offset);
 					offset = offset + pd.getLength();
 					policyData.add(pd);
 					
@@ -592,7 +539,7 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}else if(classNum == 11){
+			}else if(classNum == RSVPObjectParameters.RSVP_OBJECT_CLASS_SENDER_TEMPLATE){
 				
 				// Sender Descriptor Construct
 				int cType = RSVPObject.getcType(bytes,offset);
@@ -608,24 +555,12 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 					throw new RSVPProtocolViolationException();
 					
 				}				
-			}			
-			else if(classNum == 12){
-				
-				//Sender TSPEC 
-				int cType = RSVPObject.getcType(bytes,offset);
-				
-				if(cType == 2){
-					IntservSenderTSpec isTSpec = new IntservSenderTSpec();
-					isTSpec.decode(bytes, offset);
-					offset = offset + isTSpec.getLength();
-					this.addIntservSenderTSpecDescriptor(isTSpec);
-				
-			}else{
-				// Fallo en cType
-					throw new RSVPProtocolViolationException();
-				}
 			}
-			
+			else {
+				//System.out.println("class "+	classNum					);
+				throw new RSVPProtocolViolationException();
+			}
+				
 		}
 		log.debug("RSVP-TE Path Message decoding accomplished");
 	}
@@ -641,15 +576,6 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		senderDescriptors.add(senderDescriptor);
 
 	}
-
-	/**
-	 * 
-	 * @param senderTSpec Sender TSPec
-	 */
-	
-	public void addIntservSenderTSpecDescriptor(IntservSenderTSpec senderTSpec){	
-		intservSenderTSpec.add(senderTSpec);
-	}
 	
 	
 	
@@ -664,13 +590,13 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		this.ero = ero;
 	}
 
-	public LabelRequest getLabelRequest() {
-		return labelRequest;
-	}
-
-	public void setLabelRequest(LabelRequest labelRequest) {
-		this.labelRequest = labelRequest;
-	}
+//	public LabelRequest getLabelRequest() {
+//		return labelRequest;
+//	}
+//
+//	public void setLabelRequest(LabelRequest labelRequest) {
+//		this.labelRequest = labelRequest;
+//	}
 
 	public SessionAttribute getSessionAttribute() {
 		return sessionAttribute;
@@ -680,19 +606,21 @@ public class RSVPTEPathMessage extends RSVPPathMessage{
 		this.sessionAttribute = sessionAttribute;
 	}
 
-	public SuggestedLabel getSuggestedLabel() {
-		return suggestedLabel;
-	}
-
-	public void setSuggestedLabel(SuggestedLabel suggestedLabel) {
-		this.suggestedLabel = suggestedLabel;
-	}
-
-	public UpstreamLabel getUpstreamLabel() {
-		return upstreamLabel;
-	}
-
-	public void setUpstreamLabel(UpstreamLabel upstreamLabel) {
-		this.upstreamLabel = upstreamLabel;
-	}
+//	public SuggestedLabel getSuggestedLabel() {
+//		return suggestedLabel;
+//	}
+//
+//	public void setSuggestedLabel(SuggestedLabel suggestedLabel) {
+//		this.suggestedLabel = suggestedLabel;
+//	}
+//
+//	public UpstreamLabel getUpstreamLabel() {
+//		return upstreamLabel;
+//	}
+//
+//	public void setUpstreamLabel(UpstreamLabel upstreamLabel) {
+//		this.upstreamLabel = upstreamLabel;
+//	}
+	
+	
 }

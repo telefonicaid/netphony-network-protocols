@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,12 @@ public class UpstreamLabel extends Label{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public UpstreamLabel() {
+	  super();
+	  this.classNum = 35;
+		this.cType = 2;
+  }
+  
 	/**
 	 * Constructor to be used when a new Label Object wanted to be attached to a new message
 	 * @param label The label number requested
@@ -64,10 +71,8 @@ public class UpstreamLabel extends Label{
 		
 		this.classNum = 35;
 		this.cType = 2;
-		this.length = 8;
 		this.label = label;
-		
-		this.bytes = new byte[length];
+
 		
 		log.debug("Label Object Created");
 
@@ -78,15 +83,13 @@ public class UpstreamLabel extends Label{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public UpstreamLabel(byte[] bytes, int offset){
+	public UpstreamLabel(byte[] bytes, int offset) throws RSVPProtocolViolationException{
 		
 		super(bytes, offset);
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+
 		log.debug("Label Object Created");
 		
 	}
@@ -94,7 +97,9 @@ public class UpstreamLabel extends Label{
 	public void encode() throws RSVPProtocolViolationException{
 		
 		// Encontramos la longitud del objeto Label
-		
+		this.length = 8;
+
+		this.bytes = new byte[length];
 		encodeHeader();
 		
 		int currentIndex = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
@@ -105,10 +110,10 @@ public class UpstreamLabel extends Label{
 		
 	}
 	
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	public void decode() throws RSVPProtocolViolationException{
 
-		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
-		super.setLabel((int)(bytes[currentIndex] | bytes[currentIndex+1] | bytes[currentIndex+2] | bytes[currentIndex+3]));
+		int offset =  RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		super.setLabel(ByteHandler.decode4bytesLong(bytes,offset));
 		
 	}
 	

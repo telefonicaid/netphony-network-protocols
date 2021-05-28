@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.3
+netphony-network-protocols v1.4.0-SNAPSHOT (remove in master)
 =================================
 
 Repository branch build status in Travis CI:
@@ -11,15 +11,20 @@ Latest Maven Central Release:
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
 
+Coverage status
+| **Master**  | **Develop**   |
+|:---:|:---:|
+| [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master) | [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=develop)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=develop) |
+
 The netphony-network-protocols library is an implementation of four networking protocols: 
-* **PCEP protocol**: Path Computation Element Protocol (PCEP) (RFC 5440 https://tools.ietf.org/html/rfc5440 ). 
+* **PCEP protocol**: Path Computation Element Protocol (PCEP) [RFC 5440](https://tools.ietf.org/html/rfc5440). 
+* **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://tools.ietf.org/html/rfc7752. Support of  BGP-LS Traffic Engineering (TE) Metric Extensions 
 * **RSVP-TE protocol**: Resource reservation protocol (RSVP) with Traffic Engineering extensions.
 * **OSPF-TE protocol**: OSPF Version 2 protocol with Traffic Engineering extensions.
-* **BGP-LS protocol**: North-Bound Distribution of Link-State and Traffic Engineering Information using BGP  https://tools.ietf.org/html/rfc7752. Support of  BGP-LS Traffic Engineering (TE) Metric Extensions https://tools.ietf.org/html/draft-previdi-idr-bgpls-te-metric-extensions-01 
 
 The protocol library can be easily integrated in any software that needs to interact with other software/devices using these protoocols. The library provides the encoding and decoding from java objects to bit-level. Note that, the state machine and set up of sessions is provided by other components, also available in github. 
 
-The PCEP implemnentation has been tested against other PCEP implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) .  
+The PCEP implemnentation has been tested against other PCEP implementations. Commercial implementations (Cisco XTC). Research Implementations (Telecom Italia Implementation, CTTC Implementation and CNIT Implementation) .  
 
 The Netphony BGP-LS implementation is known to interoperate with Telecom Italia Implementation, CTTC Implementation and CNIT Implementation and Juniper MX routers. It is listed in the IETF BGP-LS implemenation report https://tools.ietf.org/html/draft-ietf-idr-ls-distribution-impl-04  
 
@@ -28,12 +33,8 @@ The library is maintained to be up-to-date to the latest version of the internet
 Detailed CHANGELOG [click here](CHANGELOG)
 
 ## **Latest news**
-- Hotfix to work with BPGPeer
-- Ability to work with multiple NLRIs in the same BGP-LS MP Reach
-- License is now Apache 2.0 
-- BPG-LS Tested with Juniper MX routers
-- Various bugfixes in BGP-LS
-- 5GEX extensions to carry IT information in BGP-LS (propietary)
+- Back to life after some time dormant :-)
+- PCEP Message numbers, Object classes and Object types from IANA https://www.iana.org/assignments/pcep/pcep.xhtml by 30th November
 
 ## Compilation and use
 
@@ -50,7 +51,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.2</version>
+      <version>1.4.0-SNAPSHOT</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
@@ -102,12 +103,14 @@ The detail of the messages, objects and TLVs can be found in [click here](doc/PC
 * RFC 5521: Path-key not supported
 * RFC 5886: Full compliance
 * RFC 6006: Only P2MP END-POINTS Object for IPv4
+* RFC 8231: Full compliance
+* RFC 8281: Full compliance
 * draft-ietf-pce-gmpls-pcep-extensions-10 (partial)
 * draft-ietf-pce-inter-layer-ext-05 (partial)
 * draft-ietf-pce-hierarchy-extensions-02
 * draft-ietf-pce-stateful-pce-05
 * draft-ietf-pce-pcep-stateful-pce-gmpls-00
-* draft-ietf-pce-pce-initiated-lsp-00:
+
  
 ## RSVP-TE Support
 

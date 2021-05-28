@@ -43,10 +43,9 @@ public class TestPCEPConstructs {
     			{"es.tid.pce.pcep.constructs.RROBandwidth"},
     			{"es.tid.pce.pcep.constructs.Request"},
     			{"es.tid.pce.pcep.constructs.Response"},
-  			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
     			{"es.tid.pce.pcep.constructs.StateReport"},
+  			    {"es.tid.pce.pcep.constructs.SVECConstruct"},
     			{"es.tid.pce.pcep.constructs.SwitchEncodingType"},
-    			{"es.tid.pce.pcep.constructs.TNA"},
     			{"es.tid.pce.pcep.constructs.UpdateRequest"}
     			
     	};
@@ -64,18 +63,18 @@ public class TestPCEPConstructs {
 	    	try {
 	    	System.out.println("Testing PCEP Construct "+object);
 	    	Class objectClass=Class.forName(object);
-	    	PCEPConstruct object = (PCEPConstruct)objectClass.newInstance();
-			TestPCEPCommons.createAllFields(object);
-			object.encode();
+	    	PCEPConstruct object1 = (PCEPConstruct)objectClass.newInstance();
+			TestCommons.createAllFields(object1,true);
+			object1.encode();
 			Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
-			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
-			PCEPConstruct object2 = (PCEPConstruct) ctor.newInstance(object.getBytes(),0);
+			PCEPConstruct object2 = (PCEPConstruct) ctor.newInstance(object1.getBytes(),0);
 			object2.encode();
-			System.out.println(ByteHandler.ByteMACToString(object.getBytes()));
+			System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 			System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
-
+			//Check all the gets
+			TestCommons.testGets(object1);
 			//Check if the fields are the same
-			assertTrue("testing Construct "+object.getClass().getName() + " original:  "+object.toString()+" copy: "+object2.toString(),object.equals(object2));
+			assertTrue("testing Construct "+object.getClass().getName() + " original:  "+object1.toString()+" copy: "+object2.toString(),object1.equals(object2));
 	    	} catch(Exception e){
 	    		e.printStackTrace();
 	    		assertTrue("Exception in construct "+object,false);

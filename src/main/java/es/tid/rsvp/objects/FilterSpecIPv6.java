@@ -3,6 +3,8 @@ package es.tid.rsvp.objects;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 
+import es.tid.protocol.commons.ByteHandler;
+
 /*
 
 RFC 2205                          RSVP                    September 1997
@@ -81,14 +83,14 @@ public class FilterSpecIPv6 extends FilterSpec{
 		cType = 2;
 		length = 24;
 		bytes = new byte[length];
-		try{
-			srcAddress = (Inet6Address) Inet6Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
 		srcPort = 0;
 		
 	}
+	
+public FilterSpecIPv6(byte[] bytes, int offset){
+	super(bytes, offset);
+	this.decode();
+}
 	
 	public FilterSpecIPv6(Inet6Address srcAddress, int srcPort){
 		
@@ -132,11 +134,10 @@ public class FilterSpecIPv6 extends FilterSpec{
 	}
 
 
-	public void decode(byte[] bytes, int offset) {
-		
-		length = (int)(bytes[offset]|bytes[offset+1]);
+	public void decode() {
+	
 		int headerSize = 4;
-		int currentIndex = offset + headerSize;
+		int currentIndex = headerSize;
 				
 		byte[] readAddress = new byte[16];
 		System.arraycopy(bytes,currentIndex,readAddress,0,16);
@@ -146,7 +147,7 @@ public class FilterSpecIPv6 extends FilterSpec{
 		}catch(UnknownHostException e){
 			// FIXME: Poner logs con respecto a excepcion
 		}
-		srcPort = (int)(bytes[currentIndex+2]|bytes[currentIndex+3]);
+		srcPort = ByteHandler.decode2bytesInteger(bytes,currentIndex+2);
 	}
 	
 	

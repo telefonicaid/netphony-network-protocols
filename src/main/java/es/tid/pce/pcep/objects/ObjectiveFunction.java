@@ -1,6 +1,5 @@
 package es.tid.pce.pcep.objects;
 
-import es.tid.pce.pcep.objects.tlvs.BandwidthTLV;
 import es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 

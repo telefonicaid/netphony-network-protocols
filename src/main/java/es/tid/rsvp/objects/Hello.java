@@ -55,6 +55,14 @@ import es.tid.rsvp.RSVPProtocolViolationException;
  */
 
 public abstract class Hello extends RSVPObject{
+	
+	public Hello(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super(bytes,offset);
+	}
+	
+	public Hello() {
+		super();
+	}
 
 	public abstract void encode() throws RSVPProtocolViolationException;
 			

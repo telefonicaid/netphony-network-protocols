@@ -44,36 +44,15 @@ public class ResvConfirmIPv4 extends ResvConfirm{
 		
 		classNum = 15;
 		cType = 1;
-		length = 8;
-		bytes = new byte[length];
-		try{
-			receiverAddress = (Inet4Address) Inet4Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
-
-		
+	
+	
 	}
 	
-	/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
+public ResvConfirmIPv4(byte[] bytes, int offset){
+	super(bytes, offset);
+	this.decode();
+}
 	
-	@Override
-	public void encodeHeader() {
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
-	}
 
 	/*
            +-------------+-------------+-------------+-------------+
@@ -84,6 +63,8 @@ public class ResvConfirmIPv4 extends ResvConfirm{
 	
 	@Override
 	public void encode() {
+		length = 8;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = receiverAddress.getAddress();
@@ -91,14 +72,9 @@ public class ResvConfirmIPv4 extends ResvConfirm{
 		System.arraycopy(addr,0, getBytes(), 4, addr.length);
 	}
 
-	@Override
-	public void decodeHeader() {
-		
-	}
 	
-	@Override
-	public void decode(byte[] bytes, int offset) {
-		
+	public void decode() {
+		 int offset=0;
 		byte[] receivedAddress = new byte[4];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,4);
 		try{

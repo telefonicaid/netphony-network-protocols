@@ -3,6 +3,7 @@ package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
+ * Administrative group (color) TLV	(Type 1088)	[RFC5305, Section 3.1]
  The administrative group sub-TLV contains a 4-octet bit mask assigned
    by the network administrator.  Each set bit corresponds to one
    administrative group assigned to the interface.

@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects.subobjects;
 
+import java.util.Arrays;
+
 /**
  * RRO Subobjects as defined in RFC 3209
  * 4.4.1. Subobjects
@@ -235,6 +237,34 @@ public abstract class RROSubobject {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + rrosolength;
+		result = prime * result + Arrays.hashCode(subobject_bytes);
+		result = prime * result + type;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RROSubobject other = (RROSubobject) obj;
+		if (rrosolength != other.rrosolength)
+			return false;
+		if (!Arrays.equals(subobject_bytes, other.subobject_bytes))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
 	}
 
 	

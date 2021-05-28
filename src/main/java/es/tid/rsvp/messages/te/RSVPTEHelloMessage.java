@@ -108,7 +108,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		rsvpChecksum = 0xFF;
 		sendTTL = 0x00;
 		reserved = 0x00;
-		length = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
+	
 		
 		log.debug("RSVP-TE Hello Message Created");
 	}
@@ -117,19 +117,18 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 	 * Constructor to be used when an RSVP-TE Hello Message wanted to be decoded
 	 * @param bytes bytes 
 	 * @param length length 
-	 */
+	 * @throws RSVPProtocolViolationException RSVPProtocolViolationException
+	 */ 
 	
-	public RSVPTEHelloMessage(byte[] bytes, int length){
-		
-		this.bytes = bytes;
-		this.length = length;
-		
+	public RSVPTEHelloMessage(byte[] bytes, int length) throws RSVPProtocolViolationException{		
+		super(bytes);
+		decode();		
 		log.debug("RSVP-TE Hello Message Created");
 	}
 	
 	
 	
-	/**
+	/*
 	 *<p> RSVP Common Header
 
                 0             1              2             3
@@ -176,33 +175,22 @@ public class RSVPTEHelloMessage extends RSVPMessage{
      
 	 */
 	
-	public void encodeHeader() {
-		bytes[0]= (byte)(((vers<<4) &0xF0) | (flags & 0x0F));
-		bytes[1]= (byte) msgType;
-		bytes[2]= (byte)((rsvpChecksum>>8) & 0xFF);
-		bytes[3]= (byte)(rsvpChecksum & 0xFF);
-		bytes[4]= (byte) sendTTL;
-		bytes[5]= (byte) reserved;
-		bytes[6]= (byte)((length>>8) & 0xFF);
-		bytes[7]= (byte)(length & 0xFF);
-		log.debug("RSVP-TE Hello Message Header encoded");
-		
-	}
+
 
 
 	public void encode() throws RSVPProtocolViolationException {
-		
+		length = RSVPMessageTypes.RSVP_MESSAGE_HEADER_LENGTH;
 		log.debug("RSVP-TE Hello Message Header encoding started");
 		
 		// Calculamos la longitud
 		
 		if(integrity != null){
-			
+			integrity.encode();
 			length = length + integrity.getLength();
 			log.debug("Integrity RSVP Object found");
 			
 		}if(hello != null){
-			
+			hello.encode();
 			length = length + hello.getLength();
 			log.debug("Hello RSVP Object found");
 			
@@ -221,14 +209,14 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 		if(integrity != null){
 			
 			//Campo Opcional
-			integrity.encode();
+			
 			System.arraycopy(integrity.getBytes(), 0, bytes, currentIndex, integrity.getLength());
 			currentIndex = currentIndex + integrity.getLength();
 			
 		}
 		
 		// Campo Obligatorio
-		hello.encode();
+		
 		System.arraycopy(hello.getBytes(), 0, bytes, currentIndex, hello.getLength());
 		currentIndex = currentIndex + hello.getLength();
 		
@@ -250,8 +238,7 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 				int cType = RSVPObject.getcType(bytes,offset);
 				if(cType == 1){
 					
-					integrity = new Integrity();
-					integrity.decode(bytes, offset);
+					integrity = new Integrity(bytes, offset);
 					offset = offset + integrity.getLength();
 					
 				}else{
@@ -295,6 +282,22 @@ public class RSVPTEHelloMessage extends RSVPMessage{
 			
 		}
 		
+	}
+
+	public Integrity getIntegrity() {
+		return integrity;
+	}
+
+	public void setIntegrity(Integrity integrity) {
+		this.integrity = integrity;
+	}
+
+	public Hello getHello() {
+		return hello;
+	}
+
+	public void setHello(Hello hello) {
+		this.hello = hello;
 	}
 
 	

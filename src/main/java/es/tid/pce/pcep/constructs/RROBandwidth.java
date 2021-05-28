@@ -134,20 +134,15 @@ public class RROBandwidth extends PCEPConstruct{
 
 
 
-	public ReportedRouteObject getrRO() {
+	public ReportedRouteObject getRRO() {
 		return rRO;
 	}
 
 
 
-	public void setrRO(ReportedRouteObject rRO) {
-		this.rRO = rRO;
-	}
-
 	public void setRRO(ReportedRouteObject rRO) {
 		this.rRO = rRO;
 	}
-
 
 
 	public Bandwidth getBandwidth() {

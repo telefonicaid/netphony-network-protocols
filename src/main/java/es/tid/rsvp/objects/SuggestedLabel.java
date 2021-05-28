@@ -2,6 +2,7 @@ package es.tid.rsvp.objects;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,13 @@ public class SuggestedLabel extends Label{
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public SuggestedLabel() {
+	  super();
+		
+		this.classNum = 129;
+		this.cType = 2;
+  }
+  
 	/**
 	 * Constructor to be used when a new Label Object wanted to be attached to a new message
 	 * @param label The label number requested
@@ -60,14 +68,14 @@ public class SuggestedLabel extends Label{
 	
 	public SuggestedLabel(int label){
 		
-		super(label);
+		super();
 		
 		this.classNum = 129;
 		this.cType = 2;
-		this.length = 8;
+		
 		this.label = label;
 		
-		this.bytes = new byte[length];
+		
 		
 		log.debug("Label Object Created");
 
@@ -78,21 +86,19 @@ public class SuggestedLabel extends Label{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public SuggestedLabel(byte[] bytes, int offset){
-		
+	public SuggestedLabel(byte[] bytes, int offset) throws RSVPProtocolViolationException{	
 		super(bytes, offset);
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+		decode();	
 		log.debug("Label Object Created");
 		
 	}
 	
 	public void encode() throws RSVPProtocolViolationException{
-		
+		this.length = 8;
+		this.bytes = new byte[length];
 		// Encontramos la longitud del objeto Label
 		
 		encodeHeader();
@@ -105,12 +111,29 @@ public class SuggestedLabel extends Label{
 		
 	}
 	
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	public void decode() throws RSVPProtocolViolationException{
 
-		int currentIndex = offset + RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
-		super.setLabel((int)(bytes[currentIndex] | bytes[currentIndex+1] | bytes[currentIndex+2] | bytes[currentIndex+3]));
+		int offset= RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
+		super.setLabel(ByteHandler.decode4bytesLong(bytes,offset));
 		
 	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
+	}
+	
 	
 	// Getters & Setters
 

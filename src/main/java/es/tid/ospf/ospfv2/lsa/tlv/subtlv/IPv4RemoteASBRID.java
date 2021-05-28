@@ -4,9 +4,18 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * Remote AS Number from RFC 5392
+ * Remote AS Number from RFC 5392 (Type 21)
  * 
- * 3.3.1. Remote AS Number Sub-TLV
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6  * 
+ * see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+
+ * @author ogondio
+ *
+ */
+public class IPv4RemoteASBRID extends OSPFSubTLV {
+
+	/*
+	 *  * 3.3.1. Remote AS Number Sub-TLV
 
 
    A new sub-TLV, the Remote AS Number sub-TLV is defined for inclusion
@@ -29,12 +38,8 @@ import java.net.UnknownHostException;
    The Remote AS Number field has 4 octets.  When only two octets are
    used for the AS number, as in current deployments, the left (high-
    order) two octets MUST be set to zero.
-
- * @author ogondio
- *
- */
-public class IPv4RemoteASBRID extends OSPFSubTLV {
-
+	 */
+	
 	private Inet4Address iPv4RemoteASBRID;
 	
 	public IPv4RemoteASBRID(){

@@ -4,8 +4,17 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * Remote AS Number Sub-TLV From RFC 5392
- * 3.3.1. Remote AS Number Sub-TLV
+ * Remote AS Number Sub-TLV (Type 21) From RFC 5392
+ * 
+ * Number assignment from https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv2
+ * 
+ * @author ogondio
+ *
+ */
+public class RemoteASNumber extends OSPFSubTLV {
+	
+	/*
+	 *  * 3.3.1. Remote AS Number Sub-TLV
 
 
    A new sub-TLV, the Remote AS Number sub-TLV is defined for inclusion
@@ -37,10 +46,7 @@ RFC 5392            OSPF Extensions for Inter-AS TE         January 2009
    The Remote AS Number field has 4 octets.  When only two octets are
    used for the AS number, as in current deployments, the left (high-
    order) two octets MUST be set to zero.
- * @author ogondio
- *
- */
-public class RemoteASNumber extends OSPFSubTLV {
+	 */
 	
 	private Inet4Address remoteASNumber;
 

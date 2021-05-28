@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 /*
  * 
 
@@ -182,6 +184,11 @@ public class IntservADSPEC extends RSVPObject{
 		
 	}
 	
+public IntservADSPEC(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	super(bytes,offset);
+	decode( );
+}
+	
 	// FIXME: Buscar Intserv SENDER_TSPEC object en int-serv working group
 	
 	public IntservADSPEC(DefaultGeneralParameters dgp, ControlledLoadService cls){
@@ -195,8 +202,7 @@ public class IntservADSPEC extends RSVPObject{
 		this.dgp = dgp;
 		this.cls = cls;
 		
-		length = 8 + this.dgp.getLength() + this.cls.getLength();
-		bytes = new byte[length];
+		
 	}
 	
 	/*	
@@ -213,6 +219,10 @@ public class IntservADSPEC extends RSVPObject{
 	
 	@Override
 	public void encode() {
+		this.dgp.encode();
+		this.cls.encode();
+		length = 8 + this.dgp.getLength() + this.cls.getLength();
+		bytes = new byte[length];
 		// TODO Auto-generated method stub
 		encodeHeader();
 		
@@ -225,18 +235,18 @@ public class IntservADSPEC extends RSVPObject{
 		
 		offset = offset + 4;
 		
-		this.dgp.encode();
+		
 		System.arraycopy(this.dgp.getBytes(),0,this.getBytes(),offset,this.dgp.getLength());
 		
 		offset = offset + this.dgp.getLength();
 
-		this.cls.encode();
+		
 		System.arraycopy(this.cls.getBytes(),0,this.getBytes(),offset,this.cls.getLength());
 				
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
+	
+	public void decode() {
 		// FIXME: Codificarlo cuando se indague en la RFC de intserv
 	}
 }

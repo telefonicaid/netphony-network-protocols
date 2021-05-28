@@ -54,6 +54,9 @@ RFC 2205                          RSVP                    September 1997
 
  */
 
+import es.tid.protocol.commons.ByteHandler;
+import es.tid.rsvp.RSVPProtocolViolationException;
+
 public class SessionIPv4 extends Session{
 
 	protected Inet4Address destAddress;
@@ -70,18 +73,16 @@ public class SessionIPv4 extends Session{
 		
 		classNum = 1;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
-		try{
-			destAddress = (Inet4Address) Inet4Address.getLocalHost();
-		}catch(UnknownHostException e){
-			
-		}
-		protocolId = 0;
+			protocolId = 0;
 		flags = 0;
 		destPort = 0;
 		
 	}
+	
+public SessionIPv4(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+	super(bytes,offset);
+	decode( );
+}
 	
 	/**
 	 * 
@@ -95,35 +96,14 @@ public class SessionIPv4 extends Session{
 		
 		classNum = 1;
 		cType = 1;
-		length = 12;
-		bytes = new byte[length];
+		
 		this.destAddress = destAddress;
 		this.protocolId = protocolId;
 		this.flags = flags;
 		this.destPort = destPort;
 		
 	}
-/*	
-    0             1              2             3
-    +-------------+-------------+-------------+-------------+
-    |       Length (bytes)      |  Class-Num  |   C-Type    |
-    +-------------+-------------+-------------+-------------+
-    |                                                       |
-    //                  (Object contents)                   //
-    |                                                       |
-    +-------------+-------------+-------------+-------------+	
-    
-    */
-	
-	public void encodeHeader(){
-		
-		bytes[0] = (byte)((length>>8) & 0xFF);
-		bytes[1] = (byte)(length & 0xFF);
-		bytes[2] = (byte) classNum;
-		bytes[3] = (byte) cType;
 
-		
-	}
 	
 	/*
 	 *     +-------------+-------------+-------------+-------------+
@@ -134,7 +114,8 @@ public class SessionIPv4 extends Session{
 	 */
 	
 	public void encode(){
-		
+		length = 12;
+		bytes = new byte[length];
 		encodeHeader();
 		
 		byte[] addr = destAddress.getAddress();
@@ -149,9 +130,9 @@ public class SessionIPv4 extends Session{
 
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset){
-		
+	
+	public void decode(){
+		int offset=0;
 		byte[] receivedAddress = new byte[4];
 		System.arraycopy(bytes,offset+4,receivedAddress,0,4);
 		try{
@@ -159,9 +140,9 @@ public class SessionIPv4 extends Session{
 		}catch(UnknownHostException e){
 			// FIXME: Poner logs con respecto a excepcion
 		}
-		protocolId = bytes[offset+8];
-		flags = bytes[offset+9];
-		destPort = bytes[offset+10] | bytes[offset+11];
+		protocolId = bytes[offset+8]&0xFF;
+		flags = bytes[offset+9]&0xFF;
+		destPort = ByteHandler.decode2bytesInteger(bytes,offset+10);;
 		
 		
 	}

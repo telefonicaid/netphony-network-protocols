@@ -6,8 +6,17 @@ import java.net.UnknownHostException;
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
+ * IPv4 Router-ID of Local Node TLV (Type 1028)	[RFC5305, Section 4.3]
  *  
- * RFC 5305        IS-IS Extensions for Traffic Engineering    October 2008
+ 
+   
+ * @author pac
+ *
+ */
+public class IPv4RouterIDLocalNodeLinkAttribTLV extends BGP4TLVFormat{
+	
+	/*
+	 * * RFC 5305        IS-IS Extensions for Traffic Engineering    October 2008
  *
  * Section 3.2
  *
@@ -23,12 +32,9 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    MAY add or omit this sub-TLV from the description of an adjacency.
    If a router implements traffic engineering, it MUST include this sub-
    TLV.
-   
- * @author pac
- *
- */
-public class IPv4RouterIDLocalNodeLinkAttribTLV extends BGP4TLVFormat{
+	 */
 	Inet4Address ipv4Address;
+	
 	public IPv4RouterIDLocalNodeLinkAttribTLV(){
 		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE);

@@ -5,38 +5,64 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.rsvp.objects.ErrorSpecIPv4;
 import es.tid.rsvp.objects.RSVPObject;
 
-/*
- * If the set up of an LSP failed at a downstream node which returned an
-   ERROR_SPEC to the PCC, the ERROR_SPEC MUST be included in the LSP
-   State Report.  Depending on whether RSVP signaling was performed over
-   IPv4 or IPv6, the LSP Object will contain an IPV4-ERROR_SPEC TLV or
-   an IPV6-ERROR_SPEC TLV.
+/**
+ * RSVP-ERROR-SPEC TLV (Type 21) [RFC8231] 
+ * 
+ * 
+ * The RSVP-ERROR-SPEC TLV is an optional TLV for use in the LSP object
+ *  to carry RSVP error information.  It includes the RSVP ERROR_SPEC or
+ *  USER_ERROR_SPEC object ([RFC2205] and [RFC5284]), which were returned
+ *  to the PCC from a downstream node.  If the setup of an LSP fails at a
+ *  downstream node that returned an ERROR_SPEC to the PCC, the PCC
+ *  SHOULD include in the PCRpt for this LSP the LSP-ERROR-CODE TLV with
+ *  LSP Error Code = "RSVP signaling error" and the RSVP-ERROR-SPEC TLV
+ *  with the relevant RSVP ERROR-SPEC or USER_ERROR_SPEC object.
+ *
+ *  TODO: UPDATE to include RFC5284
+ *  
+ *  @see <a href="https://tools.ietf.org/html/rfc8231#page-41">RFC 8231 page 41</a>
+ *  
+ *  @author jaume
+ */
 
-   The format of the IPV4-RSVP-ERROR-SPEC TLV is shown in the following
+public class RSVPErrorSpecTLV extends PCEPTLV
+{
+	
+	/*
+ * The RSVP-ERROR-SPEC TLV is an optional TLV for use in the LSP object
+   to carry RSVP error information.  It includes the RSVP ERROR_SPEC or
+   USER_ERROR_SPEC object ([RFC2205] and [RFC5284]), which were returned
+   to the PCC from a downstream node.  If the setup of an LSP fails at a
+   downstream node that returned an ERROR_SPEC to the PCC, the PCC
+   SHOULD include in the PCRpt for this LSP the LSP-ERROR-CODE TLV with
+   LSP Error Code = "RSVP signaling error" and the RSVP-ERROR-SPEC TLV
+   with the relevant RSVP ERROR-SPEC or USER_ERROR_SPEC object.
+
+   The format of the RSVP-ERROR-SPEC TLV is shown in the following
    figure:
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |           Type=[TBD]          |            Length=8           |
+     |           Type=21             |            Length (variable)  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
-     +                IPv4 ERROR_SPEC object (rfc2205)               +
+     +                RSVP ERROR_SPEC or USER_ERROR_SPEC Object      +
      |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                Figure 22: IPV4-RSVP-ERROR-SPEC TLV format
+                   Figure 16: RSVP-ERROR-SPEC TLV Format
 
-   The type of the TLV is [TBD] and it has a fixed length of 8 octets.
-   The value contains the RSVP IPv4 ERROR_SPEC object defined in
-   [RFC2205].  Error codes allowed in the ERROR_SPEC object are defined
-   in [RFC2205], [RFC3209] and [RFC3473]..
-   
-   @author jaume
- */
+   Type (16 bits): the type is 21.
 
-public class RSVPErrorSpecTLV extends PCEPTLV
-{
+   Length (16 bits): indicates the total length of the TLV in octets.
+   The TLV MUST be zero-padded so that the TLV is 4-octet aligned.
+
+   Value (variable): contains the RSVP ERROR_SPEC or USER_ERROR_SPEC
+   object, as specified in [RFC2205] and [RFC5284], including the object
+   header.
+	 */
+	
 	protected ErrorSpecIPv4 errorSpecObject4;
 	
 	public RSVPErrorSpecTLV()
@@ -56,7 +82,7 @@ public class RSVPErrorSpecTLV extends PCEPTLV
 	public void encode() 
 	{
 		log.debug("Encoding RSVPErrorSpecTLV TLV");
-		
+		errorSpecObject4.encode();
 		int length = errorSpecObject4.getLength();
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.TotalTLVLength];
@@ -64,7 +90,7 @@ public class RSVPErrorSpecTLV extends PCEPTLV
 
 		int offset=4;
 		
-		errorSpecObject4.encode();
+		
 		
 		System.arraycopy(errorSpecObject4.getBytes(), 0, tlv_bytes, offset, errorSpecObject4.getLength());
 		

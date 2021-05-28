@@ -52,7 +52,7 @@ public class BGP4Update extends BGP4Message
 	/**
 	 * Total length of the Withdrawn Routes field in octets.
 	 */
-	private int             withdrawnRoutesLength;
+	//private int             withdrawnRoutesLength;
 	/**
 	 * List of IP address prefixes for the routes that are being withdrawn from service.
 	 */
@@ -60,7 +60,7 @@ public class BGP4Update extends BGP4Message
 	/**
 	 * Total length of the Path Attributes field in octets
 	 */
-	private int             totalPathAttibuteLength;
+	//private int             totalPathAttibuteLength;
 
 	/**
 	 * List of path attributes
@@ -102,6 +102,7 @@ public class BGP4Update extends BGP4Message
 		//Encode BGP4 Update
 		if((withdrawnRoutes == null) && (pathAttributes.size() == 0))
 			log.warn("There should be withdrawnRoutes or path Attributes");
+		int withdrawnRoutesLength=0;
 		if(withdrawnRoutes == null)
 			withdrawnRoutesLength = 0;
 		int len = BGPHeaderLength;
@@ -113,7 +114,7 @@ public class BGP4Update extends BGP4Message
 			len = len + withdrawnRoutes.getLength();
 			withdrawnRoutesLength = withdrawnRoutes.getLength();
 		}
-		totalPathAttibuteLength = 0;
+		int totalPathAttibuteLength = 0;
 		for(int i = 0; i < pathAttributes.size(); ++ i)
 		{
 			pathAttributes.get(i).encode();
@@ -165,7 +166,7 @@ public class BGP4Update extends BGP4Message
 	{
 		int offset = BGPHeaderLength;
 		//Withdrawn Routes length
-		withdrawnRoutesLength = ((((int) messageBytes[offset]) << 8) & 0xFF00) | ((int) messageBytes[offset + 1] & 0xFF);
+		int withdrawnRoutesLength = ((((int) messageBytes[offset]) << 8) & 0xFF00) | ((int) messageBytes[offset + 1] & 0xFF);
 		offset = offset + 2;
 		//Withdrawn Routes
 		if(withdrawnRoutesLength != 0)
@@ -173,9 +174,11 @@ public class BGP4Update extends BGP4Message
 			//Decodificar withdrawnRoutes
 			log.warn("withdrawnRoutesLength not implemented");
 			offset = offset + withdrawnRoutesLength;
+		} else {
+			withdrawnRoutes =null;
 		}
 		//Path Attributes Length
-		totalPathAttibuteLength = ((((int) messageBytes[offset]) << 8) & 0xFF00) | ((int) messageBytes[offset + 1] & 0xFF);
+		int totalPathAttibuteLength = ((((int) messageBytes[offset]) << 8) & 0xFF00) | ((int) messageBytes[offset + 1] & 0xFF);
 		offset = offset + 2;
 		if(totalPathAttibuteLength != 0)
 		{
@@ -262,15 +265,6 @@ public class BGP4Update extends BGP4Message
 		}
 	}
 
-	public int getWithdrawnRoutesLength()
-	{
-		return withdrawnRoutesLength;
-	}
-
-	public void setWithdrawnRoutesLength(int withdrawnRoutesLength)
-	{
-		this.withdrawnRoutesLength = withdrawnRoutesLength;
-	}
 
 	public WithdrawnRoutes getWithdrawnRoutes()
 	{
@@ -279,18 +273,9 @@ public class BGP4Update extends BGP4Message
 
 	public void setWithdrawnRoutes(WithdrawnRoutes withdrawnRoutes)
 	{
-		this.withdrawnRoutes = withdrawnRoutes;
+		//this.withdrawnRoutes = withdrawnRoutes; FIXME: First, implement WithdrawnRoutes
 	}
 
-	public int getTotalPathAttibuteLength()
-	{
-		return totalPathAttibuteLength;
-	}
-
-	public void setTotalPathAttibuteLength(int totalPathAttibuteLength)
-	{
-		this.totalPathAttibuteLength = totalPathAttibuteLength;
-	}
 
 	public ArrayList<PathAttribute> getPathAttributes()
 	{
@@ -326,13 +311,13 @@ public class BGP4Update extends BGP4Message
 	public String toString()
 	{
 		// TODO Auto-generated method stub
-		StringBuffer sb = new StringBuffer((withdrawnRoutesLength + totalPathAttibuteLength) * 800);
+		StringBuffer sb = new StringBuffer(80000);
 		sb.append("BGP4Update Msg: ");
-		if(withdrawnRoutesLength != 0)
-		{
-			sb.append("> Withdrawn Routes: \n");
-			sb.append(withdrawnRoutes.toString());
-		}
+//		if(withdrawnRoutesLength != 0)
+//		{
+//			sb.append("> Withdrawn Routes: \n");
+//			sb.append(withdrawnRoutes.toString());
+//		}
 		if(pathAttributes.size() != 0)
 		{
 			sb.append("> Path Attibutes: \n ");

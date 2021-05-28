@@ -2,6 +2,7 @@ package es.tid.rsvp.objects.gmpls;
 
 import org.slf4j.Logger;
 
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.Label;
 import es.tid.rsvp.objects.RSVPObjectParameters;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 public class GeneralizedLabel extends Label {
 	
-	private int label;
+	private long label;
 	
 	/**
 	 * Log
@@ -37,15 +38,20 @@ public class GeneralizedLabel extends Label {
 
   private static final Logger log = LoggerFactory.getLogger("ROADM");
 	
+  public GeneralizedLabel(){
+	  super();
+		classNum = 16;
+		cType = 2;
+  }
 	
-	public GeneralizedLabel(int label){
+	public GeneralizedLabel(long label){
+		super();
 		classNum = 16;
 		cType = 2;
 
 		this.label = label;
 
 		
-		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 4;
 		
 		log.debug("Generalized Label Request Object Created");
 		
@@ -57,18 +63,19 @@ public class GeneralizedLabel extends Label {
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException RSVP Protocol Violation Exception
 	 */
 	
-	public GeneralizedLabel(byte[] bytes, int offset){
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		
+	public GeneralizedLabel(byte[] bytes, int offset) throws RSVPProtocolViolationException{
+		super();
+		decode();
 		log.debug("Generalized Label Request Object Created");
 		
 	}	
 	
 	public void encode() throws RSVPProtocolViolationException{
-		
+		length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE + 4;
+
 		bytes = new byte[this.length];
 		encodeHeader();
 		
@@ -79,19 +86,18 @@ public class GeneralizedLabel extends Label {
 	
 	}
 	
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-		label  = (int) (((int)bytes[offset+4] << 24)  | ((int)bytes[offset+5] << 16)
-	 			  | ((int)bytes[offset+6] << 8)
-	 			  | ((int)bytes[offset+7]));
+	public void decode() throws RSVPProtocolViolationException{
+		int offset=4;
+		label  = ByteHandler.decode4bytesLong(bytes,offset);
 	}
 	
 	// Getters & Setters
 	
-	public int getLabel() {
+	public long getLabel() {
 		return label;
 	}
 
-	public void setLabel(int label) {
+	public void setLabel(long label) {
 		this.label = label;
 	}
 

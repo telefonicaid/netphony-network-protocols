@@ -107,6 +107,7 @@ RFC 5440                          PCEP                        March 2009
 package es.tid.pce.pcep.objects;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * <p> Represents a SVEC Object as defined in RFC 5440</p>
@@ -199,7 +200,7 @@ public class Svec extends PCEPObject{
      /**
       * 
       */
-     private ArrayList<Long> requestIDlist;
+     private LinkedList<Long> requestIDlist;
 	
      /**
       * Construct new SVEC Object from scratch
@@ -207,7 +208,7 @@ public class Svec extends PCEPObject{
 	public Svec(){
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_SVEC);
 		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_SVEC);
-		requestIDlist=new ArrayList<Long>();
+		requestIDlist=new LinkedList<Long>();
 		
 	}
 	
@@ -219,7 +220,7 @@ public class Svec extends PCEPObject{
 	 */
 	public Svec(byte[] bytes, int offset)throws MalformedPCEPObjectException{		
 		super(bytes,offset);
-		requestIDlist=new ArrayList<Long>();		
+		requestIDlist=new LinkedList<Long>();		
 		decode();
 		
 	}
@@ -264,28 +265,28 @@ public class Svec extends PCEPObject{
 		}		
 		
 	}
-	public boolean islDiverseBit() {
+	public boolean isLDiverseBit() {
 		return lDiverseBit;
 	}
 	public void setLDiverseBit(boolean lDiverseBit) {
 		this.lDiverseBit = lDiverseBit;
 	}
-	public boolean isnDiverseBit() {
+	public boolean isNDiverseBit() {
 		return nDiverseBit;
 	}
 	public void setNDiverseBit(boolean nDiverseBit) {
 		this.nDiverseBit = nDiverseBit;
 	}
-	public boolean issRLGDiverseBit() {
+	public boolean isSRLGDiverseBit() {
 		return sRLGDiverseBit;
 	}
 	public void setSRLGDiverseBit(boolean sRLGDiverseBit) {
 		this.sRLGDiverseBit = sRLGDiverseBit;
 	}
-	public ArrayList<Long> getRequestIDlist() {
+	public LinkedList<Long> getRequestIDlist() {
 		return requestIDlist;
 	}
-	public void setRequestIDlist(ArrayList<Long> requestIDlist) {
+	public void setRequestIDlist(LinkedList<Long> requestIDlist) {
 		this.requestIDlist = requestIDlist;
 	}
 	
@@ -293,10 +294,6 @@ public class Svec extends PCEPObject{
 		return "Link diverse: "+lDiverseBit+" Node diverse: "+nDiverseBit+" SRLG diverse "+sRLGDiverseBit+"Requests List"+requestIDlist.toString();
 	}
 	
-	public void addRequestID(long reqID){
-		this.requestIDlist.add(new Long(reqID));
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -313,9 +310,9 @@ public class Svec extends PCEPObject{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
 		if (getClass() != obj.getClass())
+			return false;
+		if (!super.equals(obj))
 			return false;
 		Svec other = (Svec) obj;
 		if (lDiverseBit != other.lDiverseBit)

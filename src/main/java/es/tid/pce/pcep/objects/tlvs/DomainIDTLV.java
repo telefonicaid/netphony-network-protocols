@@ -7,6 +7,8 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
+ * Domain ID TLV (Type 14)
+ * 
  * DomainID TLV, non-standard encoding implemented.
  * Defined in draft-ietf-pce-hierarchy-extensions-02.
  * TLV ID: 32771, non-standard
@@ -58,7 +60,9 @@ public class DomainIDTLV extends PCEPTLV {
 		this.setTLVValueLength(8);
 		this.tlv_bytes=new byte[this.TotalTLVLength];
 		encodeHeader();
-		
+		int offset = 4;
+		this.tlv_bytes[offset]=(byte)(domainType>>>8 & 0xFF);
+		this.tlv_bytes[offset+1]=(byte)(domainType & 0xFF);
 		System.arraycopy(domainId.getAddress(),0, this.tlv_bytes, 8, 4);
 	}
 

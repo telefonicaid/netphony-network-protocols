@@ -1,5 +1,7 @@
 package es.tid.rsvp.objects;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 
 import es.tid.rsvp.*;
@@ -164,7 +166,7 @@ public abstract class RSVPObject implements RSVPElement{
 		this.length=((bytes[offset]<<8)& 0xFF00) |  (bytes[offset+1] & 0xFF);
 		this.bytes=new byte[this.length];
 		System.arraycopy(bytes, offset, this.bytes, 0, this.length);
-		classNum = (int) bytes[offset+2];
+		classNum = bytes[offset+2]&0xFF;
 		cType = (int) bytes[offset+3];
 	}
 	
@@ -193,14 +195,14 @@ public abstract class RSVPObject implements RSVPElement{
 	public void decodeHeader(byte[] bytes, int offset){
 		
 		length = ((int)((bytes[offset] << 8) & 0xFF00)) | ((int)(bytes[offset+1] & 0x00FF));
-		classNum = (int) bytes[offset+2];
+		classNum = (int) (bytes[offset+2]&0xFF);
 		cType = (int) bytes[offset+3];
 		
 	}
 	
 	public abstract void encode() throws RSVPProtocolViolationException;
 	
-	public abstract void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException;
+	//public abstract void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException;
 
 	// Getters & Setters
 	
@@ -208,7 +210,7 @@ public abstract class RSVPObject implements RSVPElement{
 		return length;
 	}
 
-	public void setLength(int length) {
+	protected void setLength(int length) {
 		this.length = length;
 	}
 
@@ -237,11 +239,11 @@ public abstract class RSVPObject implements RSVPElement{
 	}	
 
 	public static int getClassNum(byte[] bytes, int offset) {
-		return (int) bytes[offset+2];
+		return (int) bytes[offset+2]&0xFF;
 	}
 	
 	public static int getcType(byte[] bytes, int offset){
-		return (int) bytes[offset+3];		
+		return (int) bytes[offset+3]&0xFF;		
 	}
 	
 	public static int getLength(byte[] bytes, int offset){
@@ -249,4 +251,37 @@ public abstract class RSVPObject implements RSVPElement{
 		return ((int)((bytes[offset] << 8) & 0xFF00)) | ((int)(bytes[offset+1] & 0x00FF));
 		
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(bytes);
+		result = prime * result + cType;
+		result = prime * result + classNum;
+		result = prime * result + length;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RSVPObject other = (RSVPObject) obj;
+		if (!Arrays.equals(bytes, other.bytes))
+			return false;
+		if (cType != other.cType)
+			return false;
+		if (classNum != other.classNum)
+			return false;
+		if (length != other.length)
+			return false;
+		return true;
+	}
+	
+	
 }

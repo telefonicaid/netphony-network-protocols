@@ -5,30 +5,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /*
- *    The SR-PCE-CAPABILITY TLV is an optional TLV for use in the OPEN
-   Object to negotiate Segment Routing capability on the PCEP session.
-   The format of the SR-PCE-CAPABILITY TLV is shown in the following
-   figure:
-
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |            Type=TBD           |            Length=4           |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |         Reserved              |     Flags     |      PST      |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                  Figure 1: SR-PCE-CAPABILITY TLV format
-
-   The code point for the TLV type is to be defined by IANA.  The TLV
-   length is 4 octets.
-
-   The 32-bit value is formatted as follows.  The "Maximum SID Depth" (1
-   octet) field (PST) specifies the maximum number of SIDs that a PCC is
-   capable of imposing on a packet.  The "Flags" (1 octet) and
-   "Reserved" (2 octets) fields are currently unused, and MUST be set to
-   zero and ignored on receipt.
+ 
    
    @author ayk
    

@@ -1,7 +1,7 @@
 package es.tid.rsvp.objects;
 
 /*
- * 
+ * FIXME: TODO
 
 -
 RFC 2205                          RSVP                    September 1997
@@ -33,10 +33,14 @@ public class FlowLabelSenderTemplateIPv6 extends SenderTemplate{
 		
 		classNum = 11;
 		cType = 3;
-		length = 4;
-		bytes = new byte[length];
 		
 		
+		
+	}
+	
+public FlowLabelSenderTemplateIPv6(byte[] bytes, int offset){
+	super(bytes,offset);
+	decode();
 	}
 		
 	/*	
@@ -55,12 +59,14 @@ public class FlowLabelSenderTemplateIPv6 extends SenderTemplate{
 
 	@Override
 	public void encode() {
+		length = 4;
+		bytes = new byte[length];
 		encodeHeader();
 	}
 
 
 	@Override
-	public void decode(byte[] bytes, int offset) {
+	public void decode() {
 		// FIXME
 		
 	}

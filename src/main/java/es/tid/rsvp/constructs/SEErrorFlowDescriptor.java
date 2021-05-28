@@ -217,7 +217,6 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 				throw new RSVPProtocolViolationException();
 				
 			}
-			flowSpec.decode(bytes,offset);
 			offset = offset + flowSpec.getLength();
 			length = length + flowSpec.getLength();
 			bytesLeft = bytesLeft - flowSpec.getLength();
@@ -236,8 +235,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 			
 			if(cType == 1){		// FilterSpecIPv4
 				
-				FilterSpec filterSpec = new FilterSpecIPv4();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FilterSpecIPv4(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
@@ -245,8 +243,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 				
 			}else if(cType == 2){		// FilterSpecIPv6
 				
-				FilterSpec filterSpec = new FilterSpecIPv6();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FilterSpecIPv6(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
@@ -254,8 +251,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 			
 			}else if(cType == 3){		// FilterSpecIPv6
 				
-				FilterSpec filterSpec = new FlowLabelFilterSpecIPv6();
-				filterSpec.decode(bytes,offset);
+				FilterSpec filterSpec = new FlowLabelFilterSpecIPv6(bytes,offset);
 				filterSpecList.add(filterSpec);
 				offset = offset + filterSpec.getLength();
 				length = length + filterSpec.getLength();
@@ -282,8 +278,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 				// Hay un nuevo Filter Spec
 				if(cType == 1){		// FilterSpecIPv4
 					
-					FilterSpec filterSpec = new FilterSpecIPv4();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FilterSpecIPv4(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
@@ -291,8 +286,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 					
 				}else if(cType == 2){		// FilterSpecIPv6
 					
-					FilterSpec filterSpec = new FilterSpecIPv6();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FilterSpecIPv6(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();
@@ -300,8 +294,7 @@ public class SEErrorFlowDescriptor extends ErrorFlowDescriptor {
 				
 				}else if(cType == 3){		// FilterSpecIPv6
 					
-					FilterSpec filterSpec = new FlowLabelFilterSpecIPv6();
-					filterSpec.decode(bytes,offset);
+					FilterSpec filterSpec = new FlowLabelFilterSpecIPv6(bytes,offset);
 					filterSpecList.add(filterSpec);
 					offset = offset + filterSpec.getLength();
 					length = length + filterSpec.getLength();

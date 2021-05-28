@@ -1,7 +1,7 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
 
 /**
- * 2.5.8. Unreserved Bandwidth
+ * Unreserved Bandwidth
 
 
    The Unreserved Bandwidth sub-TLV specifies the amount of bandwidth
@@ -14,13 +14,16 @@ package es.tid.ospf.ospfv2.lsa.tlv.subtlv;
    Reservable Bandwidth.  Each value will be less than or equal to the
    Maximum Reservable Bandwidth.  The units are bytes per second.
 
-   The Unreserved Bandwidth sub-TLV is TLV type 8, and is 32 octets in
-   length.
+   
  * @author ogondio
  *
  */
 public class UnreservedBandwidth extends OSPFSubTLV {
 
+/*
+ * The Unreserved Bandwidth sub-TLV is TLV type 8, and is 32 octets in
+   length.
+ */
 	public float[] unreservedBandwidth;
 	
 	public UnreservedBandwidth(){

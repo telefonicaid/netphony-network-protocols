@@ -253,17 +253,13 @@ public class Request extends PCEPConstruct{
 			log.debug("Request: ot = "+ot);
 			if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
 				try {
-					log.info("PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS");
-					endPoints=new GeneralizedEndPoints(bytes,offset);
+					int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
+					if (endPointType==1) {
+						endPoints=new P2PGeneralizedEndPoints(bytes,offset);	
+					}
+					
 				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed ENDPOINTS DataPathID Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_DATAPATHID){
-				try {
-					endPoints=new P2MPEndPointsDataPathID(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed P2MP ENDPOINTS DataPathID Object found");
+					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			} else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
@@ -290,27 +286,12 @@ public class Request extends PCEPConstruct{
 					throw new PCEPProtocolViolationException();
 				}
 			}
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_MAC){
-				try {
-					endPoints=new XifiUniCastEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed EndPointsMAC Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
+
 			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV6){
 				try {
 					endPoints=new EndPointsIPv6(bytes,offset);
 				} catch (MalformedPCEPObjectException e) {
 					log.warn("Malformed ENDPOINTSIPV6 Object found");
-					throw new PCEPProtocolViolationException();
-				}
-			}
-			else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
-				try {
-					endPoints=new GeneralizedEndPoints(bytes,offset);
-				} catch (MalformedPCEPObjectException e) {
-					log.warn("Malformed GENERALIZED END POINTS Object found");
 					throw new PCEPProtocolViolationException();
 				}
 			}
@@ -564,14 +545,10 @@ public class Request extends PCEPConstruct{
 		this.endPoints = endPoints;
 	}
 
-	public LSPA getlSPA() {
+	public LSPA getLSPA() {
 		return lSPA;
 	}
 
-	public void setlSPA(LSPA lSPA) {
-		this.lSPA = lSPA;
-	}
-	
 	public void setLSPA(LSPA lSPA) {
 		this.lSPA = lSPA;
 	}
@@ -592,26 +569,19 @@ public class Request extends PCEPConstruct{
 		this.metricList = metricList;
 	}
 
-	public RROBandwidth getrROBandwidth() {
+	public RROBandwidth getRROBandwidth() {
 		return rROBandwidth;
 	}
 
-	public void setrROBandwidth(RROBandwidth rROBandwidth) {
-		this.rROBandwidth = rROBandwidth;
-	}
 	
 	public void setRROBandwidth(RROBandwidth rROBandwidth) {
 		this.rROBandwidth = rROBandwidth;
 	}
 
-	public IncludeRouteObject getiRO() {
+	public IncludeRouteObject getIRO() {
 		return iRO;
 	}
 
-	public void setiRO(IncludeRouteObject iRO) {
-		this.iRO = iRO;
-	}
-	
 	public void setIRO(IncludeRouteObject iRO) {
 		this.iRO = iRO;
 	}
@@ -725,11 +695,11 @@ public class Request extends PCEPConstruct{
 		Request req=new Request();
 		req.setRequestParameters(this.requestParameters);
 		req.setEndPoints(this.endPoints);
-		req.setlSPA(this.lSPA);
+		req.setLSPA(this.lSPA);
 		req.setBandwidth(this.bandwidth);
 		req.setMetricList(this.metricList);
-		req.setrROBandwidth(this.rROBandwidth);
-		req.setiRO(this.iRO);
+		req.setRROBandwidth(this.rROBandwidth);
+		req.setIRO(this.iRO);
 		req.setLoadBalancing(this.loadBalancing);
 		req.setObjectiveFunction(this.objectiveFunction);
 		req.setXro(this.xro);

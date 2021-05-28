@@ -155,20 +155,18 @@ public class FlowSpec extends RSVPObject{
 	private long maximumPacketSize;
 	
 	
-//	public FlowSpec(){
-//		
-//		classNum = 9;
-//		cType = 2;
-//		length = 4;
-//		bytes = new byte[length];
-//		
-//	}
+
 	public FlowSpec(byte [] bytes, int offset) {
 		super(bytes,offset);
+		decode();
 		
 	}
 	
-	
+	public FlowSpec () {
+		super();
+		this.setClassNum(RSVPObjectParameters.RSVP_OBJECT_CLASS_FLOW_SPEC);
+		this.setcType(2);
+	}
 	
 	/*
 	
@@ -206,14 +204,15 @@ public class FlowSpec extends RSVPObject{
 		this.peakDataRate = peakDataRate;
 		this.minimumPoliciedUnit = minimumPoliciedUnit;
 		this.maximumPacketSize = maximumPacketSize;
-		this.length=36;
-		bytes = new byte[length];
+
 	}
 
 
 
 	@Override
 	public void encode() {
+		this.setLength(36);
+		bytes = new byte[this.getLength()];
 		encodeHeader();
 		
 		int offset = 4;
@@ -280,9 +279,8 @@ public class FlowSpec extends RSVPObject{
 		
 	}
 
-	@Override
-	public void decode(byte[] bytes, int offset) {
-		this.decodeHeader(bytes, offset);
+	
+	public void decode() {
 		//FALTA POR IMPLEMENTAR		
 	}
 

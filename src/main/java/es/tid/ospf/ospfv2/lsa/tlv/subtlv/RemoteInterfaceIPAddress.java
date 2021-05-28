@@ -5,24 +5,31 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 /**
- * Remote Interface IP Address.
-
-
-   The Remote Interface IP Address sub-TLV specifies the IP address(es)
-   of the neighbor's interface corresponding to this link.  This and the
-   local address are used to discern multiple parallel links between
-   systems.  If the Link Type of the link is Multi-access, the Remote
-   Interface IP Address is set to 0.0.0.0; alternatively, an
-   implementation MAY choose not to send this sub-TLV.
-
-   The Remote Interface IP Address sub-TLV is TLV type 4, and is 4N
-   octets in length, where N is the number of neighbor addresses.
+ * Remote Interface IP Address (Type 4) RFC 3630
+ *
+ *  The Remote Interface IP Address sub-TLV specifies the IP address(es)
+ *  of the neighbor's interface corresponding to this link.  This and the
+ *  local address are used to discern multiple parallel links between
+ *  systems.  If the Link Type of the link is Multi-access, the Remote
+ *  Interface IP Address is set to 0.0.0.0; alternatively, an
+ *  implementation MAY choose not to send this sub-TLV.
+ *
+ * IANA Assignment in https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6
+ *
+ * @see <a href="https://www.iana.org/assignments/ospf-traffic-eng-tlvs/ospf-traffic-eng-tlvs.xhtml#subtlv6">IANA assignments of OSPF Traffic Engneering TLVs</a>
+ * @see <a href="http://www.ietf.org/rfc/rfc3630"> RFC 3630</a>
+ * 
  * @author ogondio
  *
  */
 
 public class RemoteInterfaceIPAddress extends OSPFSubTLV {
 
+	/*
+	 *   The Remote Interface IP Address sub-TLV is TLV type 4, and is 4N
+   octets in length, where N is the number of neighbor addresses.
+	 */
+	
 	/**
 	 * 
 	 */

@@ -1,12 +1,21 @@
 package es.tid.pce.pcep.objects.tlvs;
+
+import java.util.LinkedList;
+
+import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
+import es.tid.pce.pcep.objects.ObjectParameters;
+
 /**
- * OF-List TLV, from RFC 5541
+ * OF-List TLV (Type 4), from RFC 5541
  *
    The PCEP OF-List TLV is optional.  It MAY be carried within an OPEN
    object sent by a PCE in an Open message to a PCEP peer so as to
    indicate the list of supported objective functions.
+ */
+public class OF_LIST_TLV extends PCEPTLV {
 
-   The OF-List TLV format is compliant with the PCEP TLV format defined
+/*
+ *   The OF-List TLV format is compliant with the PCEP TLV format defined
    in [RFC5440].  That is, the TLV is composed of 2 octets for the type,
    2 octets specifying the TLV length, and a Value field.  The Length
    field defines the length of the value portion in octets.  The TLV is
@@ -36,13 +45,6 @@ package es.tid.pce.pcep.objects.tlvs;
    manages the "PCE Objective Function" code point registry (see Section
    6).
  */
-import java.util.LinkedList;
-
-import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
-import es.tid.pce.pcep.objects.ObjectParameters;
-
-public class OF_LIST_TLV extends PCEPTLV {
-	
 	private LinkedList<Integer> ofCodes;
 	
 	public OF_LIST_TLV(){

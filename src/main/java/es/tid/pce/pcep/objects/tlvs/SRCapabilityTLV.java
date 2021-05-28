@@ -4,10 +4,22 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/*
+/**
+ * SR-PCE-CAPABILITY (Type 26) (deprecated)	[RFC8664]
  *    The SR-PCE-CAPABILITY TLV is an optional TLV for use in the OPEN
    Object to negotiate Segment Routing capability on the PCEP session.
-   The format of the SR-PCE-CAPABILITY TLV is shown in the following
+  
+   
+   @author ayk
+   
+ */
+
+
+public class SRCapabilityTLV extends PCEPTLV 
+{
+	
+	/*
+	 *  The format of the SR-PCE-CAPABILITY TLV is shown in the following
    figure:
 
       0                   1                   2                   3
@@ -29,14 +41,7 @@ import es.tid.protocol.commons.ByteHandler;
    capable of imposing on a packet.  The "Flags" (1 octet) and
    "Reserved" (2 octets) fields are currently unused, and MUST be set to
    zero and ignored on receipt.
-   
-   @author ayk
-   
- */
-
-
-public class SRCapabilityTLV extends PCEPTLV 
-{
+	 */
 	protected int MSD;
 	
 	public SRCapabilityTLV(){

@@ -79,13 +79,11 @@ public class RRO extends RSVPObject{
 	 * message.
 	 * @param bytes bytes
 	 * @param offset offset
+	 * @throws RSVPProtocolViolationException Exception when decoding the message
 	 */
-	
-	public RRO(byte[] bytes, int offset){
-		
-		this.decodeHeader(bytes,offset);
-		this.bytes = new byte[this.getLength()];
-		rroSubobjects = new LinkedList<RROSubobject>();
+	public RRO(byte[] bytes, int offset) throws RSVPProtocolViolationException{	
+		super(bytes,offset);
+		decode();
 		
 		log.debug("RRO Object Created");
 		
@@ -119,7 +117,6 @@ public class RRO extends RSVPObject{
 		// Encontramos la longitud del objeto RRO
 		
 		this.length = RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;	// Cabecera 
-		
 		int subObjectsNumber = rroSubobjects.size();
 		for(int i = 0; i < subObjectsNumber; i++){
 			
@@ -149,13 +146,15 @@ public class RRO extends RSVPObject{
 	}
 		
 
-	public void decode(byte[] bytes, int offset) throws RSVPProtocolViolationException{
-
+	public void decode() throws RSVPProtocolViolationException{
+		rroSubobjects = new LinkedList<RROSubobject>();
 		int unprocessedBytes = this.getLength() - RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
-
+		int offset= RSVPObjectParameters.RSVP_OBJECT_COMMON_HEADER_SIZE;
 		while (unprocessedBytes > 0) {
 			int subojectclass=EROSubobject.getType(this.getBytes(), offset);
 			int subojectlength=EROSubobject.getLength(this.getBytes(), offset);
+			//System.out.println("subojectclass "+subojectclass);
+			//System.out.println("subojectlength "+subojectlength);
 			switch(subojectclass) {
 				case SubObjectValues.RRO_SUBOBJECT_IPV4ADDRESS:
 					IPv4AddressRROSubobject sobjt4=new IPv4AddressRROSubobject(this.getBytes(), offset);
@@ -173,10 +172,11 @@ public class RRO extends RSVPObject{
 					break;
 				default:
 					log.warn("RRO Subobject Unknown");
-					//FIXME What do we do??
-					break;
+					throw new RSVPProtocolViolationException();
+
 			}
 			offset=offset+subojectlength;
+			unprocessedBytes=unprocessedBytes-subojectlength;
 		}
 		
 	}
@@ -187,8 +187,8 @@ public class RRO extends RSVPObject{
 		return rroSubobjects;
 	}
 
-	public void setRroSubobjects(LinkedList<RROSubobject> rroSubobjects) {
-		this.rroSubobjects = rroSubobjects;
+	public void setRroSubobjects(LinkedList<RROSubobject> rro) {
+		this.rroSubobjects = rro;
 	}
 
 
