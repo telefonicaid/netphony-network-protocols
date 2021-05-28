@@ -1,4 +1,4 @@
-netphony-network-protocols v1.4.0-SNAPSHOT (remove in master)
+netphony-network-protocols v1.4.0
 =================================
 
 Repository branch build status in Travis CI:
@@ -34,7 +34,7 @@ Detailed CHANGELOG [click here](CHANGELOG)
 
 ## **Latest news**
 - Back to life after some time dormant :-)
-- PCEP Message numbers, Object classes and Object types from IANA https://www.iana.org/assignments/pcep/pcep.xhtml by 30th November
+- PCEP Message numbers, Object classes and Object types from IANA https://www.iana.org/assignments/pcep/pcep.xhtml by 30th November 2020
 
 ## Compilation and use
 
@@ -51,7 +51,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.4.0-SNAPSHOT</version>
+      <version>1.4.0</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
@@ -141,6 +141,8 @@ Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 The software has been developed by Telefonica I+D Core & Transport Team, led by Juan Pedro Fernandez Palacios, in internal innovation projects and through several EU funded research proyects, which continuously added functionality. The Core & Transport Team group of Telefonica working with the propocols if formed by Juan Pedro Fernandez Palacios (team leader), Victor Lopez, Oscar Gonzalez de Dios, Felipe Jiménez, Luis Miguel Contreras, Michel Carnero and Eduardo Yusta. All of them have contributed to the code, either directly of with ideas and as beta-testers. The main maintainer of the code is Oscar Gonzalez de Dios. 
 
 The effort to release as open source of the code was funded by the E.U. CSA PACE. The code has been upgraded in the E.U. projects STRONGEST, PACE, IDEALIST, ACINO and 5GEx, as well as Telefonica Innovation activities.
+
+PCEP and BGP-LS are included as requirement of the MUST Sub-group in TIP.
 
 
 
