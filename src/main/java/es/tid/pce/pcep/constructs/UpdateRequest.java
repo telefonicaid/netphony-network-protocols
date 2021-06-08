@@ -219,6 +219,13 @@ public class UpdateRequest extends PCEPConstruct
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return "UpdateRequest [lsp=" + lsp + ", srp=" + srp + ", path=" + path + "]";
+	}
+	
 	
 	
 	
