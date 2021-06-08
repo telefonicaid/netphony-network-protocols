@@ -578,7 +578,11 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 		sb.append("<LSP id = ");
 		sb.append(lspId);	
 		if (symbolicPathNameTLV_tlv!=null){
+			
 			sb.append(symbolicPathNameTLV_tlv.toString());
+		}
+		if (lspIdentifiers_tlv!=null){
+			sb.append(lspIdentifiers_tlv.toString());
 		}
 		sb.append(">");
 		return sb.toString();	
