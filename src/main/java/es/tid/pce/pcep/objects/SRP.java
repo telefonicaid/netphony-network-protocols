@@ -170,8 +170,7 @@ public class SRP extends PCEPObject
 		ByteHandler.BoolToBuffer(7 + offset*8, rFlag,object_bytes);
 
 		offset += 1;
-		//FIXME
-		ByteHandler.IntToBuffer(0,offset*8, 32,(int)SRP_ID_number,this.object_bytes);
+		ByteHandler.encode4bytesLong(SRP_ID_number, object_bytes, offset );
 
 		offset += 4;
 
