@@ -218,5 +218,14 @@ public class PCEPUpdate extends PCEPMessage{
 		return true;
 	}
 	
+	public String toString(){
+		StringBuffer sb=new StringBuffer(updateRequestList.size()*100);
+		sb.append("UPDATE MESSAGE: ");
+		for (int i=0;i<updateRequestList.size();++i){
+			sb.append(updateRequestList.get(i).toString());
+		}
+		return sb.toString();
+	}
+	
 	
 }
