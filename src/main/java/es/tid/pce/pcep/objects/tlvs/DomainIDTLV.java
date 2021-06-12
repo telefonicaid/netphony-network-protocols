@@ -39,13 +39,7 @@ public class DomainIDTLV extends PCEPTLV {
 	
 	public DomainIDTLV(){
 		this.TLVType=ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV;
-		try {
-			domainType=1;//Default value
-			domainId=(Inet4Address) Inet4Address.getByName("0.0.0.1");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		domainType=1;//Default value
 	}
 	
 	public DomainIDTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{
