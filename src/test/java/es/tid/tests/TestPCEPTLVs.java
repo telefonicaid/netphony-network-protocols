@@ -55,24 +55,24 @@ public class TestPCEPTLVs {
     			{"es.tid.pce.pcep.objects.tlvs.RSVPErrorSpecTLV" }, //	21	RSVP-ERROR-SPEC	[RFC8231]  FIXME: Draft version implemented RECHECK!!
     			//	22	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV" },//   23	LSP-DB-VERSION	[RFC8232] FIXME: Draft version implemented RECHECK!!
-    			//{"es.tid.pce.pcep.objects.tlvs.SpeakerEntityIdentifierTLV"},// 	24	SPEAKER-ENTITY-ID	[RFC8232] FIXME: Add suport for byte[] in fields
+    			{"es.tid.pce.pcep.objects.tlvs.SpeakerEntityIdentifierTLV"},// 	24	SPEAKER-ENTITY-ID	[RFC8232]
     			//	25	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.SRCapabilityTLV"},//26	SR-PCE-CAPABILITY (deprecated)	[RFC8664]
     			//	27	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.PathSetupTLV"},//   28	PATH-SETUP-TYPE	[RFC8408] FIXME: Draft version implemented RECHECK!!
     			{"es.tid.pce.pcep.objects.tlvs.OpConfAssocRangeTLV"},//  	29	Operator-configured Association Range	[RFC8697]
     			{"es.tid.pce.pcep.objects.tlvs.GlobalAssociationSourceTLV"}, //	30	Global Association Source	[RFC8697]
-//    					31	Extended Association ID	[RFC8697]
-//    					32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
-//    					33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
-//    					34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
-//    					35	ASSOC-Type-List	[RFC8697]
+    			{"es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV"}, //	31	Extended Association ID	[RFC8697]					 
+    			//  32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
+    			//  33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
+    			//  34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
+    			{"es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV"}, //  35	ASSOC-Type-List	[RFC8697]					 
 //    					36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
 //    					37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
 //    					38	Path Protection Association Group TLV	[RFC8745]
-//    					39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
-//    					40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
-//    					41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
+    			{"es.tid.pce.pcep.objects.tlvs.EndPointIPv4TLV"}, //	39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]    			    			
+//    					40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]    					
+    			{"es.tid.pce.pcep.objects.tlvs.UnnumberedEndpointTLV"}, //	41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]    			    			
     			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"}, //	42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]    			
 //    					43	LABEL-SET	[RFC8779, Section 2.5.2.5]
 //    					44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
@@ -110,7 +110,7 @@ public class TestPCEPTLVs {
 		object2.encode();
 		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
 		//Check toString output
-		object1.toString();
+		System.out.println(object1.toString());
 		//Check all the gets
 		TestCommons.testGets(object1);
 		//Check if the fields are the same
@@ -131,10 +131,14 @@ public class TestPCEPTLVs {
 		//Test Bad object
 		//Check hashcode
 //		object1.hashCode();
+		//CHECK MALFORMED OBJECT
 //		try {
 //			byte[] bitos = new byte[4];
+//			bitos[0]=0x00;
 //			bitos[3]=0x04;
-//			PCEPObject object3 = (PCEPObject) ctor.newInstance(bitos,0);
+//			bitos[1]=0x00;
+//			bitos[2]=0x00;
+//			PCEPTLV object3 = (PCEPTLV) ctor.newInstance(bitos,0);
 //			
 //		} catch (Exception e) {
 //			System.out.println("Testing malformed object ok");
