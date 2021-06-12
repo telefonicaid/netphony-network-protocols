@@ -701,6 +701,7 @@ public class TestCommons {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		} 			
 	}
 
