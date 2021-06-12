@@ -373,5 +373,16 @@ public class ByteHandler {
 		return number;
 	}
 	
+	/**
+	 * Get an Integer value from 1 byte of a byte array
+	 * @param bytes
+	 * @param offset
+	 * @return
+	 */
+	public static int decode1byteInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=((int)bytes[offset]&(int)0xFF) ;
+		return number;
+	}
 	
 }
