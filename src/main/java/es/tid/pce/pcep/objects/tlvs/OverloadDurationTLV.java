@@ -1,5 +1,6 @@
 package es.tid.pce.pcep.objects.tlvs;
 
+import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
@@ -22,11 +23,13 @@ public class OverloadDurationTLV extends PCEPTLV {
 	public long overload_duration;
 	
 	public OverloadDurationTLV(){
+		this.setTLVType(ObjectParameters.PCEP_TLV_OVERLOAD_DURATION);
 		
 	}
 	
 	public OverloadDurationTLV(byte[] bytes, int offset){
 		super(bytes,offset);
+		decode();
 	}
 
 	
@@ -43,5 +46,20 @@ public class OverloadDurationTLV extends PCEPTLV {
 		int offset=4;
 		this.overload_duration=ByteHandler.decode4bytesLong(this.tlv_bytes,offset);
 	}
+
+	public long getOverload_duration() {
+		return overload_duration;
+	}
+
+	public void setOverload_duration(long overload_duration) {
+		this.overload_duration = overload_duration;
+	}
+
+	@Override
+	public String toString() {
+		return "OverloadDurationTLV [overload_duration=" + overload_duration + "]";
+	}
+	
+	
 
 }
