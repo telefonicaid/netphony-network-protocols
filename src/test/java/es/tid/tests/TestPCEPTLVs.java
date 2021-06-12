@@ -33,7 +33,7 @@ public class TestPCEPTLVs {
     public static Collection configs() {
     	Object[][] objects={
     			{"es.tid.pce.pcep.objects.tlvs.NoPathTLV"},//Type 1
-    			//{"es.tid.pce.pcep.objects.tlvs.OverloadedDurationTLV"},//Type 2: FIXME: Not Implemented
+    			{"es.tid.pce.pcep.objects.tlvs.OverloadDurationTLV"},//Type 2 OVERLOAD-DURATION-TLV
     			{"es.tid.pce.pcep.objects.tlvs.ReqMissingTLV"},//Type 3: REQ-MISSING TLV
     			{"es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV"}, //Type 4: OF-LIST TLV
     			//{"es.tid.pce.pcep.objects.tlvs.Order TLV"}, Type 5: Order TLV FIXME: Not implemented
@@ -73,7 +73,7 @@ public class TestPCEPTLVs {
 //    					39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
 //    					40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
 //    					41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
-//    					42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]
+    			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"}, //	42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]    			
 //    					43	LABEL-SET	[RFC8779, Section 2.5.2.5]
 //    					44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
 //    					45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
@@ -108,7 +108,6 @@ public class TestPCEPTLVs {
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PCEPTLV object2 = (PCEPTLV) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();
-		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
 		//Check toString output
 		object1.toString();
