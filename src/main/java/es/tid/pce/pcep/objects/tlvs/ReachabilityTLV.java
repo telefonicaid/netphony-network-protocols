@@ -53,7 +53,7 @@ public class ReachabilityTLV extends PCEPTLV {
 
 	public void decode() throws MalformedPCEPObjectException{
 		int offset=4;
-		log.debug("Decoding Reachability TLV");//FIXME: Cambiar a fine
+		log.debug("Decoding Reachability TLV");
 		boolean fin=false;
 		if (this.TLVValueLength ==0){
 			fin=true;
@@ -99,10 +99,6 @@ public class ReachabilityTLV extends PCEPTLV {
 		}catch (Exception e){
 			throw new MalformedPCEPObjectException();
 		}		
-	}
-
-	public EROSubobject getEroso(int i) {
-		return this.EROSubobjectList.get(i);
 	}
 
 	public void addEROSubobject(EROSubobject eroso) {
