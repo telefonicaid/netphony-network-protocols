@@ -737,7 +737,7 @@ public final class ObjectParameters {
     /**
     * 2	OVERLOAD-DURATION TLV	[RFC5440] 
     */
-	public static final int PCEP_TLV_OVERLOADED_DURATION=0x02;
+	public static final int PCEP_TLV_OVERLOAD_DURATION=0x02;
 	
     /**
     * 3	REQ-MISSING TLV	[RFC5440] 
