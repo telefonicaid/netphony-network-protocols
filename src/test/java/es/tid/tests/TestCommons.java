@@ -734,7 +734,7 @@ public class TestCommons {
 			}
 			else if (ty.getName().equals("boolean")){
 
-				method.invoke(object,choice_int);
+				method.invoke(object,choice_int==1?true:false);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

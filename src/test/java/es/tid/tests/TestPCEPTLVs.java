@@ -99,7 +99,7 @@ public class TestPCEPTLVs {
     @Test
     public void test (){
     	try {
-    	System.out.println("Testing PCEP TLV "+object);
+    	System.out.println("Testing PCEP TLV "+object+" (combination of fields 0)");
     	Class objectClass=Class.forName(object);
     	PCEPTLV object1 = (PCEPTLV)objectClass.newInstance();
 		TestCommons.createAllFields(object1,0);
@@ -120,11 +120,16 @@ public class TestPCEPTLVs {
 		//testEquals(object1, object2);
 		//Check hashcode
 //		object1.hashCode();
-		//Test with boolean false
+		//Test second combination
+		System.out.println("Testing PCEP TLV "+object+" (combination of fields 1)");
+		object1 = (PCEPTLV)objectClass.newInstance();
 		TestCommons.createAllFields(object1,1);
 		object1.encode();
 		object2 = (PCEPTLV) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
+		System.out.println(object1.toString());
 		assertTrue("testing PCEP TLV changing values"+objectClass,object1.equals(object2));
 //		//Check equals with false boolean
 //		testEquals(object1, object2);
