@@ -270,33 +270,20 @@ public class PCEPRequest extends PCEPMessage {
 		this.pccReqId = pccReqId;
 	}
 
-	public String toString(){
-		StringBuffer sb=new StringBuffer(RequestList.size()*100);
-		sb.append("REQ MESSAGE: ");
-		if (monitoring!=null){
-			sb.append("<MON>");
-		}
-		for (int i=0;i<RequestList.size();++i){
-			sb.append(RequestList.get(i).toString());
-		}
-		for (int i=0;i<SvecList.size();++i){
-			sb.append(SvecList.get(i).toString());
-		}
-		return sb.toString();
+	@Override
+	public String toString() {
+		return "PCEPRequest [SvecList=" + SvecList + ", RequestList=" + RequestList + ", monitoring=" + monitoring
+				+ ", pccReqId=" + pccReqId + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((RequestList == null) ? 0 : RequestList.hashCode());
-		result = prime * result
-				+ ((SvecList == null) ? 0 : SvecList.hashCode());
-		result = prime * result
-				+ ((monitoring == null) ? 0 : monitoring.hashCode());
-		result = prime * result
-				+ ((pccReqId == null) ? 0 : pccReqId.hashCode());
+		result = prime * result + ((RequestList == null) ? 0 : RequestList.hashCode());
+		result = prime * result + ((SvecList == null) ? 0 : SvecList.hashCode());
+		result = prime * result + ((monitoring == null) ? 0 : monitoring.hashCode());
+		result = prime * result + ((pccReqId == null) ? 0 : pccReqId.hashCode());
 		return result;
 	}
 
@@ -331,7 +318,8 @@ public class PCEPRequest extends PCEPMessage {
 			return false;
 		return true;
 	}
-	
+
+
 	
 
 }

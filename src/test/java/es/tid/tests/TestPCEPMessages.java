@@ -32,7 +32,7 @@ public class TestPCEPMessages {
     			//{"es.tid.pce.pcep.messages.PCEPError"},
     			{"es.tid.pce.pcep.messages.PCEPInitiate"},
     			{"es.tid.pce.pcep.messages.PCEPKeepalive"},
-    			//{"es.tid.pce.pcep.messages.PCEPMonRep"},//TODO
+    			{"es.tid.pce.pcep.messages.PCEPMonRep"},
     			{"es.tid.pce.pcep.messages.PCEPMonReq"},
     			{"es.tid.pce.pcep.messages.PCEPNotification"},
     			{"es.tid.pce.pcep.messages.PCEPOpen"},
@@ -65,6 +65,10 @@ public class TestPCEPMessages {
 		System.out.println(object.toString());
 		//Check if the fields are the same
 		assertTrue("asserting PCEP message "+objectClass,object.equals(object2));
+		//check hashcode
+		object.hashCode();
+		//check equals
+		
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in message "+object,false);

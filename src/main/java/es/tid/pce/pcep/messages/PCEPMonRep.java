@@ -5,7 +5,10 @@ import java.util.LinkedList;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.Request;
 import es.tid.pce.pcep.constructs.SVECConstruct;
+import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.Monitoring;
+import es.tid.pce.pcep.objects.ObjectParameters;
+import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.PccReqId;
 import es.tid.pce.pcep.objects.PceId;
 import es.tid.pce.pcep.objects.RequestParameters;
@@ -57,25 +60,69 @@ public class PCEPMonRep  extends PCEPMessage {
 		monitoring=new Monitoring();
 		pccReqId=new PccReqId();
 	}
-	
+
 	public PCEPMonRep(byte [] bytes)  throws PCEPProtocolViolationException
 	{
 		super(bytes);
-		//TODO: Complete decode!!!!
-		//decode();
+		decode();
 
 	}
-	
+
 	@Override
 	public void encode() throws PCEPProtocolViolationException {
+		int len=4;
 		monitoring.encode();
+		len+=monitoring.getLength();
 		pccReqId.encode();
-		this.setMessageLength(4+monitoring.getLength()+pccReqId.getLength());
+		len+=pccReqId.getLength();
+		if (this.RP!=null) {
+			this.RP.encode();
+			len+=RP.getLength();
+		}
+		this.setMessageLength(len);
 		this.messageBytes=new byte[this.getLength()];
 		encodeHeader();
-		System.arraycopy(monitoring.getBytes(), 0, messageBytes, 4, monitoring.getLength());
-		
+		int offset=4;
+		System.arraycopy(monitoring.getBytes(), 0, messageBytes,offset, monitoring.getLength());
+		offset+=monitoring.getLength();
+		System.arraycopy(pccReqId.getBytes(), 0, messageBytes,offset, pccReqId.getLength());
+		offset+=pccReqId.getLength();
+		if (this.RP!=null) {
+			System.arraycopy(RP.getBytes(), 0, messageBytes,offset, RP.getLength());
+			offset+=RP.getLength();
+		} 
 	}
+
+	public void decode() throws PCEPProtocolViolationException {
+		try {
+			int offset=4;//We start after the object header
+			// Monitoring object
+			int oc=PCEPObject.getObjectClass(this.getBytes(), offset);
+			if (oc==ObjectParameters.PCEP_OBJECT_CLASS_MONITORING){
+				monitoring=new Monitoring(this.getBytes(),offset);		
+				offset=offset+monitoring.getLength();
+			}
+
+			//PCC Req Id
+			oc=PCEPObject.getObjectClass(this.getBytes(), offset);
+			if (oc==ObjectParameters.PCEP_OBJECT_CLASS_PCC_REQ_ID){
+				pccReqId=new PccReqId(this.getBytes(),offset);
+				offset=offset+pccReqId.getLength();
+			}
+
+			//RP
+			oc=PCEPObject.getObjectClass(this.getBytes(), offset);
+			if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RP){
+				this.RP=new RequestParameters(this.getBytes(),offset);
+				offset=offset+RP.getLength();
+			}
+
+		} catch (Exception e) {
+			log.warn("Malformed Monitoring Object found");
+			throw new PCEPProtocolViolationException();
+		}
+	}
+
 	public Monitoring getMonitoring() {
 		return monitoring;
 	}
@@ -131,8 +178,13 @@ public class PCEPMonRep  extends PCEPMessage {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "PCEPMonRep [monitoring=" + monitoring + ", pccReqId=" + pccReqId + ", RP=" + RP + "]";
+	}
+
+
+
+
 }
