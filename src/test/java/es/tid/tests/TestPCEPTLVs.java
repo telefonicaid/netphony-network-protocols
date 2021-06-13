@@ -117,9 +117,9 @@ public class TestPCEPTLVs {
 		assertTrue("testing PCEP TLV  "+objectClass,object1.equals(object2));
 		
 		//Check equals 
-		//testEquals(object1, object2);
+		testEquals(object1, object2);
 		//Check hashcode
-//		object1.hashCode();
+		object1.hashCode();
 		//Test second combination
 		System.out.println("Testing PCEP TLV "+object+" (combination of fields 1)");
 		object1 = (PCEPTLV)objectClass.newInstance();
@@ -132,7 +132,7 @@ public class TestPCEPTLVs {
 		System.out.println(object1.toString());
 		assertTrue("testing PCEP TLV changing values"+objectClass,object1.equals(object2));
 //		//Check equals with false boolean
-//		testEquals(object1, object2);
+		testEquals(object1, object2);
 		//Test Bad object
 		//Check hashcode
 //		object1.hashCode();
@@ -156,16 +156,19 @@ public class TestPCEPTLVs {
     	}
     }
     
-    public void testEquals(PCEPObject object1, PCEPObject object2) {
+    public void testEquals(PCEPTLV object1, PCEPTLV object2){
     	//Test against different class object
     	Integer test1=new Integer(2);
-		object1.equals(test1);
+    	boolean res;
+		res=object1.equals(test1);
+		assertTrue("testing equals ",!res);
     	//Test same object
     	object1.equals(object1);
+    	//Test null
+    	object1.equals(null);
     	//Test change in parent
-    	object2.setObjectClass(object1.getObjectClass()+1);
+    	object2.setTLVType(object1.getTLVType()+1);
     	object1.equals(object2);
-    	object2.setObjectClass(object1.getObjectClass());
     	//Test changes in fields
 		List<Field> fieldListNS = new ArrayList<Field>();
 		List<Field> fieldList= Arrays.asList(object1.getClass().getDeclaredFields());

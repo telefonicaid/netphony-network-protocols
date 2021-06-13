@@ -59,6 +59,7 @@ import es.tid.pce.pcep.objects.RequestParameters;
 import es.tid.pce.pcep.objects.subobjects.ASNumberXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.IPv4PrefixXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.IPv6prefixXROSubobject;
+import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.pce.pcep.objects.subobjects.SRLGXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.UnnumberIfIDXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.XROSubobject;
@@ -87,10 +88,13 @@ import es.tid.rsvp.objects.SessionIPv6;
 import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
 import es.tid.rsvp.objects.SessionLSPTunnelIPv6;
 import es.tid.rsvp.objects.Style;
+import es.tid.rsvp.objects.subobjects.ASNumberEROSubobject;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4AddressRROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
+import es.tid.rsvp.objects.subobjects.IPv6prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.RROSubobject;
+import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
 
 public class TestCommons {
 	
@@ -336,11 +340,34 @@ public class TestCommons {
 								//Method[] methods =res.getClass().getDeclaredMethods();	
 								if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.EROSubobject")) {
 									LinkedList<EROSubobject> llero = new LinkedList<EROSubobject>();
-									IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
-									Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
-									eroso.setIpv4address(in);
-									eroso.setPrefix(16);
-									llero.add(eroso);
+									if (choice_int==0) {
+										IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
+										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
+										eroso.setIpv4address(in);
+										eroso.setPrefix(16);
+										llero.add(eroso);
+									}else {
+										IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
+										createAllFields(eroso,choice_int);
+										eroso.setPrefix(16);
+										llero.add(eroso);
+										IPv6prefixEROSubobject eroso2 = new IPv6prefixEROSubobject();
+										createAllFields(eroso2,choice_int);
+										eroso2.setPrefix(16);
+										llero.add(eroso2);
+										SREROSubobject eroso3=new SREROSubobject();
+										createAllFields(eroso3,choice_int);
+										llero.add(eroso3);
+										ASNumberEROSubobject eroso4= new ASNumberEROSubobject();
+										createAllFields(eroso4,choice_int);
+										llero.add(eroso4);
+										UnnumberIfIDEROSubobject eroso5=new UnnumberIfIDEROSubobject();
+										createAllFields(eroso5,choice_int);
+										llero.add(eroso5);
+										
+									}
+									
+									
 									method2.invoke(object, llero);									
 								} else if  (((Class)at).getName().equals("es.tid.rsvp.objects.subobjects.RROSubobject")) {
 									LinkedList<RROSubobject> ll=new LinkedList<RROSubobject>();
@@ -473,9 +500,20 @@ public class TestCommons {
 								}
 								else {
 									if  (((Class)at).getName().equals("java.lang.Integer")) {
-										LinkedList<Integer> ll=new LinkedList<Integer>();																				
-										Integer in=new Integer(3);
-										ll.add(in);
+										LinkedList<Integer> ll=new LinkedList<Integer>();
+										if (choice_int==0) {
+											Integer in=new Integer(3);
+											ll.add(in);	
+										}else {
+											Integer in=new Integer(7);
+											ll.add(in);
+											in=new Integer(256);
+											ll.add(in);
+											in=new Integer(0);
+											ll.add(in);
+											
+										}
+										
 										method2.invoke(object,ll);
 									}else if  (((Class)at).getName().equals("java.lang.Long")) {
 										LinkedList<Long> ll=new LinkedList<Long>();
