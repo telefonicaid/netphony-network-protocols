@@ -34,11 +34,6 @@ public class ReachabilityTLV extends PCEPTLV {
 			EROSubobjectList.get(k).encode();			
 			len=len+EROSubobjectList.get(k).getErosolength();
 		}
-		if (len==0){
-			log.error("At least one ERO Subobject in the TLV must be set");
-			//throw new MalformedPCEPObjectException();
-			return;//FIXME: ARREGLAR PARA LANZAR EXCEPCIONES
-		}		
 		this.setTLVValueLength(len);
 		this.tlv_bytes=new byte[this.TotalTLVLength];
 		encodeHeader();

@@ -2,36 +2,67 @@ package es.tid.pce.pcep.objects.tlvs;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-
+import es.tid.protocol.commons.ByteHandler;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
  * Domain ID TLV (Type 14)
  * 
- * DomainID TLV, non-standard encoding implemented.
- * Defined in draft-ietf-pce-hierarchy-extensions-02.
- * TLV ID: 32771, non-standard
- * Enconding: as per draft-ietf-pce-hierarchy-extensions-02.
-
- *  
- *  0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |           Domain Type         |            Reserved           |
-      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |                       Domain ID                               |
-      //                                                             //
-      |                                                               |
-      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-                          Figure 1: Domain-ID TLV
-
- * 
+  The Domain-ID TLV, when used in the OPEN object, identifies the
+   domains served by the PCE.  The child PCE uses this mechanism to
+   provide the domain information to the parent PCE.
+   
  * @author ogondio
  *
  */
 public class DomainIDTLV extends PCEPTLV {
+	
+	/*
+	 *  The Domain-ID TLV is defined below:
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |               Type=14         |            Length             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Domain Type   |                  Reserved                     |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   //                          Domain ID                          //
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                       Figure 2: Domain-ID TLV Format
+
+   The type of the TLV is 14, and it has a variable Length of the value
+   portion.  The value part comprises the following:
+
+      Domain Type (8 bits):  Indicates the domain type.  Four types of
+         domains are currently defined:
+
+         Type=1:   The Domain ID field carries a 2-byte AS number.
+                   Padded with trailing zeros to a 4-byte boundary.
+
+         Type=2:   The Domain ID field carries a 4-byte AS number.
+
+         Type=3:   The Domain ID field carries a 4-byte OSPF area ID.
+
+         Type=4:   The Domain ID field carries a 2-byte Area-Len and a
+                   variable-length IS-IS area ID.  Padded with trailing
+                   zeros to a 4-byte boundary.
+
+      Reserved:  Zero at transmission; ignored on receipt.
+
+      Domain ID (variable):  Indicates an IGP area ID or AS number as
+         per the Domain Type field.  It can be 2 bytes, 4 bytes, or
+         variable length, depending on the domain identifier used.  It
+         is padded with trailing zeros to a 4-byte boundary.  In the
+         case of IS-IS, it includes the Area-Len as well.
+
+   In the case where a PCE serves more than one domain, multiple Domain-
+   ID TLVs are included for each domain it serves.
+	 */
 	
 	int domainType;
 
@@ -55,32 +86,26 @@ public class DomainIDTLV extends PCEPTLV {
 		this.tlv_bytes=new byte[this.TotalTLVLength];
 		encodeHeader();
 		int offset = 4;
-		this.tlv_bytes[offset]=(byte)(domainType>>>8 & 0xFF);
-		this.tlv_bytes[offset+1]=(byte)(domainType & 0xFF);
+		ByteHandler.encode1byteInteger(domainType,tlv_bytes,offset);
 		System.arraycopy(domainId.getAddress(),0, this.tlv_bytes, 8, 4);
 	}
 
 	
 	
 	public void decode() throws MalformedPCEPObjectException{
-		if (this.TLVValueLength!=8){
-			throw new MalformedPCEPObjectException("Bad DomainIDTLV lenght: "+this.TLVValueLength);
-		}
-		 
-		int offset=4;
-		domainType=((this.tlv_bytes[offset]<<8)& 0xFF00) |  (this.tlv_bytes[offset+1] & 0xFF);
-		offset = 8;
-		byte[] ip=new byte[4];
-		System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
-		try {		
+		try {
+			int offset=4;
+			domainType=ByteHandler.decode1byteInteger(this.getTlv_bytes(), offset);
+			offset = 8;
+			byte[] ip=new byte[4];
+			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
 			domainId=(Inet4Address)Inet4Address.getByAddress(ip);
-		} catch (UnknownHostException e) {			
-			e.printStackTrace();
-			throw new MalformedPCEPObjectException("Bad DomainIDTLV address");
 		}
-		
-
-		
+		catch (Exception e) {			
+			e.printStackTrace();
+			throw new MalformedPCEPObjectException("Bad DomainIDTLV");
+		}
+	
 	}
 	
 	
@@ -103,18 +128,11 @@ public class DomainIDTLV extends PCEPTLV {
 		this.domainType = domainType;
 	}
 
-	public String toString(){
-		String res; 
-		if (domainType==1) {
-			res = "IGP Area ID with Domain ID:  "+	domainId;
-		}else if (domainType==1) {
-		 res = "AS Number with Domain ID: "+	domainId;
-		} else {
-			res ="unknown domain ID type: "+ domainId;
-		}
-		return res;
-	}
 
+	public String toString() {
+		return "DomainIDTLV [domainType=" + domainType + ", domainId=" + domainId + "]";
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
