@@ -57,7 +57,6 @@ public class IPv4prefixEROSubobject extends EROSubobject{
 	
 	public IPv4prefixEROSubobject(){
 		super();
-		erosolength=8;
 		this.setType(SubObjectValues.ERO_SUBOBJECT_IPV4PREFIX);
 	}
 	public IPv4prefixEROSubobject(byte [] bytes, int offset){
@@ -66,7 +65,7 @@ public class IPv4prefixEROSubobject extends EROSubobject{
 	}
 	
 	public void encode(){
-		
+		erosolength=8;
 		this.subobject_bytes=new byte[erosolength];
 		encodeSoHeader();
 		System.arraycopy(ipv4address.getAddress(), 0, this.subobject_bytes, 2, 4);
