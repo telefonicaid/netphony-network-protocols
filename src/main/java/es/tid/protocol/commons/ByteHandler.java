@@ -347,13 +347,22 @@ public class ByteHandler {
 		return DataPathBytes;
 	}
 
-
 	public static void encode4bytesLong(long number, byte[] bytes, int offset ){
 		bytes[offset]=(byte)((number>>24) & 0xFF);
 		bytes[offset+1]=(byte)((number>>16) & 0xFF);
 		bytes[offset+2]=(byte)((number>>8) & 0xFF);
 		bytes[offset+3]=(byte)(number & 0xFF);
 	}
+	
+	public static void encode1byteInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)(number & 0xFF);
+	}
+	
+	public static void encode2byteInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)((number>>8) & 0xFF);
+		bytes[offset+1]=(byte)(number & 0xFF);
+	}
+	
 
 	public static long decode4bytesLong( byte[] bytes, int offset) {
 		long number=0;
