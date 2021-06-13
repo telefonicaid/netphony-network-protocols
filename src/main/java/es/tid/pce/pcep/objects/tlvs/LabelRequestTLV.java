@@ -83,8 +83,8 @@ public class LabelRequestTLV extends PCEPTLV {
 	
 	/**
 	 * Label Request TLV constructor
-	 * @param object_bytes
-	 * @param offset
+	 * @param bytes the bytes where the object is present
+	 * @param offset offset starting position of the object (in bytes)
 	 */
 	public LabelRequestTLV(byte[] bytes, int offset) {
 		super(bytes,offset);

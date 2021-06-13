@@ -45,7 +45,7 @@ public class TestOSPFv2Packets {
     	System.out.println("oscar Testing OSPFv2 Packet "+object);
     	Class objectClass=Class.forName(object);
     	OSPFv2Packet object1 = (OSPFv2Packet)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		OSPFv2Packet object2 = (OSPFv2Packet) ctor.newInstance(object1.getBytes(),0);
@@ -59,7 +59,7 @@ public class TestOSPFv2Packets {
 		System.out.println("OSPF Packet check 1 ok");
 		//Testing changing values
 		OSPFv2Packet object3 = (OSPFv2Packet)objectClass.newInstance();
-		TestCommons.createAllFields(object3,false);
+		TestCommons.createAllFields(object3,1);
 		object3.encode();
 		OSPFv2Packet object4 = (OSPFv2Packet) ctor.newInstance(object3.getBytes(),0);
 		object4.encode();

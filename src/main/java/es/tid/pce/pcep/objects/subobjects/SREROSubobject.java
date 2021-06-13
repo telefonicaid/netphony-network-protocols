@@ -3,6 +3,7 @@ package es.tid.pce.pcep.objects.subobjects;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
+import es.tid.rsvp.objects.subobjects.SubObjectValues;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,7 +132,7 @@ public class SREROSubobject extends EROSubobject{
 		mflag = false;
 		loosehop = false;
 		ST = 0;
-		type = ObjectParameters.PCEP_SUBOBJECT_TYPE_SR_ERO;
+		type = SubObjectValues.ERO_SUBOBJECT_SR_ERO;
 
 	}
 	

@@ -64,7 +64,7 @@ public class TestPCEPConstructs {
 	    	System.out.println("Testing PCEP Construct "+object);
 	    	Class objectClass=Class.forName(object);
 	    	PCEPConstruct object1 = (PCEPConstruct)objectClass.newInstance();
-			TestCommons.createAllFields(object1,true);
+			TestCommons.createAllFields(object1,0);
 			object1.encode();
 			Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 			PCEPConstruct object2 = (PCEPConstruct) ctor.newInstance(object1.getBytes(),0);

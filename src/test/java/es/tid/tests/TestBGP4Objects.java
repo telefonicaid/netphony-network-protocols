@@ -51,7 +51,7 @@ public class TestBGP4Objects {
     	System.out.println("Testing BGP4 Object "+object);
     	Class objectClass=Class.forName(object);
 		BGP4Object object = (BGP4Object)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
+		TestCommons.createAllFields(object,0);
 		object.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		BGP4Object object2 = (BGP4Object) ctor.newInstance(object.getBytes(),0);

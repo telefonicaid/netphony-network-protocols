@@ -46,7 +46,7 @@ public class TestBGP4Messages {
     	System.out.println("oscar Testing BGP4 Message "+object);
     	Class objectClass=Class.forName(object);
     	BGP4Message object1 = (BGP4Message)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class);
 		BGP4Message object2 = (BGP4Message) ctor.newInstance(object1.getBytes());

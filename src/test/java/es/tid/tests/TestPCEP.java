@@ -52,7 +52,7 @@ public class TestPCEP {
 		ErrorConstruct error= new ErrorConstruct();
 		LinkedList<ErrorConstruct> errorList= new LinkedList<ErrorConstruct>();
 		//PCEPErrorObject e = new PCEPErrorObject();
-		TestCommons.createAllFields(error,true);
+		TestCommons.createAllFields(error,0);
 		errorList.add(error);
 		message.setErrorList(errorList);
 		message.encode();

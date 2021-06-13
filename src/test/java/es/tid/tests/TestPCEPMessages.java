@@ -55,7 +55,7 @@ public class TestPCEPMessages {
     	System.out.println("Testing PCEP Message "+object);
     	Class objectClass=Class.forName(object);
     	PCEPMessage object = (PCEPMessage)objectClass.newInstance();
-		TestCommons.createAllFields(object,true);
+		TestCommons.createAllFields(object,0);
 		object.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class);
 		PCEPMessage object2 = (PCEPMessage) ctor.newInstance(object.getBytes());

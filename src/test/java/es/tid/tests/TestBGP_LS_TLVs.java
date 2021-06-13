@@ -85,7 +85,7 @@ public class TestBGP_LS_TLVs {
     	System.out.println("Testing BGP-LS TLV "+object);
     	Class objectClass=Class.forName(object);
     	BGP4TLVFormat object1 = (BGP4TLVFormat)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
@@ -105,7 +105,7 @@ public class TestBGP_LS_TLVs {
 		//Check hashcode
 //		object1.hashCode();
 		//Test with boolean false
-		TestCommons.createAllFields(object1,false);
+		TestCommons.createAllFields(object1,1);
 		object1.encode();
 		object2 = (BGP4TLVFormat) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();

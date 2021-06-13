@@ -13,6 +13,7 @@ public class SubObjectValues {
 	public static final int ERO_SUBOBJECT_LABEL=0x03;//From RFC 3473
 	public static final int ERO_SUBOBJECT_UNNUMBERED_IF_ID=0x04;//From RFC 3477
 	public static final int ERO_SUBOBJECT_ASNUMBER=32;//From RFC 3209 FIXME: CHECK IF 32 IS DECIMAL OR HEX	
+	public static final int ERO_SUBOBJECT_SR_ERO=36; //From RFC 8664 PCEP ONLY
 	public static final int ERO_SUBOBJECT_SWITCH_ID=55;
 	public static final int ERO_SUBOBJECT_SWITCH_ID_EDGE=56;
 	public static final int ERO_SUBOBJECT_SWITCH_ID_END=57;

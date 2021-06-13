@@ -375,9 +375,9 @@ public class ByteHandler {
 	
 	/**
 	 * Get an Integer value from 1 byte of a byte array
-	 * @param bytes
-	 * @param offset
-	 * @return
+	 * @param bytes bytes to examine
+	 * @param offset offset starting position of the 1 byte integer
+	 * @return the integer value
 	 */
 	public static int decode1byteInteger( byte[] bytes, int offset) {
 		int number=0;
