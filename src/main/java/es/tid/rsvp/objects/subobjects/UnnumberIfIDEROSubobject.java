@@ -95,5 +95,33 @@ public class UnnumberIfIDEROSubobject extends EROSubobject{
 		return routerID.toString()+":"+interfaceID;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (int) (interfaceID ^ (interfaceID >>> 32));
+		result = prime * result + ((routerID == null) ? 0 : routerID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UnnumberIfIDEROSubobject other = (UnnumberIfIDEROSubobject) obj;
+		if (interfaceID != other.interfaceID)
+			return false;
+		if (routerID == null) {
+			if (other.routerID != null)
+				return false;
+		} else if (!routerID.equals(other.routerID))
+			return false;
+		return true;
+	}
+
 
 }

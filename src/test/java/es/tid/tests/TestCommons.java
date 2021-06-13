@@ -46,7 +46,10 @@ import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.constructs.UnnumIfEndPoint;
 import es.tid.pce.pcep.constructs.UpdateRequest;
+import es.tid.pce.pcep.objects.BandwidthExistingLSP;
+import es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
+import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.Metric;
@@ -167,8 +170,20 @@ public class TestCommons {
 									o = new EndPointsIPv4();
 									createAllFields(o,choice_int);
 							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
-								 o= new BandwidthRequested();
-								 createAllFields(o,choice_int);
+								 if (choice_int==0) {
+									 o= new BandwidthRequested();
+									 createAllFields(o,choice_int);	 
+								 }else if (choice_int==1) {
+									 o= new BandwidthExistingLSP();
+									 createAllFields(o,choice_int);	 
+								 } else if (choice_int==2) {
+									 o= new BandwidthRequestedGeneralizedBandwidth();
+									 createAllFields(o,choice_int);	 
+								 } else if (choice_int==3) {
+									 o= new BandwidthExistingLSPGeneralizedBandwidth();
+									 createAllFields(o,choice_int);	 
+								 }
+								 
 								}else if  (c.getName().equals("es.tid.pce.pcep.constructs.GeneralizedBandwidth")) {
 									 o= new GeneralizedBandwidthSSON();
 									 createAllFields(o,choice_int);
@@ -342,9 +357,8 @@ public class TestCommons {
 									LinkedList<EROSubobject> llero = new LinkedList<EROSubobject>();
 									if (choice_int==0) {
 										IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();
-										Inet4Address in=(Inet4Address) Inet4Address.getByName("1.1.1.1");
-										eroso.setIpv4address(in);
-										eroso.setPrefix(16);
+										createAllFields(eroso,choice_int);
+										eroso.setPrefix(8);
 										llero.add(eroso);
 									}else {
 										IPv4prefixEROSubobject eroso = new IPv4prefixEROSubobject();

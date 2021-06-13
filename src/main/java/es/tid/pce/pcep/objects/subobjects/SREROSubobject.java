@@ -353,6 +353,43 @@ public class SREROSubobject extends EROSubobject{
 	public void setST(byte sT) {
 		ST = sT;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + SID;
+		result = prime * result + ST;
+		result = prime * result + (cflag ? 1231 : 1237);
+		result = prime * result + (fflag ? 1231 : 1237);
+		result = prime * result + (mflag ? 1231 : 1237);
+		result = prime * result + (sflag ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SREROSubobject other = (SREROSubobject) obj;
+		if (SID != other.SID)
+			return false;
+		if (ST != other.ST)
+			return false;
+		if (cflag != other.cflag)
+			return false;
+		if (fflag != other.fflag)
+			return false;
+		if (mflag != other.mflag)
+			return false;
+		if (sflag != other.sflag)
+			return false;
+		return true;
+	}
 	
 	
 	

@@ -111,4 +111,39 @@ public class IPv6prefixEROSubobject extends EROSubobject{
 			this.prefix = prefix;
 		}
 
+		@Override
+		public String toString() {
+			return "IPv6prefixEROSubobject [ipv6address=" + ipv6address + ", prefix=" + prefix + "]";
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + ((ipv6address == null) ? 0 : ipv6address.hashCode());
+			result = prime * result + prefix;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			IPv6prefixEROSubobject other = (IPv6prefixEROSubobject) obj;
+			if (ipv6address == null) {
+				if (other.ipv6address != null)
+					return false;
+			} else if (!ipv6address.equals(other.ipv6address))
+				return false;
+			if (prefix != other.prefix)
+				return false;
+			return true;
+		}
+		
+		
+
 }

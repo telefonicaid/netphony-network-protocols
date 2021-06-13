@@ -133,21 +133,6 @@ public class UpdateRequest extends PCEPConstruct
 				return;
 			}
 		}
-		else if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
-		{
-			path=new Path(bytes,offset);
-			offset=offset+path.getLength();
-			len=len+path.getLength();
-			if (offset>=bytes.length){
-				this.setLength(len);
-				return;
-			}			
-		}
-		else
-		{
-			log.warn("Malformed Update Request Construct.");
-			throw new PCEPProtocolViolationException();
-		}
 		this.setLength(len);
 	}
 
