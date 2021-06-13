@@ -108,7 +108,7 @@ public abstract class PCEPTLV {
 	}
 
 
-	protected void setTLVType(int tLVType) {
+	public void setTLVType(int tLVType) {
 		TLVType = tLVType;
 	}
 
