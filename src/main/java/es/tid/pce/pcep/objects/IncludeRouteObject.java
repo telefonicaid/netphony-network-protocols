@@ -3,6 +3,7 @@ package es.tid.pce.pcep.objects;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.rsvp.objects.subobjects.*;
 
 /**
@@ -126,6 +127,10 @@ public class IncludeRouteObject extends PCEPObject{
 				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID:
 					UnnumberIfIDEROSubobject subun=new UnnumberIfIDEROSubobject(this.getObject_bytes(), offset);
 					IROList.add(subun);
+					break;
+				case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+					SREROSubobject srero=new SREROSubobject(this.getObject_bytes(), offset);
+					IROList.add(srero);
 					break;
 					
 				case SubObjectValues.ERO_SUBOBJECT_LABEL:
