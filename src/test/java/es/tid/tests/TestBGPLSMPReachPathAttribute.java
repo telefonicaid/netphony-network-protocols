@@ -35,7 +35,7 @@ import java.util.Collection;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.Parameterized.class)
-public class TestBGPLSPathAttributes {
+public class TestBGPLSMPReachPathAttribute {
 
 	String object;
 
@@ -49,7 +49,7 @@ public class TestBGPLSPathAttributes {
 	}
 
 
-	public TestBGPLSPathAttributes (String object) {
+	public TestBGPLSMPReachPathAttribute (String object) {
 		this.object=object;
 	}
 

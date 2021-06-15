@@ -18,13 +18,18 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 	
 	@Override
 	public void encode() {
-		// TODO Auto-generated method stub
+		this.setTLVValueLength(name.length);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
+		int offset=4;
+		System.arraycopy(name,0, this.tlv_bytes, offset, name.length);
 		
 	}
 	
 	public void decode(){
 		int length = this.getTLVValueLength();
 		int offset = 4;
+		name= new byte[length];
 		System.arraycopy(this.tlv_bytes,offset, name, 0, length);
 	}
 	
@@ -38,6 +43,12 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 	    System.arraycopy(b,0, name, 0, b.length);
 	}
 	
+	
+	
+	public void setName(byte[] name) {
+		this.name = name;
+	}
+
 	public byte[] getName(){
 		return name;
 	}

@@ -5,9 +5,11 @@ import java.net.UnknownHostException;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
+//FIXME: IMPLEMENT IPV6
+
 public class OSPFForwardingAddressPrefixAttribTLV extends BGP4TLVFormat {
 	Inet4Address OSPFAddress;
-	private int len;
+	
 
 
 	public OSPFForwardingAddressPrefixAttribTLV() {
@@ -23,19 +25,16 @@ public class OSPFForwardingAddressPrefixAttribTLV extends BGP4TLVFormat {
 
 	@Override
 	public void encode() {
-		this.setTLVValueLength(len);		
-		switch(len){
-		case 4:
-			this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
-			encodeHeader();
-			System.arraycopy(OSPFAddress.getAddress(),0, this.tlv_bytes, 4, 4);
-		default: log.debug("IPv6 NOT IMPLEMENTED YET");
-		}
+		this.setTLVValueLength(4);		
+		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
+		encodeHeader();
+		int offset=4;
+		System.arraycopy(OSPFAddress.getAddress(),0, this.tlv_bytes, 4, 4);
 		
 	}
 	
 	public void decode(){
-		len = this.getLen();
+		int len = this.getTLVValueLength();
 		switch(len){
 		case 4:
 		byte[] ip=new byte[4]; 
@@ -59,13 +58,6 @@ public class OSPFForwardingAddressPrefixAttribTLV extends BGP4TLVFormat {
 		OSPFAddress = oSPFAddress;
 	}
 
-	public int getLen() {
-		return len;
-	}
-
-	public void setLen(int len) {
-		this.len = len;
-	}
 	
 	public String toString() {
 		return "OSPF ADDRESS [ospf_addr=" + OSPFAddress.toString() + "]";

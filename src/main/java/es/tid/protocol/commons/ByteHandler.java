@@ -358,9 +358,15 @@ public class ByteHandler {
 		bytes[offset]=(byte)(number & 0xFF);
 	}
 	
-	public static void encode2byteInteger(int number, byte[] bytes, int offset ){
+	public static void encode2bytesInteger(int number, byte[] bytes, int offset ){
 		bytes[offset]=(byte)((number>>8) & 0xFF);
 		bytes[offset+1]=(byte)(number & 0xFF);
+	}
+	
+	public static void encode3bytesInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)((number>>16) & 0xFF);
+		bytes[offset+1]=(byte)((number>>8) & 0xFF);
+		bytes[offset+2]=(byte)(number & 0xFF);
 	}
 	
 
@@ -379,6 +385,18 @@ public class ByteHandler {
 	public static int decode2bytesInteger( byte[] bytes, int offset) {
 		int number=0;
 		number=( ( ((int)bytes[offset]&(int)0xFF)<<8) |  ((int)bytes[offset+1]& (int)0xFF) );
+		return number;
+	}
+	
+	/**
+	 * Get an Integer value from 1 byte of a byte array
+	 * @param bytes bytes to examine
+	 * @param offset offset starting position of the 1 byte integer
+	 * @return the integer value
+	 */
+	public static int decode3bytesInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=((((int)bytes[offset]&(int)0xFF)<<16) |(((int)bytes[offset+1]&(int)0xFF)<<8) |  ((int)bytes[offset+2]& (int)0xFF) );
 		return number;
 	}
 	

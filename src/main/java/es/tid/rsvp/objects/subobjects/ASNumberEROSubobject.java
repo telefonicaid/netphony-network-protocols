@@ -45,7 +45,7 @@ public class ASNumberEROSubobject extends EROSubobject{
 		this.subobject_bytes=new byte[erosolength];
 		encodeSoHeader();
 		int offset=2;
-		ByteHandler.encode2byteInteger(ASNumber,this.getSubobject_bytes(),offset);
+		ByteHandler.encode2bytesInteger(ASNumber,this.getSubobject_bytes(),offset);
 	}
 	
 	public int getASNumber() {

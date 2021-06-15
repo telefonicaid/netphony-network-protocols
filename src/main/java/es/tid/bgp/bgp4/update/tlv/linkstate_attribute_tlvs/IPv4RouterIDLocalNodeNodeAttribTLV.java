@@ -6,7 +6,10 @@ import java.net.UnknownHostException;
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
- @author pac
+ * IPv4 Router-ID of Local Node (Type 1028)
+ * 		[RFC5305, Section 4.3]
+ * @author pac
+ * @author ogondio
 */
 
 public class IPv4RouterIDLocalNodeNodeAttribTLV extends BGP4TLVFormat{

@@ -163,14 +163,14 @@ public class LinkStateAttribute  extends PathAttribute{
 	UnreservedBandwidthLinkAttribTLV unreservedBandwidthTLV;
 	LinkProtectionTypeLinkAttribTLV linkProtectionTLV;
 	MetricLinkAttribTLV metricTLV;
-	AvailableLabels availableLabels;//Añadida por nosotros
+	//AvailableLabels availableLabels;//Añadida por nosotros
 	IPv4RouterIDLocalNodeLinkAttribTLV IPv4RouterIDLocalNodeLATLV;
 	IPv4RouterIDRemoteNodeLinkAttribTLV IPv4RouterIDRemoteNodeLATLV;
 	DefaultTEMetricLinkAttribTLV TEMetricTLV;
 	//********** RUBEN *************
 	SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV;
 	TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV;
-	MF_OTPAttribTLV MF_OTP_ATLV;
+	//MF_OTPAttribTLV MF_OTP_ATLV;
 	//******************************
 	
 
@@ -178,7 +178,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	NodeFlagBitsNodeAttribTLV nodeFlagBitsTLV;
 	NodeNameNodeAttribTLV nodeNameTLV;
 	IS_IS_AreaIdentifierNodeAttribTLV areaIDTLV;
-	IPv4RouterIDLocalNodeNodeAttribTLV IPv4RouterIDLocalNodeNATLV;
+//	IPv4RouterIDLocalNodeNodeAttribTLV IPv4RouterIDLocalNodeNATLV;
 	SidLabelNodeAttribTLV sidLabelTLV;
 
 	/** PREFIX ATTRIBUTE TLVs */
@@ -256,10 +256,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			TransceiverClassAndAppATLV.encode();
 			pathAttributeLength=pathAttributeLength+TransceiverClassAndAppATLV.getTotalTLVLength();
 		}
-		if(MF_OTP_ATLV!=null){
-			MF_OTP_ATLV.encode();
-			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
-		}
+//		if(MF_OTP_ATLV!=null){
+//			MF_OTP_ATLV.encode();
+//			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
+//		}
 		//******************************
 		
 		//NODE Attributes
@@ -276,10 +276,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			areaIDTLV.encode();
 			pathAttributeLength=pathAttributeLength+areaIDTLV.getTotalTLVLength();
 		}
-		if(IPv4RouterIDLocalNodeNATLV!=null){
-			IPv4RouterIDLocalNodeNATLV.encode();
-			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
-		}
+//		if(IPv4RouterIDLocalNodeNATLV!=null){
+//			IPv4RouterIDLocalNodeNATLV.encode();
+//			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
+//		}
 
 		if(sidLabelTLV!=null){
 			sidLabelTLV.encode();
@@ -308,15 +308,15 @@ public class LinkStateAttribute  extends PathAttribute{
 			pathAttributeLength=pathAttributeLength+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}			
 
-		if (availableLabels != null){
-			try {
-				availableLabels.encode();
-			} catch (MalformedOSPFSubTLVException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
-		}
+//		if (availableLabels != null){
+//			try {
+//				availableLabels.encode();
+//			} catch (MalformedOSPFSubTLVException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
+//		}
 
 		//Length
 		this.length=pathAttributeLength+mandatoryLength;
@@ -353,12 +353,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			System.arraycopy(linkProtectionTLV.getTlv_bytes(),0, this.bytes,offset, linkProtectionTLV.getTotalTLVLength());
 			offset=offset+linkProtectionTLV.getTotalTLVLength();
 		}
-
 		if (IPv4RouterIDLocalNodeLATLV!=null){
 			System.arraycopy(IPv4RouterIDLocalNodeLATLV.getTlv_bytes(),0, this.bytes,offset, IPv4RouterIDLocalNodeLATLV.getTotalTLVLength());
 			offset=offset+IPv4RouterIDLocalNodeLATLV.getTotalTLVLength();
 		}
-
 		if (IPv4RouterIDRemoteNodeLATLV!=null){
 			System.arraycopy(IPv4RouterIDRemoteNodeLATLV.getTlv_bytes(),0, this.bytes,offset, IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength());
 			offset=offset+IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength();
@@ -369,7 +367,6 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+TEMetricTLV.getTotalTLVLength();
 		}
 
-		//********** RUBEN *************
 		if(SharedRiskLinkGroupATLV!=null){
 			System.arraycopy(SharedRiskLinkGroupATLV.getTlv_bytes(),0, this.bytes,offset, SharedRiskLinkGroupATLV.getTotalTLVLength());
 			offset=offset+SharedRiskLinkGroupATLV.getTotalTLVLength();
@@ -380,10 +377,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+TransceiverClassAndAppATLV.getTotalTLVLength();
 		}
 		
-		if(MF_OTP_ATLV!=null){
-			System.arraycopy(MF_OTP_ATLV.getTlv_bytes(),0, this.bytes,offset, MF_OTP_ATLV.getTotalTLVLength());
-			offset=offset+MF_OTP_ATLV.getTotalTLVLength();
-		}
+//		if(MF_OTP_ATLV!=null){
+//			System.arraycopy(MF_OTP_ATLV.getTlv_bytes(),0, this.bytes,offset, MF_OTP_ATLV.getTotalTLVLength());
+//			offset=offset+MF_OTP_ATLV.getTotalTLVLength();
+//		}
 		//******************************
 		
 		if(areaIDTLV!=null){
@@ -406,10 +403,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+sidLabelTLV.getTotalTLVLength();
 		}
 
-		if(IPv4RouterIDLocalNodeNATLV!=null){
-			System.arraycopy(IPv4RouterIDLocalNodeNATLV.getTlv_bytes(),0, this.bytes,offset, IPv4RouterIDLocalNodeNATLV.getTotalTLVLength());
-			offset=offset+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
-		}
+//		if(IPv4RouterIDLocalNodeNATLV!=null){
+//			System.arraycopy(IPv4RouterIDLocalNodeNATLV.getTlv_bytes(),0, this.bytes,offset, IPv4RouterIDLocalNodeNATLV.getTotalTLVLength());
+//			offset=offset+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
+//		}
 
 		if(igpFlagBitsTLV!=null){
 			System.arraycopy(igpFlagBitsTLV.getTlv_bytes(),0, this.bytes,offset, igpFlagBitsTLV.getTotalTLVLength());
@@ -430,10 +427,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			System.arraycopy(OSPFForwardingAddrTLV.getTlv_bytes(),0, this.bytes,offset, OSPFForwardingAddrTLV.getTotalTLVLength());
 			offset=offset+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}
-		if (availableLabels!=null){
-			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
-			offset=offset+availableLabels.getTotalTLVLength();
-		}
+//		if (availableLabels!=null){
+//			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
+//			offset=offset+availableLabels.getTotalTLVLength();
+//		}
 
 	}
 	public void decode(){
@@ -455,14 +452,14 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_UNRESERVED_BANDWITH:
 				this.unreservedBandwidthTLV=new UnreservedBandwidthLinkAttribTLV(this.bytes, offset);
 				break;
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_METRIC:
+				this.metricTLV=new MetricLinkAttribTLV(this.bytes, offset);
+				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_ADMINISTRATIVE_GROUP:
 				this.administrativeGroupTLV=new AdministrativeGroupLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_LINK_PROTECTION_TYPE:
 				this.linkProtectionTLV=new LinkProtectionTypeLinkAttribTLV(this.bytes, offset);
-				break;
-			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_METRIC:
-				this.metricTLV=new MetricLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE:
 				this.IPv4RouterIDLocalNodeLATLV=new IPv4RouterIDLocalNodeLinkAttribTLV(this.bytes, offset);
@@ -473,27 +470,24 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TE_DEFAULT_METRIC:
 				this.TEMetricTLV=new DefaultTEMetricLinkAttribTLV(this.bytes, offset);
 				break;
-		    //********** RUBEN *************	
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_SHARED_RISK_LINK_GROUP:
 				this.SharedRiskLinkGroupATLV=new SharedRiskLinkGroupAttribTLV(this.bytes, offset);
 				break;	
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TRANSCEIVER_CLASS_AND_APPLICATION:
 				this.TransceiverClassAndAppATLV=new TransceiverClassAndAppAttribTLV(this.bytes, offset);
 				break;	
-			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP:
-				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
-				break;
+//			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP:
+//				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
+//				break;
 		    //******************************	
-			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
-				try {
-					this.availableLabels=new AvailableLabels(this.bytes, offset);
-				} catch (MalformedOSPFSubTLVException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-
-
+//			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
+//				try {
+//					this.availableLabels=new AvailableLabels(this.bytes, offset);
+//				} catch (MalformedOSPFSubTLVException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				break;
 				//NODE ATTRIBUTES
 
 				/* Se utiliza tanto en link attrib tlvs como en nodos ya que tiene el mismo type code para ambos*/
@@ -501,18 +495,21 @@ public class LinkStateAttribute  extends PathAttribute{
 						this.IPv4RouterIDLocalNodeNATLV=new IPv4RouterIDLocalNodeNodeAttribTLV(this.bytes, offset);
 
 				 */	
+			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID:
+				this.areaIDTLV=new IS_IS_AreaIdentifierNodeAttribTLV(this.bytes, offset);
+				break;				
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_FLAG_BITS:
 				this.nodeFlagBitsTLV=new NodeFlagBitsNodeAttribTLV(this.bytes, offset);
 				break;
 
-			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME:
+	        case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME:
 				this.nodeNameTLV=new NodeNameNodeAttribTLV(this.bytes, offset);
 				break;
 
-			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID:
-				this.areaIDTLV=new IS_IS_AreaIdentifierNodeAttribTLV(this.bytes, offset);
+			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_SID_LABEL:
+				this.sidLabelTLV=new SidLabelNodeAttribTLV(this.bytes, offset);
 				break;
-
+				
 				//PREFIX ATTRIBUTES
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS:
@@ -631,33 +628,32 @@ public class LinkStateAttribute  extends PathAttribute{
 	}
 	public void setTEMetricTLV(DefaultTEMetricLinkAttribTLV tEMetricTLV) {
 		TEMetricTLV = tEMetricTLV;
-	}
+	}	
 	
-	//********** RUBEN *************
-	public SharedRiskLinkGroupAttribTLV getSharedRiskLinkGroup() {
-		return SharedRiskLinkGroupATLV;
-	}
-	public void setSharedRiskLinkGroupTLV(SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV) {
-		this.SharedRiskLinkGroupATLV = SharedRiskLinkGroupATLV;
-	}
-	public TransceiverClassAndAppAttribTLV getTransceiverClassAndApp() {
-		return TransceiverClassAndAppATLV;
-	}
-	public void setTransceiverClassAndAppTLV(TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV) {
-		this.TransceiverClassAndAppATLV = TransceiverClassAndAppATLV;
-	}
-	public MF_OTPAttribTLV getMF_OTP() {
-		return MF_OTP_ATLV;
-	}
-	public void setMF_OTPAttribTLV(MF_OTPAttribTLV MF_OTP_ATLV) {
-		this.MF_OTP_ATLV = MF_OTP_ATLV;
-	}
 	
 	//******************************
 	
 	public NodeFlagBitsNodeAttribTLV getNodeFlagBitsTLV() {
 		return nodeFlagBitsTLV;
 	}
+	public SharedRiskLinkGroupAttribTLV getSharedRiskLinkGroupATLV() {
+		return SharedRiskLinkGroupATLV;
+	}
+	public void setSharedRiskLinkGroupATLV(SharedRiskLinkGroupAttribTLV sharedRiskLinkGroupATLV) {
+		SharedRiskLinkGroupATLV = sharedRiskLinkGroupATLV;
+	}
+	public TransceiverClassAndAppAttribTLV getTransceiverClassAndAppATLV() {
+		return TransceiverClassAndAppATLV;
+	}
+	public void setTransceiverClassAndAppATLV(TransceiverClassAndAppAttribTLV transceiverClassAndAppATLV) {
+		TransceiverClassAndAppATLV = transceiverClassAndAppATLV;
+	}
+//	public MF_OTPAttribTLV getMF_OTP_ATLV() {
+//		return MF_OTP_ATLV;
+//	}
+//	public void setMF_OTP_ATLV(MF_OTPAttribTLV mF_OTP_ATLV) {
+//		MF_OTP_ATLV = mF_OTP_ATLV;
+//	}
 	public void setNodeFlagBitsTLV(NodeFlagBitsNodeAttribTLV nodeFlagBitsTLV) {
 		this.nodeFlagBitsTLV = nodeFlagBitsTLV;
 	}
@@ -679,146 +675,164 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void setAreaIDTLV(IS_IS_AreaIdentifierNodeAttribTLV areaIDTLV) {
 		this.areaIDTLV = areaIDTLV;
 	}
-	public IPv4RouterIDLocalNodeNodeAttribTLV getIPv4RouterIDLocalNodeNATLV() {
-		return IPv4RouterIDLocalNodeNATLV;
-	}
-	public void setIPv4RouterIDLocalNodeNATLV(IPv4RouterIDLocalNodeNodeAttribTLV iPv4RouterIDLocalNodeNATLV) {
-		IPv4RouterIDLocalNodeNATLV = iPv4RouterIDLocalNodeNATLV;
-	}
+//	public IPv4RouterIDLocalNodeNodeAttribTLV getIPv4RouterIDLocalNodeNATLV() {
+//		return IPv4RouterIDLocalNodeNATLV;
+//	}
+//	public void setIPv4RouterIDLocalNodeNATLV(IPv4RouterIDLocalNodeNodeAttribTLV iPv4RouterIDLocalNodeNATLV) {
+//		IPv4RouterIDLocalNodeNATLV = iPv4RouterIDLocalNodeNATLV;
+//	}
 
-	public AvailableLabels getAvailableLabels() {
-		return availableLabels;
-	}
-	public void setAvailableLabels(AvailableLabels availableLabels) {
-		this.availableLabels = availableLabels;
-	}
-
+//	public AvailableLabels getAvailableLabels() {
+//		return availableLabels;
+//	}
+//	public void setAvailableLabels(AvailableLabels availableLabels) {
+//		this.availableLabels = availableLabels;
+//	}
 	@Override
 	public String toString() {
-		StringBuffer sb=new StringBuffer(1000);		
-		sb.append("LINK STATE \n\t> [typeCode=" + typeCode + ", optionalBit="
-				+ optionalBit + ", transitiveBit=" + transitiveBit
-				+ ", partialBit=" + partialBit + ", extendedLengthBit="
-				+ extendedLengthBit + ", length=" + pathAttributeLength + "]\r\n");
-		//sb.append(super.toString());
-		if (maximumLinkBandwidthTLV!=null){
-			sb.append(maximumLinkBandwidthTLV.toString());
-			sb.append("\r\n");			
-		}
-		if (maxReservableBandwidthTLV!=null){
-			sb.append(maxReservableBandwidthTLV.toString());
-			sb.append("\r\n");
-		}
-		if (unreservedBandwidthTLV!=null){
-			sb.append(unreservedBandwidthTLV.toString());
-			sb.append("\r\n");
-		}
-		if (metricTLV!=null){
-			sb.append(metricTLV.toString());
-			sb.append("\r\n");
-		}
-		if (administrativeGroupTLV!=null){
-			sb.append(administrativeGroupTLV.toString());
-			sb.append("\r\n");
-		}
-		if(linkProtectionTLV!=null){
-			sb.append(linkProtectionTLV.toString());
-			sb.append("\r\n");
+		return "LinkStateAttribute [administrativeGroupTLV=" + administrativeGroupTLV + ", maximumLinkBandwidthTLV="
+				+ maximumLinkBandwidthTLV + ", maxReservableBandwidthTLV=" + maxReservableBandwidthTLV
+				+ ", unreservedBandwidthTLV=" + unreservedBandwidthTLV + ", linkProtectionTLV=" + linkProtectionTLV
+				+ ", metricTLV=" + metricTLV + ", availableLabels=" + ", IPv4RouterIDLocalNodeLATLV="
+				+ IPv4RouterIDLocalNodeLATLV + ", IPv4RouterIDRemoteNodeLATLV=" + IPv4RouterIDRemoteNodeLATLV
+				+ ", TEMetricTLV=" + TEMetricTLV + ", SharedRiskLinkGroupATLV=" + SharedRiskLinkGroupATLV
+				+ ", TransceiverClassAndAppATLV=" + TransceiverClassAndAppATLV + ", nodeFlagBitsTLV=" + nodeFlagBitsTLV
+				+ ", nodeNameTLV=" + nodeNameTLV + ", areaIDTLV=" + areaIDTLV + ", sidLabelTLV=" + sidLabelTLV
+				+ ", igpFlagBitsTLV=" + igpFlagBitsTLV + ", routeTagTLV=" + routeTagTLV + ", prefixMetricTLV="
+				+ prefixMetricTLV + ", OSPFForwardingAddrTLV=" + OSPFForwardingAddrTLV + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((IPv4RouterIDLocalNodeLATLV == null) ? 0 : IPv4RouterIDLocalNodeLATLV.hashCode());
+		result = prime * result + ((IPv4RouterIDRemoteNodeLATLV == null) ? 0 : IPv4RouterIDRemoteNodeLATLV.hashCode());
+		result = prime * result + ((OSPFForwardingAddrTLV == null) ? 0 : OSPFForwardingAddrTLV.hashCode());
+		result = prime * result + ((SharedRiskLinkGroupATLV == null) ? 0 : SharedRiskLinkGroupATLV.hashCode());
+		result = prime * result + ((TEMetricTLV == null) ? 0 : TEMetricTLV.hashCode());
+		result = prime * result + ((TransceiverClassAndAppATLV == null) ? 0 : TransceiverClassAndAppATLV.hashCode());
+		result = prime * result + ((administrativeGroupTLV == null) ? 0 : administrativeGroupTLV.hashCode());
+		result = prime * result + ((areaIDTLV == null) ? 0 : areaIDTLV.hashCode());
+		result = prime * result + ((igpFlagBitsTLV == null) ? 0 : igpFlagBitsTLV.hashCode());
+		result = prime * result + ((linkProtectionTLV == null) ? 0 : linkProtectionTLV.hashCode());
+		result = prime * result + ((maxReservableBandwidthTLV == null) ? 0 : maxReservableBandwidthTLV.hashCode());
+		result = prime * result + ((maximumLinkBandwidthTLV == null) ? 0 : maximumLinkBandwidthTLV.hashCode());
+		result = prime * result + ((metricTLV == null) ? 0 : metricTLV.hashCode());
+		result = prime * result + ((nodeFlagBitsTLV == null) ? 0 : nodeFlagBitsTLV.hashCode());
+		result = prime * result + ((nodeNameTLV == null) ? 0 : nodeNameTLV.hashCode());
+		result = prime * result + ((prefixMetricTLV == null) ? 0 : prefixMetricTLV.hashCode());
+		result = prime * result + ((routeTagTLV == null) ? 0 : routeTagTLV.hashCode());
+		result = prime * result + ((sidLabelTLV == null) ? 0 : sidLabelTLV.hashCode());
+		result = prime * result + ((unreservedBandwidthTLV == null) ? 0 : unreservedBandwidthTLV.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 
-		}
-		if(IPv4RouterIDLocalNodeLATLV!=null){
-			sb.append(IPv4RouterIDLocalNodeLATLV.toString());
-			sb.append("\r\n");
-
-		}
-		if(IPv4RouterIDRemoteNodeLATLV!=null){
-			sb.append(IPv4RouterIDRemoteNodeLATLV.toString());
-			sb.append("\r\n");
-
-		}
-		if(TEMetricTLV!=null){
-			sb.append(TEMetricTLV.toString());
-			sb.append("\r\n");
-
-		}
-		
-		//********** RUBEN *************
-		if(SharedRiskLinkGroupATLV!=null){
-			sb.append(SharedRiskLinkGroupATLV.toString());
-			sb.append("\r\n");
-
-		}		
-		if(TransceiverClassAndAppATLV!=null){
-			sb.append(TransceiverClassAndAppATLV.toString());
-			sb.append("\r\n");
-
-		}
-		if(MF_OTP_ATLV!=null){
-			sb.append(MF_OTP_ATLV.toString());
-			sb.append("\r\n");
-
-		}
-	    //******************************
-		if(IPv4RouterIDLocalNodeNATLV!=null){
-			sb.append(IPv4RouterIDLocalNodeNATLV.toString());
-			sb.append("\r\n");
-
-		}
-
-		if(nodeFlagBitsTLV!=null){
-			sb.append(nodeFlagBitsTLV.toString());
-			sb.append("\r\n");
-
-		}
-
-		if(nodeNameTLV!=null){
-			sb.append(nodeNameTLV.toString());
-			sb.append("\r\n");
-
-		}
-
-		if(areaIDTLV!=null){
-			sb.append(areaIDTLV.toString());
-			sb.append("\r\n");
-
-		}
-
-		if (igpFlagBitsTLV!=null){
-			sb.append(igpFlagBitsTLV.toString());
-			sb.append("\r\n");			
-		}
-
-		if (OSPFForwardingAddrTLV!=null){
-			sb.append(OSPFForwardingAddrTLV.toString());
-			sb.append("\r\n");			
-		}
-
-		if (prefixMetricTLV!=null){
-			sb.append(prefixMetricTLV.toString());
-			sb.append("\r\n");			
-		}
-
-		if (routeTagTLV!=null){
-			sb.append(routeTagTLV.toString());
-			sb.append("\r\n");			
-		}
-
-		if(sidLabelTLV!=null){
-			sb.append(sidLabelTLV.toString());
-			sb.append("\r\n");			
-		}
-
-		if (availableLabels!=null){
-			sb.append(availableLabels.toString());
-			sb.append("\r\n");
-		}else
-			sb.append("There is no availableLabels");
-
-
-		return sb.toString();
-
+		if (getClass() != obj.getClass())
+			return false;
+		LinkStateAttribute other = (LinkStateAttribute) obj;
+		if (IPv4RouterIDLocalNodeLATLV == null) {
+			if (other.IPv4RouterIDLocalNodeLATLV != null)
+				return false;
+		} else if (!IPv4RouterIDLocalNodeLATLV.equals(other.IPv4RouterIDLocalNodeLATLV))
+			return false;
+		if (IPv4RouterIDRemoteNodeLATLV == null) {
+			if (other.IPv4RouterIDRemoteNodeLATLV != null)
+				return false;
+		} else if (!IPv4RouterIDRemoteNodeLATLV.equals(other.IPv4RouterIDRemoteNodeLATLV))
+			return false;
+		if (OSPFForwardingAddrTLV == null) {
+			if (other.OSPFForwardingAddrTLV != null)
+				return false;
+		} else if (!OSPFForwardingAddrTLV.equals(other.OSPFForwardingAddrTLV))
+			return false;
+		if (SharedRiskLinkGroupATLV == null) {
+			if (other.SharedRiskLinkGroupATLV != null)
+				return false;
+		} else if (!SharedRiskLinkGroupATLV.equals(other.SharedRiskLinkGroupATLV))
+			return false;
+		if (TEMetricTLV == null) {
+			if (other.TEMetricTLV != null)
+				return false;
+		} else if (!TEMetricTLV.equals(other.TEMetricTLV))
+			return false;
+		if (TransceiverClassAndAppATLV == null) {
+			if (other.TransceiverClassAndAppATLV != null)
+				return false;
+		} else if (!TransceiverClassAndAppATLV.equals(other.TransceiverClassAndAppATLV))
+			return false;
+		if (administrativeGroupTLV == null) {
+			if (other.administrativeGroupTLV != null)
+				return false;
+		} else if (!administrativeGroupTLV.equals(other.administrativeGroupTLV))
+			return false;
+		if (areaIDTLV == null) {
+			if (other.areaIDTLV != null)
+				return false;
+		} else if (!areaIDTLV.equals(other.areaIDTLV))
+			return false;
+		if (igpFlagBitsTLV == null) {
+			if (other.igpFlagBitsTLV != null)
+				return false;
+		} else if (!igpFlagBitsTLV.equals(other.igpFlagBitsTLV))
+			return false;
+		if (linkProtectionTLV == null) {
+			if (other.linkProtectionTLV != null)
+				return false;
+		} else if (!linkProtectionTLV.equals(other.linkProtectionTLV))
+			return false;
+		if (maxReservableBandwidthTLV == null) {
+			if (other.maxReservableBandwidthTLV != null)
+				return false;
+		} else if (!maxReservableBandwidthTLV.equals(other.maxReservableBandwidthTLV))
+			return false;
+		if (maximumLinkBandwidthTLV == null) {
+			if (other.maximumLinkBandwidthTLV != null)
+				return false;
+		} else if (!maximumLinkBandwidthTLV.equals(other.maximumLinkBandwidthTLV))
+			return false;
+		if (metricTLV == null) {
+			if (other.metricTLV != null)
+				return false;
+		} else if (!metricTLV.equals(other.metricTLV))
+			return false;
+		if (nodeFlagBitsTLV == null) {
+			if (other.nodeFlagBitsTLV != null)
+				return false;
+		} else if (!nodeFlagBitsTLV.equals(other.nodeFlagBitsTLV))
+			return false;
+		if (nodeNameTLV == null) {
+			if (other.nodeNameTLV != null)
+				return false;
+		} else if (!nodeNameTLV.equals(other.nodeNameTLV))
+			return false;
+		if (prefixMetricTLV == null) {
+			if (other.prefixMetricTLV != null)
+				return false;
+		} else if (!prefixMetricTLV.equals(other.prefixMetricTLV))
+			return false;
+		if (routeTagTLV == null) {
+			if (other.routeTagTLV != null)
+				return false;
+		} else if (!routeTagTLV.equals(other.routeTagTLV))
+			return false;
+		if (sidLabelTLV == null) {
+			if (other.sidLabelTLV != null)
+				return false;
+		} else if (!sidLabelTLV.equals(other.sidLabelTLV))
+			return false;
+		if (unreservedBandwidthTLV == null) {
+			if (other.unreservedBandwidthTLV != null)
+				return false;
+		} else if (!unreservedBandwidthTLV.equals(other.unreservedBandwidthTLV))
+			return false;
+		return true;
 	}
 
+	
 
 
 

@@ -117,7 +117,7 @@ public class TestCommons {
 				//System.out.println("XXXX "+fieldList.size());
 			}
 			for (Field field : fieldList) {
-				//System.out.println("Field name: "+field.getName());
+				System.out.println("Field name: "+field.getName());
 				if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 					//System.out.println("non static Field name: "+field.getName());
 					fieldListNS.add(field);
@@ -127,9 +127,8 @@ public class TestCommons {
 					if (ty instanceof Class){
 						Object o=null;
 						Class c =(Class)ty;
-						//System.out.println("Class name: "+c.getName()); 
 						Method method = object.getClass().getMethod("set"+field.getName().replaceFirst(field.getName().substring(0, 1), field.getName().substring(0, 1).toUpperCase()),field.getType());
-						//System.out.println("Method name: "+method.getName());
+						System.out.println("Method name: "+method.getName());
 						if (c.isPrimitive()){
 								fillPrimitive(object,method,ty,choice_int);
 						} else if (c.isArray()){
