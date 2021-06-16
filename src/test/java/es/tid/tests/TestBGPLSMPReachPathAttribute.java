@@ -3,11 +3,14 @@ package es.tid.tests;
 import es.tid.bgp.bgp4.update.fields.LinkNLRI;
 import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
 import es.tid.bgp.bgp4.update.fields.NodeNLRI;
+import es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI;
+import es.tid.bgp.bgp4.update.fields.PathAttribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.MP_Unreach_Attribute;
 import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV;
+import es.tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4InterfaceAddressLinkDescriptorsSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4NeighborAddressLinkDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6InterfaceAddressLinkDescriptorSubTLV;
@@ -43,7 +46,8 @@ public class TestBGPLSMPReachPathAttribute {
 	public static Collection<Object[]> configs() {
 		Object[][] objects={
 				{"es.tid.bgp.bgp4.update.fields.NodeNLRI"},
-				{"es.tid.bgp.bgp4.update.fields.LinkNLRI"}
+				{"es.tid.bgp.bgp4.update.fields.LinkNLRI"},
+				{"es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI"},
 		};
 		return Arrays.asList(objects);
 	}
@@ -72,7 +76,20 @@ public class TestBGPLSMPReachPathAttribute {
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				nodeNLRI.setLocalNodeDescriptors(ln);
 				TestCommons.createAllFields(ln,0);
-			}else {
+			} else if (object.equals("es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI")) {
+				TestCommons.createAllFields(ls,0);
+//				((IPv4PrefixNLRI)ls).setRoutingUniverseIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
+//				((IPv4PrefixNLRI)ls).setProtocolID(0);;				
+//				LocalNodeDescriptorsTLV lnt=new LocalNodeDescriptorsTLV();
+//				TestCommons.createAllFields(lnt,0);		
+//				((IPv4PrefixNLRI)ls).setLocalNodeDescriptors(lnt);
+//				ls.encode();
+				Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
+				//LinkStateNLRI ls2 = (LinkStateNLRI) ctor.newInstance(ls.getBytes(),0);
+				//object2.encode();
+				
+			}
+			else {
 				LinkNLRI linkNLRI=(LinkNLRI)ls;
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				linkNLRI.setLocalNodeDescriptors(ln);

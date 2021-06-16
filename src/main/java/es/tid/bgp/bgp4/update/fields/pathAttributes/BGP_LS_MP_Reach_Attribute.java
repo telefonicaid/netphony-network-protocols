@@ -43,7 +43,7 @@ public class BGP_LS_MP_Reach_Attribute extends MP_Reach_Attribute {
 				tempNLri = new ITNodeNLRI(bytes, offset2);
 			} else if(type == NLRITypes.Prefix_v4_NLRI)
 			{
-				tempNLri = new PrefixNLRI(bytes, offset2);
+				tempNLri = new IPv4PrefixNLRI(bytes, offset2);
 			} else
 			{
 				log.warn("UNKNOWN_NLRI: " + type);

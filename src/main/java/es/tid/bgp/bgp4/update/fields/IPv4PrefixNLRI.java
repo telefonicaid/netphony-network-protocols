@@ -5,23 +5,28 @@ import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import es.tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.*;
 
-public class PrefixNLRI extends LinkStateNLRI {
+/**
+ * 
+ * @author ogondio
+ *
+ */
+public class IPv4PrefixNLRI extends LinkStateNLRI {
 	
 	private int protocolID;//inicializado a 0(unknown)
 	private long routingUniverseIdentifier;
 	private LocalNodeDescriptorsTLV localNodeDescriptors;
-	private OSPFRouteTypePrefixDescriptorSubTLV OSPFRouteType;
+	private OSPFRouteTypeTLV OSPFRouteType;
 	private IPReachabilityInformationPrefixDescriptorSubTLV ipReachability;
 	//private IPReachabilityInfo IPReachabilityINFO;
 	
-	public PrefixNLRI() {
+	public IPv4PrefixNLRI() {
 		this.setNLRIType(NLRITypes.Prefix_v4_NLRI);
 		this.setRoutingUniverseIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
 	}
 
 	
 
-	public PrefixNLRI(byte[] bytes, int offset) {
+	public IPv4PrefixNLRI(byte[] bytes, int offset) {
 		super(bytes, offset);
 		decode();
 		// TODO Auto-generated constructor stub
@@ -29,7 +34,25 @@ public class PrefixNLRI extends LinkStateNLRI {
 	
 @Override
 	public void encode() {
-		int len=4+8;// The four bytes of the header plus the 4 first bytes)
+	
+		/*
+		 *       0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+
+     |  Protocol-ID  |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                           Identifier                          |
+     |                            (64 bits)                          |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     //              Local Node Descriptors (variable)              //
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     //                Prefix Descriptors (variable)                //
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+            Figure 9: The IPv4/IPv6 Topology Prefix NLRI Format
+		 */
+	
+		int len=13;// The four bytes of the header + 1 of 
 		if (localNodeDescriptors!=null){
 			localNodeDescriptors.encode();
 			len=len+localNodeDescriptors.getTotalTLVLength();		
@@ -99,7 +122,9 @@ public class PrefixNLRI extends LinkStateNLRI {
 		offset = offset + localNodeDescriptors.getTotalTLVLength();
 		
 		boolean fin=false;
-		
+		if (offset>=(this.getTotalNLRILength())){
+			fin=true;
+		}
 		while (!fin) {
 			int subTLVType=BGP4TLVFormat.getType(bytes, offset);
 			int subTLVLength=BGP4TLVFormat.getTotalTLVLength(bytes, offset);
@@ -110,7 +135,7 @@ public class PrefixNLRI extends LinkStateNLRI {
 				break;
 				
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_OSPF_ROUTE_TYPE:
-				this.OSPFRouteType=new OSPFRouteTypePrefixDescriptorSubTLV(bytes, offset);
+				this.OSPFRouteType=new OSPFRouteTypeTLV(bytes, offset);
 				break;
 			default:
 				log.warn("Unknown sub TLV found, subtype "+subTLVType);
@@ -140,7 +165,7 @@ public class PrefixNLRI extends LinkStateNLRI {
 		this.localNodeDescriptors = localNodeDescriptors;
 	}
 	
-	private void setRoutingUniverseIdentifier(long level3identifier) {
+	public void setRoutingUniverseIdentifier(long level3identifier) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -151,13 +176,13 @@ public class PrefixNLRI extends LinkStateNLRI {
 
 
 
-	public OSPFRouteTypePrefixDescriptorSubTLV getOSPFRouteType() {
+	public OSPFRouteTypeTLV getOSPFRouteType() {
 		return OSPFRouteType;
 	}
 
 
 
-	public void setOSPFRouteType(OSPFRouteTypePrefixDescriptorSubTLV oSPFRouteType) {
+	public void setOSPFRouteType(OSPFRouteTypeTLV oSPFRouteType) {
 		OSPFRouteType = oSPFRouteType;
 	}
 
