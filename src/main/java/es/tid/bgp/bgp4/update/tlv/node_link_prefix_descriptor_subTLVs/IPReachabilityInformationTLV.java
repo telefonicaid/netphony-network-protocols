@@ -13,7 +13,14 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    or IPv6) originally advertised in the IGP topology.  Its purpose is
    to glue a particular BGP service NLRI by virtue of its BGP next hop
    to a given node in the LSDB.  A router SHOULD advertise an IP Prefix
-   NLRI for each of its BGP next hops.  The format of the IP
+   NLRI for each of its BGP next hops.  
+ * @author ogondio
+ *
+ */
+public class IPReachabilityInformationTLV extends BGP4TLVFormat {
+	
+	/*
+	 * The format of the IP
    Reachability Information TLV is shown in the following figure:
 
       0                   1                   2                   3
@@ -33,21 +40,18 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    octets of the prefix, i.e., 1 octet for prefix length 1 up to 8, 2
    octets for prefix length 9 to 16, 3 octets for prefix length 17 up to
    24, 4 octets for prefix length 25 up to 32, etc.
- * @author ogondio
- *
- */
-public class IPReachabilityInformationPrefixDescriptorSubTLV extends BGP4TLVFormat {
+	 */
 
 	private Inet4Address ipv4Address;
 	private int prefix_length;
 	
 
-	public IPReachabilityInformationPrefixDescriptorSubTLV() {
+	public IPReachabilityInformationTLV() {
 		super();
 		this.setTLVType(PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO);
 	}
 
-	public IPReachabilityInformationPrefixDescriptorSubTLV(byte[] bytes, int offset) {
+	public IPReachabilityInformationTLV(byte[] bytes, int offset) {
 		super(bytes, offset);
 		decode();
 	}

@@ -16,7 +16,7 @@ public class IPv4PrefixNLRI extends LinkStateNLRI {
 	private long routingUniverseIdentifier;
 	private LocalNodeDescriptorsTLV localNodeDescriptors;
 	private OSPFRouteTypeTLV OSPFRouteType;
-	private IPReachabilityInformationPrefixDescriptorSubTLV ipReachability;
+	private IPReachabilityInformationTLV ipReachability;
 	//private IPReachabilityInfo IPReachabilityINFO;
 	
 	public IPv4PrefixNLRI() {
@@ -131,7 +131,7 @@ public class IPv4PrefixNLRI extends LinkStateNLRI {
 			
 			switch (subTLVType){
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO:
-				this.ipReachability=new IPReachabilityInformationPrefixDescriptorSubTLV(bytes, offset);
+				this.ipReachability=new IPReachabilityInformationTLV(bytes, offset);
 				break;
 				
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_OSPF_ROUTE_TYPE:
@@ -188,14 +188,14 @@ public class IPv4PrefixNLRI extends LinkStateNLRI {
 
 
 
-	public IPReachabilityInformationPrefixDescriptorSubTLV getIpReachability() {
+	public IPReachabilityInformationTLV getIpReachability() {
 		return ipReachability;
 	}
 
 
 
 	public void setIpReachability(
-			IPReachabilityInformationPrefixDescriptorSubTLV ipReachability) {
+			IPReachabilityInformationTLV ipReachability) {
 		this.ipReachability = ipReachability;
 	}
 

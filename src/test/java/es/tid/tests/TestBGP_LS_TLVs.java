@@ -44,7 +44,7 @@ public class TestBGP_LS_TLVs {
 //    					262	IPv6 neighbor address	22/13	[RFC6119, Section 4.3]
 //    					263	Multi-Topology ID		[RFC7752, Section 3.2.1.5]
 //    					264	OSPF Route Type		[RFC7752, Section 3.2.3]
-//    					265	IP Reachability Information		[RFC7752, Section 3.2.3]
+    			{"es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPReachabilityInformationTLV"},//    					265	IP Reachability Information		[RFC7752, Section 3.2.3]
 //    					266	Node MSD	242/23	[RFC8814]
 //    					267	Link MSD	(22,23,25,141,222,223)/15	[RFC8814]
 //    					268-511	Unassigned		
