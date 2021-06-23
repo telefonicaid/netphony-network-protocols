@@ -163,7 +163,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	UnreservedBandwidthLinkAttribTLV unreservedBandwidthTLV;
 	LinkProtectionTypeLinkAttribTLV linkProtectionTLV;
 	MetricLinkAttribTLV metricTLV;
-	//AvailableLabels availableLabels;//Añadida por nosotros
+	AvailableLabels availableLabels;//Añadida por nosotros
 	IPv4RouterIDLocalNodeLinkAttribTLV IPv4RouterIDLocalNodeLATLV;
 	IPv4RouterIDRemoteNodeLinkAttribTLV IPv4RouterIDRemoteNodeLATLV;
 	DefaultTEMetricLinkAttribTLV TEMetricTLV;
@@ -204,7 +204,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	@Override
 	public void encode() {
 		//Encode LinkStateAttribute
-
+		pathAttributeLength=0;
 		//LINK ATTRIBUTES
 		if (maximumLinkBandwidthTLV!=null){
 			maximumLinkBandwidthTLV.encode();
@@ -280,46 +280,39 @@ public class LinkStateAttribute  extends PathAttribute{
 //			IPv4RouterIDLocalNodeNATLV.encode();
 //			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
 //		}
-
 		if(sidLabelTLV!=null){
 			sidLabelTLV.encode();
 			pathAttributeLength=pathAttributeLength+sidLabelTLV.getTotalTLVLength();
 		}
-
 		//PREFIX Attributes
-
 		if(igpFlagBitsTLV!=null){
 			igpFlagBitsTLV.encode();
 			pathAttributeLength=pathAttributeLength+igpFlagBitsTLV.getTotalTLVLength();
 		}
-
 		if(routeTagTLV!=null){
 			routeTagTLV.encode();
 			pathAttributeLength=pathAttributeLength+routeTagTLV.getTotalTLVLength();
 		}
-
 		if(prefixMetricTLV!=null){
 			prefixMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+prefixMetricTLV.getTotalTLVLength();
 		}
-
 		if(OSPFForwardingAddrTLV!=null){
 			OSPFForwardingAddrTLV.encode();
 			pathAttributeLength=pathAttributeLength+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}			
-
-//		if (availableLabels != null){
-//			try {
-//				availableLabels.encode();
-//			} catch (MalformedOSPFSubTLVException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
-//		}
+		if (availableLabels != null){
+			try {
+				availableLabels.encode();
+			} catch (MalformedOSPFSubTLVException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
+		}
 
 		//Length
-		this.length=pathAttributeLength+mandatoryLength;
+		this.setPathAttributeLength(pathAttributeLength);
 		this.bytes=new byte[this.length];
 
 		//Encode Header
@@ -427,10 +420,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			System.arraycopy(OSPFForwardingAddrTLV.getTlv_bytes(),0, this.bytes,offset, OSPFForwardingAddrTLV.getTotalTLVLength());
 			offset=offset+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}
-//		if (availableLabels!=null){
-//			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
-//			offset=offset+availableLabels.getTotalTLVLength();
-//		}
+		if (availableLabels!=null){
+			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
+			offset=offset+availableLabels.getTotalTLVLength();
+		}
 
 	}
 	public void decode(){
@@ -440,6 +433,7 @@ public class LinkStateAttribute  extends PathAttribute{
 		while (!fin) {
 			int TLVType=BGP4TLVFormat.getType(this.bytes, offset);
 			int TLVLength=BGP4TLVFormat.getTotalTLVLength(this.bytes, offset);
+			//System.out.println ("TLV Type: "+TLVType+" TLV Legnth: "+TLVLength);
 			//diferenciar en links y nodes para que no de error de compilacion ya que los id de los IPv4 son iguales 
 			switch (TLVType){
 			//LINK ATTRIBUTES
@@ -480,14 +474,14 @@ public class LinkStateAttribute  extends PathAttribute{
 //				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
 //				break;
 		    //******************************	
-//			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
-//				try {
-//					this.availableLabels=new AvailableLabels(this.bytes, offset);
-//				} catch (MalformedOSPFSubTLVException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				break;
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
+				try {
+					this.availableLabels=new AvailableLabels(this.bytes, offset);
+				} catch (MalformedOSPFSubTLVException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 				//NODE ATTRIBUTES
 
 				/* Se utiliza tanto en link attrib tlvs como en nodos ya que tiene el mismo type code para ambos*/
@@ -682,12 +676,12 @@ public class LinkStateAttribute  extends PathAttribute{
 //		IPv4RouterIDLocalNodeNATLV = iPv4RouterIDLocalNodeNATLV;
 //	}
 
-//	public AvailableLabels getAvailableLabels() {
-//		return availableLabels;
-//	}
-//	public void setAvailableLabels(AvailableLabels availableLabels) {
-//		this.availableLabels = availableLabels;
-//	}
+	public AvailableLabels getAvailableLabels() {
+		return availableLabels;
+	}
+	public void setAvailableLabels(AvailableLabels availableLabels) {
+		this.availableLabels = availableLabels;
+	}
 	@Override
 	public String toString() {
 		return "LinkStateAttribute [administrativeGroupTLV=" + administrativeGroupTLV + ", maximumLinkBandwidthTLV="

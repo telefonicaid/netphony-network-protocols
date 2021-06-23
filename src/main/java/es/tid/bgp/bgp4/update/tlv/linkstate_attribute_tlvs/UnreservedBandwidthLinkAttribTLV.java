@@ -15,6 +15,15 @@ public float[] unreservedBandwidth;
 		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_UNRESERVED_BANDWITH);
 		unreservedBandwidth=new float[8];
+		unreservedBandwidth[0]=0x00;
+		unreservedBandwidth[1]=0x00;
+		unreservedBandwidth[2]=0x00;
+		unreservedBandwidth[3]=0x00;
+		unreservedBandwidth[4]=0x00;
+		unreservedBandwidth[5]=0x00;
+		unreservedBandwidth[6]=0x00;
+		unreservedBandwidth[7]=0x00;
+
 	}
 	
 	public UnreservedBandwidthLinkAttribTLV(byte[] bytes, int offset){

@@ -56,7 +56,8 @@ public class TestBGPLSPathAttribute {
 		System.out.println(ByteHandler.ByteMACToString(object1.getBytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
 		//Check toString output
-		object1.toString();
+		System.out.println("Object 1: "+object1.toString());
+		System.out.println("Object 2: "+object2.toString());
 		//Check all the gets
 		TestCommons.testGets(object1);
 		//Check if the fields are the same

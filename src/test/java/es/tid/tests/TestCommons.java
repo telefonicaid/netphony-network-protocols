@@ -22,6 +22,7 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Attribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Segment;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.OriginAttribute;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IGPRouterIDNodeDescriptorSubTLV;
 import es.tid.of.DataPathID;
 import es.tid.ospf.ospfv2.lsa.InterASTEv2LSA;
@@ -168,7 +169,12 @@ public class TestCommons {
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
 									o = new EndPointsIPv4();
 									createAllFields(o,choice_int);
-							 }else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
+							 } else if  (c.getName().equals("es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV")) {
+									o = new UnreservedBandwidthLinkAttribTLV();
+									((UnreservedBandwidthLinkAttribTLV)o).getUnreservedBandwidth()[3]=(float)3.0;
+							 }
+							 
+							 else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
 								 if (choice_int==0) {
 									 o= new BandwidthRequested();
 									 createAllFields(o,choice_int);	 
