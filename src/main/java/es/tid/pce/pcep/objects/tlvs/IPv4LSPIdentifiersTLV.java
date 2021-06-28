@@ -106,7 +106,8 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 
 	
 	public void decode() throws MalformedPCEPObjectException 
-	{		
+	{	
+		log.debug("Decoding IPv4LSPIdentifiers TLV");
 		byte[] ip=new byte[4]; 
 		int offset = 4;
 		System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);

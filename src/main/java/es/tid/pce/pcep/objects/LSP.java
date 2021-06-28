@@ -1,8 +1,5 @@
 package es.tid.pce.pcep.objects;
 
-import java.net.Inet4Address;
-import java.util.Hashtable;
-
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPErrorCodeTLV;
 import es.tid.pce.pcep.objects.tlvs.IPv4LSPIdentifiersTLV;
@@ -10,8 +7,6 @@ import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.pce.pcep.objects.tlvs.RSVPErrorSpecTLV;
 import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import es.tid.protocol.commons.ByteHandler;
-
-
 
 /**
  * LSP Object
@@ -279,6 +274,7 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 
 	@Override
 	public void decode() throws MalformedPCEPObjectException {		
+		log.debug("Decoding LSP object with length "+this.ObjectLength);
 		symbolicPathNameTLV_tlv = null;
 		lspIdentifiers_tlv = null;
 		lspErrorCodes_tlv = null;
@@ -294,9 +290,9 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 		fragmentationFlag=(object_bytes[6]&0x02)==0x02;
 		eroCompressionFlag=(object_bytes[6]&0x4)==0x04;
 		createFlag = (ByteHandler.easyCopy(0,0,object_bytes[7]) == 1) ? true : false ;
-		log.debug("cFlag="+createFlag);
+		//log.debug("cFlag="+createFlag);
 		opFlags = ByteHandler.easyCopy(1,3,object_bytes[7]);
-		log.debug("opFlag="+opFlags);
+		//log.debug("opFlag="+opFlags);
 		administrativeFlag = (ByteHandler.easyCopy(4,4,object_bytes[7]) == 1) ? true : false ;
 		removeFlag = (ByteHandler.easyCopy(5,5,object_bytes[7]) == 1) ? true : false ;
 		syncFlag = (ByteHandler.easyCopy(6,6,object_bytes[7]) == 1) ? true : false ;
@@ -568,25 +564,22 @@ The LSP object MUST be present within PCRpt and PCUpd messages.  The
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "LSP [lspId=" + lspId + ", delegateFlag=" + delegateFlag + ", syncFlag=" + syncFlag + ", removeFlag="
+				+ removeFlag + ", administrativeFlag=" + administrativeFlag + ", opFlags=" + opFlags + ", createFlag="
+				+ createFlag + ", p2mpFlag=" + p2mpFlag + ", fragmentationFlag=" + fragmentationFlag
+				+ ", eroCompressionFlag=" + eroCompressionFlag + ", symbolicPathNameTLV_tlv=" + symbolicPathNameTLV_tlv
+				+ ", lspIdentifiers_tlv=" + lspIdentifiers_tlv + ", lspErrorCodes_tlv=" + lspErrorCodes_tlv
+				+ ", rsvpErrorSpec_tlv=" + rsvpErrorSpec_tlv + ", lspDBVersion_tlv=" + lspDBVersion_tlv + "]";
+	}
+
 	/*
 	 * toString
 	 * Use this method to represent the most significant information of the object 
 	 */
 	
-	public String toString(){
-		StringBuffer sb=new StringBuffer(100);
-		sb.append("<LSP id = ");
-		sb.append(lspId);	
-		if (symbolicPathNameTLV_tlv!=null){
-			
-			sb.append(symbolicPathNameTLV_tlv.toString());
-		}
-		if (lspIdentifiers_tlv!=null){
-			sb.append(lspIdentifiers_tlv.toString());
-		}
-		sb.append(">");
-		return sb.toString();	
-	}
+
 	
 	
 

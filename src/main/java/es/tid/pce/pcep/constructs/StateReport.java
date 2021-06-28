@@ -127,6 +127,7 @@ public class StateReport extends PCEPConstruct
 		}
 		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
+		log.debug("Voy  ver el SRP oc "+oc+" offset "+offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
 				try {
@@ -140,6 +141,7 @@ public class StateReport extends PCEPConstruct
 		}
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
+		log.debug("Voy a ver el LSP, oc "+oc+" offset "+offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSP)
 		{
 			try 

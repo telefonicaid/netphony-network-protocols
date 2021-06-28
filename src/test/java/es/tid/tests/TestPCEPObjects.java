@@ -116,6 +116,7 @@ public class TestPCEPObjects {
 		object2 = (PCEPObject) ctor.newInstance(object1.getBytes(),0);
 		object2.encode();
 		assertTrue("testing PCEP object 2"+objectClass,object1.equals(object2));
+		System.out.println("Testing String output: "+object1.toString());
 		//Check equals with false boolean
 		testEquals(object1, object2);
 		//Test Bad object
