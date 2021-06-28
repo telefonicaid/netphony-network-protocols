@@ -4,7 +4,9 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 import es.tid.protocol.commons.ByteHandler;
 /**
  * IGP Metric TLV (Type 1095)
- * @see https://www.iana.org/go/rfc7752	
+ * 
+ * @see <a href="https://www.iana.org/go/rfc7752">RFC 7742</a>	
+ * 
  * @author ogondio
  *
  */

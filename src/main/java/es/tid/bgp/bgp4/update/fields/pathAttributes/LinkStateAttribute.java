@@ -170,7 +170,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	//********** RUBEN *************
 	SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV;
 	TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV;
-	//MF_OTPAttribTLV MF_OTP_ATLV;
+	MF_OTPAttribTLV MF_OTP_ATLV;
 	//******************************
 	
 
@@ -256,10 +256,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			TransceiverClassAndAppATLV.encode();
 			pathAttributeLength=pathAttributeLength+TransceiverClassAndAppATLV.getTotalTLVLength();
 		}
-//		if(MF_OTP_ATLV!=null){
-//			MF_OTP_ATLV.encode();
-//			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
-//		}
+		if(MF_OTP_ATLV!=null){
+			MF_OTP_ATLV.encode();
+			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
+		}
 		//******************************
 		
 		//NODE Attributes
@@ -370,10 +370,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+TransceiverClassAndAppATLV.getTotalTLVLength();
 		}
 		
-//		if(MF_OTP_ATLV!=null){
-//			System.arraycopy(MF_OTP_ATLV.getTlv_bytes(),0, this.bytes,offset, MF_OTP_ATLV.getTotalTLVLength());
-//			offset=offset+MF_OTP_ATLV.getTotalTLVLength();
-//		}
+		if(MF_OTP_ATLV!=null){
+			System.arraycopy(MF_OTP_ATLV.getTlv_bytes(),0, this.bytes,offset, MF_OTP_ATLV.getTotalTLVLength());
+			offset=offset+MF_OTP_ATLV.getTotalTLVLength();
+		}
 		//******************************
 		
 		if(areaIDTLV!=null){
@@ -470,9 +470,9 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TRANSCEIVER_CLASS_AND_APPLICATION:
 				this.TransceiverClassAndAppATLV=new TransceiverClassAndAppAttribTLV(this.bytes, offset);
 				break;	
-//			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP:
-//				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
-//				break;
+			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_MF_OTP:
+				this.MF_OTP_ATLV=new MF_OTPAttribTLV(this.bytes, offset);
+				break;
 		    //******************************	
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_AVAILABLELABELS:
 				try {
@@ -642,12 +642,12 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void setTransceiverClassAndAppATLV(TransceiverClassAndAppAttribTLV transceiverClassAndAppATLV) {
 		TransceiverClassAndAppATLV = transceiverClassAndAppATLV;
 	}
-//	public MF_OTPAttribTLV getMF_OTP_ATLV() {
-//		return MF_OTP_ATLV;
-//	}
-//	public void setMF_OTP_ATLV(MF_OTPAttribTLV mF_OTP_ATLV) {
-//		MF_OTP_ATLV = mF_OTP_ATLV;
-//	}
+	public MF_OTPAttribTLV getMF_OTP_ATLV() {
+		return MF_OTP_ATLV;
+	}
+	public void setMF_OTP_ATLV(MF_OTPAttribTLV mF_OTP_ATLV) {
+		MF_OTP_ATLV = mF_OTP_ATLV;
+	}
 	public void setNodeFlagBitsTLV(NodeFlagBitsNodeAttribTLV nodeFlagBitsTLV) {
 		this.nodeFlagBitsTLV = nodeFlagBitsTLV;
 	}

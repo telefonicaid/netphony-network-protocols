@@ -8,7 +8,7 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 /**
  * IP Reachability Information TLV (Type 265)	
  * 
- * The IP Reachability Information TLV is a mandatory TLV for IPv4 &
+ * The IP Reachability Information TLV is a mandatory TLV for IPv4 and
    IPv6 Prefix NLRI types.  The TLV contains one IP address prefix (IPv4
    or IPv6) originally advertised in the IGP topology.  Its purpose is
    to glue a particular BGP service NLRI by virtue of its BGP next hop
