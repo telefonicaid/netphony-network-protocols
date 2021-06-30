@@ -65,7 +65,7 @@ public class TestPCEPTLVs {
     			{"es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV"}, //	31	Extended Association ID	[RFC8697]					 
     			//  32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
     			//  33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
-    			//  34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
+    			{"es.tid.pce.pcep.objects.tlvs.PathSetupCapabilityTLV"},//  34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
     			{"es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV"}, //  35	ASSOC-Type-List	[RFC8697]					 
 //    					36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
 //    					37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
@@ -76,7 +76,7 @@ public class TestPCEPTLVs {
     			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"}, //	42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]    			
 //    					43	LABEL-SET	[RFC8779, Section 2.5.2.5]
 //    					44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
-//    					45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
+    			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"},// 45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
 //    					46	DISJOINTNESS-CONFIGURATION	[RFC8800]
 //    					47	DISJOINTNESS-STATUS	[RFC8800]
 //    					48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
@@ -85,8 +85,6 @@ public class TestPCEPTLVs {
 //    					51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
-    			{"es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV"},//Type 35
-
 				};
 		return Arrays.asList(objects);
     }
