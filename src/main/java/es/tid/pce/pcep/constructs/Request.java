@@ -53,6 +53,11 @@ public class Request extends PCEPConstruct{
 	private ReqAdapCap reqAdapCap;
 	
 	/**
+	 * LSP Object: According to RFC 8231, the LSP object can be included.
+	 */
+	private LSP lsp;
+	
+	/**
 	 * Reservation Object //OPTIONAL AND TEMPORAL!!
 	 */
 	private Reservation reservation;
@@ -97,6 +102,10 @@ public class Request extends PCEPConstruct{
 		else {
 			log.warn("EndPoints not found! They are compulsory");
 			throw new PCEPProtocolViolationException();
+		}
+		if (lsp!=null) {
+			lsp.encode();
+			len=len+lsp.getLength();
 		}
 		if (lSPA!=null){
 			lSPA.encode();
@@ -155,6 +164,10 @@ public class Request extends PCEPConstruct{
 		offset=offset+requestParameters.getLength();
 		System.arraycopy(endPoints.getBytes(), 0, bytes, offset, endPoints.getLength());
 		offset=offset+endPoints.getLength();
+		if (lsp!=null) {
+			System.arraycopy(lsp.getBytes(), 0, bytes, offset, lsp.getLength());
+			offset=offset+lsp.getLength();			
+		}
 		if (lSPA!=null){
 			System.arraycopy(lSPA.getBytes(), 0, bytes, offset, lSPA.getLength());
 			offset=offset+lSPA.getLength();
@@ -309,6 +322,21 @@ public class Request extends PCEPConstruct{
 		else {
 			log.warn("ENDPOINTS COMPULSORY AFTER  RP object");
 			throw new PCEPProtocolViolationException();
+		}
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSP){
+			try {
+				lsp=new LSP(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed LSPA Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+lsp.getLength();
+			len=len+lsp.getLength();
+			if (offset>=max_offset){
+				this.setLength(len);
+				return;
+			}
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
@@ -638,6 +666,9 @@ public class Request extends PCEPConstruct{
 		if (endPoints!=null){
 			sb.append(endPoints);
 		}
+		if (lsp!=null){
+			sb.append(lsp);
+		}
 		if (lSPA!=null){
 			sb.append(lSPA);
 		}
@@ -680,6 +711,7 @@ public class Request extends PCEPConstruct{
 		Request req=new Request();
 		req.setRequestParameters(this.requestParameters);
 		req.setEndPoints(this.endPoints);
+		
 		req.setLSPA(this.lSPA);
 		req.setBandwidth(this.bandwidth);
 		req.setMetricList(this.metricList);
@@ -698,34 +730,20 @@ public class Request extends PCEPConstruct{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime * result
-				+ ((endPoints == null) ? 0 : endPoints.hashCode());
+		result = prime * result + ((bandwidth == null) ? 0 : bandwidth.hashCode());
+		result = prime * result + ((endPoints == null) ? 0 : endPoints.hashCode());
 		result = prime * result + ((iRO == null) ? 0 : iRO.hashCode());
-		result = prime * result
-				+ ((interLayer == null) ? 0 : interLayer.hashCode());
+		result = prime * result + ((interLayer == null) ? 0 : interLayer.hashCode());
 		result = prime * result + ((lSPA == null) ? 0 : lSPA.hashCode());
-		result = prime * result
-				+ ((loadBalancing == null) ? 0 : loadBalancing.hashCode());
-		result = prime * result
-				+ ((metricList == null) ? 0 : metricList.hashCode());
-		result = prime
-				* result
-				+ ((objectiveFunction == null) ? 0 : objectiveFunction
-						.hashCode());
-		result = prime * result
-				+ ((rROBandwidth == null) ? 0 : rROBandwidth.hashCode());
-		result = prime * result
-				+ ((reqAdapCap == null) ? 0 : reqAdapCap.hashCode());
-		result = prime
-				* result
-				+ ((requestParameters == null) ? 0 : requestParameters
-						.hashCode());
-		result = prime * result
-				+ ((reservation == null) ? 0 : reservation.hashCode());
-		result = prime * result
-				+ ((switchLayer == null) ? 0 : switchLayer.hashCode());
+		result = prime * result + ((loadBalancing == null) ? 0 : loadBalancing.hashCode());
+		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
+		result = prime * result + ((metricList == null) ? 0 : metricList.hashCode());
+		result = prime * result + ((objectiveFunction == null) ? 0 : objectiveFunction.hashCode());
+		result = prime * result + ((rROBandwidth == null) ? 0 : rROBandwidth.hashCode());
+		result = prime * result + ((reqAdapCap == null) ? 0 : reqAdapCap.hashCode());
+		result = prime * result + ((requestParameters == null) ? 0 : requestParameters.hashCode());
+		result = prime * result + ((reservation == null) ? 0 : reservation.hashCode());
+		result = prime * result + ((switchLayer == null) ? 0 : switchLayer.hashCode());
 		result = prime * result + ((xro == null) ? 0 : xro.hashCode());
 		return result;
 	}
@@ -769,6 +787,11 @@ public class Request extends PCEPConstruct{
 				return false;
 		} else if (!loadBalancing.equals(other.loadBalancing))
 			return false;
+		if (lsp == null) {
+			if (other.lsp != null)
+				return false;
+		} else if (!lsp.equals(other.lsp))
+			return false;
 		if (metricList == null) {
 			if (other.metricList != null)
 				return false;
@@ -811,6 +834,17 @@ public class Request extends PCEPConstruct{
 			return false;
 		return true;
 	}
+
+
+	public LSP getLsp() {
+		return lsp;
+	}
+
+	public void setLsp(LSP lsp) {
+		this.lsp = lsp;
+	}
+
+	
 	
 	
 	

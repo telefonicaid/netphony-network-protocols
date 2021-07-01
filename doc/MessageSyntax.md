@@ -35,7 +35,7 @@ PCReq Message::=<Common Header>[<svec-tuple-list>]<request-list>
 
 <request>::=<RP><segment-computation>|<path-key-expansion>
 
-<segment-computation>::=<END-POINTS>[<CLASSTYPE>][<LSPA>][<BANDWIDTH>][<metric-list>][<OF>][<rro-bw-pair>][<IRO>][<LOAD-BALANCING>][<XRO>]
+<segment-computation>::=<END-POINTS>[LSP][<CLASSTYPE>][<LSPA>][<BANDWIDTH>][<metric-list>][<OF>][<rro-bw-pair>][<IRO>][<LOAD-BALANCING>][<XRO>]
 
 <rro-bw-pair>::=<RRO>[<BANDWIDTH>]
 
@@ -203,12 +203,5 @@ StartTLS Message
 ```
  <StartTLS Message>::= <Common Header>
 ```
-
-### Experimental proprietary messages
-
-* PCEPTELinkSuggestion
-* PCEPTELinkConfirmation
-* PCEPTELinkTearDownSuggestion
-
 
 
