@@ -1,3 +1,24 @@
+v1.4.1
+- Request Object Updated to include LSP (RFC 8231)
+- Path updated to support State Reports (RFC 8231)
+- Bugfixes in Link State Attribute
+- Bugfixes in BGP-LS Path Attribute
+- Implemented BGP-LS Path Atrribute TLVs
+- Updated Domain ID TLV to RFC 8685
+- Implemented Label Request TLV
+- Add support of OverloadDurationTLV
+- Updated IPv4LSPIdentifiers TLV from draft to RFC 8231
+- Tests coverage increased to 72%
+v1.4.0
+- Completed enconding of IS_IS_AreaIdentifierNodeAttribTLV (1027)
+- Fixed SRLG TLV
+- Added tests for BGP-LS TLV
+- Removed experimental objects. Focus on standard protocols.
+- Tests coverage increased to 61%
+- Bugfixes due to the new test coverage increase.
+- PCEP Association object added
+- OP-CONF-ASSOC-RANGE (Operator-configured Association Range) TLV is implemented
+-  Updated PCEP Support based on IANA PCEP assignment
 v1.3.3
 - 5GEX extensions to carry IT information in BGP-LS (propietary)
 v1.3.2
