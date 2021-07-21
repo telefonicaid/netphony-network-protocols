@@ -16,14 +16,14 @@ import org.slf4j.LoggerFactory;
    the following sections.
 
     0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |L|    Type     |     Length    |  ST   |     Flags     |F|S|C|M|
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              SID                              |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   //                        NAI (variable)                       //
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |L|   Type=36   |     Length    |  NT   |     Flags     |F|S|C|M|
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                         SID (optional)                        |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     //                   NAI (variable, optional)                  //
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                      Figure 2: SR-ERO Subobject format
 
@@ -114,12 +114,13 @@ public class SREROSubobject extends EROSubobject{
 	public static final int length_UnnumberedAdjacencyIPv4NodeID = 24;	
 		
 		
-	protected byte ST;
+	
 	protected boolean fflag;
 	protected boolean sflag;
 	protected boolean cflag;
 	protected boolean mflag;
-	protected int SID;
+	protected int NT;
+	protected long SID;
 
 
 	
@@ -131,7 +132,7 @@ public class SREROSubobject extends EROSubobject{
 		cflag = false;
 		mflag = false;
 		loosehop = false;
-		ST = 0;
+		NT = 0;
 		type = SubObjectValues.ERO_SUBOBJECT_SR_ERO;
 
 	}
@@ -156,18 +157,18 @@ public class SREROSubobject extends EROSubobject{
 		}
 		//TODO: ver si el length varia con los NAI
 		subobject_bytes[1]=(byte)erosolength;
-		subobject_bytes[2]=(byte)((ST & 0x0F) << 4);
+		subobject_bytes[2]=(byte)((NT & 0x0F) << 4);
 		ByteHandler.BoolToBuffer(4 + 3 * 8,fflag,this.subobject_bytes);
 		ByteHandler.BoolToBuffer(5 + 3 * 8,sflag,this.subobject_bytes);
 		ByteHandler.BoolToBuffer(6 + 3 * 8,cflag,this.subobject_bytes);
 		ByteHandler.BoolToBuffer(7 + 3 * 8,mflag,this.subobject_bytes);
 		//SID
-		
-		this.subobject_bytes[4]=(byte)(SID >>> 24 & 0xff);
-		this.subobject_bytes[5]=(byte)(SID >>> 16 & 0xff);
-		this.subobject_bytes[6]=(byte)(SID >>> 8 & 0xff);
-		this.subobject_bytes[7]=(byte)(SID & 0xff);	
-		//TODO: los NAI?		
+		int offset=4;
+		if (!sflag) {
+		  ByteHandler.encode4bytesLong(SID, this.subobject_bytes, offset);	
+		}
+		//TODO: NAI
+				
 		
 		
 	}
@@ -176,17 +177,19 @@ public class SREROSubobject extends EROSubobject{
 		loosehop = (ByteHandler.easyCopy(0,0,this.subobject_bytes[0]) == 1);
 		type=subobject_bytes[0]&0x7F;
 		erosolength=(int)subobject_bytes[1];
-		ST = (byte)((subobject_bytes[2] >> 4) & 0x0f);
+		NT = (byte)((subobject_bytes[2] >> 4) & 0x0f);
 		
 		fflag = (ByteHandler.easyCopy(4,4,this.subobject_bytes[3]) == 1);	
 		sflag = (ByteHandler.easyCopy(5,5,this.subobject_bytes[3]) == 1);	
 		cflag = (ByteHandler.easyCopy(6,6,this.subobject_bytes[3]) == 1);	
 		mflag = (ByteHandler.easyCopy(7,7,this.subobject_bytes[3]) == 1);			
 
-		SID=0;
-		for (int k = 0; k < 4; k++) {
-			SID = (SID << 8) | (this.subobject_bytes[k+4] & 0xff);
-		}		
+		int offset=4;
+		if (!sflag) {
+			SID=ByteHandler.decode4bytesLong(this.subobject_bytes, offset);
+		}
+		
+
 		
 	}
 	
@@ -199,7 +202,7 @@ public class SREROSubobject extends EROSubobject{
 		sb.append(" loosehop: "+loosehop);
 		sb.append(" type: "+type);
 		sb.append(" length: "+erosolength);
-		sb.append(" ST: "+ST);
+		sb.append(" NT: "+NT);
 		sb.append(" flags: |f|="+fflag+" |s|="+sflag+" |c|="+cflag+" |m|="+mflag);
 		sb.append(">");
 		
@@ -234,7 +237,7 @@ public class SREROSubobject extends EROSubobject{
 	 * 
 	 */
 	public void decodeNAI(){
-		switch((int)this.ST) {
+		switch((int)this.NT) {
 		case SREROSubobject.ST_IPv4NodeID:
 			decodeIPv4NodeID();
 			break;
@@ -313,7 +316,7 @@ public class SREROSubobject extends EROSubobject{
 		return type;
 	}
 
-	public int getSID() {
+	public long getSID() {
 		return SID;
 	}
 	
@@ -341,25 +344,29 @@ public class SREROSubobject extends EROSubobject{
 		this.mflag = mFlag;
 	}
 	
-	public void setSID(int SID)
+	public void setSID(long SID)
 	{
 		this.SID = SID;
+		//If a SID is provided, then sflag MUST be false.
+		this.sflag=false;
 	}
 
-	public byte getST() {
-		return ST;
+	public int getNT() {
+		return NT;
 	}
 
-	public void setST(byte sT) {
-		ST = sT;
+	public void setNT(int nT) {
+		NT = nT;
 	}
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + SID;
-		result = prime * result + ST;
+		result = prime * result + NT;
+		result = prime * result + (int) (SID ^ (SID >>> 32));
 		result = prime * result + (cflag ? 1231 : 1237);
 		result = prime * result + (fflag ? 1231 : 1237);
 		result = prime * result + (mflag ? 1231 : 1237);
@@ -376,9 +383,9 @@ public class SREROSubobject extends EROSubobject{
 		if (getClass() != obj.getClass())
 			return false;
 		SREROSubobject other = (SREROSubobject) obj;
-		if (SID != other.SID)
+		if (NT != other.NT)
 			return false;
-		if (ST != other.ST)
+		if (SID != other.SID)
 			return false;
 		if (cflag != other.cflag)
 			return false;

@@ -1,5 +1,7 @@
 package es.tid.pce.pcep.constructs;
 
+import java.util.LinkedList;
+
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthExistingLSP;
@@ -15,6 +17,7 @@ import es.tid.pce.pcep.objects.ExplicitRouteObject;
 import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
+import es.tid.pce.pcep.objects.Metric;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.P2MPEndPointsIPv4;
 import es.tid.pce.pcep.objects.P2PGeneralizedEndPoints;
@@ -22,26 +25,36 @@ import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.pce.pcep.objects.SRP;
 
 /**
- * PCEP Initiated LSP.
- * {@code
+ * PCEP Initiated LSP. {@code
  *   <PCE-initiated-lsp-request> ::= <SRP>
                                    <LSP>
                                    <END-POINTS>
                                    <ERO>
-                                   [<attribute-list>]}
+                                   [<attribute-list>]
+<attribute-list>::=[<LSPA>]
+                       [<BANDWIDTH>]
+                       [<metric-list>]
+                       [<IRO>]                                   
+                                   
+                                   }
+ * 
  * @author ogondio
  *
  */
-public class PCEPIntiatedLSP extends PCEPConstruct
-{
+public class PCEPIntiatedLSP extends PCEPConstruct {
 
 	private SRP srp;
 	private LSP lsp;
 	private ExplicitRouteObject ero;
 
 	private EndPoints endPoint;
-	private Bandwidth bandwidth;
 
+	/**
+	 * Metric List
+	 */
+	private LinkedList<Metric> metricList;
+
+	private Bandwidth bandwidth;
 
 	public Bandwidth getBandwidth() {
 		return bandwidth;
@@ -51,17 +64,16 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		this.bandwidth = bandwidth;
 	}
 
-	public PCEPIntiatedLSP() 
-	{
+	public PCEPIntiatedLSP() {
+		metricList=new LinkedList<Metric>();
 	}
 
-	public PCEPIntiatedLSP(byte []bytes, int offset)throws PCEPProtocolViolationException 
-	{
+	public PCEPIntiatedLSP(byte[] bytes, int offset) throws PCEPProtocolViolationException {
+		metricList=new LinkedList<Metric>();
 		decode(bytes, offset);
 	}
 
-	public void encode() throws PCEPProtocolViolationException 
-	{
+	public void encode() throws PCEPProtocolViolationException {
 
 		int len = 0;
 
@@ -70,93 +82,90 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		len += srp.getLength();
 		len += lsp.getLength();
 
-
-		if (endPoint!=null) {
+		if (endPoint != null) {
 			endPoint.encode();
 			len += endPoint.getLength();
 		}
 
-
-		if (ero!=null)
-		{	
+		if (ero != null) {
 			ero.encode();
 			len += ero.getLength();
 
 		}
-		
-		else
-		{
+
+		else {
 			log.warn("NO ERO ...");
-			// This is not a mistake. A PCE can receive an empty PCEPInitiate and that means it has to find
+			// This is not a mistake. A PCE can receive an empty PCEPInitiate and that means
+			// it has to find
 			// a path between the endpoints
-			//throw new PCEPProtocolViolationException();
+			// throw new PCEPProtocolViolationException();
 		}
 
-		if (bandwidth!=null){
+		if (bandwidth != null) {
 			bandwidth.encode();
-			len=len+bandwidth.getLength();
-		}		
+			len = len + bandwidth.getLength();
+		}
+		if (metricList != null) {
+			for (int i = 0; i < metricList.size(); ++i) {
+				(metricList.get(i)).encode();
+				len = len + (metricList.get(i)).getLength();
+			}
+		}
+
 		this.setLength(len);
 
 		this.bytes = new byte[len];
-		int offset=0;
-
+		int offset = 0;
 		System.arraycopy(srp.getBytes(), 0, this.getBytes(), offset, srp.getLength());
-		offset=offset + srp.getLength();
-
-
+		offset = offset + srp.getLength();
 		System.arraycopy(lsp.getBytes(), 0, this.getBytes(), offset, lsp.getLength());
-		offset=offset + lsp.getLength();
-
-		if (endPoint!=null)
-		{
+		offset = offset + lsp.getLength();
+		if (endPoint != null) {
 			System.arraycopy(endPoint.getBytes(), 0, this.getBytes(), offset, endPoint.getLength());
-			offset=offset + endPoint.getLength();
+			offset = offset + endPoint.getLength();
 		}
-		
-		if (ero!=null)
-		{
+		System.out.println("offset "+offset);
+		if (ero != null) {
 			System.arraycopy(ero.getBytes(), 0, this.getBytes(), offset, ero.getLength());
-			offset=offset + ero.getLength();
+			offset = offset + ero.getLength();
 		}
-	
-		if (bandwidth!=null)
-		{
+		if (bandwidth != null) {
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
-			offset=offset+bandwidth.getLength();
+			offset = offset + bandwidth.getLength();
 		}
+		for (int i = 0; i < metricList.size(); ++i) {
+			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
+			offset = offset + metricList.get(i).getLength();
+		}
+
 	}
 
-	public void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException
-	{
-		int len=0;
-		//Current implementation is strict, does not accept unknown objects 
-		int max_offset=bytes.length;
-		if (offset>=max_offset){
+	public void decode(byte[] bytes, int offset) throws PCEPProtocolViolationException {
+		int len = 0;
+		// Current implementation is strict, does not accept unknown objects
+		int max_offset = bytes.length;
+		if (offset >= max_offset) {
 			log.warn("Empty Request construct!!!");
 			throw new PCEPProtocolViolationException();
 		}
-		//SRP
-		//No SRP object. Malformed Update Request. PCERR mesage should be sent!
+		// SRP
+		// No SRP object. Malformed Update Request. PCERR mesage should be sent!
 		int oc = PCEPObject.getObjectClass(bytes, offset);
 		int ot = PCEPObject.getObjectType(bytes, offset);
-		if (oc!=ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
+		if (oc != ObjectParameters.PCEP_OBJECT_CLASS_SRP) {
 			log.info("There should be at least one SRP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
-			try 
-			{
-				srp = new SRP(bytes,offset);
+			try {
+				srp = new SRP(bytes, offset);
 
-			} 
-			catch (MalformedPCEPObjectException e) 
-			{
+			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
-			offset=offset+srp.getLength();
+			offset = offset + srp.getLength();
 			len += srp.getLength();
-			if (offset>=max_offset){
+			if (offset >= max_offset) {
 				this.setLength(len);
 				log.warn("Just one SRP object found, no more");
 				throw new PCEPProtocolViolationException();
@@ -164,133 +173,118 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		}
 		oc = PCEPObject.getObjectClass(bytes, offset);
 		ot = PCEPObject.getObjectType(bytes, offset);
-		if (oc!=ObjectParameters.PCEP_OBJECT_CLASS_LSP) {
+		if (oc != ObjectParameters.PCEP_OBJECT_CLASS_LSP) {
 			log.warn("There should be at least one LSP Object");
 			throw new PCEPProtocolViolationException();
 		} else {
-			try 
-			{
-				lsp = new LSP(bytes,offset);
+			try {
+				lsp = new LSP(bytes, offset);
 
-			} 
-			catch (MalformedPCEPObjectException e) 
-			{
+			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed LSP Object found");
 				throw new PCEPProtocolViolationException();
 			}
-			offset=offset+lsp.getLength();
+			offset = offset + lsp.getLength();
 			len += lsp.getLength();
-			if (offset>=max_offset){
+			if (offset >= max_offset) {
 				this.setLength(len);
 				log.warn("Just one SRP and one LSP object found, no more");
 				log.warn("TEMPORAL FIX");
 				return;
-				//throw new PCEPProtocolViolationException();
+				// throw new PCEPProtocolViolationException();
 			}
 		}
 		oc = PCEPObject.getObjectClass(bytes, offset);
 		ot = PCEPObject.getObjectType(bytes, offset);
-		if (oc!=ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS) {
+		if (oc != ObjectParameters.PCEP_OBJECT_CLASS_ENDPOINTS) {
 			log.warn("There should be at least one EndPoint Object. Should throw Ex");
-			//throw new PCEPProtocolViolationException(); //Optional
+			// throw new PCEPProtocolViolationException(); //Optional
 		} else {
-			try 
-			{
-				if (ot==ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4){
+			try {
+				if (ot == ObjectParameters.PCEP_OBJECT_TYPE_P2MP_ENDPOINTS_IPV4) {
 					try {
-						endPoint=new P2MPEndPointsIPv4(bytes,offset);
+						endPoint = new P2MPEndPointsIPv4(bytes, offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed P2MP ENDPOINTS IPV4 Object found");
 						throw new PCEPProtocolViolationException();
 					}
-				}	
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4){
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV4) {
 					try {
-						endPoint=new EndPointsIPv4(bytes,offset);
+						endPoint = new EndPointsIPv4(bytes, offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed ENDPOINTS IPV4 Object found");
 						throw new PCEPProtocolViolationException();
 					}
-				}
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED){
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_UNNUMBERED) {
 					try {
-						endPoint=new EndPointsUnnumberedIntf(bytes,offset);
+						endPoint = new EndPointsUnnumberedIntf(bytes, offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed ENDPOINTS Unnumbered Interface Object found");
 						throw new PCEPProtocolViolationException();
 					}
 				}
-				
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV6){
+
+				else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_IPV6) {
 					try {
-						endPoint=new EndPointsIPv6(bytes,offset);
+						endPoint = new EndPointsIPv6(bytes, offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed ENDPOINTSIPV6 Object found");
 						throw new PCEPProtocolViolationException();
 					}
-				}
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS){
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_GENERALIZED_ENDPOINTS) {
 					try {
-						int endPointType=GeneralizedEndPoints.getGeneralizedEndPointsType(bytes,offset);
-						if (endPointType==1) {
-							endPoint=new P2PGeneralizedEndPoints(bytes,offset);	
+						int endPointType = GeneralizedEndPoints.getGeneralizedEndPointsType(bytes, offset);
+						if (endPointType == 1) {
+							endPoint = new P2PGeneralizedEndPoints(bytes, offset);
 						}
-						
+
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed GENERALIZED END POINTS Object found");
 						throw new PCEPProtocolViolationException();
 					}
 				}
 
-				else if (ot==ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID){
+				else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_ENDPOINTS_DATAPATH_ID) {
 					try {
-						endPoint=new EndPointDataPathID(bytes,offset);
+						endPoint = new EndPointDataPathID(bytes, offset);
 					} catch (MalformedPCEPObjectException e) {
 						log.warn("Malformed GENERALIZED END POINTS Object found");
 						throw new PCEPProtocolViolationException();
 					}
-				}
-				else {
+				} else {
 					log.warn("BANDWIDTH TYPE NOT SUPPORTED");
 					throw new PCEPProtocolViolationException();
 				}
-			} 
-			catch (Exception e) 
-			{
+			} catch (Exception e) {
 				log.warn("Malformed EndPoint Object found");
-				//throw new PCEPProtocolViolationException();
+				// throw new PCEPProtocolViolationException();
 			}
-			if (endPoint!=null)
-			{
+			if (endPoint != null) {
 				offset = offset + endPoint.getLength();
 				len += endPoint.getLength();
-				if (offset>=max_offset){
+				if (offset >= max_offset) {
 					this.setLength(len);
-					//In draft, ERO is mandatory... here we relax the draft
+					// In draft, ERO is mandatory... here we relax the draft
 					log.warn("Just one SRP, one LSP and one END-POINTS, object found, no more");
-					//throw new PCEPProtocolViolationException();
+					// throw new PCEPProtocolViolationException();
 				}
 			}
 		}
 
-		if(PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_ERO)
-		{
-			try 
-			{
-				ero = new ExplicitRouteObject(bytes,offset);
+		if (PCEPObject.getObjectClass(bytes, offset) == ObjectParameters.PCEP_OBJECT_CLASS_ERO) {
+			try {
+				ero = new ExplicitRouteObject(bytes, offset);
 
-			} 
-			catch (MalformedPCEPObjectException e) 
-			{
+			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed ERO Object found");
 				throw new PCEPProtocolViolationException();
 			}
 			offset = offset + ero.getLength();
 			len += ero.getLength();
-			
+
 		}
-		
-		//Bandwidth
+
+		// Bandwidth
 		try {
 			oc = PCEPObject.getObjectClass(bytes, offset);
 			ot = PCEPObject.getObjectType(bytes, offset);
@@ -327,21 +321,39 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			log.warn("Malformed BANDWIDTH Object found");
 			throw new PCEPProtocolViolationException();
 		}
+		// Metric
+		oc = PCEPObject.getObjectClass(bytes, offset);
+
+		while (oc == ObjectParameters.PCEP_OBJECT_CLASS_METRIC) {
+			Metric metric;
+			try {
+				metric = new Metric(bytes, offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed METRIC Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			metricList.add(metric);
+			offset = offset + metric.getLength();
+			len = len + metric.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
+			oc = PCEPObject.getObjectClass(bytes, offset);
+		}
 		this.setLength(len);
 	}
 
-	//FIXME: REMOVE
-	public SRP getRsp() 
-	{
+	// FIXME: REMOVE
+	public SRP getRsp() {
 		return srp;
 	}
 
-	//FIXME: REMOVE
-	public void setRsp(SRP rsp) 
-	{
+	// FIXME: REMOVE
+	public void setRsp(SRP rsp) {
 		this.srp = rsp;
 	}
-	
+
 	public SRP getSrp() {
 		return srp;
 	}
@@ -350,59 +362,64 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 		this.srp = srp;
 	}
 
-	public LSP getLsp() 
-	{
+	public LSP getLsp() {
 		return lsp;
 	}
 
-	public void setLsp(LSP lsp)
-	{
+	public void setLsp(LSP lsp) {
 		this.lsp = lsp;
 	}
 
-	public ExplicitRouteObject getEro()
-	{
+	public ExplicitRouteObject getEro() {
 		return ero;
 	}
 
-	public void setEro(ExplicitRouteObject ero) 
-	{
+	public void setEro(ExplicitRouteObject ero) {
 		this.ero = ero;
 	}
 
-	public EndPoints getEndPoint() 
-	{
+	public EndPoints getEndPoint() {
 		return endPoint;
 	}
 
-	public void setEndPoint(EndPoints endPoint) 
-	{
+	public void setEndPoint(EndPoints endPoint) {
 		this.endPoint = endPoint;
 	}
 
-	
-	public String toString(){
-		StringBuffer sb=new StringBuffer();
+	public LinkedList<Metric> getMetricList() {
+		return metricList;
+	}
+
+	public void setMetricList(LinkedList<Metric> metricList) {
+		this.metricList = metricList;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
 		sb.append("Initiated LSP: ");
-		if (srp!=null){
+		if (srp != null) {
 			sb.append(srp.toString());
 		}
-		if (lsp!=null){
+		if (lsp != null) {
 			sb.append(lsp.toString());
 		}
-		if (ero!=null){
+		if (ero != null) {
 			sb.append(ero.toString());
 		}
-		if (endPoint!=null){
+		if (endPoint != null) {
 			sb.append(endPoint.toString());
 		}
-		
-	
-		
-		if (bandwidth!=null){
+
+		if (bandwidth != null) {
 			sb.append(bandwidth.toString());
-		}		
+		}
 		
+		if (metricList!=null){
+			for (int i=0;i<metricList.size();++i){
+				sb.append(metricList.get(i).toString());
+			}
+		}
+
 		return sb.toString();
 	}
 
@@ -410,12 +427,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime * result
-				+ ((endPoint == null) ? 0 : endPoint.hashCode());
+		result = prime * result + ((bandwidth == null) ? 0 : bandwidth.hashCode());
+		result = prime * result + ((endPoint == null) ? 0 : endPoint.hashCode());
 		result = prime * result + ((ero == null) ? 0 : ero.hashCode());
 		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
+		result = prime * result + ((metricList == null) ? 0 : metricList.hashCode());
 		result = prime * result + ((srp == null) ? 0 : srp.hashCode());
 		return result;
 	}
@@ -449,7 +465,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 				return false;
 		} else if (!lsp.equals(other.lsp))
 			return false;
-	
+		if (metricList == null) {
+			if (other.metricList != null)
+				return false;
+		} else if (!metricList.equals(other.metricList))
+			return false;
 		if (srp == null) {
 			if (other.srp != null)
 				return false;
@@ -457,7 +477,5 @@ public class PCEPIntiatedLSP extends PCEPConstruct
 			return false;
 		return true;
 	}
-	
-	
 
 }

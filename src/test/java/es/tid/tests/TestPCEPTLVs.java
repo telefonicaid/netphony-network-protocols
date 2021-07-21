@@ -176,7 +176,7 @@ public class TestPCEPTLVs {
 			if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 				if (ty instanceof Class){
 					Class c =(Class)ty;
-					System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
+					//System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
 					Method method;
 					Method methods;
 					if (c.isPrimitive()){
