@@ -1,5 +1,9 @@
 package es.tid.pce.pcep.objects.subobjects;
 
+import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.constructs.NAI;
+import es.tid.pce.pcep.constructs.NAIIPv4NodeID;
+import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
@@ -122,11 +126,11 @@ public class SREROSubobject extends EROSubobject{
 	protected int NT;
 	protected long SID;
 
-
+	protected NAI nai;
 	
 	public SREROSubobject(){
 		//TODO: this will be variable in future updates
-		erosolength = 8;
+		
 		fflag = true;
 		sflag = false;
 		cflag = false;
@@ -147,6 +151,17 @@ public class SREROSubobject extends EROSubobject{
 	}
 	
 	public void encode(){
+		erosolength = 8;
+		if (nai!=null) {
+			try {
+				nai.encode();
+			} catch (PCEPProtocolViolationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			erosolength += nai.getLength();
+			
+		}
 		this.subobject_bytes=new byte[this.erosolength];
 		//TODO: Cambiar esto..?
 		if (loosehop){
@@ -166,9 +181,12 @@ public class SREROSubobject extends EROSubobject{
 		int offset=4;
 		if (!sflag) {
 		  ByteHandler.encode4bytesLong(SID, this.subobject_bytes, offset);	
+		  offset+=4;
 		}
 		//TODO: NAI
-				
+		if (nai!=null) {
+			System.arraycopy(nai.getBytes(), 0, this.subobject_bytes, offset, nai.getLength());			
+		}
 		
 		
 	}
@@ -177,7 +195,7 @@ public class SREROSubobject extends EROSubobject{
 		loosehop = (ByteHandler.easyCopy(0,0,this.subobject_bytes[0]) == 1);
 		type=subobject_bytes[0]&0x7F;
 		erosolength=(int)subobject_bytes[1];
-		NT = (byte)((subobject_bytes[2] >> 4) & 0x0f);
+		NT = (int)((subobject_bytes[2] >> 4) & 0x0f);
 		
 		fflag = (ByteHandler.easyCopy(4,4,this.subobject_bytes[3]) == 1);	
 		sflag = (ByteHandler.easyCopy(5,5,this.subobject_bytes[3]) == 1);	
@@ -187,8 +205,19 @@ public class SREROSubobject extends EROSubobject{
 		int offset=4;
 		if (!sflag) {
 			SID=ByteHandler.decode4bytesLong(this.subobject_bytes, offset);
+			offset+=4;
 		}
-		
+		if (this.erosolength>offset) {
+			//There is a NAI
+			if (NT==1) {
+				try {
+					nai=new NAIIPv4NodeID(this.subobject_bytes, offset);
+				} catch (MalformedPCEPObjectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 
 		
 	}
@@ -204,6 +233,7 @@ public class SREROSubobject extends EROSubobject{
 		sb.append(" length: "+erosolength);
 		sb.append(" NT: "+NT);
 		sb.append(" flags: |f|="+fflag+" |s|="+sflag+" |c|="+cflag+" |m|="+mflag);
+		sb.append(" NAI: "+nai);
 		sb.append(">");
 		
 		
@@ -359,7 +389,13 @@ public class SREROSubobject extends EROSubobject{
 		NT = nT;
 	}
 
+	public NAI getNai() {
+		return nai;
+	}
 
+	public void setNai(NAI nai) {
+		this.nai = nai;
+	}
 
 	@Override
 	public int hashCode() {
@@ -370,6 +406,7 @@ public class SREROSubobject extends EROSubobject{
 		result = prime * result + (cflag ? 1231 : 1237);
 		result = prime * result + (fflag ? 1231 : 1237);
 		result = prime * result + (mflag ? 1231 : 1237);
+		result = prime * result + ((nai == null) ? 0 : nai.hashCode());
 		result = prime * result + (sflag ? 1231 : 1237);
 		return result;
 	}
@@ -392,6 +429,11 @@ public class SREROSubobject extends EROSubobject{
 		if (fflag != other.fflag)
 			return false;
 		if (mflag != other.mflag)
+			return false;
+		if (nai == null) {
+			if (other.nai != null)
+				return false;
+		} else if (!nai.equals(other.nai))
 			return false;
 		if (sflag != other.sflag)
 			return false;
