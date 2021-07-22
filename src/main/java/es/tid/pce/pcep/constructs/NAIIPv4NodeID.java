@@ -28,7 +28,7 @@ public class NAIIPv4NodeID extends NAI {
 		bytes=new byte[len];
 		
 		if (nodeID!=null){
-			System.arraycopy(nodeID.getAddress(),offset, this.bytes , 0, 4);
+			System.arraycopy(nodeID.getAddress(),0, this.bytes , offset, 4);
 		}
 
 	}

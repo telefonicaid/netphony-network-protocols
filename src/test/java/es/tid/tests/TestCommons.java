@@ -37,6 +37,7 @@ import es.tid.pce.pcep.constructs.ErrorConstruct;
 import es.tid.pce.pcep.constructs.GeneralizedBandwidthSSON;
 import es.tid.pce.pcep.constructs.IPv4AddressEndPoint;
 import es.tid.pce.pcep.constructs.MetricPCE;
+import es.tid.pce.pcep.constructs.NAIIPv4Adjacency;
 import es.tid.pce.pcep.constructs.NAIIPv4NodeID;
 import es.tid.pce.pcep.constructs.NCF;
 import es.tid.pce.pcep.constructs.Notify;
@@ -328,14 +329,14 @@ public class TestCommons {
 								 
 							 }
 							 else if (c.getName().equals("es.tid.pce.pcep.constructs.NAI")){
-								// if (choice_int==0) {
+								 if (choice_int==0) {
 									 o= new NAIIPv4NodeID();
 									 createAllFields(o,choice_int);
-//								 }else {
-//									 o= new UnnumIfEndPoint();
-//									 createAllFields(o,choice_int);
-//								 }
-//								
+								 }else {
+									 o= new NAIIPv4Adjacency();
+								 createAllFields(o,choice_int);
+								 }
+								
 								 
 							 }
 							 
