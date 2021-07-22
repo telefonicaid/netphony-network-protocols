@@ -2,6 +2,7 @@ package es.tid.pce.pcep.objects.tlvs;
 
 import java.util.LinkedList;
 
+import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
@@ -14,6 +15,8 @@ import es.tid.protocol.commons.ByteHandler;
 public class PathSetupCapabilityTLV extends PCEPTLV {
 	
 	private LinkedList<Integer> pathSetupTypes;
+	
+	private SRCapabilityTLV srCapabilitySubTLV;
 	
 	//
 //    0                   1                   2                   3
@@ -45,7 +48,16 @@ public class PathSetupCapabilityTLV extends PCEPTLV {
 	
 	public void encode() {
 		int numTypes=pathSetupTypes.size();
-		this.setTLVValueLength(numTypes+4);
+		int len=4+numTypes;
+		if ((len%4)!=0){
+			//Padding must be done before adding the tlvs
+			len=len+4-(len%4);
+		}		
+		if (srCapabilitySubTLV!=null) {
+			srCapabilitySubTLV.encode();
+			len+=srCapabilitySubTLV.getTotalTLVLength();
+		}
+		this.setTLVValueLength(len);
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		this.encodeHeader();
 		int offset=4;
@@ -59,6 +71,17 @@ public class PathSetupCapabilityTLV extends PCEPTLV {
 			ByteHandler.encode1byteInteger(pathSetupTypes.get(i).intValue(), this.getTlv_bytes(), offset);
 			offset+=1;
 		}
+		int old_offset=offset;
+		if ((offset%4)!=0){
+			//Padding must be done!!
+			offset=offset+4-(offset%4);
+		}		
+		for (int i=old_offset;i<offset;++i) {
+			this.getTlv_bytes()[i]=0x00;
+		}
+		if (srCapabilitySubTLV!=null) {
+			System.arraycopy(srCapabilitySubTLV.getTlv_bytes(), 0, this.getTlv_bytes(), offset, srCapabilitySubTLV.getTotalTLVLength());
+		}
 
 	}
 	
@@ -71,6 +94,36 @@ public class PathSetupCapabilityTLV extends PCEPTLV {
 			pathSetupTypes.add(Integer.valueOf(pathSetupType));
 			offset+=1;
 		}
+		if ((offset%4)!=0){
+			//skip padding
+			offset=offset+4-(offset%4);
+		}	
+		boolean fin=false;
+		if (offset>=this.getTotalTLVLength()){
+			fin=true;
+		}
+		while (!fin) {
+			int tlvtype=PCEPTLV.getType(this.getTlv_bytes(), offset);
+			int tlvlength=PCEPTLV.getTotalTLVLength(this.getTlv_bytes(), offset);
+			switch (tlvtype){
+			case ObjectParameters.PCEP_TLV_TYPE_SR_CAPABILITY :
+				try {
+					srCapabilitySubTLV=new SRCapabilityTLV(this.getTlv_bytes(), offset);
+				} catch (MalformedPCEPObjectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+				
+			default:
+				log.debug("UNKNOWN TLV found");
+				break;
+			}
+			offset=offset+tlvlength;
+			if (offset>=this.getTotalTLVLength()){
+				fin=true;
+			}
+		}
 	}
 
 	public LinkedList<Integer> getPathSetupTypes() {
@@ -79,6 +132,14 @@ public class PathSetupCapabilityTLV extends PCEPTLV {
 
 	public void setPathSetupTypes(LinkedList<Integer> pathSetupTypes) {
 		this.pathSetupTypes = pathSetupTypes;		
+	}
+
+	public SRCapabilityTLV getSrCapabilitySubTLV() {
+		return srCapabilitySubTLV;
+	}
+
+	public void setSrCapabilitySubTLV(SRCapabilityTLV srCapabilitySubTLV) {
+		this.srCapabilitySubTLV = srCapabilitySubTLV;
 	}
 	
 	
