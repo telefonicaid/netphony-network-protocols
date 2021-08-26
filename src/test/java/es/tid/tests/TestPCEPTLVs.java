@@ -85,6 +85,10 @@ public class TestPCEPTLVs {
 //    					51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathNameTLV"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathPreferenceTLV"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyName"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathIdentifiersTLV"},
 				};
 		return Arrays.asList(objects);
     }
@@ -128,6 +132,7 @@ public class TestPCEPTLVs {
 		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
 		System.out.println(object1.toString());
+		System.out.println(object2.toString());
 		assertTrue("testing PCEP TLV changing values"+objectClass,object1.equals(object2));
 //		//Check equals with false boolean
 		testEquals(object1, object2);

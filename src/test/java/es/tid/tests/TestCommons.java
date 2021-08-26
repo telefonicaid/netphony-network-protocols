@@ -7,6 +7,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -49,6 +51,7 @@ import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.constructs.SwitchEncodingType;
 import es.tid.pce.pcep.constructs.UnnumIfEndPoint;
 import es.tid.pce.pcep.constructs.UpdateRequest;
+import es.tid.pce.pcep.objects.AssociationIPv4;
 import es.tid.pce.pcep.objects.BandwidthExistingLSP;
 import es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
@@ -167,6 +170,12 @@ public class TestCommons {
 									o=Inet4Address.getByName("1.1.1.1");
 							 }else if  (c.getName().equals("java.net.Inet6Address")) {
 									o=Inet6Address.getByName("1080:0:0:0:8:800:200C:417A");
+							 }else if(c.getName().equals("java.net.InetAddress")) {
+								 if (choice_int==0) {
+									 o= o=Inet4Address.getByName("1.1.1.1");									 
+								 }else {
+									 o=Inet6Address.getByName("1080:0:0:0:8:800:200C:417A");
+									 }
 							 }
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.EndPoints")) {
 									o = new EndPointsIPv4();
@@ -652,7 +661,25 @@ public class TestCommons {
 										  	
 										ll.add(os);
 										method2.invoke(object,ll);
-									} else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Segment")) {
+									} else if(((Class)at).getName().equals("es.tid.pce.pcep.objects.Association")){
+										LinkedList<es.tid.pce.pcep.objects.Association> ll = new LinkedList <es.tid.pce.pcep.objects.Association>();
+										AssociationIPv4 aso = new AssociationIPv4();
+										String string_ip_source = "1.1.1.1";
+										Inet4Address ip_source = null;
+										try {
+											ip_source = (Inet4Address) InetAddress.getByName(string_ip_source);
+
+										} catch (UnknownHostException e) {
+
+											e.printStackTrace();
+										}
+										aso.setAssociationSource(ip_source);
+										aso.setAssocType(6);
+										aso.setAssocID(1);
+										ll.add(aso);
+										method2.invoke(object,ll);
+										
+									}else if  (((Class)at).getName().equals("es.tid.bgp.bgp4.update.fields.pathAttributes.AS_Path_Segment")) {
 										LinkedList<AS_Path_Segment> ll=new LinkedList<AS_Path_Segment>();
 										AS_Path_Segment os = new  AS_Path_Segment();		
 										  	
