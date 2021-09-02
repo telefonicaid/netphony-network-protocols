@@ -135,7 +135,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 	@Override
 	public void encode() {
 		//Log.debug("Encoding SRPolicyCandidatePathIdentifiers TLV");
-		this.setTLVValueLength(16);
+		this.setTLVValueLength(32);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();
 		int offset=4;
@@ -146,6 +146,12 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		ByteHandler.encode3bytesInteger(reserved, this.tlv_bytes, offset);
 		offset+=3;
 		ByteHandler.encode4bytesLong(originatorASN, this.tlv_bytes, offset);
+		offset+=4;
+		ByteHandler.encode4bytesLong(reserved, tlv_bytes, offset);
+		offset+=4;
+		ByteHandler.encode4bytesLong(reserved, tlv_bytes, offset);
+		offset+=4;
+		ByteHandler.encode4bytesLong(reserved, tlv_bytes, offset);
 		offset+=4;
 		System.arraycopy(originatorAddress.getAddress(),0,this.tlv_bytes,offset,4);
 		offset+=4;
