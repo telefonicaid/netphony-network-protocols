@@ -267,16 +267,16 @@ public class AssociationIPv6 extends Association {
 			case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
 				extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
 				break;
-			case 56:
+			case ObjectParameters.PCEP_TLV_SRPOLICY_POL_NAME:
 				sr_policy_name = new SRPolicyName(this.getObject_bytes(),offset);
 				break;
-			case 57:
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_IDS:
 				sr_policy_candidate_path_identifiers_tlv= new SRPolicyCandidatePathIdentifiersTLV(this.getObject_bytes(),offset);
 				break;
-			case 58:
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_NAME:
 				sr_policy_candidate_path_tlv=new SRPolicyCandidatePathNameTLV(this.getObject_bytes(),offset);
 				break;
-			case 59:
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_PREFERENCE:
 				sr_policy_candidate_path_preference_tlv=new SRPolicyCandidatePathPreferenceTLV(this.getObject_bytes(),offset);
 				break;
 			default:

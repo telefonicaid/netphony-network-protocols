@@ -5,6 +5,12 @@ import java.util.Objects;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
+/**
+ * SR Policy Candidate Path Name TLV
+ * @author b.lcm
+ *
+ */
+
 public class SRPolicyCandidatePathNameTLV extends PCEPTLV{
 
 	/**
@@ -24,7 +30,7 @@ public class SRPolicyCandidatePathNameTLV extends PCEPTLV{
 	private String SRPolicyCandidatePathName;
 	
 	public SRPolicyCandidatePathNameTLV(){
-		this.TLVType=58;
+		this.TLVType=ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_NAME;
 	}
 
 	public SRPolicyCandidatePathNameTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{		
@@ -55,7 +61,7 @@ public class SRPolicyCandidatePathNameTLV extends PCEPTLV{
 		try {
 			System.arraycopy(this.tlv_bytes, offset, SRPolicyCandidatePathNamePaso, 0, this.getTLVValueLength());
 			this.SRPolicyCandidatePathName = new String(SRPolicyCandidatePathNamePaso);
-			log.debug("Sended name : "+this.SRPolicyCandidatePathName);
+			log.debug("Candidate name : "+this.SRPolicyCandidatePathName);
 		}catch (Exception e){
 			log.error("Exception occurred, Possibly TLV size is not what expected");
 			throw new MalformedPCEPObjectException();

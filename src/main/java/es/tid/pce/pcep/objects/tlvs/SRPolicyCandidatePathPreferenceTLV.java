@@ -3,16 +3,25 @@ package es.tid.pce.pcep.objects.tlvs;
 import java.util.Objects;
 
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
+import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
+
+/**
+ * SR Policy Candidate Path Preference TLV (59)
+ *  
+ *  The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPAT
+   ASSOCIATION.  Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be
+   encoded by the sender and only the first occurrence is processed and
+   any others MUST be ignored.
+ * @see <a href="https://datatracker.ietf.org/doc/html/draft-ietf-pce-segment-routing-policy-cp-05">draft-barth-pce-segment-routing-policy-cp v5</a>
+ * @author Luis Cepeda Martínez
+ *
+ */
 
 public class SRPolicyCandidatePathPreferenceTLV extends PCEPTLV{
 	
 	/*
-	 * The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPAT
-   ASSOCIATION.  Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be
-   encoded by the sender and only the first occurrence is processed and
-   any others MUST be ignored.
-
+	 * 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -31,7 +40,7 @@ public class SRPolicyCandidatePathPreferenceTLV extends PCEPTLV{
 	
 	
 	public SRPolicyCandidatePathPreferenceTLV(){
-		this.TLVType=59;
+		this.TLVType=ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_PREFERENCE;
 	}
 
 	public SRPolicyCandidatePathPreferenceTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{		

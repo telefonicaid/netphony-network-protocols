@@ -338,6 +338,15 @@ public final class ObjectParameters {
 	 */ 
     public static final int PCEP_OBJECT_CLASS_FLOWSPEC=43;
     public static final int PCEP_OBJECT_TYPE_FLOWSPEC=1;
+    
+    /**
+     * PCEP Extensions to support Segment Routing
+     * @see <a href="https://datatracker.ietf.org/doc/html/draft-ietf-pce-segment-routing-policy-cp-05">Draft Barth PCE segment routing policy</a>
+     */
+    public static final int PCEP_TLV_SRPOLICY_POL_NAME = 56;
+    public static final int PCEP_TLV_SRPOLICY_CANDIDATE_PATH_IDS= 57;
+    public static final int PCEP_TLV_SRPOLICY_CANDIDATE_PATH_NAME = 58;
+    public static final int PCEP_TLV_SRPOLICY_CANDIDATE_PATH_PREFERENCE=59;
 
 	/* 
 	 * Metric Types

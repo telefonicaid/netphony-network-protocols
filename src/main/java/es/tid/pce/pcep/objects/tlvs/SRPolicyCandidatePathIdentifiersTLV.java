@@ -4,9 +4,15 @@ import java.net.Inet4Address;
 import java.util.Objects;
 
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
+import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 import jdk.internal.org.jline.utils.Log;
 
+/**
+ * SR Policy Candidate Path Identifiers TLV (57)
+ * @author Luis Cepeda Martínez
+ *
+ */
 public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 
 	/*
@@ -52,8 +58,6 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 	
 	private int protocol;
 	
-	private int reserved;
-	
 	private long originatorASN;
 	
 	private Inet4Address originatorAddress;
@@ -61,7 +65,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 	private long discriminator;
 	
 	public SRPolicyCandidatePathIdentifiersTLV(){
-		this.TLVType=57;
+		this.TLVType=ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_IDS;
 	}
 	
 	public SRPolicyCandidatePathIdentifiersTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{		
@@ -75,16 +79,6 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 
 	public void setProtocol(int protocol) {
 		this.protocol = protocol;
-	}
-	
-	
-
-	public int getReserved() {
-		return reserved;
-	}
-
-	public void setReserved(int reserved) {
-		this.reserved = reserved;
 	}
 
 	public long getOriginatorASN() {
@@ -110,12 +104,12 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 	public void setDiscriminator(long discriminator) {
 		this.discriminator = discriminator;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(discriminator, originatorASN, originatorAddress, protocol, reserved);
+		result = prime * result + Objects.hash(discriminator, originatorASN, originatorAddress, protocol);
 		return result;
 	}
 
@@ -129,16 +123,13 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 			return false;
 		SRPolicyCandidatePathIdentifiersTLV other = (SRPolicyCandidatePathIdentifiersTLV) obj;
 		return discriminator == other.discriminator && originatorASN == other.originatorASN
-				&& Objects.equals(originatorAddress, other.originatorAddress) && protocol == other.protocol
-				&& reserved == other.reserved;
+				&& Objects.equals(originatorAddress, other.originatorAddress) && protocol == other.protocol;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "SRPolicyCandidatePathIdentifiersTLV [protocol=" + protocol + ", reserved=" + reserved
-				+ ", originatorASN=" + originatorASN + ", originatorAddress=" + originatorAddress + ", discriminator="
-				+ discriminator + "]";
+		return "SRPolicyCandidatePathIdentifiersTLV [protocol=" + protocol + ", originatorASN=" + originatorASN
+				+ ", originatorAddress=" + originatorAddress + ", discriminator=" + discriminator + "]";
 	}
 
 	@Override
@@ -148,7 +139,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();
 		int offset=4;
-		this.reserved=0;
+		int reserved=0;
 		
 		ByteHandler.encode1byteInteger(protocol, this.tlv_bytes, offset);
 		offset+=1;
@@ -159,8 +150,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		System.arraycopy(originatorAddress.getAddress(),0,this.tlv_bytes,offset,4);
 		offset+=4;
 		ByteHandler.encode4bytesLong(discriminator, this.tlv_bytes, offset);
-
-		
+	
 	}
 	
 
@@ -174,9 +164,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 			
 		try {
 			this.protocol = ByteHandler.decode1byteInteger(this.tlv_bytes, offset);
-			offset+=1;
-			this.reserved = ByteHandler.decode3bytesInteger(this.tlv_bytes, offset);
-			offset+=3;
+			offset+=4;
 			this.originatorASN = ByteHandler.decode4bytesLong(this.tlv_bytes, offset);
 			offset+=4;
 			byte[] ip=new byte[4]; 

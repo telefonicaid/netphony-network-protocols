@@ -23,7 +23,15 @@ public class SRPolicyName extends PCEPTLV{
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                   Figure: The SRPOLICY-POL-NAME TLV format
-                  
+       Type: 56 for "SRPOLICY-POL-NAME" TLV.
+
+   	Length: indicates the length of the value portion of the TLV in
+   	octets and MUST be greater than 0.  The TLV MUST be zero-padded so
+   	that the TLV is 4-octet aligned.
+
+   	SR Policy Name: SR Policy name, as defined in
+   	[I-D.ietf-spring-segment-routing-policy].  It SHOULD be a string of
+   	printable ASCII characters, without a NULL terminator.            
                   
 	 */
 
@@ -31,7 +39,7 @@ public class SRPolicyName extends PCEPTLV{
 	
 	
 	public SRPolicyName(){
-		this.TLVType=56;
+		this.TLVType=ObjectParameters.PCEP_TLV_SRPOLICY_POL_NAME;
 	}
 
 	public SRPolicyName(byte[] bytes, int offset)throws MalformedPCEPObjectException{		
