@@ -6,7 +6,7 @@ import java.util.Objects;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
-import jdk.internal.org.jline.utils.Log;
+
 
 /**
  * SR Policy Candidate Path Identifiers TLV (57)
@@ -105,6 +105,8 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		this.discriminator = discriminator;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +128,8 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 				&& Objects.equals(originatorAddress, other.originatorAddress) && protocol == other.protocol;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "SRPolicyCandidatePathIdentifiersTLV [protocol=" + protocol + ", originatorASN=" + originatorASN
@@ -134,7 +138,6 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 
 	@Override
 	public void encode() {
-		//Log.debug("Encoding SRPolicyCandidatePathIdentifiers TLV");
 		this.setTLVValueLength(32);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();
@@ -172,7 +175,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 			this.protocol = ByteHandler.decode1byteInteger(this.tlv_bytes, offset);
 			offset+=4;
 			this.originatorASN = ByteHandler.decode4bytesLong(this.tlv_bytes, offset);
-			offset+=4;
+			offset+=16;
 			byte[] ip=new byte[4]; 
 			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
 			originatorAddress=(Inet4Address)Inet4Address.getByAddress(ip);
