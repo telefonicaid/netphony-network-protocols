@@ -105,6 +105,8 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		this.discriminator = discriminator;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,6 +127,8 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 		return discriminator == other.discriminator && originatorASN == other.originatorASN
 				&& Objects.equals(originatorAddress, other.originatorAddress) && protocol == other.protocol;
 	}
+
+	
 
 	@Override
 	public String toString() {
@@ -172,7 +176,7 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 			this.protocol = ByteHandler.decode1byteInteger(this.tlv_bytes, offset);
 			offset+=4;
 			this.originatorASN = ByteHandler.decode4bytesLong(this.tlv_bytes, offset);
-			offset+=4;
+			offset+=16;
 			byte[] ip=new byte[4]; 
 			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
 			originatorAddress=(Inet4Address)Inet4Address.getByAddress(ip);
