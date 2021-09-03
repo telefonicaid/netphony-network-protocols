@@ -6,7 +6,7 @@ import java.util.Objects;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
-import jdk.internal.org.jline.utils.Log;
+
 
 /**
  * SR Policy Candidate Path Identifiers TLV (57)
@@ -138,7 +138,6 @@ public class SRPolicyCandidatePathIdentifiersTLV extends PCEPTLV{
 
 	@Override
 	public void encode() {
-		//Log.debug("Encoding SRPolicyCandidatePathIdentifiers TLV");
 		this.setTLVValueLength(32);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		this.encodeHeader();
