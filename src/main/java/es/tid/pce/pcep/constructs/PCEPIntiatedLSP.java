@@ -1,8 +1,12 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.objects.Association;
+import es.tid.pce.pcep.objects.AssociationIPv4;
+import es.tid.pce.pcep.objects.AssociationIPv6;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthExistingLSP;
 import es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth;
@@ -30,7 +34,11 @@ import es.tid.pce.pcep.objects.SRP;
                                    <LSP>
                                    <END-POINTS>
                                    <ERO>
+                                   [<association-list>]
                                    [<attribute-list>]
+                                   
+<association-list> ::= <ASSOCIATION> [<association-list>]
+
 <attribute-list>::=[<LSPA>]
                        [<BANDWIDTH>]
                        [<metric-list>]
@@ -45,9 +53,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 
 	private SRP srp;
 	private LSP lsp;
+	
 	private ExplicitRouteObject ero;
 
 	private EndPoints endPoint;
+	
+	private LinkedList<Association> associationList;
 
 	/**
 	 * Metric List
@@ -66,10 +77,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 
 	public PCEPIntiatedLSP() {
 		metricList=new LinkedList<Metric>();
+		associationList=new LinkedList<Association>();
 	}
 
 	public PCEPIntiatedLSP(byte[] bytes, int offset) throws PCEPProtocolViolationException {
 		metricList=new LinkedList<Metric>();
+		associationList=new LinkedList<Association>();
 		decode(bytes, offset);
 	}
 
@@ -100,6 +113,12 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 			// a path between the endpoints
 			// throw new PCEPProtocolViolationException();
 		}
+		if (associationList != null) {
+			for (int i = 0; i < associationList.size(); ++i) {
+				(associationList.get(i)).encode();
+				len = len + (associationList.get(i)).getLength();
+			}
+		}
 
 		if (bandwidth != null) {
 			bandwidth.encode();
@@ -128,6 +147,10 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 		if (ero != null) {
 			System.arraycopy(ero.getBytes(), 0, this.getBytes(), offset, ero.getLength());
 			offset = offset + ero.getLength();
+		}
+		for (int i = 0; i < associationList.size(); ++i) {
+			System.arraycopy(associationList.get(i).getBytes(), 0, bytes, offset, associationList.get(i).getLength());
+			offset = offset + associationList.get(i).getLength();
 		}
 		if (bandwidth != null) {
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
@@ -283,6 +306,32 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 			len += ero.getLength();
 
 		}
+		//Association
+		oc = PCEPObject.getObjectClass(bytes, offset);
+		ot = PCEPObject.getObjectType(bytes, offset);
+		while (oc == ObjectParameters.PCEP_OBJECT_CLASS_ASSOCIATION) {
+			Association aso=null;
+			try {
+				if(ot == ObjectParameters.PCEP_OBJECT_TYPE__ASSOCIATION_IPV4) {
+					aso = new AssociationIPv4(bytes, offset);
+				}else if(ot == ObjectParameters.PCEP_OBJECT_TYPE__ASSOCIATION_IPV6) {
+					aso = new AssociationIPv6(bytes, offset);
+				}
+				
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed METRIC Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			associationList.add(aso);
+			offset = offset + aso.getLength();
+			len = len + aso.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
+			oc = PCEPObject.getObjectClass(bytes, offset);
+		}
+		
 
 		// Bandwidth
 		try {
@@ -386,6 +435,14 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 		this.endPoint = endPoint;
 	}
 
+	public LinkedList<Association> getAssociationList() {
+		return associationList;
+	}
+
+	public void setAssociationList(LinkedList<Association> associationList) {
+		this.associationList = associationList;
+	}
+
 	public LinkedList<Metric> getMetricList() {
 		return metricList;
 	}
@@ -394,45 +451,11 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 		this.metricList = metricList;
 	}
 
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("Initiated LSP: ");
-		if (srp != null) {
-			sb.append(srp.toString());
-		}
-		if (lsp != null) {
-			sb.append(lsp.toString());
-		}
-		if (ero != null) {
-			sb.append(ero.toString());
-		}
-		if (endPoint != null) {
-			sb.append(endPoint.toString());
-		}
-
-		if (bandwidth != null) {
-			sb.append(bandwidth.toString());
-		}
-		
-		if (metricList!=null){
-			for (int i=0;i<metricList.size();++i){
-				sb.append(metricList.get(i).toString());
-			}
-		}
-
-		return sb.toString();
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime * result + ((endPoint == null) ? 0 : endPoint.hashCode());
-		result = prime * result + ((ero == null) ? 0 : ero.hashCode());
-		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
-		result = prime * result + ((metricList == null) ? 0 : metricList.hashCode());
-		result = prime * result + ((srp == null) ? 0 : srp.hashCode());
+		result = prime * result + Objects.hash(associationList, bandwidth, endPoint, ero, lsp, metricList, srp);
 		return result;
 	}
 
@@ -445,37 +468,19 @@ public class PCEPIntiatedLSP extends PCEPConstruct {
 		if (getClass() != obj.getClass())
 			return false;
 		PCEPIntiatedLSP other = (PCEPIntiatedLSP) obj;
-		if (bandwidth == null) {
-			if (other.bandwidth != null)
-				return false;
-		} else if (!bandwidth.equals(other.bandwidth))
-			return false;
-		if (endPoint == null) {
-			if (other.endPoint != null)
-				return false;
-		} else if (!endPoint.equals(other.endPoint))
-			return false;
-		if (ero == null) {
-			if (other.ero != null)
-				return false;
-		} else if (!ero.equals(other.ero))
-			return false;
-		if (lsp == null) {
-			if (other.lsp != null)
-				return false;
-		} else if (!lsp.equals(other.lsp))
-			return false;
-		if (metricList == null) {
-			if (other.metricList != null)
-				return false;
-		} else if (!metricList.equals(other.metricList))
-			return false;
-		if (srp == null) {
-			if (other.srp != null)
-				return false;
-		} else if (!srp.equals(other.srp))
-			return false;
-		return true;
+		return Objects.equals(associationList, other.associationList) && Objects.equals(bandwidth, other.bandwidth)
+				&& Objects.equals(endPoint, other.endPoint) && Objects.equals(ero, other.ero)
+				&& Objects.equals(lsp, other.lsp) && Objects.equals(metricList, other.metricList)
+				&& Objects.equals(srp, other.srp);
 	}
+
+	@Override
+	public String toString() {
+		return "PCEPIntiatedLSP [srp=" + srp + ", lsp=" + lsp + ", ero=" + ero + ", endPoint=" + endPoint
+				+ ", associationList=" + associationList + ", metricList=" + metricList + ", bandwidth=" + bandwidth
+				+ "]";
+	}
+
+	
 
 }
