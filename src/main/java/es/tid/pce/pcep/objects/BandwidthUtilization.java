@@ -25,9 +25,22 @@ public class BandwidthUtilization extends PCEPObject{
 
                            BU Object Body Format
 	 */
-	
 	private int type;
-	private long bandwidthUtilization;
+	private float bandwidthUtilization = 0;
+	
+	public BandwidthUtilization(){
+		super();
+		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_BU);
+		this.setOT(ObjectParameters.PCEP_OBJECT_TYPE_BU);
+	}
+
+	public BandwidthUtilization(byte[] bytes, int offset) throws MalformedPCEPObjectException{
+
+		super(bytes,offset);
+		decode();
+	}
+	
+	
 
 	public int getType() {
 		return type;
@@ -36,18 +49,19 @@ public class BandwidthUtilization extends PCEPObject{
 	public void setType(int type) {
 		this.type = type;
 	}
-
-	public long getBandwidthUtilization() {
+	
+	public float getBandwidthUtilization() {
 		return bandwidthUtilization;
 	}
 
-	public void setBandwidthUtilization(long bandwidthUtilization) {
+	public void setBandwidthUtilization(float bandwidthUtilization) {
 		this.bandwidthUtilization = bandwidthUtilization;
 	}
 
 	@Override
 	public void encode() {
-		this.object_bytes=new byte[12];
+		ObjectLength=12;
+		this.object_bytes=new byte[ObjectLength];
 		encode_header();
 		
 		object_bytes[4]=0;
@@ -56,18 +70,21 @@ public class BandwidthUtilization extends PCEPObject{
 		
 		ByteHandler.encode1byteInteger(type, object_bytes, 7);
 		
-		ByteHandler.encode4bytesLong(bandwidthUtilization, object_bytes, 8);
-		
-		
+		ByteHandler.encode1Float(bandwidthUtilization, object_bytes, 8);
+	
 	}
 
 	
 	@Override
 	public void decode() throws MalformedPCEPObjectException {
+		if (ObjectLength!=12){
+			throw new MalformedPCEPObjectException();
+		}
 		int offset=7;
 		type = ByteHandler.decode1byteInteger(object_bytes, offset);
 		offset += 1;
-		bandwidthUtilization = ByteHandler.decode4bytesLong(object_bytes, offset);
+		bandwidthUtilization = ByteHandler.decode1Float(object_bytes, offset);
+		
 		
 	}
 
@@ -88,13 +105,15 @@ public class BandwidthUtilization extends PCEPObject{
 		if (getClass() != obj.getClass())
 			return false;
 		BandwidthUtilization other = (BandwidthUtilization) obj;
-		return bandwidthUtilization == other.bandwidthUtilization && type == other.type;
+		return Float.floatToIntBits(bandwidthUtilization) == Float.floatToIntBits(other.bandwidthUtilization)
+				&& type == other.type;
 	}
 
 	@Override
 	public String toString() {
 		return "BandwidthUtilization [type=" + type + ", bandwidthUtilization=" + bandwidthUtilization + "]";
 	}
+
 	
 	
 

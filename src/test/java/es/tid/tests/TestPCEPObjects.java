@@ -51,6 +51,7 @@ public class TestPCEPObjects {
     			{"es.tid.pce.pcep.objects.ExplicitRouteObject"},   // ObjectClass 7	ERO Object-Type 1: Explicit Route	[RFC5440]
     			{"es.tid.pce.pcep.objects.ReportedRouteObject"}, // ObjectClass 8	RRO	Object-Type 1: Recorded Route	[RFC5440] 
     			{"es.tid.pce.pcep.objects.LSPA"},
+    			{"es.tid.pce.pcep.objects.BandwidthUtilization"},
 //9	LSPA	0: Reserved	[RFC5440][RFC Errata 4956]
 //1: LSP Attributes	[RFC5440]
 //2-15: Unassigned	

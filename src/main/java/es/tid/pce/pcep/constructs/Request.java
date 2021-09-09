@@ -1,9 +1,11 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.*;
+import jdk.internal.org.jline.utils.Log;
 
 /**
  * Request Object. 
@@ -17,7 +19,8 @@ import es.tid.pce.pcep.objects.*;
                    <END-POINTS>
                    [<LSPA>]
                    [<BANDWIDTH>]
-                   [<GENERALIZED-BANDWIDTH>] --ESTADO DRAFT
+                   
+                   AQUIIIIIIIIIIII
                    [<metric-list>]
                    [<OF>]
                    [<RRO>[<BANDWIDTH>]]
@@ -42,6 +45,7 @@ public class Request extends PCEPConstruct{
 	private EndPoints endPoints;//COMPULSORY!!!
 	private LSPA lSPA;
 	private Bandwidth bandwidth;
+	private LinkedList<BandwidthUtilization> buList;
 	private LinkedList<Metric> metricList;
 	private RROBandwidth rROBandwidth;
 	private IncludeRouteObject iRO;
@@ -69,6 +73,7 @@ public class Request extends PCEPConstruct{
 	 */
 	public Request(){
 		metricList=new LinkedList<Metric>();
+		buList = new LinkedList<BandwidthUtilization>();
 		
 	}
 	
@@ -81,6 +86,7 @@ public class Request extends PCEPConstruct{
 	 */
 	public Request(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		metricList=new LinkedList<Metric>();
+		buList = new LinkedList<BandwidthUtilization>();
 		decode(bytes,offset);
 	}
 
@@ -115,6 +121,14 @@ public class Request extends PCEPConstruct{
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
+		
+		if (buList!=null){
+			for (int i=0;i<buList.size();++i){
+				(buList.get(i)).encode();
+				len=len+(buList.get(i)).getLength();
+			}	
+		}
+		
 		if (metricList!=null){
 			for (int i=0;i<metricList.size();++i){
 				(metricList.get(i)).encode();
@@ -176,6 +190,13 @@ public class Request extends PCEPConstruct{
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
+		}
+		
+		if(buList!=null) {
+			for (int i=0;i<buList.size();++i){
+				System.arraycopy(buList.get(i).getBytes(), 0, bytes, offset, buList.get(i).getLength());
+				offset=offset+buList.get(i).getLength();
+			}
 		}
 
 		if (metricList!=null){
@@ -383,6 +404,30 @@ public class Request extends PCEPConstruct{
 			log.warn("Malformed BANDWIDTH Object found");
 			throw new PCEPProtocolViolationException();
 		}
+		
+		//BU Objects
+	
+		oc = PCEPObject.getObjectClass(bytes, offset);
+		while(oc==ObjectParameters.PCEP_OBJECT_CLASS_BU) {
+			BandwidthUtilization bu;
+			try {
+				bu=new BandwidthUtilization(bytes,offset);
+			}catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed BU Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			buList.add(bu);
+			offset=offset+bu.getLength();
+			len=len+bu.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
+			oc=PCEPObject.getObjectClass(bytes, offset);
+			
+		}
+		
+		
 		
 		//Metric
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -658,53 +703,13 @@ public class Request extends PCEPConstruct{
 		this.reqAdapCap = reqAdapCap;
 	}
 
-	public String toString(){
-		StringBuffer sb=new StringBuffer();
-		if (requestParameters!=null){
-			sb.append(requestParameters.toString());
-		}
-		if (endPoints!=null){
-			sb.append(endPoints);
-		}
-		if (lsp!=null){
-			sb.append(lsp);
-		}
-		if (lSPA!=null){
-			sb.append(lSPA);
-		}
-		if (bandwidth!=null){
-			sb.append(bandwidth.toString());
-		}
-		if (metricList!=null){
-			for (int i=0;i<metricList.size();++i){
-				sb.append(metricList.get(i).toString());
-			}
-		}
-		if (objectiveFunction!=null){
-			sb.append(objectiveFunction.toString());
-		}
-		if (reservation!=null){
-			sb.append(reservation.toString());
-		}
-		if (rROBandwidth!=null){
-			sb.append(rROBandwidth.toString());
-		}
-		if (iRO!=null){
-			sb.append(iRO.toString());
-		}
-		if (loadBalancing!=null){
-			sb.append(loadBalancing.toString());
-		}
-		if (xro!=null){
-			sb.append(xro.toString());
-		}
-		if (interLayer!=null){
-			sb.append(interLayer.toString());
-		}
-		if (switchLayer!=null){
-			sb.append(switchLayer.toString());
-		}
-		return sb.toString();
+	
+	public LinkedList<BandwidthUtilization> getBuList() {
+		return buList;
+	}
+
+	public void setBuList(LinkedList<BandwidthUtilization> buList) {
+		this.buList = buList;
 	}
 	
 	public Request duplicate(){
@@ -726,25 +731,23 @@ public class Request extends PCEPConstruct{
 		return req;
 	}
 
+
+
+	public LSP getLsp() {
+		return lsp;
+	}
+
+	public void setLsp(LSP lsp) {
+		this.lsp = lsp;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime * result + ((endPoints == null) ? 0 : endPoints.hashCode());
-		result = prime * result + ((iRO == null) ? 0 : iRO.hashCode());
-		result = prime * result + ((interLayer == null) ? 0 : interLayer.hashCode());
-		result = prime * result + ((lSPA == null) ? 0 : lSPA.hashCode());
-		result = prime * result + ((loadBalancing == null) ? 0 : loadBalancing.hashCode());
-		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
-		result = prime * result + ((metricList == null) ? 0 : metricList.hashCode());
-		result = prime * result + ((objectiveFunction == null) ? 0 : objectiveFunction.hashCode());
-		result = prime * result + ((rROBandwidth == null) ? 0 : rROBandwidth.hashCode());
-		result = prime * result + ((reqAdapCap == null) ? 0 : reqAdapCap.hashCode());
-		result = prime * result + ((requestParameters == null) ? 0 : requestParameters.hashCode());
-		result = prime * result + ((reservation == null) ? 0 : reservation.hashCode());
-		result = prime * result + ((switchLayer == null) ? 0 : switchLayer.hashCode());
-		result = prime * result + ((xro == null) ? 0 : xro.hashCode());
+		result = prime * result
+				+ Objects.hash(bandwidth, buList, endPoints, iRO, interLayer, lSPA, loadBalancing, lsp, metricList,
+						objectiveFunction, rROBandwidth, reqAdapCap, requestParameters, reservation, switchLayer, xro);
 		return result;
 	}
 
@@ -757,93 +760,28 @@ public class Request extends PCEPConstruct{
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		if (bandwidth == null) {
-			if (other.bandwidth != null)
-				return false;
-		} else if (!bandwidth.equals(other.bandwidth))
-			return false;
-		if (endPoints == null) {
-			if (other.endPoints != null)
-				return false;
-		} else if (!endPoints.equals(other.endPoints))
-			return false;
-		if (iRO == null) {
-			if (other.iRO != null)
-				return false;
-		} else if (!iRO.equals(other.iRO))
-			return false;
-		if (interLayer == null) {
-			if (other.interLayer != null)
-				return false;
-		} else if (!interLayer.equals(other.interLayer))
-			return false;
-		if (lSPA == null) {
-			if (other.lSPA != null)
-				return false;
-		} else if (!lSPA.equals(other.lSPA))
-			return false;
-		if (loadBalancing == null) {
-			if (other.loadBalancing != null)
-				return false;
-		} else if (!loadBalancing.equals(other.loadBalancing))
-			return false;
-		if (lsp == null) {
-			if (other.lsp != null)
-				return false;
-		} else if (!lsp.equals(other.lsp))
-			return false;
-		if (metricList == null) {
-			if (other.metricList != null)
-				return false;
-		} else if (!metricList.equals(other.metricList))
-			return false;
-		if (objectiveFunction == null) {
-			if (other.objectiveFunction != null)
-				return false;
-		} else if (!objectiveFunction.equals(other.objectiveFunction))
-			return false;
-		if (rROBandwidth == null) {
-			if (other.rROBandwidth != null)
-				return false;
-		} else if (!rROBandwidth.equals(other.rROBandwidth))
-			return false;
-		if (reqAdapCap == null) {
-			if (other.reqAdapCap != null)
-				return false;
-		} else if (!reqAdapCap.equals(other.reqAdapCap))
-			return false;
-		if (requestParameters == null) {
-			if (other.requestParameters != null)
-				return false;
-		} else if (!requestParameters.equals(other.requestParameters))
-			return false;
-		if (reservation == null) {
-			if (other.reservation != null)
-				return false;
-		} else if (!reservation.equals(other.reservation))
-			return false;
-		if (switchLayer == null) {
-			if (other.switchLayer != null)
-				return false;
-		} else if (!switchLayer.equals(other.switchLayer))
-			return false;
-		if (xro == null) {
-			if (other.xro != null)
-				return false;
-		} else if (!xro.equals(other.xro))
-			return false;
-		return true;
+		return Objects.equals(bandwidth, other.bandwidth) && Objects.equals(buList, other.buList)
+				&& Objects.equals(endPoints, other.endPoints) && Objects.equals(iRO, other.iRO)
+				&& Objects.equals(interLayer, other.interLayer) && Objects.equals(lSPA, other.lSPA)
+				&& Objects.equals(loadBalancing, other.loadBalancing) && Objects.equals(lsp, other.lsp)
+				&& Objects.equals(metricList, other.metricList)
+				&& Objects.equals(objectiveFunction, other.objectiveFunction)
+				&& Objects.equals(rROBandwidth, other.rROBandwidth) && Objects.equals(reqAdapCap, other.reqAdapCap)
+				&& Objects.equals(requestParameters, other.requestParameters)
+				&& Objects.equals(reservation, other.reservation) && Objects.equals(switchLayer, other.switchLayer)
+				&& Objects.equals(xro, other.xro);
 	}
 
-
-	public LSP getLsp() {
-		return lsp;
+	@Override
+	public String toString() {
+		return "Request [requestParameters=" + requestParameters + ", endPoints=" + endPoints + ", lSPA=" + lSPA
+				+ ", bandwidth=" + bandwidth + ", buList=" + buList + ", metricList=" + metricList + ", rROBandwidth="
+				+ rROBandwidth + ", iRO=" + iRO + ", loadBalancing=" + loadBalancing + ", objectiveFunction="
+				+ objectiveFunction + ", xro=" + xro + ", interLayer=" + interLayer + ", switchLayer=" + switchLayer
+				+ ", reqAdapCap=" + reqAdapCap + ", lsp=" + lsp + ", reservation=" + reservation + "]";
 	}
 
-	public void setLsp(LSP lsp) {
-		this.lsp = lsp;
-	}
-
+	
 	
 	
 	

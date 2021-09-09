@@ -1,12 +1,15 @@
 package es.tid.pce.pcep.constructs;
 
 import java.util.LinkedList;
+import java.util.Objects;
+
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthExistingLSP;
 import es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
+import es.tid.pce.pcep.objects.BandwidthUtilization;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.ExplicitRouteObject;
 import es.tid.pce.pcep.objects.IncludeRouteObject;
@@ -35,7 +38,7 @@ import es.tid.pce.pcep.objects.SwitchLayer;
     <attribute-list>::= [OF]
     					[<LSPA>]
                        [<BANDWIDTH>]
-                       [<GENERALIZED-BANDWIDTH>] --ESTADO DRAFT
+                       [<BU Object>]
                        [<metric-list>]
                        [<IRO>]
   						[<INTER-LAYER>]
@@ -53,6 +56,7 @@ public class Path extends PCEPConstruct {
 	private ObjectiveFunction of;
 	private LSPA lspa;
 	private Bandwidth bandwidth;
+	private LinkedList<BandwidthUtilization> buList;
 	private LinkedList<Metric> metricList;
 	private IncludeRouteObject iro;
 	private InterLayer interLayer;
@@ -72,11 +76,13 @@ public class Path extends PCEPConstruct {
 	public Path(){
 		metricList=new LinkedList<Metric>();
 		actual_metricList=new LinkedList<Metric>();
+		buList = new LinkedList<BandwidthUtilization>();
 	}
 
 	public Path(byte[] bytes, int offset) throws PCEPProtocolViolationException{
 		metricList=new LinkedList<Metric>();
 		actual_metricList=new LinkedList<Metric>();
+		buList = new LinkedList<BandwidthUtilization>();
 		decode(bytes,offset);
 	}
 
@@ -120,6 +126,13 @@ public class Path extends PCEPConstruct {
 			bandwidth.encode();
 			len=len+bandwidth.getLength();
 		}
+		if (buList!=null){
+			for (int i=0;i<buList.size();++i){
+				(buList.get(i)).encode();
+				len=len+(buList.get(i)).getLength();
+			}	
+		}
+		
 		for (int i=0;i<metricList.size();++i){
 			(metricList.get(i)).encode();
 			len=len+(metricList.get(i)).getLength();
@@ -185,6 +198,12 @@ public class Path extends PCEPConstruct {
 		if (bandwidth!=null){
 			System.arraycopy(bandwidth.getBytes(), 0, bytes, offset, bandwidth.getLength());
 			offset=offset+bandwidth.getLength();
+		}
+		if(buList!=null) {
+			for (int i=0;i<buList.size();++i){
+				System.arraycopy(buList.get(i).getBytes(), 0, bytes, offset, buList.get(i).getLength());
+				offset=offset+buList.get(i).getLength();
+			}
 		}
 		for (int i=0;i<metricList.size();++i){
 			System.arraycopy(metricList.get(i).getBytes(), 0, bytes, offset, metricList.get(i).getLength());
@@ -345,6 +364,28 @@ public class Path extends PCEPConstruct {
 			log.warn("Malformed BANDWIDTH Object found");
 			throw new PCEPProtocolViolationException();
 		}
+		
+		//BU Objects
+		
+			oc = PCEPObject.getObjectClass(bytes, offset);
+			while(oc==ObjectParameters.PCEP_OBJECT_CLASS_BU) {
+				BandwidthUtilization bu;
+				try {
+					bu=new BandwidthUtilization(bytes,offset);
+				}catch (MalformedPCEPObjectException e) {
+					log.warn("Malformed BU Object found");
+					throw new PCEPProtocolViolationException();
+				}
+				buList.add(bu);
+				offset=offset+bu.getLength();
+				len=len+bu.getLength();
+				if (offset >= bytes.length) {
+					this.setLength(len);
+					return;
+				}
+				oc=PCEPObject.getObjectClass(bytes, offset);
+				
+			}
 
 		//Metric
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -544,6 +585,14 @@ public class Path extends PCEPConstruct {
 
 
 
+	public LinkedList<BandwidthUtilization> getBuList() {
+		return buList;
+	}
+
+	public void setBuList(LinkedList<BandwidthUtilization> buList) {
+		this.buList = buList;
+	}
+
 	public ObjectiveFunction getOf() {
 		return of;
 	}
@@ -580,21 +629,9 @@ public class Path extends PCEPConstruct {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((actual_bandwidth == null) ? 0 : actual_bandwidth.hashCode());
-		result = prime * result + ((actual_metricList == null) ? 0 : actual_metricList.hashCode());
-		result = prime * result + ((actual_path == null) ? 0 : actual_path.hashCode());
-		result = prime * result + ((bandwidth == null) ? 0 : bandwidth.hashCode());
-		result = prime * result + ((ero == null) ? 0 : ero.hashCode());
-		result = prime * result + ((interLayer == null) ? 0 : interLayer.hashCode());
-		result = prime * result + ((iro == null) ? 0 : iro.hashCode());
-		result = prime * result + ((labelSet == null) ? 0 : labelSet.hashCode());
-		result = prime * result + ((lspa == null) ? 0 : lspa.hashCode());
-		result = prime * result + ((metricList == null) ? 0 : metricList.hashCode());
-		result = prime * result + ((of == null) ? 0 : of.hashCode());
-		result = prime * result + ((reqAdapCap == null) ? 0 : reqAdapCap.hashCode());
-		result = prime * result + ((serverIndication == null) ? 0 : serverIndication.hashCode());
-		result = prime * result + ((suggestedLabel == null) ? 0 : suggestedLabel.hashCode());
-		result = prime * result + ((switchLayer == null) ? 0 : switchLayer.hashCode());
+		result = prime * result
+				+ Objects.hash(actual_bandwidth, actual_metricList, actual_path, bandwidth, buList, ero, interLayer,
+						iro, labelSet, lspa, metricList, of, reqAdapCap, serverIndication, suggestedLabel, switchLayer);
 		return result;
 	}
 
@@ -607,92 +644,29 @@ public class Path extends PCEPConstruct {
 		if (getClass() != obj.getClass())
 			return false;
 		Path other = (Path) obj;
-		if (actual_bandwidth == null) {
-			if (other.actual_bandwidth != null)
-				return false;
-		} else if (!actual_bandwidth.equals(other.actual_bandwidth))
-			return false;
-		if (actual_metricList == null) {
-			if (other.actual_metricList != null)
-				return false;
-		} else if (!actual_metricList.equals(other.actual_metricList))
-			return false;
-		if (actual_path == null) {
-			if (other.actual_path != null)
-				return false;
-		} else if (!actual_path.equals(other.actual_path))
-			return false;
-		if (bandwidth == null) {
-			if (other.bandwidth != null)
-				return false;
-		} else if (!bandwidth.equals(other.bandwidth))
-			return false;
-		if (ero == null) {
-			if (other.ero != null)
-				return false;
-		} else if (!ero.equals(other.ero))
-			return false;
-		if (interLayer == null) {
-			if (other.interLayer != null)
-				return false;
-		} else if (!interLayer.equals(other.interLayer))
-			return false;
-		if (iro == null) {
-			if (other.iro != null)
-				return false;
-		} else if (!iro.equals(other.iro))
-			return false;
-		if (labelSet == null) {
-			if (other.labelSet != null)
-				return false;
-		} else if (!labelSet.equals(other.labelSet))
-			return false;
-		if (lspa == null) {
-			if (other.lspa != null)
-				return false;
-		} else if (!lspa.equals(other.lspa))
-			return false;
-		if (metricList == null) {
-			if (other.metricList != null)
-				return false;
-		} else if (!metricList.equals(other.metricList))
-			return false;
-		if (of == null) {
-			if (other.of != null)
-				return false;
-		} else if (!of.equals(other.of))
-			return false;
-		if (reqAdapCap == null) {
-			if (other.reqAdapCap != null)
-				return false;
-		} else if (!reqAdapCap.equals(other.reqAdapCap))
-			return false;
-		if (serverIndication == null) {
-			if (other.serverIndication != null)
-				return false;
-		} else if (!serverIndication.equals(other.serverIndication))
-			return false;
-		if (suggestedLabel == null) {
-			if (other.suggestedLabel != null)
-				return false;
-		} else if (!suggestedLabel.equals(other.suggestedLabel))
-			return false;
-		if (switchLayer == null) {
-			if (other.switchLayer != null)
-				return false;
-		} else if (!switchLayer.equals(other.switchLayer))
-			return false;
-		return true;
+		return Objects.equals(actual_bandwidth, other.actual_bandwidth)
+				&& Objects.equals(actual_metricList, other.actual_metricList)
+				&& Objects.equals(actual_path, other.actual_path) && Objects.equals(bandwidth, other.bandwidth)
+				&& Objects.equals(buList, other.buList) && Objects.equals(ero, other.ero)
+				&& Objects.equals(interLayer, other.interLayer) && Objects.equals(iro, other.iro)
+				&& Objects.equals(labelSet, other.labelSet) && Objects.equals(lspa, other.lspa)
+				&& Objects.equals(metricList, other.metricList) && Objects.equals(of, other.of)
+				&& Objects.equals(reqAdapCap, other.reqAdapCap)
+				&& Objects.equals(serverIndication, other.serverIndication)
+				&& Objects.equals(suggestedLabel, other.suggestedLabel)
+				&& Objects.equals(switchLayer, other.switchLayer);
 	}
 
 	@Override
 	public String toString() {
-		return "Path [ero=" + ero + ", of=" + of + ", lspa=" + lspa + ", bandwidth=" + bandwidth + ", metricList="
-				+ metricList + ", iro=" + iro + ", interLayer=" + interLayer + ", switchLayer=" + switchLayer
-				+ ", reqAdapCap=" + reqAdapCap + ", serverIndication=" + serverIndication + ", labelSet=" + labelSet
-				+ ", suggestedLabel=" + suggestedLabel + ", actual_bandwidth=" + actual_bandwidth
+		return "Path [ero=" + ero + ", of=" + of + ", lspa=" + lspa + ", bandwidth=" + bandwidth + ", buList=" + buList
+				+ ", metricList=" + metricList + ", iro=" + iro + ", interLayer=" + interLayer + ", switchLayer="
+				+ switchLayer + ", reqAdapCap=" + reqAdapCap + ", serverIndication=" + serverIndication + ", labelSet="
+				+ labelSet + ", suggestedLabel=" + suggestedLabel + ", actual_bandwidth=" + actual_bandwidth
 				+ ", actual_metricList=" + actual_metricList + ", actual_path=" + actual_path + "]";
 	}
+
+	
 
 	
 
