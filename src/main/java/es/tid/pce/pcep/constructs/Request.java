@@ -19,8 +19,7 @@ import jdk.internal.org.jline.utils.Log;
                    <END-POINTS>
                    [<LSPA>]
                    [<BANDWIDTH>]
-                   
-                   AQUIIIIIIIIIIII
+                   [<BU Object>]
                    [<metric-list>]
                    [<OF>]
                    [<RRO>[<BANDWIDTH>]]
