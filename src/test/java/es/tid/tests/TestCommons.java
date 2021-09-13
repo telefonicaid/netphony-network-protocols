@@ -56,6 +56,7 @@ import es.tid.pce.pcep.objects.BandwidthExistingLSP;
 import es.tid.pce.pcep.objects.BandwidthExistingLSPGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
+import es.tid.pce.pcep.objects.BandwidthUtilization;
 import es.tid.pce.pcep.objects.BitmapLabelSet;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.Metric;
@@ -475,6 +476,13 @@ public class TestCommons {
 									ll.add((StateReport)o);
 									method2.invoke(object,ll);
 									
+								}
+								else if  (((Class)at).getName().equals("es.tid.pce.pcep.objects.BandwidthUtilization")) {
+									LinkedList<BandwidthUtilization> ll=new LinkedList<BandwidthUtilization>();
+									BandwidthUtilization o = new BandwidthUtilization();
+									createAllFields(o,choice_int);
+									ll.add(o);
+									method2.invoke(object,ll);
 								}
 								else if  (((Class)at).getName().equals("es.tid.pce.pcep.constructs.Response")) {
 									LinkedList<Response> ll=new LinkedList<Response>();
