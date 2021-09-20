@@ -268,6 +268,7 @@ public class Path extends PCEPConstruct {
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
 		//The first thing is the intended-path (an ERO)
+		log.info("Checking Intended Path: looking for ERO");
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
 			try {
 				ero=new ExplicitRouteObject(bytes,offset);
@@ -281,6 +282,7 @@ public class Path extends PCEPConstruct {
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		ot=PCEPObject.getObjectType(bytes, offset);
 		// Actual Bandwidth (opcional)
+		log.info("Checking for actual bandwidth: looking for BANDWIDTH");
 		try {
 			oc = PCEPObject.getObjectClass(bytes, offset);
 			ot = PCEPObject.getObjectType(bytes, offset);
@@ -335,14 +337,15 @@ public class Path extends PCEPConstruct {
 		}
 		//CISCO BUG: Sends two bw objects, getting rid of them
 		if (PCEPObject.getObjectClass(bytes, offset)== ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
-			offset+=PCEPObject.getObjectLength(bytes, offset);
-			len +=PCEPObject.getObjectLength(bytes, offset);
+			int bw_length= PCEPObject.getObjectLength(bytes, offset);
+			offset+=bw_length;
+			len +=bw_length;
 			if (offset>=bytes.length){
 				this.setLength(len);
 				return;
 				}
 		}
-		
+		log.info("Checking for actual METRIC: looking for METRIC");
 		//Actual metrics
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		while (oc==ObjectParameters.PCEP_OBJECT_CLASS_METRIC){
@@ -358,6 +361,7 @@ public class Path extends PCEPConstruct {
 			len=len+metric.getLength();
 			oc=PCEPObject.getObjectClass(bytes, offset);
 		}
+		log.info("Checking for  ACTUAL PATH: looking for RRO");
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		//ACTUAL PATH
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
@@ -392,6 +396,7 @@ public class Path extends PCEPConstruct {
 		oc=PCEPObject.getObjectClass(bytes, offset);		
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
 			try {
+				log.info ("LSPA found");
 				lspa=new LSPA(bytes,offset);
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed LSPA Object found");
@@ -455,8 +460,9 @@ public class Path extends PCEPConstruct {
 		}
 		//CISCO BUG: Sends two bw objects, getting rid of them
 		if (PCEPObject.getObjectClass(bytes, offset)== ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
-			offset+=PCEPObject.getObjectLength(bytes, offset);
-			len +=PCEPObject.getObjectLength(bytes, offset);
+			int bw_length= PCEPObject.getObjectLength(bytes, offset);
+			offset+=bw_length;
+			len +=bw_length;
 			if (offset>=bytes.length){
 				this.setLength(len);
 				return;
@@ -498,6 +504,10 @@ public class Path extends PCEPConstruct {
 			metricList.add(metric);
 			offset=offset+metric.getLength();
 			len=len+metric.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 			oc=PCEPObject.getObjectClass(bytes, offset);
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -510,6 +520,10 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+iro.getLength();
 			len=len+iro.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
 
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -522,6 +536,10 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+interLayer.getLength();
 			len=len+interLayer.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
 
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -534,6 +552,10 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+switchLayer.getLength();
 			len=len+switchLayer.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
 
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -546,6 +568,10 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+reqAdapCap.getLength();
 			len=len+reqAdapCap.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
 
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -558,6 +584,10 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+serverIndication.getLength();
 			len=len+serverIndication.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
 		oc=PCEPObject.getObjectClass(bytes, offset);	
 		ot=PCEPObject.getObjectType(bytes, offset);
@@ -572,6 +602,10 @@ public class Path extends PCEPConstruct {
 				}
 				offset=offset+labelSet.getLength();
 				len=len+labelSet.getLength();
+				if (offset >= bytes.length) {
+					this.setLength(len);
+					return;
+				}
 			}
 
 		}
@@ -585,8 +619,23 @@ public class Path extends PCEPConstruct {
 			}
 			offset=offset+suggestedLabel.getLength();
 			len=len+suggestedLabel.getLength();
+			if (offset >= bytes.length) {
+				this.setLength(len);
+				return;
+			}
 		}
-
+		log.info("Checking for VENDOR-INFORMATION");
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_VENDOR_INFORMATION){
+			log.info("VENDOR-INFORMATION FOUND");
+			int vi_length= PCEPObject.getObjectLength(bytes, offset);			
+			offset+=vi_length;
+			len+=vi_length;
+			if (offset>=bytes.length){
+				this.setLength(len);
+				return;
+				}
+		}
 		this.setLength(len);
 	}
 
