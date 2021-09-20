@@ -263,6 +263,7 @@ public class AssociationIPv4 extends Association {
 			
 			offset=16;
 			while (!fin) {
+				
 				int tlvtype=PCEPTLV.getType(this.getObject_bytes(), offset);
 				int tlvlength=PCEPTLV.getTotalTLVLength(this.getObject_bytes(), offset);
 				switch (tlvtype){
@@ -285,17 +286,24 @@ public class AssociationIPv4 extends Association {
 					sr_policy_candidate_path_preference_tlv=new SRPolicyCandidatePathPreferenceTLV(this.getObject_bytes(),offset);
 					break;
 				default:
-					log.debug("UNKNOWN TLV found");
+					log.debug("UNKNOWN TLV found" + tlvtype);
 					break;
 				}
+				
 				offset=offset+tlvlength;
+				
 				if (offset>=ObjectLength){
 					fin=true;
+					log.debug("fin=true");
 				}
+				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			log.debug("AQUI");
+			e.printStackTrace();
 			log.debug(e.getMessage());
+			
 			throw new MalformedPCEPObjectException();
 		}
 	}

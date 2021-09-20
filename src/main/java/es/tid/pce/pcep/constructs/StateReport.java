@@ -1,6 +1,12 @@
 package es.tid.pce.pcep.constructs;
 
+import java.util.LinkedList;
+import java.util.Objects;
+
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.objects.Association;
+import es.tid.pce.pcep.objects.AssociationIPv4;
+import es.tid.pce.pcep.objects.AssociationIPv6;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
@@ -68,13 +74,18 @@ public class StateReport extends PCEPConstruct
 	 */
 	Path path;
 	
+	private LinkedList<Association> associationList;
+	
 	public StateReport(){
-		super();
 		
+		super();
+		associationList=new LinkedList<Association>();
 	}
 	
 	public StateReport(byte []bytes, int offset)throws PCEPProtocolViolationException {
+		associationList=new LinkedList<Association>();
 		decode(bytes,offset);
+		
 	}
 
 	public void encode() throws PCEPProtocolViolationException {
@@ -91,6 +102,12 @@ public class StateReport extends PCEPConstruct
 			log.warn("LSP Object compulsory");
 			throw new PCEPProtocolViolationException();
 		}
+		if (associationList != null) {
+			for (int i = 0; i < associationList.size(); ++i) {
+				(associationList.get(i)).encode();
+				length = length + (associationList.get(i)).getLength();
+			}
+		}
 		if (path!=null){
 			path.encode();
 			length=length+path.getLength();
@@ -98,6 +115,7 @@ public class StateReport extends PCEPConstruct
 			log.warn("PATH Construct compulsory");
 			throw new PCEPProtocolViolationException();
 		}
+		
 		
 		this.setLength(length);
 		this.bytes = new byte[length];
@@ -109,6 +127,10 @@ public class StateReport extends PCEPConstruct
 		if (lsp!=null){
 			System.arraycopy(lsp.getBytes(), 0, this.getBytes(), offset,lsp.getLength());		
 			offset += lsp.getLength();
+		}
+		for (int i = 0; i < associationList.size(); ++i) {
+			System.arraycopy(associationList.get(i).getBytes(), 0, bytes, offset, associationList.get(i).getLength());
+			offset = offset + associationList.get(i).getLength();
 		}
 		if (path!=null){
 			System.arraycopy(path.getBytes(), 0, bytes, offset, path.getLength());
@@ -127,6 +149,7 @@ public class StateReport extends PCEPConstruct
 		}
 		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
+		int ot;
 		log.debug("Voy  ver el SRP oc "+oc+" offset "+offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_SRP)
 		{
@@ -168,6 +191,36 @@ public class StateReport extends PCEPConstruct
 			throw new PCEPProtocolViolationException();
 		}
 		
+		//Association
+			
+				oc = PCEPObject.getObjectClass(bytes, offset);
+				ot = PCEPObject.getObjectType(bytes, offset);
+				log.debug("Voy a ver el ASSOCIATION, oc "+oc+" offset "+offset +"OT: "+ ot);
+				while (oc == ObjectParameters.PCEP_OBJECT_CLASS_ASSOCIATION) {
+					Association aso=null;
+					try {
+						if(ot == ObjectParameters.PCEP_OBJECT_TYPE__ASSOCIATION_IPV4) {
+							aso = new AssociationIPv4(bytes, offset);
+						}else if(ot == ObjectParameters.PCEP_OBJECT_TYPE__ASSOCIATION_IPV6) {
+							aso = new AssociationIPv6(bytes, offset);
+						}
+						
+					} catch (MalformedPCEPObjectException e) {
+						log.warn("Malformed ASSOCIATION Object found");
+						throw new PCEPProtocolViolationException();
+					}
+					associationList.add(aso);
+					offset = offset + aso.getLength();
+					len = len + aso.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+					
+					oc = PCEPObject.getObjectClass(bytes, offset);
+					ot = PCEPObject.getObjectType(bytes, offset);
+				}
+				log.debug("Voy a ver el ERO, oc "+oc+" offset "+offset +"OT: "+ ot);
 		if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_ERO)
 		{
 			path=new Path(bytes,offset);
@@ -178,22 +231,21 @@ public class StateReport extends PCEPConstruct
 				return;
 			}
 		}
-		else if (PCEPObject.getObjectClass(bytes, offset)==ObjectParameters.PCEP_OBJECT_CLASS_SR_ERO)
-		{
-			//SRERO Object found, New Path Construct found
-			path=new Path(bytes,offset);
-			offset=offset+path.getLength();
-			len=len+path.getLength();
-			if (offset>=bytes.length){
-				this.setLength(len);
-				return;
-			}			
-		}
 		else
 		{
 			log.warn("Malformed Report Message. There must be at least one ERO or SRERO message!");
 			//throw new PCEPProtocolViolationException();
 		}
+		if (PCEPObject.getObjectClass(bytes, offset)==34) {
+			offset+=PCEPObject.getObjectLength(bytes, offset);
+			len +=PCEPObject.getObjectLength(bytes, offset);
+			if (offset>=bytes.length){
+				this.setLength(len);
+				return;
+				}
+		}
+		
+		
 		this.setLength(len);
 	}
 
@@ -221,28 +273,20 @@ public class StateReport extends PCEPConstruct
 	public void setPath(Path path) {
 		this.path = path;
 	}
-	
-	public String toString(){
-		StringBuffer sb=new StringBuffer();
-		if (srp!=null){
-			sb.append(srp.toString());
-		}
-		if (lsp!=null){
-			sb.append(lsp.toString());
-		}
-		if (path!=null){
-			sb.append(path.toString());
-		}	
-		return sb.toString();
+
+	public LinkedList<Association> getAssociationList() {
+		return associationList;
+	}
+
+	public void setAssociationList(LinkedList<Association> associationList) {
+		this.associationList = associationList;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((lsp == null) ? 0 : lsp.hashCode());
-		result = prime * result + ((path == null) ? 0 : path.hashCode());
-		result = prime * result + ((srp == null) ? 0 : srp.hashCode());
+		result = prime * result + Objects.hash(associationList, lsp, path, srp);
 		return result;
 	}
 
@@ -255,23 +299,18 @@ public class StateReport extends PCEPConstruct
 		if (getClass() != obj.getClass())
 			return false;
 		StateReport other = (StateReport) obj;
-		if (lsp == null) {
-			if (other.lsp != null)
-				return false;
-		} else if (!lsp.equals(other.lsp))
-			return false;
-		if (path == null) {
-			if (other.path != null)
-				return false;
-		} else if (!path.equals(other.path))
-			return false;
-		if (srp == null) {
-			if (other.srp != null)
-				return false;
-		} else if (!srp.equals(other.srp))
-			return false;
-		return true;
+		return Objects.equals(associationList, other.associationList) && Objects.equals(lsp, other.lsp)
+				&& Objects.equals(path, other.path) && Objects.equals(srp, other.srp);
 	}
+
+	@Override
+	public String toString() {
+		return "StateReport [srp=" + srp + ", lsp=" + lsp + ", path=" + path + ", associationList=" + associationList
+				+ "]";
+	}
+	
+	
+
 	
 	
 }
