@@ -29,12 +29,21 @@ import es.tid.pce.pcep.objects.SwitchLayer;
 
 /**
  * Path PCEP Construct. RFC 5440
- * From RFC 5440 Section 6.5
+ * UPDATED!!!! 
  * {@code 
- *      <path>::= <ERO><attribute-list>
+ *     <path>::= <intended-path>
+                [<actual-attribute-list><actual-path>]
+                <intended-attribute-list>
+ *      
 
    where:
 
+     <inteded-path>::= <ERO>
+     
+     <actual-attribute-list>::= [<BANDWIDTH>]
+                                [<metric-list>]
+     <actual-path>::= <RRO>
+     
     <attribute-list>::= [OF]
     					[<LSPA>]
                        [<BANDWIDTH>]
@@ -46,13 +55,28 @@ import es.tid.pce.pcep.objects.SwitchLayer;
                             [<REQ-ADAP-CAP>]
                             [<SERVER-INDICATION>]
 
-    <metric-list>::=<METRIC>[<metric-list>]}
+    <metric-list>::=<METRIC>[<metric-list>]
+    
+    
+    }
+    
+    
+                
  * @author ogondio
  *
  */
 public class Path extends PCEPConstruct {
 
+	//Intended Path
+	// ero = intended-path
 	private ExplicitRouteObject ero;
+	
+	//Actual Path
+	private Bandwidth actual_bandwidth;
+	private LinkedList<Metric> actual_metricList;
+	private ReportedRouteObject actual_path;
+	
+	//Intended attribute list
 	private ObjectiveFunction of;
 	private LSPA lspa;
 	private Bandwidth bandwidth;
@@ -68,10 +92,7 @@ public class Path extends PCEPConstruct {
 
 	private SuggestedLabel suggestedLabel;
 
-	//Actual Path
-	private Bandwidth actual_bandwidth;
-	private LinkedList<Metric> actual_metricList;
-	private ReportedRouteObject actual_path;
+
 
 	public Path(){
 		metricList=new LinkedList<Metric>();
@@ -246,6 +267,7 @@ public class Path extends PCEPConstruct {
 		int len=0;		
 		int oc=PCEPObject.getObjectClass(bytes, offset);
 		int ot=PCEPObject.getObjectType(bytes, offset);
+		//The first thing is the intended-path (an ERO)
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_ERO){
 			try {
 				ero=new ExplicitRouteObject(bytes,offset);
@@ -258,45 +280,60 @@ public class Path extends PCEPConstruct {
 		
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		ot=PCEPObject.getObjectType(bytes, offset);
-		// Actual Bandwidth
+		// Actual Bandwidth (opcional)
 		try {
 			oc = PCEPObject.getObjectClass(bytes, offset);
 			ot = PCEPObject.getObjectType(bytes, offset);
 			if (oc == ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
 				if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST) {
 					bandwidth = new BandwidthRequested(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
 				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP) {
 					bandwidth = new BandwidthExistingLSP(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
 				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST) {
 					bandwidth = new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
 				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP) {
 					bandwidth = new BandwidthExistingLSPGeneralizedBandwidth(bytes, offset);
-				} else if (ot == 5) {
-					log.warn("BANDWIDTH POCHO");
-					offset+=4;
-					len = len + 4;
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				} else {
+					log.warn("Non standard bandwidth");
+					int bw_length= PCEPObject.getObjectLength(bytes, offset);
+					offset+=bw_length;
+					len = len + bw_length;
 					if (offset >= bytes.length) {
 						this.setLength(len);
 						return;
 					}
 				}
-				else {
-					log.warn("Malformed BANDWIDTH Object found");
-					throw new PCEPProtocolViolationException();
-				}
-				if(ot!=5) {
-				offset = offset + bandwidth.getLength();
-				len = len + bandwidth.getLength();
-				if (offset >= bytes.length) {
-					this.setLength(len);
-					return;
-				}
-				}
+
 			}
 		} catch (MalformedPCEPObjectException e) {
 			log.warn("Malformed BANDWIDTH Object found");
 			throw new PCEPProtocolViolationException();
 		}
+		//CISCO BUG: Sends two bw objects, getting rid of them
 		if (PCEPObject.getObjectClass(bytes, offset)== ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
 			offset+=PCEPObject.getObjectLength(bytes, offset);
 			len +=PCEPObject.getObjectLength(bytes, offset);
@@ -305,48 +342,6 @@ public class Path extends PCEPConstruct {
 				return;
 				}
 		}
-//		try {
-//			log.debug(null);
-//			oc=PCEPObject.getObjectClass(bytes, offset);		
-//			if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
-//				try {
-//					lspa=new LSPA(bytes,offset);
-//				} catch (MalformedPCEPObjectException e) {
-//					log.warn("Malformed LSPA Object found");
-//					throw new PCEPProtocolViolationException();
-//				}
-//				offset=offset+lspa.getLength();
-//				len=len+lspa.getLength();
-//			}
-//			
-//			oc = PCEPObject.getObjectClass(bytes, offset);
-//			ot = PCEPObject.getObjectType(bytes, offset);
-//			if (oc == ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
-//				if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST) {
-//					actual_bandwidth = new BandwidthRequested(bytes, offset);
-//				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP) {
-//					actual_bandwidth = new BandwidthExistingLSP(bytes, offset);
-//				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST) {
-//					actual_bandwidth = new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
-//				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP) {
-//					actual_bandwidth = new BandwidthExistingLSPGeneralizedBandwidth(bytes, offset);
-//				} else {
-//					log.warn("Malformed BANDWIDTH Object found");
-//					throw new PCEPProtocolViolationException();
-//				}
-//
-//				offset = offset + actual_bandwidth.getLength();
-//				len = len + actual_bandwidth.getLength();
-//				if (offset >= bytes.length) {
-//					this.setLength(len);
-//					return;
-//				}
-//			}
-//		} catch (MalformedPCEPObjectException e) {
-//			log.warn("Malformed BANDWIDTH Object found");
-//			throw new PCEPProtocolViolationException();
-//		}
-		
 		
 		//Actual metrics
 		oc=PCEPObject.getObjectClass(bytes, offset);
@@ -368,6 +363,10 @@ public class Path extends PCEPConstruct {
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_RRO){
 			try {
 				actual_path=new ReportedRouteObject(bytes,offset);
+				if (bandwidth!=null) {
+					actual_bandwidth = bandwidth;
+					bandwidth= null;
+				}
 			} catch (MalformedPCEPObjectException e) {
 				log.warn("Malformed RRO Object found");
 				throw new PCEPProtocolViolationException();
@@ -375,6 +374,9 @@ public class Path extends PCEPConstruct {
 			offset=offset+actual_path.getLength();
 			len=len+actual_path.getLength();
 		}
+		//
+		log.info ("Decoding Intended attribute list");
+		log.info ("Checking OF");
 		oc=PCEPObject.getObjectClass(bytes, offset);
 		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_OBJECTIVE_FUNCTION){
 			try {
@@ -386,18 +388,81 @@ public class Path extends PCEPConstruct {
 			offset=offset+of.getLength();
 			len=len+of.getLength();
 		}
+		log.info ("Checking LSPA");
+		oc=PCEPObject.getObjectClass(bytes, offset);		
+		if (oc==ObjectParameters.PCEP_OBJECT_CLASS_LSPA){
+			try {
+				lspa=new LSPA(bytes,offset);
+			} catch (MalformedPCEPObjectException e) {
+				log.warn("Malformed LSPA Object found");
+				throw new PCEPProtocolViolationException();
+			}
+			offset=offset+lspa.getLength();
+			len=len+lspa.getLength();
+		}
 		
-		// Bandwidth
-		
-//		if (PCEPObject.getObjectClass(bytes, offset)== ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
-//			offset+=PCEPObject.getObjectLength(bytes, offset);
-//			len +=PCEPObject.getObjectLength(bytes, offset);
-//			if (offset>=bytes.length){
-//				this.setLength(len);
-//				return;
-//				}
-//		}
-		
+		try {
+			oc = PCEPObject.getObjectClass(bytes, offset);
+			ot = PCEPObject.getObjectType(bytes, offset);
+			if (oc == ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
+				if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_REQUEST) {
+					bandwidth = new BandwidthRequested(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_EXISTING_TE_LSP) {
+					bandwidth = new BandwidthExistingLSP(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_REQUEST) {
+					bandwidth = new BandwidthRequestedGeneralizedBandwidth(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				} else if (ot == ObjectParameters.PCEP_OBJECT_TYPE_BANDWIDTH_GEN_BW_EXISTING_TE_LSP) {
+					bandwidth = new BandwidthExistingLSPGeneralizedBandwidth(bytes, offset);
+					offset = offset + bandwidth.getLength();
+					len = len + bandwidth.getLength();
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				} else {
+					log.warn("Non standard bandwidth");
+					int bw_length= PCEPObject.getObjectLength(bytes, offset);
+					offset+=bw_length;
+					len = len + bw_length;
+					if (offset >= bytes.length) {
+						this.setLength(len);
+						return;
+					}
+				}
+
+			}
+		} catch (MalformedPCEPObjectException e) {
+			log.warn("Malformed BANDWIDTH Object found");
+			throw new PCEPProtocolViolationException();
+		}
+		//CISCO BUG: Sends two bw objects, getting rid of them
+		if (PCEPObject.getObjectClass(bytes, offset)== ObjectParameters.PCEP_OBJECT_CLASS_BANDWIDTH) {
+			offset+=PCEPObject.getObjectLength(bytes, offset);
+			len +=PCEPObject.getObjectLength(bytes, offset);
+			if (offset>=bytes.length){
+				this.setLength(len);
+				return;
+				}
+		}
+	
 		//BU Objects
 		
 			oc = PCEPObject.getObjectClass(bytes, offset);

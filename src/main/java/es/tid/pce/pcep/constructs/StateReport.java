@@ -21,6 +21,7 @@ import es.tid.pce.pcep.objects.SRP;
 
    <state-report> ::= [<SRP>]
                       <LSP>
+                      [<association-list>]
                       <path>
  Where:
    <path>::= <ERO><attribute-list>[<RRO>]
@@ -74,6 +75,9 @@ public class StateReport extends PCEPConstruct
 	 */
 	Path path;
 	
+	/**
+	 * Optional associationList
+	 */
 	private LinkedList<Association> associationList;
 	
 	public StateReport(){
