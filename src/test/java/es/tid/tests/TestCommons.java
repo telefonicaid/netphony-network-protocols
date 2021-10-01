@@ -73,6 +73,7 @@ import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.pce.pcep.objects.subobjects.SRLGXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.UnnumberIfIDXROSubobject;
 import es.tid.pce.pcep.objects.subobjects.XROSubobject;
+import es.tid.pce.pcep.objects.tlvs.EmptyDomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.OperatorAssociation;
 import es.tid.rsvp.constructs.SenderDescriptor;
 import es.tid.rsvp.constructs.WFFlowDescriptor;
@@ -185,7 +186,9 @@ public class TestCommons {
 									o = new UnreservedBandwidthLinkAttribTLV();
 									((UnreservedBandwidthLinkAttribTLV)o).getUnreservedBandwidth()[3]=(float)3.0;
 							 }
-							 
+							 else if  (c.getName().equals("es.tid.pce.pcep.objects.tlvs.DomainIDTLV")) {
+								 o = new EmptyDomainIDTLV();
+							 }
 							 else if  (c.getName().equals("es.tid.pce.pcep.objects.Bandwidth")) {
 								 if (choice_int==0) {
 									 o= new BandwidthRequested();

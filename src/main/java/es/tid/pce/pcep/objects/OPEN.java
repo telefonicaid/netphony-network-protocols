@@ -2,9 +2,11 @@ package es.tid.pce.pcep.objects;
 
 import es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV;
 import es.tid.pce.pcep.objects.tlvs.DomainIDTLV;
+import es.tid.pce.pcep.objects.tlvs.EmptyDomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.GMPLSCapabilityTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
+import es.tid.pce.pcep.objects.tlvs.OSPFDomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.OpConfAssocRangeTLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.pce.pcep.objects.tlvs.PCE_ID_TLV;
@@ -371,7 +373,12 @@ public class OPEN extends PCEPObject{
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
-				domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
+				int domainType=DomainIDTLV.getDomainType(this.getObject_bytes(), offset);	
+				if (domainType==0) {
+					domain_id_tlv=new EmptyDomainIDTLV(this.getObject_bytes(), offset);	
+				}else if (domainType==3) {
+					domain_id_tlv=new OSPFDomainIDTLV(this.getObject_bytes(), offset);
+				}
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
 				pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);

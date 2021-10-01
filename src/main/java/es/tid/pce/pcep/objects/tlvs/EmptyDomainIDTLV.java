@@ -7,8 +7,8 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * Domain ID TLV (Type 14) 
- * 
+ * Domain ID TLV (Type 14) Domain Type 0 
+ * (Type 0 non standard, included for compatibility with BAD PCEP speakers
  * 
   The Domain-ID TLV, when used in the OPEN object, identifies the
    domains served by the PCE.  The child PCE uses this mechanism to
@@ -17,7 +17,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
  * @author ogondio
  *
  */
-public abstract class DomainIDTLV extends PCEPTLV {
+public class EmptyDomainIDTLV extends DomainIDTLV {
 	
 	/*
 	 *  The Domain-ID TLV is defined below:
@@ -65,41 +65,41 @@ public abstract class DomainIDTLV extends PCEPTLV {
    ID TLVs are included for each domain it serves.
 	 */
 	
-	int domainType;
-
-	
-	public DomainIDTLV(){
-		this.TLVType=ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV;
+	public EmptyDomainIDTLV(){		
+		this.setDomainType(0);
 	}
 	
-	public DomainIDTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{
+	public EmptyDomainIDTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{
 		super(bytes,offset);
+		decode();
 	}
 	
-	public void encodeType() {
-		int offset = 4;
-		ByteHandler.encode1byteInteger(domainType,tlv_bytes,offset);
-	}
-	
-	public void decodeType() {
-		int offset = 4;
-		this.domainType=ByteHandler.decode1byteInteger(tlv_bytes, offset);
+	/**
+	 * Encodes the Domain Id TLV
+	 */
+	public void encode() {
+		this.setTLVValueLength(4);
+		this.tlv_bytes=new byte[this.TotalTLVLength];
+		encodeHeader();
+		this.encodeType();
 	}
 
 	
-
-	public void setDomainType(int domainType) {
-		this.domainType = domainType;
-	}
-
-	public int getDomainType() {
-		return domainType;
+	
+	public void decode() throws MalformedPCEPObjectException{
+	
 	}
 	
-	public static int getDomainType(byte[] bytes, int offset) {
-		int domT=ByteHandler.decode1byteInteger(bytes, offset+4);
-		return domT;
+	
+	
+	
+
+	public String toString() {
+		return "DomainIDTLV [domainType=" + domainType ;
 	}
+	
+
+	
 
 
 }

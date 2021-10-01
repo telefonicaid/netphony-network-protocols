@@ -13,12 +13,12 @@ import es.tid.pce.pcep.objects.ObjectParameters;
   The Domain-ID TLV, when used in the OPEN object, identifies the
    domains served by the PCE.  The child PCE uses this mechanism to
    provide the domain information to the parent PCE.
-   
+
  * @author ogondio
  *
  */
-public abstract class DomainIDTLV extends PCEPTLV {
-	
+public class OSPFDomainIDTLV extends DomainIDTLV {
+
 	/*
 	 *  The Domain-ID TLV is defined below:
 
@@ -64,42 +64,94 @@ public abstract class DomainIDTLV extends PCEPTLV {
    In the case where a PCE serves more than one domain, multiple Domain-
    ID TLVs are included for each domain it serves.
 	 */
-	
-	int domainType;
 
-	
-	public DomainIDTLV(){
-		this.TLVType=ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV;
+	Inet4Address domainId;
+
+	public OSPFDomainIDTLV(){
+		super();
+		this.domainType=3;
 	}
-	
-	public DomainIDTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{
+
+	public OSPFDomainIDTLV(byte[] bytes, int offset)throws MalformedPCEPObjectException{
 		super(bytes,offset);
-	}
-	
-	public void encodeType() {
-		int offset = 4;
-		ByteHandler.encode1byteInteger(domainType,tlv_bytes,offset);
-	}
-	
-	public void decodeType() {
-		int offset = 4;
-		this.domainType=ByteHandler.decode1byteInteger(tlv_bytes, offset);
+		decodeType();
+		decode();
 	}
 
-	
-
-	public void setDomainType(int domainType) {
-		this.domainType = domainType;
+	/**
+	 * Encodes the Domain Id TLV
+	 */
+	public void encode() {
+		this.setTLVValueLength(8);
+		this.tlv_bytes=new byte[this.TotalTLVLength];
+		encodeHeader();
+		this.encodeType();
+		int offset = 8;
+		System.arraycopy(domainId.getAddress(),0, this.tlv_bytes, offset, 4);
 	}
 
-	public int getDomainType() {
-		return domainType;
+
+
+	public void decode() throws MalformedPCEPObjectException{
+		try {
+			int offset=8;
+			byte[] ip=new byte[4];
+			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
+			domainId=(Inet4Address)Inet4Address.getByAddress(ip);
+
+
+		}			catch (Exception e) {			
+			e.printStackTrace();
+			throw new MalformedPCEPObjectException("Bad DomainIDTLV");
+		}
+
 	}
-	
-	public static int getDomainType(byte[] bytes, int offset) {
-		int domT=ByteHandler.decode1byteInteger(bytes, offset+4);
-		return domT;
+
+
+
+	public Inet4Address getDomainId() {
+		return domainId;
 	}
+
+	public void setDomainId(Inet4Address domainId) {
+		this.domainId = domainId;
+	}
+
+
+
+	public String toString() {
+		return "DomainIDTLV [domainType=" + domainType + ", domainId=" + domainId + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((domainId == null) ? 0 : domainId.hashCode());
+		result = prime * result + domainType;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OSPFDomainIDTLV other = (OSPFDomainIDTLV) obj;
+		if (domainId == null) {
+			if (other.domainId != null)
+				return false;
+		} else if (!domainId.equals(other.domainId))
+			return false;
+		if (domainType != other.domainType)
+			return false;
+		return true;
+	}
+
+
 
 
 }

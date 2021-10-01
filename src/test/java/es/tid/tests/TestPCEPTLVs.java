@@ -45,7 +45,11 @@ public class TestPCEPTLVs {
     			//Type 11: Optical Interface Class List FIXME: Not implemented
     			//Type 12: Client Signal Information FIXME: Not implemented
     			//Type 13: H-PCE Capability FIXME: Not implemented
-    			{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			{"es.tid.pce.pcep.objects.tlvs.EmptyDomainIDTLV"},//Type 14: Domain ID TLV Type 0 (non standard, included for compatibility)
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			{"es.tid.pce.pcep.objects.tlvs.OSPFDomainIDTLV"},//Type 14: Domain ID Type 3 (OSPF) RFC 
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
     			//Type 15: H-PCE-FLAG FIXME: Not implemented
     			{"es.tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV"},//Type 16: STATEFUL-PCE-CAPABILITY FIXME: IMPLEMENT MORE FLAGS
     			{"es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV"},//Type 17: 17	SYMBOLIC-PATH-NAME	[RFC8231]
