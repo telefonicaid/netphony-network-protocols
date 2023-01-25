@@ -58,28 +58,48 @@ public class IPReachabilityInformationTLV extends BGP4TLVFormat {
 
 	@Override
 	public void encode() {
-		int len = 1 + prefix_length;
+		int len;
+		if (prefix_length>=25) {	
+			len=5;
+		}else if (prefix_length>=17) {
+			len=4;
+		}else if (prefix_length>=9) {
+			len=3;
+	   }else {
+		  len=2;
+	   }
 		this.setTLVValueLength(len);
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 		encodeHeader();
 		int offset = 4;
 		this.tlv_bytes[offset] = (byte) prefix_length;
 		offset += 1;
-		System.arraycopy(ipv4Address.getAddress(), 0, this.tlv_bytes, offset, prefix_length);
+		System.arraycopy(ipv4Address.getAddress(), 0, this.tlv_bytes, offset, len-1);
 
 	}
 
 	public void decode() {
 		int offset = 4;
-		 byte[] address = new byte[4];
+		 byte[] ip = new byte[4];
 		prefix_length = this.tlv_bytes[offset] & (0xFF);
 		offset += 1;
-		for (int i = 0; i < address.length; i++) {
-			address[i] = 0;
-		}
-		System.arraycopy(this.tlv_bytes, offset, address, 0, prefix_length);
+		if (prefix_length>=25) {	
+			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
+		}else if (prefix_length>=17) {
+			System.arraycopy(this.tlv_bytes,offset, ip, 0, 3);
+			ip[3]=0;
+		}else if (prefix_length>=9) {
+			System.arraycopy(this.tlv_bytes,offset, ip, 0, 2);
+			ip[2]=0;
+			ip[3]=0;
+	   }else {
+		   System.arraycopy(this.tlv_bytes,offset, ip, 0, 1);
+		   ip[1]=0;
+		   ip[2]=0;
+		   ip[3]=0;
+	   }
 		try {
-			ipv4Address = (Inet4Address) Inet4Address.getByAddress(address);
+			ipv4Address = (Inet4Address) Inet4Address.getByAddress(ip);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
