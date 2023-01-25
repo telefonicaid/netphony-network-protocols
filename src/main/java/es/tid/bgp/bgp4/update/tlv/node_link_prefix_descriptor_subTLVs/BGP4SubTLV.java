@@ -57,13 +57,7 @@ public abstract class BGP4SubTLV {
 		public BGP4SubTLV(byte []bytes, int offset) {
 			this.SubTLVType=((  ((int)bytes[offset]&0xFF)   <<8)& 0xFF00) |  ((int)bytes[offset+1] & 0xFF);
 			this.SubTLVValueLength=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF);
-			this.TotalSubTLVLength=SubTLVValueLength+4;
-			
-			if ((this.TotalSubTLVLength%4)!=0){
-				//Padding must be done!!
-				this.TotalSubTLVLength=this.TotalSubTLVLength+4-(this.TotalSubTLVLength%4);
-				
-			}	
+			this.TotalSubTLVLength=SubTLVValueLength+4;		
 			this.subtlv_bytes=new byte[TotalSubTLVLength];
 			System.arraycopy(bytes, offset, subtlv_bytes, 0, TotalSubTLVLength);
 		}
@@ -128,12 +122,6 @@ public abstract class BGP4SubTLV {
 		protected void setSubTLVValueLength(int SubTLVValueLength) {
 			this.SubTLVValueLength = SubTLVValueLength;
 			this.TotalSubTLVLength=SubTLVValueLength+ 4;
-			if ((this.TotalSubTLVLength%4)!=0){
-				//Padding must be done!!
-				this.TotalSubTLVLength=this.TotalSubTLVLength+4-(this.TotalSubTLVLength%4);
-				
-			}	
-			
 		}
 		
 
