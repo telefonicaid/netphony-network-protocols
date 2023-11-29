@@ -346,7 +346,19 @@ public class ByteHandler {
 		}
 		return DataPathBytes;
 	}
-
+	
+	public static void encode1Float(float number, byte[] bytes, int offset) {
+		
+		int number_int=Float.floatToIntBits(number);
+		bytes[offset]=(byte)(number_int >>> 24);
+		offset+=1;
+		bytes[offset]=(byte)(number_int >> 16 & 0xff);
+		offset+=1;
+		bytes[offset]=(byte)(number_int >> 8 & 0xff);
+		offset+=1;
+		bytes[offset]=(byte)(number_int & 0xff);
+		
+	}
 
 	public static void encode4bytesLong(long number, byte[] bytes, int offset ){
 		bytes[offset]=(byte)((number>>24) & 0xFF);
@@ -354,6 +366,32 @@ public class ByteHandler {
 		bytes[offset+2]=(byte)((number>>8) & 0xFF);
 		bytes[offset+3]=(byte)(number & 0xFF);
 	}
+	
+	public static void encode1byteInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)(number & 0xFF);
+	}
+	
+	public static void encode2bytesInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)((number>>8) & 0xFF);
+		bytes[offset+1]=(byte)(number & 0xFF);
+	}
+	
+	public static void encode3bytesInteger(int number, byte[] bytes, int offset ){
+		bytes[offset]=(byte)((number>>16) & 0xFF);
+		bytes[offset+1]=(byte)((number>>8) & 0xFF);
+		bytes[offset+2]=(byte)(number & 0xFF);
+	}
+	
+	public static float decode1Float(byte[]bytes,int offset) {
+		float number = 0;	
+		int number_int = 0;
+		for (int k = 0; k < 4; k++) {
+			number_int = (number_int << 8) | (bytes[k+offset] & 0xff);
+		}
+		number=Float.intBitsToFloat(number_int);
+		return number;
+	}
+	
 
 	public static long decode4bytesLong( byte[] bytes, int offset) {
 		long number=0;
@@ -373,5 +411,28 @@ public class ByteHandler {
 		return number;
 	}
 	
+	/**
+	 * Get an Integer value from 1 byte of a byte array
+	 * @param bytes bytes to examine
+	 * @param offset offset starting position of the 1 byte integer
+	 * @return the integer value
+	 */
+	public static int decode3bytesInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=((((int)bytes[offset]&(int)0xFF)<<16) |(((int)bytes[offset+1]&(int)0xFF)<<8) |  ((int)bytes[offset+2]& (int)0xFF) );
+		return number;
+	}
+	
+	/**
+	 * Get an Integer value from 1 byte of a byte array
+	 * @param bytes bytes to examine
+	 * @param offset offset starting position of the 1 byte integer
+	 * @return the integer value
+	 */
+	public static int decode1byteInteger( byte[] bytes, int offset) {
+		int number=0;
+		number=((int)bytes[offset]&(int)0xFF) ;
+		return number;
+	}
 	
 }

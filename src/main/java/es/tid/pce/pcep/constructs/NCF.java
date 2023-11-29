@@ -96,9 +96,10 @@ public class NCF extends PCEPConstruct {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (getClass() != obj.getClass()){
+		if (!super.equals(obj))
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		NCF other = (NCF) obj;
 		if (channelSpacing != other.channelSpacing)
 			return false;
@@ -108,6 +109,8 @@ public class NCF extends PCEPConstruct {
 			return false;
 		return true;
 	}
+
+
 
 	
 	

@@ -1,7 +1,15 @@
 package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
+import es.tid.protocol.commons.ByteHandler;
 
+
+/**
+ * Prefix Metric (Type 1155)
+ * 	[RFC5305]
+ * @author ogondio
+ *
+ */
 public class PrefixMetricPrefixAttribTLV extends BGP4TLVFormat {
 	
 	private long prefix_metric;
@@ -9,13 +17,11 @@ public class PrefixMetricPrefixAttribTLV extends BGP4TLVFormat {
 
 	public PrefixMetricPrefixAttribTLV() {
 		this.setTLVType(LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_METRIC);
-		// TODO Auto-generated constructor stub
 	}
 
 	public PrefixMetricPrefixAttribTLV(byte[] bytes, int offset) {
 		super(bytes, offset);
 		decode();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,17 +30,12 @@ public class PrefixMetricPrefixAttribTLV extends BGP4TLVFormat {
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
 		int offset = 4;		
-		this.tlv_bytes[offset] = (byte)(prefix_metric >> 16 & 0xff);
-		this.tlv_bytes[offset + 1] = (byte)(prefix_metric >> 8 & 0xff);
-		this.tlv_bytes[offset + 2] = (byte)(prefix_metric >> 0 & 0xff);
-		this.tlv_bytes[offset + 3] = (byte)(prefix_metric & 0xff);
-
+		ByteHandler.encode4bytesLong(prefix_metric, this.getTlv_bytes(), offset);
 	}
 	
-	public void decode(){
-		for (int k = 0; k < 4; k++) {
-			prefix_metric = (prefix_metric << 8) | ((long)tlv_bytes[k+4] & (long)0xff);
-		}
+	public void decode() {
+		int offset=4;
+		prefix_metric = ByteHandler.decode4bytesLong(this.getTlv_bytes(), offset);
 		
 	}
 

@@ -8,8 +8,8 @@ public class IGPFlagBitsPrefixAttribTLV extends BGP4TLVFormat{
 	private byte flags;
 
 	public IGPFlagBitsPrefixAttribTLV() {
+		this.setTLVType(LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS);
 		this.setTLVValueLength(1);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public IGPFlagBitsPrefixAttribTLV(byte[] bytes, int offset){		

@@ -80,7 +80,7 @@ public class TestRSVPObjects {
     	System.out.println("Testing RSVP Object "+object);
     	Class objectClass=Class.forName(object);
 		RSVPObject object1 = (RSVPObject)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPObject object2 = (RSVPObject) ctor.newInstance(object1.getBytes(),0);

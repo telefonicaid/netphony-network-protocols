@@ -7,7 +7,7 @@ import es.tid.protocol.commons.ByteHandler;
 
 
 /**
- * Speaker Entity Identifier TLV
+ * Speaker Entity Identifier TLV (Type 24)
  * 
  * The Speaker Entity Identifier TLV (SPEAKER-ENTITY-ID) is an optional
    TLV that MAY be included in the OPEN object when a PCEP speaker

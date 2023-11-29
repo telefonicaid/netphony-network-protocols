@@ -38,7 +38,7 @@ public class LabelTypeTLV  extends OSPFSubTLV {
 	
 	private byte[] bytesBitmap;
 	
-	private int sumBytesBitmap;
+	
 	
 	
 	public LabelTypeTLV(){

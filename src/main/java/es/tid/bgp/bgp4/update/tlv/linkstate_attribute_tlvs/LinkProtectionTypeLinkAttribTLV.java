@@ -1,6 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
+import es.tid.protocol.commons.ByteHandler;
 
 /**
  * Link Protection Type	TLV (Type 1093) [RFC5307, Section 1.2]
@@ -62,7 +63,11 @@ public class LinkProtectionTypeLinkAttribTLV extends BGP4TLVFormat {
 		
 	@Override
 	public void encode() {
-		// TODO Auto-generated method stub
+		this.setTLVValueLength(1);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
+		int offset=4;
+		ByteHandler.encode1byteInteger(protection_type, this.getTlv_bytes(), offset);
 
 	}
 	

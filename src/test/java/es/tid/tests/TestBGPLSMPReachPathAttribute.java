@@ -3,11 +3,14 @@ package es.tid.tests;
 import es.tid.bgp.bgp4.update.fields.LinkNLRI;
 import es.tid.bgp.bgp4.update.fields.LinkStateNLRI;
 import es.tid.bgp.bgp4.update.fields.NodeNLRI;
+import es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI;
+import es.tid.bgp.bgp4.update.fields.PathAttribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.BGP_LS_MP_Reach_Attribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute;
 import es.tid.bgp.bgp4.update.fields.pathAttributes.MP_Unreach_Attribute;
 import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV;
+import es.tid.bgp.bgp4.update.tlv.RoutingUniverseIdentifierTypes;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4InterfaceAddressLinkDescriptorsSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4NeighborAddressLinkDescriptorSubTLV;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6InterfaceAddressLinkDescriptorSubTLV;
@@ -35,7 +38,7 @@ import java.util.Collection;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.Parameterized.class)
-public class TestBGPLSPathAttributes {
+public class TestBGPLSMPReachPathAttribute {
 
 	String object;
 
@@ -43,13 +46,14 @@ public class TestBGPLSPathAttributes {
 	public static Collection<Object[]> configs() {
 		Object[][] objects={
 				{"es.tid.bgp.bgp4.update.fields.NodeNLRI"},
-				{"es.tid.bgp.bgp4.update.fields.LinkNLRI"}
+				{"es.tid.bgp.bgp4.update.fields.LinkNLRI"},
+				{"es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI"},
 		};
 		return Arrays.asList(objects);
 	}
 
 
-	public TestBGPLSPathAttributes (String object) {
+	public TestBGPLSMPReachPathAttribute (String object) {
 		this.object=object;
 	}
 
@@ -71,15 +75,28 @@ public class TestBGPLSPathAttributes {
 				nodeNLRI.setRoutingUniverseIdentifier(1);
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				nodeNLRI.setLocalNodeDescriptors(ln);
-				TestCommons.createAllFields(ln,true);
-			}else {
+				TestCommons.createAllFields(ln,0);
+			} else if (object.equals("es.tid.bgp.bgp4.update.fields.IPv4PrefixNLRI")) {
+				TestCommons.createAllFields(ls,0);
+//				((IPv4PrefixNLRI)ls).setRoutingUniverseIdentifier(RoutingUniverseIdentifierTypes.Level3Identifier);
+//				((IPv4PrefixNLRI)ls).setProtocolID(0);;				
+//				LocalNodeDescriptorsTLV lnt=new LocalNodeDescriptorsTLV();
+//				TestCommons.createAllFields(lnt,0);		
+//				((IPv4PrefixNLRI)ls).setLocalNodeDescriptors(lnt);
+//				ls.encode();
+				Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
+				//LinkStateNLRI ls2 = (LinkStateNLRI) ctor.newInstance(ls.getBytes(),0);
+				//object2.encode();
+				
+			}
+			else {
 				LinkNLRI linkNLRI=(LinkNLRI)ls;
 				LocalNodeDescriptorsTLV ln= new LocalNodeDescriptorsTLV();
 				linkNLRI.setLocalNodeDescriptors(ln);
-				TestCommons.createAllFields(ln,true);
+				TestCommons.createAllFields(ln,0);
 				RemoteNodeDescriptorsTLV lnr= new RemoteNodeDescriptorsTLV();
 				linkNLRI.setRemoteNodeDescriptorsTLV(lnr);
-				TestCommons.createAllFields(lnr,true);
+				TestCommons.createAllFields(lnr,0);
 				
 				LinkLocalRemoteIdentifiersLinkDescriptorSubTLV llrIdSTLV = new LinkLocalRemoteIdentifiersLinkDescriptorSubTLV();
 				llrIdSTLV.setLinkLocalIdentifier(1);
@@ -87,11 +104,11 @@ public class TestBGPLSPathAttributes {
 				linkNLRI.setLinkIdentifiersTLV(llrIdSTLV);
 				
 				IPv4InterfaceAddressLinkDescriptorsSubTLV ipInteSTLV= new IPv4InterfaceAddressLinkDescriptorsSubTLV();
-				TestCommons.createAllFields(ipInteSTLV,true);
+				TestCommons.createAllFields(ipInteSTLV,0);
 				linkNLRI.setIpv4InterfaceAddressTLV(ipInteSTLV);
 				
 				IPv4NeighborAddressLinkDescriptorSubTLV ipNeiAddSTLV = new IPv4NeighborAddressLinkDescriptorSubTLV();
-				TestCommons.createAllFields(ipNeiAddSTLV,true);
+				TestCommons.createAllFields(ipNeiAddSTLV,0);
 				linkNLRI.setIpv4NeighborAddressTLV(ipNeiAddSTLV);
 				
 				UndirectionalLinkDelayDescriptorSubTLV uldSTLV = new UndirectionalLinkDelayDescriptorSubTLV();

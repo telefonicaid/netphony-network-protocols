@@ -54,7 +54,7 @@ public class TestRSVPMessages {
     	System.out.println("Testing RSVP Message "+object);
     	Class objectClass=Class.forName(object);
     	RSVPMessage object1 = (RSVPMessage)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		RSVPMessage object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
@@ -68,7 +68,7 @@ public class TestRSVPMessages {
 		//Check all the gets
 		TestCommons.testGets(object1);
 		//Test with boolean false
-		TestCommons.createAllFields(object1,false);
+		TestCommons.createAllFields(object1,1);
 		object1.encode();
 		object2 = (RSVPMessage) ctor.newInstance(object1.getBytes(),object1.getBytes().length);
 		object2.encode();

@@ -8,37 +8,40 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 public class RouteTagPrefixAttribTLV extends BGP4TLVFormat {
 
-	private  int number = 0;
-	int length;
-	private byte[] address = null;
-	private LinkedList <Inet4Address> routeTags = new LinkedList <Inet4Address>();
+	public LinkedList <Inet4Address> routeTags;
 
 	public RouteTagPrefixAttribTLV() {
 		this.setTLVType(LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG);
-		// TODO Auto-generated constructor stub
+		routeTags = new LinkedList <Inet4Address>();
 	}
 
 	public RouteTagPrefixAttribTLV(byte[] bytes, int offset) {
 		super(bytes, offset);
+		routeTags = new LinkedList <Inet4Address>();
 		decode();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void encode() {
+		int number = routeTags.size();
 		this.setTLVValueLength(4*number);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
-		//int offset = 4;	
-		// TODO Auto-generated method stub
+		int offset = 4;	
+		for (int i=0;i<number;++i) {
+			System.arraycopy(routeTags.get(i).getAddress(), 0, this.getTlv_bytes(), offset, 4);
+			offset+=4;
+		}
 
 	}
 	
 	public void decode(){
-		length = this.getTLVValueLength();
-		number = length/4;
+		
+		int length = this.getTLVValueLength();
+		int number = length/4;
 		int offset = 4;
-	    address=new byte[4]; 
+	    byte [] address=new byte[4]; 
 	    Inet4Address igp_tag = null;
 		for (int i=0; i<number; i++){
 			System.arraycopy(this.tlv_bytes,offset, address, 0, 4);
@@ -54,22 +57,6 @@ public class RouteTagPrefixAttribTLV extends BGP4TLVFormat {
 		
 	}
 	
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	public byte[] getAddress() {
-		return address;
-	}
-
-	public void setAddress(byte[] address) {
-		this.address = address;
-	}
-
 	public LinkedList<Inet4Address> getRouteTags() {
 		return routeTags;
 	}
@@ -84,6 +71,6 @@ public class RouteTagPrefixAttribTLV extends BGP4TLVFormat {
 			ret="ROUTE TAG ["+i+"] IDENTIFIER: "+routeTags.get(i).toString();
 		} 
 		return ret;
-}
+	}
 
 }

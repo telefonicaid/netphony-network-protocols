@@ -1,6 +1,7 @@
 package es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields;
 
 import java.net.Inet4Address;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
@@ -163,6 +164,45 @@ public abstract class LabelSetField{
 	}
 
 	public abstract LabelSetField duplicate();
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + action;
+		result = prime * result + Arrays.hashCode(bytes);
+		result = prime * result + ((labels == null) ? 0 : labels.hashCode());
+		result = prime * result + length;
+		result = prime * result + numLabels;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LabelSetField other = (LabelSetField) obj;
+		if (action != other.action)
+			return false;
+		if (!Arrays.equals(bytes, other.bytes))
+			return false;
+		if (labels == null) {
+			if (other.labels != null)
+				return false;
+		} else if (!labels.equals(other.labels))
+			return false;
+		if (length != other.length)
+			return false;
+		if (numLabels != other.numLabels)
+			return false;
+		return true;
+	}
 		
 	
 	

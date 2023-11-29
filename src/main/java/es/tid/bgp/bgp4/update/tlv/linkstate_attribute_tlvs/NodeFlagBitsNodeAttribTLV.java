@@ -8,8 +8,6 @@ public class NodeFlagBitsNodeAttribTLV extends BGP4TLVFormat{
 	private boolean attached_bit = false;
 	private boolean external_bit = false;
 	private boolean abr_bit = false;
-	private boolean reserved = false;
-	private byte flags;
 	
 	public NodeFlagBitsNodeAttribTLV(){
 		super();
@@ -22,13 +20,22 @@ public class NodeFlagBitsNodeAttribTLV extends BGP4TLVFormat{
 	}
 	@Override
 	public void encode() {
-		// TODO Auto-generated method stub
+		this.setTLVValueLength(1);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
+		int offset=4;
+		this.tlv_bytes[offset]=(byte)0x00;
+		this.tlv_bytes[offset]=(byte) (this.tlv_bytes[offset]|(overload_bit?(byte)0x80:(byte)0x00));
+		this.tlv_bytes[offset]=(byte) (this.tlv_bytes[offset]|(attached_bit?(byte)0x40:(byte)0x00));
+		this.tlv_bytes[offset]=(byte) (this.tlv_bytes[offset]|(external_bit?(byte)0x20:(byte)0x00));
+		this.tlv_bytes[offset]=(byte) (this.tlv_bytes[offset]|(abr_bit?(byte)0x10:(byte)0x00));
+
 		
 	}
 	
 	public void decode(){
 		int offset =4;
-		flags = tlv_bytes[offset];
+		int flags = tlv_bytes[offset]&0xFF;
 		if ((flags & 0x80) == 0x80){
 			this.setOverload_bit(true);
 		}
@@ -76,21 +83,6 @@ public class NodeFlagBitsNodeAttribTLV extends BGP4TLVFormat{
 		this.abr_bit = abr_bit;
 	}
 
-	public boolean isReserved() {
-		return reserved;
-	}
-
-	public void setReserved(boolean reserved) {
-		this.reserved = reserved;
-	}
-
-	public byte getFlags() {
-		return flags;
-	}
-
-	public void setFlags(byte flags) {
-		this.flags = flags;
-	}
 	
 	public String toString(){
 		return "NODE FLAGS [OB="+ this.isOverload_bit() + "AB="+this.isAttached_bit()+ 

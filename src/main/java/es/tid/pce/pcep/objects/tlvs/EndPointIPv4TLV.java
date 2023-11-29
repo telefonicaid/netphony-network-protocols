@@ -6,29 +6,14 @@ import java.net.UnknownHostException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
-  *  IPV4-ADDRESS TLV from draft-ietf-pce-gmpls-pcep-extensions-10.
-  *  Encoding: standard
-  *  TLV Type: 7 (draft-ietf-pce-gmpls-pcep-extensions-9) not asigned by IANA
+  * IPV4-ADDRESS TLV (Type 39)
   *  
-2.5.2.1. IPV4-ADDRESS
-
-
-   This TLV represent a numbered endpoint using IPv4 numbering, the
-   format of the IPv4-ADDRESS TLV value (TLV-Type=TBA) is as follows:
-
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                          IPv4 address                         |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-   This TLV MAY be ignored, in which case a PCRep with NO-PATH should be
-   responded, as described in Section 2.5.1.	
-
- 
- * @author Alejandro Tovar de Due�as
- *
- */
+  * The IPV4-ADDRESS TLV represents a numbered endpoint using
+  * IPv4 numbering.   
+  * @author Alejandro Tovar
+  * @author ogondio
+  *
+  */
 public class EndPointIPv4TLV extends PCEPTLV {
 	
 	

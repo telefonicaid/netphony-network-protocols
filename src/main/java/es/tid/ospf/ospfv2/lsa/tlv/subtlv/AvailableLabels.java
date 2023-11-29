@@ -95,11 +95,31 @@ public class AvailableLabels extends OSPFSubTLV {
 		this.labelSet = labelSet;
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((labelSet == null) ? 0 : labelSet.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if ((labelSet != null) &&(((AvailableLabels)obj).getLabelSet() != null))
-			return labelSet.equals(((AvailableLabels)obj).getLabelSet());
-		return false;
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AvailableLabels other = (AvailableLabels) obj;
+		if (labelSet == null) {
+			if (other.labelSet != null)
+				return false;
+		} else if (!labelSet.equals(other.labelSet))
+			return false;
+		return true;
 	}
 
 	@Override

@@ -7,22 +7,16 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
 
-/** IPV4-LSP-IDENTIFIERS TLV draft-ietf-pce-stateful-pce-11.
+/** IPV4-LSP-IDENTIFIERS TLV (Type: 18)
+ * 
  * Encoding: 
- * TLV Type: 18 (non standard)
- * Whenever the value of an LSP identifier changes, a PCC MUST send out
-   an LSP State Report, where the LSP Object carries the LSP Identifiers
-   TLV that contains the new value.  The LSP Identifiers TLV MUST also
-   be included in the LSP object during state synchronization.  There
-   are two LSP Identifiers TLVs, one for IPv4 and one for IPv6.
-
    The format of the IPV4-LSP-IDENTIFIERS TLV is shown in the following
    figure:
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |           Type=[TBD]          |           Length=12           |
+     |           Type=18             |           Length=16           |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                   IPv4 Tunnel Sender Address                  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -30,11 +24,12 @@ import es.tid.protocol.commons.ByteHandler;
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                        Extended Tunnel ID                     |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                   IPv4 Tunnel Endpoint Address                |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                Figure 18: IPV4-LSP-IDENTIFIERS TLV format
+                Figure 12: IPV4-LSP-IDENTIFIERS TLV Format
 
-   The type of the TLV is [TBD] and it has a fixed length of 12 octets.
-   The value contains the following fields:
+  
 
    IPv4 Tunnel Sender Address:  contains the sender node's IPv4 address,
       as defined in [RFC3209], Section 4.6.2.1 for the LSP_TUNNEL_IPv4
@@ -56,7 +51,7 @@ import es.tid.protocol.commons.ByteHandler;
       identifier defined in [RFC3209], Section 4.6.1.1 for the
       LSP_TUNNEL_IPv4 Session Object.
       
-      @author jaume
+      @author jaume, ogondio
  */
 
 public class IPv4LSPIdentifiersTLV extends PCEPTLV 
@@ -67,7 +62,9 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 	
 	private int tunnelID;
 	
-	private int extendedTunnelID;
+	private long extendedTunnelID;
+	
+	private Inet4Address tunnelEndPointIPAddress;
 
 	public IPv4LSPIdentifiersTLV()
 	{
@@ -83,7 +80,7 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 	@Override
 	public void encode() 
 	{		
-		int length = 12;
+		int length = 16;
 		this.setTLVValueLength(length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
@@ -100,13 +97,17 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 		
 		offset += 4;
 		
-		ByteHandler.IntToBuffer(0,offset * 8,32,extendedTunnelID,tlv_bytes);
+		ByteHandler.encode4bytesLong(extendedTunnelID, tlv_bytes, offset);
+		
+		offset += 4;
+		System.arraycopy(tunnelEndPointIPAddress.getAddress(),0, this.tlv_bytes, offset, 4);
 		
 	}
 
 	
 	public void decode() throws MalformedPCEPObjectException 
-	{		
+	{	
+		log.debug("Decoding IPv4LSPIdentifiers TLV");
 		byte[] ip=new byte[4]; 
 		int offset = 4;
 		System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
@@ -124,13 +125,25 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 		
 		offset += 4;
 		
-		lspID = ByteHandler.easyCopy(0, 15, tlv_bytes[offset],tlv_bytes[offset+1]);
-		tunnelID = ByteHandler.easyCopy(0, 15, tlv_bytes[offset+2],tlv_bytes[offset+3]);
+		lspID = ByteHandler.decode2bytesInteger(tlv_bytes, offset);
+		tunnelID = ByteHandler.decode2bytesInteger(tlv_bytes, offset+2);
 		
 		offset += 4;
 		
-		extendedTunnelID = ByteHandler.easyCopy(0, 31, tlv_bytes[offset],tlv_bytes[offset+1],
-				tlv_bytes[offset+2],tlv_bytes[offset+3]);
+		extendedTunnelID = ByteHandler.decode4bytesLong(tlv_bytes, offset);
+		offset += 4;
+		System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
+		try 
+		{
+			tunnelEndPointIPAddress=(Inet4Address)Inet4Address.getByAddress(ip);
+			log.debug("Destination IP adress, tunnel: "+tunnelEndPointIPAddress);
+		} 
+		catch (UnknownHostException e) 
+		{			
+			e.printStackTrace();
+			throw new MalformedPCEPObjectException();
+		}
+		 
 		
 	}
 	
@@ -166,27 +179,37 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 		this.tunnelID = tunnelID;
 	}
 
-	public int getExtendedTunnelID() 
+	public long getExtendedTunnelID() 
 	{
 		return extendedTunnelID;
 	}
 
-	public void setExtendedTunnelID(int extendedTunnelID) 
+	public void setExtendedTunnelID(long extendedTunnelID) 
 	{
 		this.extendedTunnelID = extendedTunnelID;
 	}
+	
+	
+
+	public Inet4Address getTunnelEndPointIPAddress() {
+		return tunnelEndPointIPAddress;
+	}
+
+	public void setTunnelEndPointIPAddress(Inet4Address tunnelEndPointIPAddress) {
+		this.tunnelEndPointIPAddress = tunnelEndPointIPAddress;
+	}
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + extendedTunnelID;
+		result = prime * result + (int) (extendedTunnelID ^ (extendedTunnelID >>> 32));
 		result = prime * result + lspID;
+		result = prime * result + ((tunnelEndPointIPAddress == null) ? 0 : tunnelEndPointIPAddress.hashCode());
 		result = prime * result + tunnelID;
-		result = prime
-				* result
-				+ ((tunnelSenderIPAddress == null) ? 0 : tunnelSenderIPAddress
-						.hashCode());
+		result = prime * result + ((tunnelSenderIPAddress == null) ? 0 : tunnelSenderIPAddress.hashCode());
 		return result;
 	}
 
@@ -203,6 +226,11 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 			return false;
 		if (lspID != other.lspID)
 			return false;
+		if (tunnelEndPointIPAddress == null) {
+			if (other.tunnelEndPointIPAddress != null)
+				return false;
+		} else if (!tunnelEndPointIPAddress.equals(other.tunnelEndPointIPAddress))
+			return false;
 		if (tunnelID != other.tunnelID)
 			return false;
 		if (tunnelSenderIPAddress == null) {
@@ -212,6 +240,15 @@ public class IPv4LSPIdentifiersTLV extends PCEPTLV
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "IPv4LSPIdentifiersTLV [tunnelSenderIPAddress=" + tunnelSenderIPAddress + ", lspID=" + lspID
+				+ ", tunnelID=" + tunnelID + ", extendedTunnelID=" + extendedTunnelID + ", tunnelEndPointIPAddress="
+				+ tunnelEndPointIPAddress + "]";
+	}
+
+	
 	
 	
 	

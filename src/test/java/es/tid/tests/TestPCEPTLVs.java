@@ -33,7 +33,7 @@ public class TestPCEPTLVs {
     public static Collection configs() {
     	Object[][] objects={
     			{"es.tid.pce.pcep.objects.tlvs.NoPathTLV"},//Type 1
-    			//{"es.tid.pce.pcep.objects.tlvs.OverloadedDurationTLV"},//Type 2: FIXME: Not Implemented
+    			{"es.tid.pce.pcep.objects.tlvs.OverloadDurationTLV"},//Type 2 OVERLOAD-DURATION-TLV
     			{"es.tid.pce.pcep.objects.tlvs.ReqMissingTLV"},//Type 3: REQ-MISSING TLV
     			{"es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV"}, //Type 4: OF-LIST TLV
     			//{"es.tid.pce.pcep.objects.tlvs.Order TLV"}, Type 5: Order TLV FIXME: Not implemented
@@ -45,7 +45,11 @@ public class TestPCEPTLVs {
     			//Type 11: Optical Interface Class List FIXME: Not implemented
     			//Type 12: Client Signal Information FIXME: Not implemented
     			//Type 13: H-PCE Capability FIXME: Not implemented
-    			{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			{"es.tid.pce.pcep.objects.tlvs.EmptyDomainIDTLV"},//Type 14: Domain ID TLV Type 0 (non standard, included for compatibility)
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
+    			{"es.tid.pce.pcep.objects.tlvs.OSPFDomainIDTLV"},//Type 14: Domain ID Type 3 (OSPF) RFC 
+    			//{"es.tid.pce.pcep.objects.tlvs.DomainIDTLV"},//Type 14: Domain ID TLV FIXME: Draft version implemented RECHECK!!
     			//Type 15: H-PCE-FLAG FIXME: Not implemented
     			{"es.tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV"},//Type 16: STATEFUL-PCE-CAPABILITY FIXME: IMPLEMENT MORE FLAGS
     			{"es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV"},//Type 17: 17	SYMBOLIC-PATH-NAME	[RFC8231]
@@ -55,28 +59,28 @@ public class TestPCEPTLVs {
     			{"es.tid.pce.pcep.objects.tlvs.RSVPErrorSpecTLV" }, //	21	RSVP-ERROR-SPEC	[RFC8231]  FIXME: Draft version implemented RECHECK!!
     			//	22	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV" },//   23	LSP-DB-VERSION	[RFC8232] FIXME: Draft version implemented RECHECK!!
-    			//{"es.tid.pce.pcep.objects.tlvs.SpeakerEntityIdentifierTLV"},// 	24	SPEAKER-ENTITY-ID	[RFC8232] FIXME: Add suport for byte[] in fields
+    			{"es.tid.pce.pcep.objects.tlvs.SpeakerEntityIdentifierTLV"},// 	24	SPEAKER-ENTITY-ID	[RFC8232]
     			//	25	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.SRCapabilityTLV"},//26	SR-PCE-CAPABILITY (deprecated)	[RFC8664]
     			//	27	Unassigned	
     			{"es.tid.pce.pcep.objects.tlvs.PathSetupTLV"},//   28	PATH-SETUP-TYPE	[RFC8408] FIXME: Draft version implemented RECHECK!!
     			{"es.tid.pce.pcep.objects.tlvs.OpConfAssocRangeTLV"},//  	29	Operator-configured Association Range	[RFC8697]
     			{"es.tid.pce.pcep.objects.tlvs.GlobalAssociationSourceTLV"}, //	30	Global Association Source	[RFC8697]
-//    					31	Extended Association ID	[RFC8697]
-//    					32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
-//    					33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
-//    					34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
-//    					35	ASSOC-Type-List	[RFC8697]
+    			{"es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV"}, //	31	Extended Association ID	[RFC8697]					 
+    			//  32	P2MP-IPV4-LSP-IDENTIFIERS	[RFC8623]
+    			//  33	P2MP-IPV6-LSP-IDENTIFIERS	[RFC8623]
+    			{"es.tid.pce.pcep.objects.tlvs.PathSetupCapabilityTLV"},//  34	PATH-SETUP-TYPE-CAPABILITY	[RFC8408]
+    			{"es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV"}, //  35	ASSOC-Type-List	[RFC8697]					 
 //    					36	AUTO-BANDWIDTH-CAPABILITY	[RFC8733]
 //    					37	AUTO-BANDWIDTH-ATTRIBUTES	[RFC8733]
 //    					38	Path Protection Association Group TLV	[RFC8745]
-//    					39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
-//    					40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]
-//    					41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]
-//    					42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]
+    			{"es.tid.pce.pcep.objects.tlvs.EndPointIPv4TLV"}, //	39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]    			    			
+//    					40	IPV6-ADDRESS	[RFC8779, Section 2.5.2.2]    					
+    			{"es.tid.pce.pcep.objects.tlvs.UnnumberedEndpointTLV"}, //	41	UNNUMBERED-ENDPOINT	[RFC8779, Section 2.5.2.3]    			    			
+    			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"}, //	42	LABEL-REQUEST	[RFC8779, Section 2.5.2.4]    			
 //    					43	LABEL-SET	[RFC8779, Section 2.5.2.5]
 //    					44	PROTECTION-ATTRIBUTE	[RFC8779, Section 2.8]
-//    					45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
+    			{"es.tid.pce.pcep.objects.tlvs.LabelRequestTLV"},// 45	GMPLS-CAPABILITY	[RFC8779, Section 2.1.2]
 //    					46	DISJOINTNESS-CONFIGURATION	[RFC8800]
 //    					47	DISJOINTNESS-STATUS	[RFC8800]
 //    					48	POLICY-PARAMETERS-TLV (TEMPORARY - registered 2020-05-15, expires 2021-05-15)	[draft-ietf-pce-association-policy-09]
@@ -85,8 +89,10 @@ public class TestPCEPTLVs {
 //    					51	PCE-FLOWSPEC-CAPABILITY TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					52	FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
 //    					53	L2 FLOW FILTER TLV	[RFC-ietf-pce-pcep-flowspec-12]
-    			{"es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV"},//Type 35
-
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathNameTLV"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathPreferenceTLV"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyName"},
+    			{"es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathIdentifiersTLV"},
 				};
 		return Arrays.asList(objects);
     }
@@ -99,43 +105,52 @@ public class TestPCEPTLVs {
     @Test
     public void test (){
     	try {
-    	System.out.println("Testing PCEP TLV "+object);
+    	System.out.println("Testing PCEP TLV "+object+" (combination of fields 0)");
     	Class objectClass=Class.forName(object);
     	PCEPTLV object1 = (PCEPTLV)objectClass.newInstance();
-		TestCommons.createAllFields(object1,true);
+		TestCommons.createAllFields(object1,0);
 		object1.encode();
 		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PCEPTLV object2 = (PCEPTLV) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();
-		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
 		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
 		//Check toString output
-		object1.toString();
+		System.out.println(object1.toString());
 		//Check all the gets
 		TestCommons.testGets(object1);
 		//Check if the fields are the same
 		assertTrue("testing PCEP TLV  "+objectClass,object1.equals(object2));
 		
 		//Check equals 
-		//testEquals(object1, object2);
+		testEquals(object1, object2);
 		//Check hashcode
-//		object1.hashCode();
-		//Test with boolean false
-		TestCommons.createAllFields(object1,false);
+		object1.hashCode();
+		//Test second combination
+		System.out.println("Testing PCEP TLV "+object+" (combination of fields 1)");
+		object1 = (PCEPTLV)objectClass.newInstance();
+		TestCommons.createAllFields(object1,1);
 		object1.encode();
 		object2 = (PCEPTLV) ctor.newInstance(object1.getTlv_bytes(),0);
 		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(object1.getTlv_bytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getTlv_bytes()));
+		System.out.println(object1.toString());
+		System.out.println(object2.toString());
 		assertTrue("testing PCEP TLV changing values"+objectClass,object1.equals(object2));
 //		//Check equals with false boolean
-//		testEquals(object1, object2);
+		testEquals(object1, object2);
 		//Test Bad object
 		//Check hashcode
 //		object1.hashCode();
+		//CHECK MALFORMED OBJECT
 //		try {
 //			byte[] bitos = new byte[4];
+//			bitos[0]=0x00;
 //			bitos[3]=0x04;
-//			PCEPObject object3 = (PCEPObject) ctor.newInstance(bitos,0);
+//			bitos[1]=0x00;
+//			bitos[2]=0x00;
+//			PCEPTLV object3 = (PCEPTLV) ctor.newInstance(bitos,0);
 //			
 //		} catch (Exception e) {
 //			System.out.println("Testing malformed object ok");
@@ -148,16 +163,19 @@ public class TestPCEPTLVs {
     	}
     }
     
-    public void testEquals(PCEPObject object1, PCEPObject object2) {
+    public void testEquals(PCEPTLV object1, PCEPTLV object2){
     	//Test against different class object
     	Integer test1=new Integer(2);
-		object1.equals(test1);
+    	boolean res;
+		res=object1.equals(test1);
+		assertTrue("testing equals ",!res);
     	//Test same object
     	object1.equals(object1);
+    	//Test null
+    	object1.equals(null);
     	//Test change in parent
-    	object2.setObjectClass(object1.getObjectClass()+1);
+    	object2.setTLVType(object1.getTLVType()+1);
     	object1.equals(object2);
-    	object2.setObjectClass(object1.getObjectClass());
     	//Test changes in fields
 		List<Field> fieldListNS = new ArrayList<Field>();
 		List<Field> fieldList= Arrays.asList(object1.getClass().getDeclaredFields());
@@ -167,7 +185,7 @@ public class TestPCEPTLVs {
 			if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 				if (ty instanceof Class){
 					Class c =(Class)ty;
-					System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
+					//System.out.println("XXXXXXXXXXXXXXXXXClass name: "+c.getName()); 
 					Method method;
 					Method methods;
 					if (c.isPrimitive()){

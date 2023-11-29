@@ -3,6 +3,7 @@ package es.tid.rsvp.objects;
 import java.util.LinkedList;
 import org.slf4j.Logger;
 
+import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.rsvp.RSVPProtocolViolationException;
 import es.tid.rsvp.objects.subobjects.*;
 import org.slf4j.LoggerFactory;
@@ -118,6 +119,7 @@ public class ERO extends RSVPObject{
 		int subObjectsNumber = eroSubobjects.size();
 		for(int j = 0; j < subObjectsNumber; j++){
 			EROSubobject eroSO = eroSubobjects.get(j);
+			eroSO.encode();
 			this.length = this.length + eroSO.getErosolength();
 		}
 		
@@ -131,7 +133,6 @@ public class ERO extends RSVPObject{
 		
 		for(int i = 0; i < subObjectsNumber; i++){
 			EROSubobject eroSO = eroSubobjects.get(i);
-			eroSO.encode();
 			System.arraycopy(eroSO.getSubobject_bytes(), 0, this.bytes, currentIndex, eroSO.getErosolength());
 			currentIndex = currentIndex + eroSO.getErosolength();
 		}
@@ -163,6 +164,12 @@ public class ERO extends RSVPObject{
 				case SubObjectValues.ERO_SUBOBJECT_UNNUMBERED_IF_ID:
 					UnnumberIfIDEROSubobject subun=new UnnumberIfIDEROSubobject(bytes, offset);
 					addEROSubobject(subun);
+					break;
+					
+			    // ONLY ADDED FOR SIMPLIFY TESTING. THEY WILL NOT BE USED
+				case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+					SREROSubobject sreroso = new SREROSubobject(bytes, offset);
+					this.addEROSubobject(sreroso);
 					break;
 					
 				case SubObjectValues.ERO_SUBOBJECT_LABEL:

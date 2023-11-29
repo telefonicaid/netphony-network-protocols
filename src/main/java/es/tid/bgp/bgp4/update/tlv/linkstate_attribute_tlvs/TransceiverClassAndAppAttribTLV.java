@@ -9,8 +9,8 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 
-	private long trans_app_code;
-	private long trans_class;
+	public long trans_app_code;
+	public long trans_class;
 	
 	public TransceiverClassAndAppAttribTLV(){
 		super();
@@ -24,7 +24,10 @@ public class TransceiverClassAndAppAttribTLV extends BGP4TLVFormat{
 
 	@Override
 	public void encode() {
-		int offset =4;
+		this.setTLVValueLength(8);
+		this.tlv_bytes=new byte[this.getTotalTLVLength()];
+		encodeHeader();
+		int offset = 4;	
 		
 	    tlv_bytes[offset]=(byte)((trans_app_code>>24) & 0xFF);
 	    tlv_bytes[offset+1]=(byte)((trans_app_code>>16) & 0xFF);

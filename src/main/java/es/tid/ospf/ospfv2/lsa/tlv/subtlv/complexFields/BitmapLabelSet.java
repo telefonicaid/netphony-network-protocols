@@ -49,7 +49,7 @@ public class BitmapLabelSet  extends LabelSetField {
 
 	private byte[] bytesBitmap;
 	private byte[] bytesBitmapReserved;
-	private int sumBytesBitmap;
+	//private int sumBytesBitmap;
 	//private int n;
 	private DWDMWavelengthLabel dwdmWavelengthLabel;
 	private static final Logger log= LoggerFactory.getLogger("PCEServer");
@@ -246,7 +246,7 @@ public class BitmapLabelSet  extends LabelSetField {
 	}
 	
 	public int getSumaBits(){
-		sumBytesBitmap=0;
+		int sumBytesBitmap=0;
 		for (int i=0; i<bytesBitmap.length*8; i++){
 			if ((bytesBitmap[i/8]&(0x80>>(i%8))) == (0x80>>i%8)){
 				sumBytesBitmap = sumBytesBitmap + 1;

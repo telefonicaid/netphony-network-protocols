@@ -99,7 +99,7 @@ public class SenderTemplateLSPTunnelIPv6 extends SenderTemplate{
 	
 	public SenderTemplateLSPTunnelIPv6(byte[] bytes, int offset){
 		
-		super();
+		super(bytes,offset);
 		decode();
 		
 		log.debug("Sender Template LSP Tunnel IPv6 Object Created");

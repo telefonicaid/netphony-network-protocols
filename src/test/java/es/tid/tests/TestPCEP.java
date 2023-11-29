@@ -13,6 +13,7 @@ import es.tid.pce.pcep.messages.PCEPInitiate;
 import es.tid.pce.pcep.messages.PCEPKeepalive;
 import es.tid.pce.pcep.messages.PCEPMessage;
 import es.tid.pce.pcep.objects.Close;
+import es.tid.pce.pcep.objects.OPEN;
 import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.protocol.commons.ByteHandler;
 
@@ -52,7 +53,7 @@ public class TestPCEP {
 		ErrorConstruct error= new ErrorConstruct();
 		LinkedList<ErrorConstruct> errorList= new LinkedList<ErrorConstruct>();
 		//PCEPErrorObject e = new PCEPErrorObject();
-		TestCommons.createAllFields(error,true);
+		TestCommons.createAllFields(error,0);
 		errorList.add(error);
 		message.setErrorList(errorList);
 		message.encode();
@@ -63,6 +64,36 @@ public class TestPCEP {
 		System.out.println(message.toString());
 		//Check if the fields are the same
 		assertTrue("asserting Error message with single error object ",message.equals(object2));
+		
+		System.out.println("Testing #2 of PCEPError Message with open and error object list");
+		message = new PCEPError();
+		//Test with an Error
+		PCEPErrorObject erroro= new PCEPErrorObject();
+		//PCEPErrorObject e = new PCEPErrorObject();
+		TestCommons.createAllFields(erroro,0);
+		message.getErrorObjList().add(erroro);
+		OPEN open = new OPEN();
+		TestCommons.createAllFields(open,0);
+		message.setOpen(open);
+		message.encode();
+		 object2 = new PCEPError(message.getBytes());
+		object2.encode();
+		System.out.println(ByteHandler.ByteMACToString(message.getBytes()));
+		System.out.println(ByteHandler.ByteMACToString(object2.getBytes()));
+		System.out.println(message.toString());
+		//Check if the fields are the same
+		assertTrue("asserting Error message with  error object and open",message.equals(object2));
+		
+		System.out.println("Testing #3 of bad error");
+		message = new PCEPError();
+		boolean testok=false;
+		try {
+			message.encode();
+		} catch(Exception e){
+			testok=true;
+		}
+		assertTrue("asserting empty message",testok);
+
     	} catch(Exception e){
     		e.printStackTrace();
     		assertTrue("Exception in message error",false);

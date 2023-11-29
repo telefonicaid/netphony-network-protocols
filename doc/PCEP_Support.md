@@ -92,7 +92,7 @@ TLVs
 | Value | Description | Reference | Implemented |
 | ------ | ------  | ------    | ------ |
 |1 | NO-PATH-VECTOR TLV | [RFC5440] | YES |
-|2 | OVERLOAD-DURATION TLV | [RFC5440] | NO |
+|2 | OVERLOAD-DURATION TLV | [RFC5440] | YES |
 |3 | REQ-MISSING TLV | [RFC5440] | YES |
 |4 | OF-List | [RFC5541] | YES |
 |5 | Order TLV | [RFC5557] | NO |
@@ -117,11 +117,11 @@ TLVs
 |26 | SR-PCE-CAPABILITY (deprecated) | [RFC8664] | YES |
 |28 | PATH-SETUP-TYPE | [RFC8408] | YES | 
 |29 | Operator-configured Association Range | [RFC8697] | YES |
-|30 | Global Association Source | [RFC8697] | NO |
-|31 | Extended Association ID | [RFC8697] | NO |
+|30 | Global Association Source | [RFC8697] | YES |
+|31 | Extended Association ID | [RFC8697] | YES |
 |32 | P2MP-IPV4-LSP-IDENTIFIERS | [RFC8623] | NO |
 |33 | P2MP-IPV6-LSP-IDENTIFIERS | [RFC8623] | NO |
-|34 | PATH-SETUP-TYPE-CAPABILITY | [RFC8408] | NO |
+|34 | PATH-SETUP-TYPE-CAPABILITY | [RFC8408] | YES |
 |35 | ASSOC-Type-List | [RFC8697] | YES |
 |36 | AUTO-BANDWIDTH-CAPABILITY | [RFC8733] | NO |
 |37 | AUTO-BANDWIDTH-ATTRIBUTES | [RFC8733] | NO |

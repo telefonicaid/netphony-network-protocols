@@ -1,6 +1,8 @@
 package es.tid.pce.pcep.objects.tlvs;
 
 
+import java.util.Arrays;
+
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.protocol.commons.ByteHandler;
@@ -40,7 +42,6 @@ public class SymbolicPathNameTLV extends PCEPTLV
 		log.debug("Encoding SymbolicPathName TLV");
 		this.setTLVValueLength(SymbolicPathNameID.length);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
-		log.debug("TOTA  "+this.getTotalTLVLength()+" SW "+SymbolicPathNameID.length);
 		this.encodeHeader();
 		int offset=4;
 		System.arraycopy(SymbolicPathNameID, 0, this.tlv_bytes, offset, SymbolicPathNameID.length);
@@ -102,10 +103,11 @@ public class SymbolicPathNameTLV extends PCEPTLV
 	{
 		SymbolicPathNameID = symbolicPathNameID;
 	}
-	
-	public String toString(){
-		String pathName = new String (SymbolicPathNameID);
-		return pathName;
+
+	@Override
+	public String toString() {
+		return "SymbolicPathNameTLV [SymbolicPathNameID=" + new String (SymbolicPathNameID) + "]";
 	}
 	
+		
 }

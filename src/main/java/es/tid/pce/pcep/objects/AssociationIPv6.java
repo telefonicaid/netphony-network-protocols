@@ -3,10 +3,15 @@ package es.tid.pce.pcep.objects;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 import es.tid.pce.pcep.objects.tlvs.ExtendedAssociationIDTLV;
 import es.tid.pce.pcep.objects.tlvs.GlobalAssociationSourceTLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
+import es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathIdentifiersTLV;
+import es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathNameTLV;
+import es.tid.pce.pcep.objects.tlvs.SRPolicyCandidatePathPreferenceTLV;
+import es.tid.pce.pcep.objects.tlvs.SRPolicyName;
 import es.tid.protocol.commons.ByteHandler;
 
 /**
@@ -139,8 +144,17 @@ public class AssociationIPv6 extends Association {
 	private GlobalAssociationSourceTLV global_association_source_tlv=null;
 
 	private ExtendedAssociationIDTLV extended_ssociation_id_tlv=null;
-
-
+	
+	private SRPolicyCandidatePathNameTLV sr_policy_candidate_path_tlv=null;
+	
+	private SRPolicyCandidatePathIdentifiersTLV sr_policy_candidate_path_identifiers_tlv=null;
+	
+	private SRPolicyCandidatePathPreferenceTLV sr_policy_candidate_path_preference_tlv=null;
+	
+	private SRPolicyName sr_policy_name = null;
+	
+	
+	
 	public AssociationIPv6() {
 		super();
 		this.setObjectClass(ObjectParameters.PCEP_OBJECT_CLASS_ASSOCIATION);
@@ -163,6 +177,22 @@ public class AssociationIPv6 extends Association {
 		if (extended_ssociation_id_tlv!=null){
 			extended_ssociation_id_tlv.encode();
 			ObjectLength=ObjectLength+extended_ssociation_id_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_candidate_path_tlv!=null) {
+			sr_policy_candidate_path_tlv.encode();
+			ObjectLength=ObjectLength+sr_policy_candidate_path_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_candidate_path_identifiers_tlv!=null) {
+			sr_policy_candidate_path_identifiers_tlv.encode();
+			ObjectLength=ObjectLength+sr_policy_candidate_path_identifiers_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_candidate_path_preference_tlv!=null) {
+			sr_policy_candidate_path_preference_tlv.encode();
+			ObjectLength=ObjectLength+sr_policy_candidate_path_preference_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_name!=null) {
+			sr_policy_name.encode();
+			ObjectLength=ObjectLength+sr_policy_name.getTotalTLVLength();
 		}
 		this.object_bytes=new byte[ObjectLength];
 		encode_header();
@@ -187,6 +217,23 @@ public class AssociationIPv6 extends Association {
 			System.arraycopy(extended_ssociation_id_tlv.getTlv_bytes(),0,this.object_bytes,offset,extended_ssociation_id_tlv.getTotalTLVLength());
 			offset=offset+extended_ssociation_id_tlv.getTotalTLVLength();
 			
+		}
+		if(sr_policy_candidate_path_tlv!=null) {
+			System.arraycopy(sr_policy_candidate_path_tlv.getTlv_bytes(),0,this.object_bytes,offset,sr_policy_candidate_path_tlv.getTotalTLVLength());
+			offset=offset+sr_policy_candidate_path_tlv.getTotalTLVLength();
+			
+		}
+		if(sr_policy_candidate_path_identifiers_tlv!=null) {
+			System.arraycopy(sr_policy_candidate_path_identifiers_tlv.getTlv_bytes(),0,this.object_bytes,offset,sr_policy_candidate_path_identifiers_tlv.getTotalTLVLength());
+			offset=offset+sr_policy_candidate_path_identifiers_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_candidate_path_preference_tlv!=null) {
+			System.arraycopy(sr_policy_candidate_path_preference_tlv.getTlv_bytes(),0,this.object_bytes,offset,sr_policy_candidate_path_preference_tlv.getTotalTLVLength());
+			offset=offset+sr_policy_candidate_path_preference_tlv.getTotalTLVLength();
+		}
+		if(sr_policy_name!=null) {
+			System.arraycopy(sr_policy_name.getTlv_bytes(),0,this.object_bytes,offset,sr_policy_name.getTotalTLVLength());
+			offset=offset+sr_policy_name.getTotalTLVLength();
 		}
 
 	}
@@ -219,6 +266,18 @@ public class AssociationIPv6 extends Association {
 				break;
 			case ObjectParameters.PCEP_TLV_EXTENDED_ASSOCIATION_ID:
 				extended_ssociation_id_tlv=new ExtendedAssociationIDTLV(this.getObject_bytes(), offset);
+				break;
+			case ObjectParameters.PCEP_TLV_SRPOLICY_POL_NAME:
+				sr_policy_name = new SRPolicyName(this.getObject_bytes(),offset);
+				break;
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_IDS:
+				sr_policy_candidate_path_identifiers_tlv= new SRPolicyCandidatePathIdentifiersTLV(this.getObject_bytes(),offset);
+				break;
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_NAME:
+				sr_policy_candidate_path_tlv=new SRPolicyCandidatePathNameTLV(this.getObject_bytes(),offset);
+				break;
+			case ObjectParameters.PCEP_TLV_SRPOLICY_CANDIDATE_PATH_PREFERENCE:
+				sr_policy_candidate_path_preference_tlv=new SRPolicyCandidatePathPreferenceTLV(this.getObject_bytes(),offset);
 				break;
 			default:
 				log.debug("UNKNOWN TLV found");
@@ -279,18 +338,48 @@ public class AssociationIPv6 extends Association {
 	public void setExtended_ssociation_id_tlv(ExtendedAssociationIDTLV extended_ssociation_id_tlv) {
 		this.extended_ssociation_id_tlv = extended_ssociation_id_tlv;
 	}
+	
+	public SRPolicyCandidatePathNameTLV getSr_policy_candidate_path_tlv() {
+		return sr_policy_candidate_path_tlv;
+	}
+
+	public void setSr_policy_candidate_path_tlv(SRPolicyCandidatePathNameTLV sr_policy_candidate_path_tlv) {
+		this.sr_policy_candidate_path_tlv = sr_policy_candidate_path_tlv;
+	}
+
+	public SRPolicyCandidatePathIdentifiersTLV getSr_policy_candidate_path_identifiers_tlv() {
+		return sr_policy_candidate_path_identifiers_tlv;
+	}
+
+	public void setSr_policy_candidate_path_identifiers_tlv(
+			SRPolicyCandidatePathIdentifiersTLV sr_policy_candidate_path_identifiers_tlv) {
+		this.sr_policy_candidate_path_identifiers_tlv = sr_policy_candidate_path_identifiers_tlv;
+	}
+
+	public SRPolicyCandidatePathPreferenceTLV getSr_policy_candidate_path_preference_tlv() {
+		return sr_policy_candidate_path_preference_tlv;
+	}
+
+	public void setSr_policy_candidate_path_preference_tlv(
+			SRPolicyCandidatePathPreferenceTLV sr_policy_candidate_path_preference_tlv) {
+		this.sr_policy_candidate_path_preference_tlv = sr_policy_candidate_path_preference_tlv;
+	}
+
+	public SRPolicyName getSr_policy_name() {
+		return sr_policy_name;
+	}
+
+	public void setSr_policy_name(SRPolicyName sr_policy_name) {
+		this.sr_policy_name = sr_policy_name;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + assocID;
-		result = prime * result + assocType;
-		result = prime * result + ((associationSource == null) ? 0 : associationSource.hashCode());
-		result = prime * result + ((extended_ssociation_id_tlv == null) ? 0 : extended_ssociation_id_tlv.hashCode());
-		result = prime * result
-				+ ((global_association_source_tlv == null) ? 0 : global_association_source_tlv.hashCode());
-		result = prime * result + (removal ? 1231 : 1237);
+		result = prime * result + Objects.hash(assocID, assocType, associationSource, extended_ssociation_id_tlv,
+				global_association_source_tlv, removal, sr_policy_candidate_path_identifiers_tlv,
+				sr_policy_candidate_path_preference_tlv, sr_policy_candidate_path_tlv, sr_policy_name);
 		return result;
 	}
 
@@ -303,36 +392,31 @@ public class AssociationIPv6 extends Association {
 		if (getClass() != obj.getClass())
 			return false;
 		AssociationIPv6 other = (AssociationIPv6) obj;
-		if (assocID != other.assocID)
-			return false;
-		if (assocType != other.assocType)
-			return false;
-		if (associationSource == null) {
-			if (other.associationSource != null)
-				return false;
-		} else if (!associationSource.equals(other.associationSource))
-			return false;
-		if (extended_ssociation_id_tlv == null) {
-			if (other.extended_ssociation_id_tlv != null)
-				return false;
-		} else if (!extended_ssociation_id_tlv.equals(other.extended_ssociation_id_tlv))
-			return false;
-		if (global_association_source_tlv == null) {
-			if (other.global_association_source_tlv != null)
-				return false;
-		} else if (!global_association_source_tlv.equals(other.global_association_source_tlv))
-			return false;
-		if (removal != other.removal)
-			return false;
-		return true;
+		return assocID == other.assocID && assocType == other.assocType
+				&& Objects.equals(associationSource, other.associationSource)
+				&& Objects.equals(extended_ssociation_id_tlv, other.extended_ssociation_id_tlv)
+				&& Objects.equals(global_association_source_tlv, other.global_association_source_tlv)
+				&& removal == other.removal
+				&& Objects.equals(sr_policy_candidate_path_identifiers_tlv,
+						other.sr_policy_candidate_path_identifiers_tlv)
+				&& Objects.equals(sr_policy_candidate_path_preference_tlv,
+						other.sr_policy_candidate_path_preference_tlv)
+				&& Objects.equals(sr_policy_candidate_path_tlv, other.sr_policy_candidate_path_tlv)
+				&& Objects.equals(sr_policy_name, other.sr_policy_name);
 	}
 
 	@Override
 	public String toString() {
 		return "AssociationIPv6 [removal=" + removal + ", assocType=" + assocType + ", assocID=" + assocID
 				+ ", associationSource=" + associationSource + ", global_association_source_tlv="
-				+ global_association_source_tlv + ", extended_ssociation_id_tlv=" + extended_ssociation_id_tlv + "]";
+				+ global_association_source_tlv + ", extended_ssociation_id_tlv=" + extended_ssociation_id_tlv
+				+ ", sr_policy_candidate_path_tlv=" + sr_policy_candidate_path_tlv
+				+ ", sr_policy_candidate_path_identifiers_tlv=" + sr_policy_candidate_path_identifiers_tlv
+				+ ", sr_policy_candidate_path_preference_tlv=" + sr_policy_candidate_path_preference_tlv
+				+ ", sr_policy_name=" + sr_policy_name + "]";
 	}
+
+	
 	
 	
 

@@ -2,7 +2,21 @@ package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
-public class OSPFRouteTypePrefixDescriptorSubTLV extends BGP4TLVFormat{
+/**
+ * OSPF Route Type TLV (Type 264)
+ * 
+ * See [RFC7752, Section 3.2.3]
+ * The OSPF Route Type TLV is a mandatory TLV corresponding to Prefix
+   NLRIs originated from OSPF.  It is used to identify the OSPF route
+   type of the prefix.  An OSPF prefix MAY be advertised in the OSPF
+   domain with multiple route types.  The Route Type TLV allows the
+   discrimination of these advertisements.  The format of the OSPF Route
+   Type TLV is shown in the following figure
+ * @author ogondio
+ *
+ */
+
+public class OSPFRouteTypeTLV extends BGP4TLVFormat{
 	
 	public static final int INTRA_AREA=0x1;
 	public static final int INTER_AREA = 0X2;
@@ -13,7 +27,7 @@ public class OSPFRouteTypePrefixDescriptorSubTLV extends BGP4TLVFormat{
 	
 	private int route_type;
 
-	public OSPFRouteTypePrefixDescriptorSubTLV() {
+	public OSPFRouteTypeTLV() {
 		super();
 		this.setTLVType(PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_OSPF_ROUTE_TYPE);
 		this.setTLVValueLength(1);
@@ -24,7 +38,7 @@ public class OSPFRouteTypePrefixDescriptorSubTLV extends BGP4TLVFormat{
 	}
 
 	
-	public OSPFRouteTypePrefixDescriptorSubTLV(byte []bytes, int offset) {		
+	public OSPFRouteTypeTLV(byte []bytes, int offset) {		
 		super(bytes, offset);
 		decode();
 	}

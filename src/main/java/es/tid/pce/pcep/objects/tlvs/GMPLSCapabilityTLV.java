@@ -4,10 +4,9 @@ import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.ObjectParameters;
 
 /**
- * GMPLS-CAPABILITY TLV, see draft-ietf-pce-gmpls-pcep-extensions-10.
+ * GMPLS-CAPABILITY TLV (Type 45)
+ * see RFC8779, Section 2.1.2
  * Encoding: standard
- * TLV Type: non-standard (14, as per draft-ietf-pce-gmpls-pcep-extensions-10 )
- * 
  * In addition to the IGP advertisement, a PCEP speaker should be able
    to discover the other peer GMPLS capabilities during the Open message
    exchange.  This capability is also useful to avoid misconfigurations.

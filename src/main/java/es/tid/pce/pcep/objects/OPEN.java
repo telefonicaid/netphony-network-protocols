@@ -2,13 +2,16 @@ package es.tid.pce.pcep.objects;
 
 import es.tid.pce.pcep.objects.tlvs.ASSOCTypeListTLV;
 import es.tid.pce.pcep.objects.tlvs.DomainIDTLV;
+import es.tid.pce.pcep.objects.tlvs.EmptyDomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.GMPLSCapabilityTLV;
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
 import es.tid.pce.pcep.objects.tlvs.OF_LIST_TLV;
+import es.tid.pce.pcep.objects.tlvs.OSPFDomainIDTLV;
 import es.tid.pce.pcep.objects.tlvs.OpConfAssocRangeTLV;
 import es.tid.pce.pcep.objects.tlvs.PCEPTLV;
 import es.tid.pce.pcep.objects.tlvs.PCE_ID_TLV;
 import es.tid.pce.pcep.objects.tlvs.PCE_Redundancy_Group_Identifier_TLV;
+import es.tid.pce.pcep.objects.tlvs.PathSetupCapabilityTLV;
 import es.tid.pce.pcep.objects.tlvs.SRCapabilityTLV;
 import es.tid.pce.pcep.objects.tlvs.StatefulCapabilityTLV;
 
@@ -199,6 +202,7 @@ public class OPEN extends PCEPObject{
 	 */
 	private OpConfAssocRangeTLV op_conf_assoc_range_tlv = null;
 	
+	private PathSetupCapabilityTLV pathSetupCababiity = null;
 	
 	//Constructors
 	
@@ -275,6 +279,12 @@ public class OPEN extends PCEPObject{
 			op_conf_assoc_range_tlv.encode();
 			ObjectLength=ObjectLength+op_conf_assoc_range_tlv.getTotalTLVLength();
 		}
+		if (pathSetupCababiity!=null){
+			pathSetupCababiity.encode();
+			ObjectLength=ObjectLength+pathSetupCababiity.getTotalTLVLength();
+		}
+		
+		
 		object_bytes=new byte[ObjectLength];
 				
 		encode_header();
@@ -326,6 +336,11 @@ public class OPEN extends PCEPObject{
 			offset=offset+op_conf_assoc_range_tlv.getTotalTLVLength();
 			
 		}
+		if (this.pathSetupCababiity!=null) {
+			System.arraycopy(pathSetupCababiity.getTlv_bytes(),0,this.object_bytes,offset,pathSetupCababiity.getTotalTLVLength());
+			offset=offset+pathSetupCababiity.getTotalTLVLength();
+			
+		}
 	}
 	
 	/**
@@ -358,7 +373,12 @@ public class OPEN extends PCEPObject{
 				of_list_tlv=new OF_LIST_TLV(this.getObject_bytes(), offset);
 				break;
 			case ObjectParameters.PCEP_TLV_DOMAIN_ID_TLV:
-				domain_id_tlv=new DomainIDTLV(this.getObject_bytes(), offset);
+				int domainType=DomainIDTLV.getDomainType(this.getObject_bytes(), offset);	
+				if (domainType==0) {
+					domain_id_tlv=new EmptyDomainIDTLV(this.getObject_bytes(), offset);	
+				}else if (domainType==3) {
+					domain_id_tlv=new OSPFDomainIDTLV(this.getObject_bytes(), offset);
+				}
 				break;
 			case ObjectParameters.PCEP_TLV_PCE_ID_TLV:
 				pce_id_tlv=new PCE_ID_TLV(this.getObject_bytes(), offset);
@@ -384,6 +404,9 @@ public class OPEN extends PCEPObject{
 			case ObjectParameters.PCEP_TLV_OPERATOR_CONF_ASSOCIATION_RANGE:
 				op_conf_assoc_range_tlv=new OpConfAssocRangeTLV(this.getObject_bytes(), offset);
 				break;
+			case ObjectParameters.PCEP_TLV_PATH_SETUP_TYPE_CAPABILITY :
+				this.pathSetupCababiity=new PathSetupCapabilityTLV(this.getObject_bytes(), offset);
+				break;			
 			default:
 				log.debug("UNKNOWN TLV found");
 				break;
@@ -574,6 +597,7 @@ public class OPEN extends PCEPObject{
 		this.op_conf_assoc_range_tlv = op_conf_assoc_range_tlv;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -591,6 +615,7 @@ public class OPEN extends PCEPObject{
 		result = prime * result + ((op_conf_assoc_range_tlv == null) ? 0 : op_conf_assoc_range_tlv.hashCode());
 		result = prime * result + (parentPCEIndicationBit ? 1231 : 1237);
 		result = prime * result + (parentPCERequestBit ? 1231 : 1237);
+		result = prime * result + ((pathSetupCababiity == null) ? 0 : pathSetupCababiity.hashCode());
 		result = prime * result + ((pce_id_tlv == null) ? 0 : pce_id_tlv.hashCode());
 		result = prime * result + ((redundancy_indetifier_tlv == null) ? 0 : redundancy_indetifier_tlv.hashCode());
 		result = prime * result + ((stateful_capability_tlv == null) ? 0 : stateful_capability_tlv.hashCode());
@@ -653,6 +678,11 @@ public class OPEN extends PCEPObject{
 			return false;
 		if (parentPCERequestBit != other.parentPCERequestBit)
 			return false;
+		if (pathSetupCababiity == null) {
+			if (other.pathSetupCababiity != null)
+				return false;
+		} else if (!pathSetupCababiity.equals(other.pathSetupCababiity))
+			return false;
 		if (pce_id_tlv == null) {
 			if (other.pce_id_tlv != null)
 				return false;
@@ -679,8 +709,18 @@ public class OPEN extends PCEPObject{
 				+ ", gmplsCapabilityTLV=" + gmplsCapabilityTLV + ", stateful_capability_tlv=" + stateful_capability_tlv
 				+ ", SR_capability_tlv=" + SR_capability_tlv + ", lsp_database_version_tlv=" + lsp_database_version_tlv
 				+ ", redundancy_indetifier_tlv=" + redundancy_indetifier_tlv + ", assoc_type_list_tlv="
-				+ assoc_type_list_tlv + ", op_conf_assoc_range_tlv=" + op_conf_assoc_range_tlv + "]";
+				+ assoc_type_list_tlv + ", op_conf_assoc_range_tlv=" + op_conf_assoc_range_tlv + ", pathSetupCababiity="
+				+ pathSetupCababiity + "]";
 	}
+
+	public PathSetupCapabilityTLV getPathSetupCababiity() {
+		return pathSetupCababiity;
+	}
+
+	public void setPathSetupCababiity(PathSetupCapabilityTLV pathSetupCababiity) {
+		this.pathSetupCababiity = pathSetupCababiity;
+	}
+
 
 
 	

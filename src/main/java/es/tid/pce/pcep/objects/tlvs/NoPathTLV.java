@@ -50,7 +50,7 @@ public class NoPathTLV extends PCEPTLV {
 		
 	}
 	
-	public NoPathTLV(byte[] bytes, int offset){
+	public NoPathTLV(byte[] bytes, int offset) {
 		super(bytes,offset);
 		decode();
 	}
@@ -69,7 +69,7 @@ public class NoPathTLV extends PCEPTLV {
 	}
 
 	
-	public void decode() {
+	public void decode()  {
 		this.unknownSource=(this.tlv_bytes[7]&0x04)==0x04;
 		this.unknownDestination=(this.tlv_bytes[7]&0x02)==0x02;
 		this.PCEunavailable=(this.tlv_bytes[7]&0x01)==0x01;
@@ -100,12 +100,13 @@ public class NoPathTLV extends PCEPTLV {
 	public void setUnknownSource(boolean unknownSource) {
 		this.unknownSource = unknownSource;
 	}
-	
-	public String toString(){
-		String st="unknownSource "+unknownSource+"unknownDestination "+unknownDestination+"PCEunavailable "+PCEunavailable;
-		return st;
+
+	@Override
+	public String toString() {
+		return "NoPathTLV [PCEunavailable=" + PCEunavailable + ", unknownDestination=" + unknownDestination
+				+ ", unknownSource=" + unknownSource + "]";
 	}
 	
-	
+		
 
 }

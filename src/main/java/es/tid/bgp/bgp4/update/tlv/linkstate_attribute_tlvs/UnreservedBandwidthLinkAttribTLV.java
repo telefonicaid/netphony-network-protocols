@@ -1,5 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
+import java.util.Arrays;
+
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
@@ -13,6 +15,15 @@ public float[] unreservedBandwidth;
 		super();
 		this.setTLVType(LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_UNRESERVED_BANDWITH);
 		unreservedBandwidth=new float[8];
+		unreservedBandwidth[0]=0x00;
+		unreservedBandwidth[1]=0x00;
+		unreservedBandwidth[2]=0x00;
+		unreservedBandwidth[3]=0x00;
+		unreservedBandwidth[4]=0x00;
+		unreservedBandwidth[5]=0x00;
+		unreservedBandwidth[6]=0x00;
+		unreservedBandwidth[7]=0x00;
+
 	}
 	
 	public UnreservedBandwidthLinkAttribTLV(byte[] bytes, int offset){
@@ -28,7 +39,7 @@ public float[] unreservedBandwidth;
 		encodeHeader();
 		int bwi;
 		int offset=4;
-		for (int i=0;i<8;++i){
+		for (int i=0;i<unreservedBandwidth.length;++i){
 			bwi=Float.floatToIntBits(unreservedBandwidth[i]);
 			this.tlv_bytes[offset]=(byte)(bwi >>> 24);
 			this.tlv_bytes[offset+1]=(byte)(bwi >> 16 & 0xff);
@@ -41,12 +52,10 @@ public float[] unreservedBandwidth;
 	
 	protected void decode(){
 		//Decoding UnreservedBandwidthTLV
-		if (this.getTLVValueLength()!=32){
-			//throw new MalformedOSPFSubTLVException();
-		}
+
 		int bwi = 0;
 		int offset=4;
-		for (int i=0;i<8;++i){
+		for (int i=0;i<unreservedBandwidth.length;++i){
 			bwi=0;
 			for (int k = 0; k < 4; k++) {
 				bwi = (bwi << 8) | (this.tlv_bytes[offset+k] & 0xff);
@@ -58,15 +67,13 @@ public float[] unreservedBandwidth;
 		
 	}
 	
-	public String toString(){
-		String ret="";
-		for (int i=0;i<7;++i){
-			ret=ret+"\t> unreservedBandwidth["+i+"]: "+Float.toString(unreservedBandwidth[i])+"\r\n";
-		}
-		ret=ret+"\t> unreservedBandwidth[7]: "+Float.toString(unreservedBandwidth[7]);
-		return ret;
-	}
+
 	
+	@Override
+	public String toString() {
+		return "UnreservedBandwidthLinkAttribTLV [unreservedBandwidth=" + Arrays.toString(unreservedBandwidth) + "]";
+	}
+
 	public String toStringShort(){
 		String ret="unrBw[0]: "+unreservedBandwidth[0];
 		return ret;

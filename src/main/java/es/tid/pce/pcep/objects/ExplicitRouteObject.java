@@ -3,6 +3,7 @@ package es.tid.pce.pcep.objects;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.rsvp.objects.subobjects.*;
 
 /** Explicit Route Object
@@ -96,10 +97,12 @@ public class ExplicitRouteObject extends PCEPObject{
 			int subojectclass=EROSubobject.getType(this.getObject_bytes(), offset);
 			int subojectlength=EROSubobject.getLength(this.getObject_bytes(), offset);
 			switch(subojectclass) {
-			/*		case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+					case SubObjectValues.ERO_SUBOBJECT_SR_ERO:
+						log.debug("SR ERO");
 					SREROSubobject sreroso = new SREROSubobject(this.getObject_bytes(), offset);
+					log.debug("FIN");
 					this.addEROSubobject(sreroso);
-					break;*/
+					break;
 				case SubObjectValues.ERO_SUBOBJECT_IPV4PREFIX:
 					IPv4prefixEROSubobject sobjt4=new IPv4prefixEROSubobject(this.getObject_bytes(), offset);
 					this.addEROSubobject(sobjt4);
