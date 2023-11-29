@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.tid.netphony</groupId>
 	<artifactId>network-protocols</artifactId>
-	<version>1.4.1-SNAPSHOT</version>
+	<version>1.4.1</version>
 	<packaging>jar</packaging>
 	<name>Netphony Network Protocols</name>
 	<description>BGP-LS,OSPF-TE,PCEP and RSVP-TE protocol encodings.</description>
@@ -18,9 +18,9 @@
 	</licenses>
 	<developers>
 		<developer>
-			<name>Telefonica I+D</name>
+			<name>Telefonica Innovacion Digital</name>
 			<email>oscar.gonzalezdedios@telefonica.com</email>
-			<organization>Telefonica I+D</organization>
+			<organization>Telefonica Innovacion Digital</organization>
 			<organizationUrl>https://www.tid.es</organizationUrl>
 		</developer>
 	</developers>
