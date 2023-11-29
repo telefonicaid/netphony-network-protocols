@@ -6,8 +6,8 @@ Latest Maven Central Release:
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
 
 Coverage status
-| **Master**  | **Develop**   |
-|:---:|:---:|
+| **Master**  | 
+|:---:|
 | [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master) |
 
 The netphony-network-protocols library is an implementation of four networking protocols: 
@@ -135,6 +135,7 @@ Detailed BGP4 & BGP-LS Support [click here](doc/BGP-LS_Support.md)
 The software has been developed by Telefonica I+D Core & Transport Team, led by Juan Pedro Fernandez Palacios, in internal innovation projects and through several EU funded research proyects, which continuously added functionality. The Core & Transport Team group of Telefonica working with the propocols if formed by Juan Pedro Fernandez Palacios (team leader), Victor Lopez, Oscar Gonzalez de Dios, Felipe Jiménez, Luis Miguel Contreras, Michel Carnero and Eduardo Yusta. All of them have contributed to the code, either directly of with ideas and as beta-testers. The main maintainer of the code is Oscar Gonzalez de Dios. 
 
 The effort to release as open source of the code was funded by the E.U. CSA PACE. The code has been upgraded in the E.U. projects STRONGEST, PACE, IDEALIST, ACINO and 5GEx, as well as Telefonica Innovation activities.
+The last version of the code has been updated in the E.U. ALLEGRO project
 
 PCEP and BGP-LS are included as requirement of the MUST Sub-group in TIP.
 
