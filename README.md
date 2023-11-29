@@ -1,11 +1,5 @@
-netphony-network-protocols v1.4.0
+netphony-network-protocols v1.4.1
 =================================
-
-Repository branch build status in Travis CI:
-
-| **Master**  | **Develop**   |
-|:---:|:---:|
-| [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=master)](https://travis-ci.org/telefonicaid/netphony-network-protocols) | [![Travis Build Status](https://travis-ci.org/telefonicaid/netphony-network-protocols.svg?branch=develop)](https://travis-ci.org/telefonicaid/netphony-network-protocols) |
 
 Latest Maven Central Release: 
 
@@ -14,7 +8,7 @@ Latest Maven Central Release:
 Coverage status
 | **Master**  | **Develop**   |
 |:---:|:---:|
-| [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master) | [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=develop)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=develop) |
+| [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/netphony-network-protocols/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/netphony-network-protocols?branch=master) |
 
 The netphony-network-protocols library is an implementation of four networking protocols: 
 * **PCEP protocol**: Path Computation Element Protocol (PCEP) [RFC 5440](https://tools.ietf.org/html/rfc5440). 
