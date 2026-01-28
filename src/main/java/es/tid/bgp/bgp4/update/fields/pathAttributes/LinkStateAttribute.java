@@ -30,6 +30,7 @@ import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MF_OTPAttribTLV;
 //******************************
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.PrefixSIDPrefixAttribTLV; 
 
 /**
  * Link-State Info Distribution using BGP, July 2012
@@ -186,6 +187,7 @@ public class LinkStateAttribute  extends PathAttribute{
 	RouteTagPrefixAttribTLV routeTagTLV;
 	PrefixMetricPrefixAttribTLV prefixMetricTLV;
 	OSPFForwardingAddressPrefixAttribTLV OSPFForwardingAddrTLV;
+	PrefixSIDPrefixAttribTLV prefixSIDTLV;
 
 
 	public LinkStateAttribute(){		
@@ -300,6 +302,10 @@ public class LinkStateAttribute  extends PathAttribute{
 		if(OSPFForwardingAddrTLV!=null){
 			OSPFForwardingAddrTLV.encode();
 			pathAttributeLength=pathAttributeLength+OSPFForwardingAddrTLV.getTotalTLVLength();
+		}
+		if(prefixSIDTLV!=null){ // <--- Añadir esto
+			prefixSIDTLV.encode();
+			pathAttributeLength=pathAttributeLength+prefixSIDTLV.getTotalTLVLength();
 		}			
 		if (availableLabels != null){
 			try {
@@ -420,6 +426,10 @@ public class LinkStateAttribute  extends PathAttribute{
 			System.arraycopy(OSPFForwardingAddrTLV.getTlv_bytes(),0, this.bytes,offset, OSPFForwardingAddrTLV.getTotalTLVLength());
 			offset=offset+OSPFForwardingAddrTLV.getTotalTLVLength();
 		}
+		if(prefixSIDTLV!=null){ // <--- Añadir esto
+			System.arraycopy(prefixSIDTLV.getTlv_bytes(),0, this.bytes,offset, prefixSIDTLV.getTotalTLVLength());
+			offset=offset+prefixSIDTLV.getTotalTLVLength();
+		}
 		if (availableLabels!=null){
 			System.arraycopy(availableLabels.getTlv_bytes(),0, this.bytes,offset, availableLabels.getTotalTLVLength());
 			offset=offset+availableLabels.getTotalTLVLength();
@@ -521,6 +531,10 @@ public class LinkStateAttribute  extends PathAttribute{
 
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG:
 				this.routeTagTLV=new RouteTagPrefixAttribTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_SID:
+				this.prefixSIDTLV = new PrefixSIDPrefixAttribTLV(this.bytes, offset);
 				break;
 
 			default:

@@ -126,6 +126,7 @@ public class TestBGP_LS_TLVs {
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.OSPFForwardingAddressPrefixAttribTLV"},//    			1156	OSPF Forwarding Address		[RFC2328]
 //    			1157	Opaque Prefix Attribute		[RFC7752, Section 3.3.3.6]
 //    			1158	Prefix SID		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.3.1]
+				{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.PrefixSIDPrefixAttribTLV"}, 
 //    			1159	Range		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.3.4]
 //    			1160	Unassigned		
     			{"es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SidLabelNodeAttribTLV"},//    			1161	SID/Label		[RFC-ietf-idr-bgp-ls-segment-routing-ext-16, Section 2.1.1]

@@ -94,6 +94,7 @@ public class LinkStateAttributeTLVTypes {
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS = 1152;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_METRIC = 1155;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG = 1153;
+	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_SID = 1158;
 	
 	
 	
