@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>es.tid.netphony</groupId>
-	<artifactId>network-protocols</artifactId>
-	<version>1.4.2</version>
-	<packaging>jar</packaging>
-	<name>Netphony Network Protocols</name>
-	<description>BGP-LS,OSPF-TE,PCEP and RSVP-TE protocol encodings.</description>
-	<url>https://github.com/telefonicaid/netphony-network-protocols</url>
-	<licenses>
-		<license>
-			<name>Apache License 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-		</license>
-	</licenses>
-	<developers>
-		<developer>
-			<name>Telefonica Innovacion Digital</name>
-			<email>oscar.gonzalezdedios@telefonica.com</email>
-			<organization>Telefonica Innovacion Digital</organization>
-			<organizationUrl>https://www.tid.es</organizationUrl>
-		</developer>
-	</developers>
-	<scm>
-		<connection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</connection>
-		<developerConnection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</developerConnection>
-		<url>git@github.com:telefonicaid/netphony-network-protocols.git</url>
-	  <tag>network-protocols-1.4.2</tag>
-  </scm>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>2.0.16</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-	<build>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-		<plugins>
-			<plugin>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>es.tid.netphony</groupId>
+    <artifactId>network-protocols</artifactId>
+    <version>1.4.2</version>
+    <packaging>jar</packaging>
+    <name>Netphony Network Protocols</name>
+    <description>BGP-LS,OSPF-TE,PCEP and RSVP-TE protocol encodings.</description>
+    <url>https://github.com/telefonicaid/netphony-network-protocols</url>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Telefonica Innovacion Digital</name>
+            <email>oscar.gonzalezdedios@telefonica.com</email>
+            <organization>Telefonica Innovacion Digital</organization>
+            <organizationUrl>https://www.tid.es</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</connection>
+        <developerConnection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</developerConnection>
+        <url>https://github.com/telefonicaid/netphony-network-protocols</url>
+		<tag>network-protocols-1.4.2</tag>
+    </scm>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.10.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                </configuration>
+            </plugin>
+            <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
 				<configuration>
@@ -155,16 +155,16 @@
 			<id>deploy-maven-central</id>
 			<build>
 				<plugins>
-                                                    <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <branchName>master</branchName>
-                    <pushChanges>false</pushChanges>
-                    <localCheckout>true</localCheckout>
-                </configuration>
-            </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <configuration>
+                            <branchName>master</branchName>
+                            <pushChanges>false</pushChanges>
+                            <localCheckout>true</localCheckout>
+                        </configuration>
+                    </plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
