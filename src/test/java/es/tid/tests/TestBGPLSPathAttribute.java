@@ -20,6 +20,8 @@ import es.tid.bgp.bgp4.update.fields.PathAttribute;
 import es.tid.pce.pcep.objects.MalformedPCEPObjectException;
 import es.tid.pce.pcep.objects.PCEPObject;
 import es.tid.protocol.commons.ByteHandler;
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.PrefixSIDPrefixAttribTLV;
+import es.tid.bgp.bgp4.update.fields.pathAttributes.LinkStateAttribute;
 
 @RunWith(org.junit.runners.Parameterized.class)
 public class TestBGPLSPathAttribute {
@@ -49,6 +51,17 @@ public class TestBGPLSPathAttribute {
     	Class objectClass=Class.forName(object);
     	PathAttribute object1 = (PathAttribute)objectClass.newInstance();
 		TestCommons.createAllFields(object1,1);
+		// --- BLOQUE PARA FORZAR MODO LABEL (RFC 8667) ---
+		//if (object1 instanceof LinkStateAttribute) {
+		//	LinkStateAttribute lsAttr = (LinkStateAttribute) object1;
+		//	PrefixSIDPrefixAttribTLV sidLabel = new PrefixSIDPrefixAttribTLV();
+		//	sidLabel.setAlgorithm(0);
+		//	sidLabel.setLabel(888);   // Ponemos una etiqueta local
+		//	sidLabel.setFlags(0x0C);  // Forzamos Bits V=1 y L=1 (00001100 en binario)
+		//	lsAttr.setPrefixSIDTLV(sidLabel);
+		//	System.out.println("[TEST-FORCED] Prefix-SID configurado en modo LABEL LOCAL (Flags=0x0C)");
+		//}
+		// ------------------------------------------------
 		object1.encode();
 		Constructor ctor = objectClass.getConstructor(byte[].class,int.class);
 		PathAttribute object2 = (PathAttribute) ctor.newInstance(object1.getBytes(),0);

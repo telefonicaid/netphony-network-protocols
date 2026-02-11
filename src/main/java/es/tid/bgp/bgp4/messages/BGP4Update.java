@@ -6,7 +6,7 @@ import es.tid.bgp.bgp4.update.fields.pathAttributes.*;
 import java.util.ArrayList;
 
 /**
- * <h1> BGP4 Update Message (RFC 4271). </h1>
+ * <b> BGP4 Update Message (RFC 4271). </b>
  * <p> From RFC 4271 Section 4.3. </p>
  * <a href="https://tools.ietf.org/html/rfc4271">RFC 4271</a>.
  * 4.3.  UPDATE Message Format

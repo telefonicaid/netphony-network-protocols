@@ -7,7 +7,7 @@ import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.rsvp.objects.subobjects.*;
 
 /**
- * <h1> Include Route Object as described in RFC 5440</h1>
+ * <b> Include Route Object as described in RFC 5440</b>
  * 
  * <p> From RFC 5440 Section 7.12. Include Route Object</p>
 
