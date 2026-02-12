@@ -3,7 +3,7 @@ netphony-network-protocols v1.4.2
 
 Latest Maven Central Release: 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
+[![Maven Central](https://maven-badges.sml.io/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.sml.io/maven-central/es.tid.netphony/network-protocols/)
 
 Coverage status
 | **Master**  | 
