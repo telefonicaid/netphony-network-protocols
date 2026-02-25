@@ -74,7 +74,15 @@ Fields in UPDATE Message
 |  260    | IPv4 neighbor    address |
 |  261    | IPv6 interface address  |
 | 262    | IPv6 neighbor address |
-|  263    | Multi-Topology Identifier |    
+|  263    | Multi-Topology Identifier |   
+
+### Prefix Descriptors TLVs
+
+| **TLV Code points**  | **Name**   | **Reference** | 
+|:---:|:---:| :---:| 
+|  265  | IP Reachability Information | [RFC9552, Section 5.2.3.2] 
+
+
 
 ## BGP-LS Attribute TLVs
 
@@ -89,6 +97,10 @@ Fields in UPDATE Message
 |     1027    | IS-IS Area    Identifier        | 
 |     1028    | IPv4 Router-ID of  Local Node  |
 |     1029    | IPv6 Router-ID of Local Node     |
+|     1034    | SR capabilities     |
+|     1161    | SR capabilities SID Label    |
+
+
   
 ### Link Attribute TLVs
   
@@ -122,13 +134,16 @@ Fields in UPDATE Message
 |    1110     | Unidirectional Utilized Bandwidth    |
 
 ### Prefix Attribute TLVs
-| **TLV Code points**  | **Name**   |
-|:---:|:---:| 
-|      1152     | IGP Flags            |
-|      1153     | IGP Route Tag    (**Not Implemented**)       | 
-|      1154     | IGP Extended Route Tag   (**Not Implemented**)   |
-|      1155     | Prefix Metric        |
-|      1156     | OSPF Forwarding  Address    |
-|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    
+| **TLV Code points**  | **Name**   | **Reference** |
+|:---:|:---:| :---:|
+|      1152     | IGP Flags            | |
+|      1153     | IGP Route Tag    (**Not Implemented**)       | |
+|      1154     | IGP Extended Route Tag   (**Not Implemented**)   | |
+|      1155     | Prefix Metric        | |
+|      1156     | OSPF Forwarding  Address    | |
+|      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    |
+|      1158     |   Prefix-SID | [RFC9085, Section 2.3.1]([[RFC9085, Section 2.3.1)   ](https://www.iana.org/go/rfc9085)|
+|      1171     | Source Router Identifier |  [RFC9085, Section 2.3.3](https://www.iana.org/go/rfc9085)|
+
 
  
