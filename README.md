@@ -1,4 +1,4 @@
-netphony-network-protocols v1.4.2
+netphony-network-protocols v1.4.3
 =================================
 
 Latest Maven Central Release: 
