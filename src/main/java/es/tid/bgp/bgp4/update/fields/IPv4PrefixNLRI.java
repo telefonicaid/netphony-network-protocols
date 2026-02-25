@@ -132,6 +132,7 @@ public class IPv4PrefixNLRI extends LinkStateNLRI {
 			switch (subTLVType){
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO:
 				this.ipReachability=new IPReachabilityInformationTLV(bytes, offset);
+				log.info("TLV 265 detectada en NLRI: " + this.ipReachability.toString());
 				break;
 				
 			case PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_OSPF_ROUTE_TYPE:
@@ -198,6 +199,28 @@ public class IPv4PrefixNLRI extends LinkStateNLRI {
 			IPReachabilityInformationTLV ipReachability) {
 		this.ipReachability = ipReachability;
 	}
+
+	@Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append("IPv4PrefixNLRI [Protocol-ID=").append(protocolID)
+          .append(", Identifier=").append(routingUniverseIdentifier);
+        
+        if (localNodeDescriptors != null) {
+            sb.append(", ").append(localNodeDescriptors.toString());
+        }
+        
+        if (ipReachability != null) {
+            sb.append(", ").append(ipReachability.toString());
+        }
+        
+        if (OSPFRouteType != null) {
+            sb.append(", ").append(OSPFRouteType.toString());
+        }
+        
+        sb.append("]");
+        return sb.toString();
+    }
 
 	
 

@@ -8,7 +8,8 @@ public class NodeDescriptorsSubTLVTypes {
            |         513        | BGP-LS Identifier |        4 |
            |         514        | Area-ID           |        4 |
            |         515        | IGP Router-ID     | Variable |
-           +--------------------+-------------------+----------+
+           |        1161        | SID/Label         | Variable |
+            +--------------------+-------------------+----------+
 
                      Table 2: Node Descriptor Sub-TLVs             */
 	
@@ -17,4 +18,6 @@ public class NodeDescriptorsSubTLVTypes {
 	public static final int NODE_DESCRIPTORS_SUBTLV_TYPE_BGP_LS_IDENTIFIER=513;
 	public static final int NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID=514;
 	public static final int NODE_DESCRIPTORS_SUBTLV_TYPE_IGP_ROUTER_ID=515;
+    /* Segment Routing Sub-TLV (RFC 9085) */
+    public static final int NODE_SUBTLV_TYPE_SID_LABEL = 1161;
 }

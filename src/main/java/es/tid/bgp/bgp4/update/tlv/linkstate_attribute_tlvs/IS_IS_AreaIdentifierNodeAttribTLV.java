@@ -1,85 +1,87 @@
 package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
 
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-import java.util.LinkedList;
-
+import java.util.Arrays;
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 /**
- *IS-IS Area Identifier TLV (Type 1027)  [RFC7752, Section 3.3.1.2]
- * 
- * @author pac
- * @author ogondio
+ * IS-IS Area Identifier TLV (Type 1027) [RFC7752, Section 3.3.1.2]
+ * * Basado en RFC 7752: "The IS-IS Area Identifier TLV may be present 
+ * in the BGP-LS attribute only when advertised in the Link-State Node NLRI.
+ * The value contains the variable-length Area Identifier."
+ * * @author pac
+ * @author isdr
  */
+public class IS_IS_AreaIdentifierNodeAttribTLV extends BGP4TLVFormat {
 
-public class IS_IS_AreaIdentifierNodeAttribTLV extends BGP4TLVFormat{
+    /* El Area ID en IS-IS es binario y de longitud variable */
+    private byte[] areaID;
 
-	
-	//int length;
-	//private byte[] address = null;
-	private LinkedList <Inet4Address> ipv4areaIDs;
-	
-	public IS_IS_AreaIdentifierNodeAttribTLV() {
-		super();
-		this.setTLVType(LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID);
-		ipv4areaIDs = new LinkedList <Inet4Address>();
-		// TODO Auto-generated constructor stub
-	}
+    public IS_IS_AreaIdentifierNodeAttribTLV() {
+        super();
+        this.setTLVType(LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID);
+    }
 
-	public IS_IS_AreaIdentifierNodeAttribTLV(byte[] bytes, int offset) {
-		super(bytes, offset);
-		decode();
-		// TODO Auto-generated constructor stub
-	}
+    public IS_IS_AreaIdentifierNodeAttribTLV(byte[] bytes, int offset) {
+        super(bytes, offset);
+        decode();
+    }
 
-	@Override
-	public void encode() {
-		this.setTLVValueLength(ipv4areaIDs.size()*4);
-		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
-		encodeHeader();
-		int i=0;
-		int offset=4;
-		for (i=0;i<ipv4areaIDs.size();++i) {
-			System.arraycopy(ipv4areaIDs.get(i).getAddress(),0, this.tlv_bytes, offset, 4);
-			offset+=4;
-		}
-		
-	}
-	
-	public void decode(){
-		ipv4areaIDs = new LinkedList <Inet4Address>();
-		int number_addresses = this.getTLVValueLength()/4;
-		int offset = 4;
-		 byte[] address=new byte[4]; 
-	    Inet4Address idarea = null;
-		for (int i=0; i<number_addresses; i++){
-			System.arraycopy(this.tlv_bytes,offset, address, 0, 4);
-			try {
-				idarea= (Inet4Address) Inet4Address.getByAddress(address);
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ipv4areaIDs.add(idarea);
-			offset+=4;
-		}
-	}
+    @Override
+    public void encode() {
+        if (areaID == null) {
+            areaID = new byte[0];
+        }
+        this.setTLVValueLength(areaID.length);
+        this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
+        encodeHeader();
+        System.arraycopy(areaID, 0, this.tlv_bytes, 4, areaID.length);
+    }
 
-	public LinkedList <Inet4Address> getIpv4areaIDs() {
-		return ipv4areaIDs;
-	}
+    public void decode() {
+        int len = this.getTLVValueLength();
+        if (len > 0) {
+            this.areaID = new byte[len];
+            System.arraycopy(this.tlv_bytes, 4, this.areaID, 0, len);
+        }
+    }
 
-	public void setIpv4areaIDs(LinkedList <Inet4Address> ipv4areaIDs) {
-		this.ipv4areaIDs = ipv4areaIDs;
-	}
-	
-	public String toString(){
-			String ret="";
-			for (int i=0;i<ipv4areaIDs.size();++i) {
-				ret="ISIS AREA ["+i+"] IDENTIFIER: "+ipv4areaIDs.get(i).toString();
-			} 
-			return ret;
-	}
+    public byte[] getAreaID() {
+        return areaID;
+    }
 
+    public void setAreaID(byte[] areaID) {
+        this.areaID = areaID;
+    }
+
+    @Override
+    public String toString() {
+        if (areaID == null || areaID.length == 0) {
+            return "ISIS AREA [NONE]";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < areaID.length; i++) {
+            sb.append(String.format("%02x", areaID[i]));
+            if ((i + 1) % 2 == 1 && i != areaID.length - 1 && areaID.length > 3) {
+            }
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!super.equals(obj)) return false;
+        if (getClass() != obj.getClass()) return false;
+        IS_IS_AreaIdentifierNodeAttribTLV other = (IS_IS_AreaIdentifierNodeAttribTLV) obj;
+        return Arrays.equals(areaID, other.areaID);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Arrays.hashCode(areaID);
+        return result;
+    }
 }

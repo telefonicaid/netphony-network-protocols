@@ -1,6 +1,7 @@
 package es.tid.bgp.bgp4.update.tlv;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import org.slf4j.Logger;
 
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.AreaIDNodeDescriptorSubTLV;
@@ -195,6 +196,13 @@ private IGPRouterIDNodeDescriptorSubTLV IGPRouterID; //515
 			sb.append("\n\t> "+IGPRouterID.toString()+"\n");
 		
 		return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		return true; 
 	}
 	
 }

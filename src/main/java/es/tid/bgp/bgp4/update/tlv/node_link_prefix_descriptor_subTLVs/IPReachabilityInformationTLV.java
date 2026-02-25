@@ -1,11 +1,4 @@
-package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
-
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-
-import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-
-/**
+	/**
  * IP Reachability Information TLV (Type 265)	
  * 
  * The IP Reachability Information TLV is a mandatory TLV for IPv4 and
@@ -14,11 +7,9 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
    to glue a particular BGP service NLRI by virtue of its BGP next hop
    to a given node in the LSDB.  A router SHOULD advertise an IP Prefix
    NLRI for each of its BGP next hops.  
- * @author ogondio
+ * @author ogondio & isdr
  *
  */
-public class IPReachabilityInformationTLV extends BGP4TLVFormat {
-	
 	/*
 	 * The format of the IP
    Reachability Information TLV is shown in the following figure:
@@ -41,89 +32,69 @@ public class IPReachabilityInformationTLV extends BGP4TLVFormat {
    octets for prefix length 9 to 16, 3 octets for prefix length 17 up to
    24, 4 octets for prefix length 25 up to 32, etc.
 	 */
+package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
-	private Inet4Address ipv4Address;
-	private int prefix_length;
-	
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
-	public IPReachabilityInformationTLV() {
-		super();
-		this.setTLVType(PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO);
-	}
+public class IPReachabilityInformationTLV extends BGP4TLVFormat {
 
-	public IPReachabilityInformationTLV(byte[] bytes, int offset) {
-		super(bytes, offset);
-		decode();
-	}
+    private Inet4Address ipv4Address;
+    private int prefix_length;
 
-	@Override
-	public void encode() {
-		int len;
-		if (prefix_length>=25) {	
-			len=5;
-		}else if (prefix_length>=17) {
-			len=4;
-		}else if (prefix_length>=9) {
-			len=3;
-	   }else {
-		  len=2;
-	   }
-		this.setTLVValueLength(len);
-		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
-		encodeHeader();
-		int offset = 4;
-		this.tlv_bytes[offset] = (byte) prefix_length;
-		offset += 1;
-		System.arraycopy(ipv4Address.getAddress(), 0, this.tlv_bytes, offset, len-1);
+    public IPReachabilityInformationTLV() {
+        super();
+        this.setTLVType(PrefixDescriptorSubTLVTypes.PREFIX_DESCRIPTOR_SUB_TLV_TYPE_IPV4_REACHABILITY_INFO);
+    }
 
-	}
+    public IPReachabilityInformationTLV(byte[] bytes, int offset) {
+        super(bytes, offset);
+        decode();
+    }
 
-	public void decode() {
-		int offset = 4;
-		 byte[] ip = new byte[4];
-		prefix_length = this.tlv_bytes[offset] & (0xFF);
-		offset += 1;
-		if (prefix_length>=25) {	
-			System.arraycopy(this.tlv_bytes,offset, ip, 0, 4);
-		}else if (prefix_length>=17) {
-			System.arraycopy(this.tlv_bytes,offset, ip, 0, 3);
-			ip[3]=0;
-		}else if (prefix_length>=9) {
-			System.arraycopy(this.tlv_bytes,offset, ip, 0, 2);
-			ip[2]=0;
-			ip[3]=0;
-	   }else {
-		   System.arraycopy(this.tlv_bytes,offset, ip, 0, 1);
-		   ip[1]=0;
-		   ip[2]=0;
-		   ip[3]=0;
-	   }
-		try {
-			ipv4Address = (Inet4Address) Inet4Address.getByAddress(ip);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    public void encode() {
+        int prefixBytes = (prefix_length + 7) / 8;
+        int len = 1 + prefixBytes; 
 
-	public Inet4Address getIpv4Address() {
-		return ipv4Address;
-	}
+        this.setTLVValueLength(len);
+        this.tlv_bytes = new byte[this.getTotalTLVLength()];
+        encodeHeader();
 
-	public void setIpv4Address(Inet4Address ipv4Address) {
-		this.ipv4Address = ipv4Address;
-	}
+        int offset = 4;
+        this.tlv_bytes[offset] = (byte) prefix_length;
+        offset += 1;
 
-	public int getPrefix_length() {
-		return prefix_length;
-	}
+        if (ipv4Address != null) {
+            System.arraycopy(ipv4Address.getAddress(), 0, this.tlv_bytes, offset, prefixBytes);
+        }
+    }
 
-	public void setPrefix_length(int prefix_length) {
-		this.prefix_length = prefix_length;
-	}
+    public void decode() {
+        int offset = 4;
+        prefix_length = this.tlv_bytes[offset] & 0xFF;
+        offset += 1;
 
-	public String toString() {
-		return "IPReachability [Reachability=" + ipv4Address.toString() + "]";
-	}
+        int prefixBytes = (prefix_length + 7) / 8;
+        byte[] ip = new byte[4];
 
+        try {
+            System.arraycopy(this.tlv_bytes, offset, ip, 0, prefixBytes);
+            this.ipv4Address = (Inet4Address) Inet4Address.getByAddress(ip);
+        } catch (Exception e) {
+            try {
+                this.ipv4Address = (Inet4Address) Inet4Address.getByName("0.0.0.0");
+            } catch (UnknownHostException e1) {}
+        }
+    }
+
+    public Inet4Address getIpv4Address() { return ipv4Address; }
+    public void setIpv4Address(Inet4Address ipv4Address) { this.ipv4Address = ipv4Address; }
+    public int getPrefix_length() { return prefix_length; }
+    public void setPrefix_length(int prefix_length) { this.prefix_length = prefix_length; }
+
+    @Override
+    public String toString() {
+        return "IPReachability [Reachability=" + (ipv4Address != null ? ipv4Address.getHostAddress() : "null") + "/" + prefix_length + "]";
+    }
 }

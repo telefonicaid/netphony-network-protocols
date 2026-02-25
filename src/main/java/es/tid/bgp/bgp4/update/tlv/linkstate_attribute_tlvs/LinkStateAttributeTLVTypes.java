@@ -75,8 +75,9 @@ public class LinkStateAttributeTLVTypes {
    |              | Local Node            |          |                 |
    |     1029     | IPv6 Router-ID of     |       16 | [RFC6119]/4.1   |
    |              | Local Node            |          |                 |
+   |     1034     | SR capabilities       | variable | [RFC9085]/2.1.2 |
+   |              |                       |          |                 |
    +--------------+-----------------------+----------+-----------------+
-
                        Table 5: Node Attribute TLVs
 	 */
 	
@@ -88,13 +89,37 @@ public class LinkStateAttributeTLVTypes {
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME = 1026;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID = 1027;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE = 1028;
+     public static final int NODE_ATTRIBUTE_TLV_TYPE_SR_CAPABILITIES = 1034;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_SID_LABEL = 1069;
-	
+
+
+
+	/**          
+	 *     
+	+--------------+-----------------------+----------+-----------------+
+      |   TLV Code   | Description           |   Length | Value defined   |
+      |    Point     |                       |          | in:             |
+      +--------------+-----------------------+----------+-----------------+
+      |     1152     | IGP Flags             |        1 | Section 3.4.1.1 |
+      |     1153     | Route Tag             | variable | Section 3.4.1.2 |
+      |     1155     | Prefix Metric         |        4 | Section 3.4.1.5 |
+      |     1156     | OSPF Forwarding       |        4 | Section 3.4.1.3 |
+      |              | Address               |          |                 |
+      |     1158     | Prefix-SID            | variable | RFC 8667        |
+      |              |                       |          | (SR BGP-LS)     |
+      |     1171     | Source Router         |  4 o 16  | RFC 9084 /      |
+      |              | Identifier            |          | RFC 7794        |
+      +--------------+-----------------------+----------+-----------------+
+
+                    Table 7: Prefix Attribute TLVs
+      */
+
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_OSPF_FORWARDING_ADDRESS = 1156;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_IGP_FLAGS = 1152;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_METRIC = 1155;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG = 1153;
 	public static final int PREFIX_ATTRIBUTE_TLV_TYPE_PREFIX_SID = 1158;
+     public static final int PREFIX_ATTRIBUTE_TLV_TYPE_SOURCE_ROUTER_ID = 1171;
 	
 	
 	

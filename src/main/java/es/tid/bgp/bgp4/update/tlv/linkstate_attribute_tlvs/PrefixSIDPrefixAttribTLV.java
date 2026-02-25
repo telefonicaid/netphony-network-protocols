@@ -61,31 +61,33 @@ public class PrefixSIDPrefixAttribTLV extends BGP4TLVFormat {
     protected void decode() {
         if (this.tlv_bytes == null) return;
 
+        
+        StringBuilder sb = new StringBuilder();
+        for (byte b : this.tlv_bytes) {
+            sb.append(String.format("%02x:", b));
+        }
+        log.info("BYTES RAW: " + sb.toString());
+      
         this.flags = this.tlv_bytes[4] & 0xFF;
         this.algorithm = this.tlv_bytes[5] & 0xFF;
 
-        // Validamos flags V o L para saber qué leer
+        int valueLen = this.getTLVValueLength();
         boolean isLabel = ((flags & 0x04) != 0) || ((flags & 0x08) != 0);
-        int valueLength = this.getTLVValueLength();
 
-        log.debug("Decoding Prefix-SID: isLabel={}, algorithm={}, length={}", isLabel, algorithm, valueLength);
-
-        if (isLabel && valueLength == 5) {
-            this.label = ((tlv_bytes[6] & 0xFF) << 12) |
-                         ((tlv_bytes[7] & 0xFF) << 4) |
-                         ((tlv_bytes[8] & 0xFF) >> 4);
-            this.sidIndex = -1; // Limpiamos para el equals
-        } else if (!isLabel && valueLength == 6) {
-            this.sidIndex = ((long)(tlv_bytes[6] & 0xFF) << 24) |
-                            ((long)(tlv_bytes[7] & 0xFF) << 16) |
-                            ((long)(tlv_bytes[8] & 0xFF) << 8) |
-                            ((long)(tlv_bytes[9] & 0xFF));
-            this.label = -1; // Limpiamos para el equals
-        } else {
-            log.warn("Invalid Prefix-SID format: Flags indicate isLabel={}, but valueLength is {}", isLabel, valueLength);
+        if (!isLabel) {
+            // Leemos los 4 bytes del final
+            int lastPos = 4 + valueLen - 1; 
+            if (tlv_bytes.length > lastPos) {
+                this.sidIndex = ((long)(tlv_bytes[lastPos - 3] & 0xFF) << 24) |
+                                ((long)(tlv_bytes[lastPos - 2] & 0xFF) << 16) |
+                                ((long)(tlv_bytes[lastPos - 1] & 0xFF) << 8) |
+                                ((long)(tlv_bytes[lastPos] & 0xFF));
+                this.label = -1;
+            }
         }
+        
+        log.info("Prefix-SID Decodificado: INDEX={}, Flags={}", sidIndex, Integer.toBinaryString(flags));
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
