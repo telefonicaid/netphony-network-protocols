@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * - Reserved: 1 byte
  * - Range Size: 3 bytes
  * - Sub-TLVs: Variable (ej. SID/Label Sub-TLV 1161)
- * * @author pac & isdr
+ * * @author pac/isdr
  */
 public class SRCapabilitiesTLV extends BGP4TLVFormat {
 
