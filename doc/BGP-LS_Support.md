@@ -142,7 +142,7 @@ Fields in UPDATE Message
 |      1155     | Prefix Metric        | |
 |      1156     | OSPF Forwarding  Address    | |
 |      1157     | Opaque Prefix Attribute  (**Not Implemented**)   |    |
-|      1158     |   Prefix-SID | [RFC9085, Section 2.3.1]([[RFC9085, Section 2.3.1)   ](https://www.iana.org/go/rfc9085)|
+|      1158     |   Prefix-SID | [RFC9085, Section 2.3.1](https://www.iana.org/go/rfc9085)|
 |      1171     | Source Router Identifier |  [RFC9085, Section 2.3.3](https://www.iana.org/go/rfc9085)|
 
 
