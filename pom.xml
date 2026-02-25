@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.tid.netphony</groupId>
     <artifactId>network-protocols</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
     <name>Netphony Network Protocols</name>
     <description>BGP-LS,OSPF-TE,PCEP and RSVP-TE protocol encodings.</description>
@@ -28,7 +28,7 @@
         <connection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</connection>
         <developerConnection>scm:git:git@github.com:telefonicaid/netphony-network-protocols.git</developerConnection>
         <url>https://github.com/telefonicaid/netphony-network-protocols</url>
-        <tag>1.4.2</tag>
+        <tag>1.4.3</tag>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
