@@ -3,7 +3,7 @@ netphony-network-protocols v1.4.2
 
 Latest Maven Central Release: 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-protocols/)
+[![Maven Central](https://maven-badges.sml.io/maven-central/es.tid.netphony/network-protocols/badge.svg?style=flat-square)](https://maven-badges.sml.io/maven-central/es.tid.netphony/network-protocols/)
 
 Coverage status
 | **Master**  | 
@@ -45,7 +45,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.4.0</version>
+      <version>1.4.2</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process

@@ -932,7 +932,7 @@ public final class ObjectParameters {
     /**
      * 38	Path Protection Association Group TLV	[RFC8745]
      */
-	public static final int PCEP_TLV_PATH_PROT_ASSOCIATION_GROUP=39;
+	public static final int PCEP_TLV_PATH_PROT_ASSOCIATION_GROUP=38;
 	
     /**
     * 39	IPV4-ADDRESS	[RFC8779, Section 2.5.2.1]
