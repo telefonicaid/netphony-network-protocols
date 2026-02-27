@@ -8,6 +8,11 @@ v1.4.3
 - Fixed IGP Router-ID SubTLV 515 (RFC 9552)
 - Implemented SR capabilities TLV 1034 (RFC 9085)
 - Implemented SID Label SubTLV 1161 (RFC 9085)
+v1.4.2
+- Add BGP-LS Prefix SID TLV 1158
+- Updated dependencies
+- Updated java version to 21
+- Updated TLV codes to latest IANA code numbers for BGP-LS TLVs
 v1.4.1
 - Request Object Updated to include LSP (RFC 8231)
 - Path updated to support State Reports (RFC 8231)
